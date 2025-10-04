@@ -133,4 +133,4 @@ The project is currently in the Sprint 0 planning phase, focused on setting up t
 - Modular architecture to allow for future scaling and microservice decomposition
 - Comprehensive observability and monitoring requirements from day one
 
-For all github commits and push, I am the sole contributer "Ahmed Mahmoud", "ahmedmmkms@hotmail.com"
+For all github commits and push, I am the sole contributer "Ahmed Mahmoud", "tahmedmmkms@hotmail.com"
