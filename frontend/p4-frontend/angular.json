@@ -32,9 +32,7 @@
             "styles": [
               "src/styles.scss"
             ],
-            "output": {
-              "path": "dist/landing"
-            }
+            "outputPath": "dist/landing"
           },
           "configurations": {
             "production": {
