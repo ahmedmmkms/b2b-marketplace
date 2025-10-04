@@ -938,7 +938,7 @@ For use in your deployment environment, collect:
 3. Connect to your GitHub account and select the `p4-monorepo` repository
 4. Set build settings:
    - Build command: `cd frontend/p4-frontend && npm ci && nx build landing --prod`
-   - Build output directory: `frontend/p4-frontend/dist/apps/landing/browser`
+   - Build output directory: `frontend/p4-frontend/dist/landing`
    - Root directory: `p4-monorepo`
 5. Set environment variables:
    - `API_BASE_URL`: `https://your-backend-app.azurewebsites.net` (for Azure) or `https://your-backend-service.koyeb.app` (for Koyeb)
