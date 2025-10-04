@@ -1,0 +1,51 @@
+2025-10-04T20:44:54.602384Z	Cloning repository...
+2025-10-04T20:44:55.278731Z	From https://github.com/ahmedmmkms/b2b-marketplace
+2025-10-04T20:44:55.27925Z	 * branch            6ae79e498152bb66ff4961eb1a43a10f8e468238 -> FETCH_HEAD
+2025-10-04T20:44:55.279385Z	
+2025-10-04T20:44:55.315283Z	HEAD is now at 6ae79e4 Fix frontend build: resolve dependency mismatch and increase bundle size limits
+2025-10-04T20:44:55.315696Z	
+2025-10-04T20:44:55.403457Z	
+2025-10-04T20:44:55.403928Z	Using v2 root directory strategy
+2025-10-04T20:44:55.425214Z	Success: Finished cloning repository files
+2025-10-04T20:44:57.146297Z	Checking for configuration in a Wrangler configuration file (BETA)
+2025-10-04T20:44:57.146969Z	
+2025-10-04T20:44:58.251584Z	No wrangler.toml file found. Continuing.
+2025-10-04T20:44:58.318465Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+2025-10-04T20:44:58.31915Z	Installing project dependencies: npm clean-install --progress=false
+2025-10-04T20:45:09.52739Z	
+2025-10-04T20:45:09.527594Z	added 21 packages, and audited 22 packages in 11s
+2025-10-04T20:45:09.527892Z	
+2025-10-04T20:45:09.5281Z	3 packages are looking for funding
+2025-10-04T20:45:09.528223Z	  run `npm fund` for details
+2025-10-04T20:45:09.528627Z	
+2025-10-04T20:45:09.528887Z	found 0 vulnerabilities
+2025-10-04T20:45:09.55649Z	Executing user command: cd frontend/p4-frontend && npm ci && npx nx build landing --prod
+2025-10-04T20:45:11.295012Z	npm error code EUSAGE
+2025-10-04T20:45:11.296049Z	npm error
+2025-10-04T20:45:11.296269Z	npm error `npm ci` can only install packages when your package.json and package-lock.json or npm-shrinkwrap.json are in sync. Please update your lock file with `npm install` before continuing.
+2025-10-04T20:45:11.296492Z	npm error
+2025-10-04T20:45:11.29662Z	npm error Missing: @types/node@24.6.2 from lock file
+2025-10-04T20:45:11.296773Z	npm error Missing: yaml@2.8.1 from lock file
+2025-10-04T20:45:11.296914Z	npm error Missing: undici-types@7.13.0 from lock file
+2025-10-04T20:45:11.29701Z	npm error
+2025-10-04T20:45:11.297071Z	npm error Clean install a project
+2025-10-04T20:45:11.297142Z	npm error
+2025-10-04T20:45:11.297245Z	npm error Usage:
+2025-10-04T20:45:11.297344Z	npm error npm ci
+2025-10-04T20:45:11.29746Z	npm error
+2025-10-04T20:45:11.29756Z	npm error Options:
+2025-10-04T20:45:11.297668Z	npm error [--install-strategy <hoisted|nested|shallow|linked>] [--legacy-bundling]
+2025-10-04T20:45:11.297773Z	npm error [--global-style] [--omit <dev|optional|peer> [--omit <dev|optional|peer> ...]]
+2025-10-04T20:45:11.297871Z	npm error [--include <prod|dev|optional|peer> [--include <prod|dev|optional|peer> ...]]
+2025-10-04T20:45:11.297964Z	npm error [--strict-peer-deps] [--foreground-scripts] [--ignore-scripts] [--no-audit]
+2025-10-04T20:45:11.298055Z	npm error [--no-bin-links] [--no-fund] [--dry-run]
+2025-10-04T20:45:11.298124Z	npm error [-w|--workspace <workspace-name> [-w|--workspace <workspace-name> ...]]
+2025-10-04T20:45:11.298223Z	npm error [-ws|--workspaces] [--include-workspace-root] [--install-links]
+2025-10-04T20:45:11.29829Z	npm error
+2025-10-04T20:45:11.298352Z	npm error aliases: clean-install, ic, install-clean, isntall-clean
+2025-10-04T20:45:11.298428Z	npm error
+2025-10-04T20:45:11.298491Z	npm error Run "npm help ci" for more info
+2025-10-04T20:45:11.298565Z	npm error A complete log of this run can be found in: /opt/buildhome/.npm/_logs/2025-10-04T20_45_09_884Z-debug-0.log
+2025-10-04T20:45:11.30628Z	Failed: Error while executing user command. Exited with error code: 1
+2025-10-04T20:45:11.318551Z	Failed: build command exited with code: 1
+2025-10-04T20:45:12.421627Z	Failed: error occurred while running build command
