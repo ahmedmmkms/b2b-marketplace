@@ -21,10 +21,14 @@ jobs:
         distribution: 'temurin'
         
     - name: Build with Maven
-      run: ./mvnw clean test
+      run: |
+        chmod +x ./mvnw
+        ./mvnw clean test
       
     - name: Run integration tests
-      run: ./mvnw verify
+      run: |
+        chmod +x ./mvnw
+        ./mvnw verify
 
   frontend-test:
     runs-on: ubuntu-latest
@@ -65,7 +69,9 @@ jobs:
         java-version: '21'
         distribution: 'temurin'
     - name: Build JAR for deployment
-      run: ./mvnw clean package -DskipTests
+      run: |
+        chmod +x ./mvnw
+        ./mvnw clean package -DskipTests
     - name: Deploy to Azure
       run: |
         # Deploy to Azure App Service
