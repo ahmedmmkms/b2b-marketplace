@@ -1,0 +1,20 @@
+{
+  "WELCOME_MESSAGE": "Welcome to P4 B2B Marketplace",
+  "NAVIGATION": {
+    "HOME": "Home",
+    "CATALOG": "Catalog",
+    "RFQ": "RFQ",
+    "ORDERS": "Orders",
+    "ACCOUNT": "Account"
+  },
+  "BUTTONS": {
+    "LOGIN": "Login",
+    "SIGNUP": "Sign Up",
+    "SEARCH": "Search"
+  },
+  "CATALOG": {
+    "TITLE": "Product Catalog",
+    "SEARCH_PLACEHOLDER": "Search products...",
+    "NO_PRODUCTS": "No products found."
+  }
+}
