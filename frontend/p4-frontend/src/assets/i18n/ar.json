@@ -10,7 +10,8 @@
   "BUTTONS": {
     "LOGIN": "تسجيل الدخول",
     "SIGNUP": "إنشاء حساب",
-    "SEARCH": "بحث"
+    "SEARCH": "بحث",
+    "VIEW_DETAILS": "عرض التفاصيل"
   },
   "CATALOG": {
     "TITLE": "كتالوج المنتجات",

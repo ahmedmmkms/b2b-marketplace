@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import { TranslateService, TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -26,12 +26,13 @@ interface Product {
     NzButtonModule,
     NzGridModule,
     NzIconModule,
-    FormsModule
+    FormsModule,
+    TranslateModule
   ],
   template: `
     <div class="catalog-container">
       <div class="search-section">
-        <nz-input-group [nzSuffix]="suffixIcon" size="large">
+        <nz-input-group size="large">
           <input 
             type="text" 
             nz-input 
@@ -39,10 +40,8 @@ interface Product {
             [(ngModel)]="searchTerm"
             (ngModelChange)="onSearchChange()"
           />
+          <span *nzSuffix nz-icon nzType="search"></span>
         </nz-input-group>
-        <ng-template #suffixIcon>
-          <span nz-icon nzType="search"></span>
-        </ng-template>
       </div>
 
       <div class="products-grid">
@@ -50,11 +49,10 @@ interface Product {
           <div nz-col nzSpan="8" *ngFor="let product of filteredProducts">
             <nz-card 
               [nzTitle]="product.name" 
-              [nzExtra]="extraTemplate"
               class="product-card">
               <p>{{ product.description }}</p>
-              <p class="price">${{ product.price }}</p>
-              <button nz-button nzType="primary">View Details</button>
+              <p class="price">{{ '$' + product.price }}</p>
+              <button nz-button nzType="primary">{{ 'BUTTONS.VIEW_DETAILS' | translate }}</button>
             </nz-card>
           </div>
         </div>

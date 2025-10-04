@@ -6,6 +6,7 @@ import { NzLayoutModule } from 'ng-zorro-antd/layout';
 import { NzMenuModule } from 'ng-zorro-antd/menu';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { TranslateModule } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +17,8 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     NzLayoutModule,
     NzMenuModule,
     NzButtonModule,
-    NzIconModule
+    NzIconModule,
+    TranslateModule
   ],
   template: `
     <nz-layout class="app-layout">
@@ -77,7 +79,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
     }
   `]
 })
-export class AppComponent implements OnInit {
+export class App implements OnInit {
   constructor(private translate: TranslateService) {
     translate.addLangs(['en', 'ar']);
     translate.setDefaultLang('en');

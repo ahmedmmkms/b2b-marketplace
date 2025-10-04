@@ -10,7 +10,8 @@
   "BUTTONS": {
     "LOGIN": "Login",
     "SIGNUP": "Sign Up",
-    "SEARCH": "Search"
+    "SEARCH": "Search",
+    "VIEW_DETAILS": "View Details"
   },
   "CATALOG": {
     "TITLE": "Product Catalog",
