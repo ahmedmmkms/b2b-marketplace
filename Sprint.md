@@ -1,6 +1,6 @@
-# Sprint 0 Setup Guide: Getting Started with P4 B2B Marketplace
+# Sprint 0 Setup Guide: Getting Started with P4 B2B Marketplace (Monorepo)
 
-This guide will walk you through setting up all the required services, accounts, and local development environment for the P4 B2B Marketplace project.
+This guide will walk you through setting up all the required services, accounts, and local development environment for the P4 B2B Marketplace project using a monorepo approach with both frontend and backend in the same repository.
 
 ## Table of Contents
 1. [Required Accounts & Services](#required-accounts--services)
@@ -17,17 +17,20 @@ This guide will walk you through setting up all the required services, accounts,
 - Sign up at [github.com](https://github.com) if you don't already have one
 - Create an access token with appropriate permissions for CI/CD
 
-### 2. Cloudflare Account (Pages + R2)
+### 2. Cloudflare Account (Pages) + Backblaze B2
 1. Go to [cloudflare.com](https://www.cloudflare.com/)
 2. Sign up for a free account
 3. Verify your email and set up your account
 4. For Pages: Create a new project connected to your GitHub repository
-5. For R2: Navigate to R2 in your dashboard and create a new bucket
+5. For B2: Go to [backblaze.com](https://www.backblaze.com/) and sign up for a free account without requiring a credit card
 
-### 3. Koyeb Account
-1. Visit [koyeb.com](https://www.koyeb.com/)
-2. Sign up for a free account (using GitHub for easy integration)
-3. Link your GitHub account to enable repository access
+### 3. Azure Account (Primary Cloud Provider)
+1. Visit [azure.microsoft.com](https://azure.microsoft.com/)
+2. Sign up for a free account (requires credit card verification for identity purposes, but many services remain free)
+3. Access the Azure portal dashboard after verification
+4. Take advantage of the $200 credit for the first 30 days and 12 months of free services
+5. For Java hosting: Use Azure App Service to deploy your Spring Boot application directly using JAR files
+6. Link your GitHub account for seamless deployment integration (optional)
 
 ### 4. Neon Account (PostgreSQL)
 1. Go to [neon.tech](https://neon.tech/)
@@ -43,15 +46,15 @@ This guide will walk you through setting up all the required services, accounts,
 
 ### Java 21
 1. Download and install OpenJDK 21 from one of these sources:
-   - [OpenJDK](https://openjdk.org/projects/jdk/21/) (official)
-   - [Eclipse Temurin](https://adoptium.net/temurin/releases/?version=21) (recommended)
-   - [Oracle JDK](https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html) (commercial)
+   - [OpenJDK](https://openjdk.org/projects/jdk/25/) (official)
+   - [Eclipse Temurin](https://adoptium.net/) (recommended) - check for JDK 25 when available
+   - [Oracle JDK](https://www.oracle.com/java/technologies/) (commercial) - check for JDK 25 when available
 
 2. Verify installation:
 ```bash
 java -version
 ```
-Should show version 21.x.x
+Should show version 25.x.x
 
 ### Node.js and npm
 1. Download and install Node.js (v20.x or higher) from [nodejs.org](https://nodejs.org/)
@@ -87,24 +90,23 @@ git config --global user.email "your.email@example.com"
 
 ## Repository Setup
 
-### Creating GitHub Repositories
-1. In your GitHub account, create two new public repositories:
-   - `p4-frontend`
-   - `p4-backend`
+### Creating GitHub Repository
+1. In your GitHub account, create a new public repository:
+   - `p4-monorepo` (or `p4-marketplace`)
 
 2. Add branch protection rules:
    - Protect `main` branch
    - Protect `release/*` branches
    - Require pull requests and status checks
 
-### Cloning Repositories
+### Cloning Repository
 ```bash
 # Create a workspace directory
 mkdir p4-workspace && cd p4-workspace
 
-# Clone repositories
-git clone https://github.com/YOUR_USERNAME/p4-frontend.git
-git clone https://github.com/YOUR_USERNAME/p4-backend.git
+# Clone repository
+git clone https://github.com/YOUR_USERNAME/p4-monorepo.git
+cd p4-monorepo
 ```
 
 ## Backend Setup (Spring Boot)
@@ -114,9 +116,9 @@ git clone https://github.com/YOUR_USERNAME/p4-backend.git
 - Maven or Gradle (will be set up automatically in project)
 
 ### Initial Project Setup
-1. Navigate to the backend directory:
+1. In your monorepo root directory, create the backend directory:
 ```bash
-cd p4-backend
+mkdir backend && cd backend
 ```
 
 2. Create a basic Spring Boot project structure:
@@ -137,36 +139,257 @@ mkdir -p src/main/java/com/p4/backend/{catalog,rfq,orders,payments,invoicing,wal
 
 4. Add required dependencies to `pom.xml`:
 ```xml
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-data-jpa</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-security</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-cache</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-batch</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.springframework.boot</groupId>
-    <artifactId>spring-boot-starter-actuator</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.flywaydb</groupId>
-    <artifactId>flyway-core</artifactId>
-</dependency>
-<dependency>
-    <groupId>org.springdoc</groupId>
-    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-    <version>2.1.0</version>
-</dependency>
-<!-- Database driver dependencies will be added when connecting to services -->
+<dependencies>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-web</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-actuator</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-validation</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-data-jpa</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-security</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-cache</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-batch</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.flywaydb</groupId>
+        <artifactId>flyway-core</artifactId>
+    </dependency>
+    <dependency>
+        <groupId>org.springdoc</groupId>
+        <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+        <version>2.1.0</version>
+    </dependency>
+    <dependency>
+        <groupId>com.h2database</groupId>
+        <artifactId>h2</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.postgresql</groupId>
+        <artifactId>postgresql</artifactId>
+        <scope>runtime</scope>
+    </dependency>
+    <dependency>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-test</artifactId>
+        <scope>test</scope>
+    </dependency>
+</dependencies>
+```
+
+5. Create basic module structure with initial interfaces and entities:
+```bash
+# Create package structure for catalog module
+mkdir -p src/main/java/com/p4/backend/catalog/{controller,entity,repository,service,model}
+
+# Create CatalogEntity.java
+cat > src/main/java/com/p4/backend/catalog/entity/CatalogEntity.java << 'EOF'
+package com.p4.backend.catalog.entity;
+
+import jakarta.persistence.*;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+
+@Entity
+@Table(name = "product")
+public class CatalogEntity {
+    @Id
+    private String id;
+    
+    private String name;
+    private String description;
+    private BigDecimal price;
+    private String vendorId;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
+    
+    // Constructors, getters, and setters
+    public CatalogEntity() {}
+    
+    public CatalogEntity(String id, String name, String description, BigDecimal price, String vendorId) {
+        this.id = id;
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.vendorId = vendorId;
+        this.createdAt = LocalDateTime.now();
+        this.updatedAt = LocalDateTime.now();
+    }
+    
+    // Getters and setters
+    public String getId() { return id; }
+    public void setId(String id) { this.id = id; }
+    
+    public String getName() { return name; }
+    public void setName(String name) { this.name = name; }
+    
+    public String getDescription() { return description; }
+    public void setDescription(String description) { this.description = description; }
+    
+    public BigDecimal getPrice() { return price; }
+    public void setPrice(BigDecimal price) { this.price = price; }
+    
+    public String getVendorId() { return vendorId; }
+    public void setVendorId(String vendorId) { this.vendorId = vendorId; }
+    
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
+    
+    public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+}
+EOF
+
+# Create CatalogRepository.java
+cat > src/main/java/com/p4/backend/catalog/repository/CatalogRepository.java << 'EOF'
+package com.p4.backend.catalog.repository;
+
+import com.p4.backend.catalog.entity.CatalogEntity;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import java.util.List;
+
+@Repository
+public interface CatalogRepository extends JpaRepository<CatalogEntity, String> {
+    List<CatalogEntity> findByVendorId(String vendorId);
+    List<CatalogEntity> findByNameContainingIgnoreCase(String name);
+}
+EOF
+
+# Create CatalogService.java
+cat > src/main/java/com/p4/backend/catalog/service/CatalogService.java << 'EOF'
+package com.p4.backend.catalog.service;
+
+import com.p4.backend.catalog.entity.CatalogEntity;
+import com.p4.backend.catalog.repository.CatalogRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class CatalogService {
+    
+    @Autowired
+    private CatalogRepository catalogRepository;
+    
+    public List<CatalogEntity> getAllProducts() {
+        return catalogRepository.findAll();
+    }
+    
+    public Optional<CatalogEntity> getProductById(String id) {
+        return catalogRepository.findById(id);
+    }
+    
+    public CatalogEntity saveProduct(CatalogEntity product) {
+        return catalogRepository.save(product);
+    }
+    
+    public void deleteProduct(String id) {
+        catalogRepository.deleteById(id);
+    }
+    
+    public List<CatalogEntity> getProductsByVendor(String vendorId) {
+        return catalogRepository.findByVendorId(vendorId);
+    }
+    
+    public List<CatalogEntity> searchProducts(String name) {
+        return catalogRepository.findByNameContainingIgnoreCase(name);
+    }
+}
+EOF
+
+# Create CatalogController.java
+cat > src/main/java/com/p4/backend/catalog/controller/CatalogController.java << 'EOF'
+package com.p4.backend.catalog.controller;
+
+import com.p4.backend.catalog.entity.CatalogEntity;
+import com.p4.backend.catalog.service.CatalogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.Optional;
+
+@RestController
+@RequestMapping("/api/catalog")
+public class CatalogController {
+    
+    @Autowired
+    private CatalogService catalogService;
+    
+    @GetMapping
+    public ResponseEntity<List<CatalogEntity>> getAllProducts() {
+        List<CatalogEntity> products = catalogService.getAllProducts();
+        return ResponseEntity.ok(products);
+    }
+    
+    @GetMapping("/{id}")
+    public ResponseEntity<CatalogEntity> getProductById(@PathVariable String id) {
+        Optional<CatalogEntity> product = catalogService.getProductById(id);
+        return product.map(ResponseEntity::ok)
+                     .orElse(ResponseEntity.notFound().build());
+    }
+    
+    @PostMapping
+    public ResponseEntity<CatalogEntity> createProduct(@RequestBody CatalogEntity product) {
+        CatalogEntity savedProduct = catalogService.saveProduct(product);
+        return ResponseEntity.ok(savedProduct);
+    }
+    
+    @PutMapping("/{id}")
+    public ResponseEntity<CatalogEntity> updateProduct(@PathVariable String id, @RequestBody CatalogEntity product) {
+        if (!catalogService.getProductById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        product.setId(id);
+        CatalogEntity updatedProduct = catalogService.saveProduct(product);
+        return ResponseEntity.ok(updatedProduct);
+    }
+    
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String id) {
+        if (!catalogService.getProductById(id).isPresent()) {
+            return ResponseEntity.notFound().build();
+        }
+        catalogService.deleteProduct(id);
+        return ResponseEntity.ok().build();
+    }
+    
+    @GetMapping("/vendor/{vendorId}")
+    public ResponseEntity<List<CatalogEntity>> getProductsByVendor(@PathVariable String vendorId) {
+        List<CatalogEntity> products = catalogService.getProductsByVendor(vendorId);
+        return ResponseEntity.ok(products);
+    }
+    
+    @GetMapping("/search")
+    public ResponseEntity<List<CatalogEntity>> searchProducts(@RequestParam String name) {
+        List<CatalogEntity> products = catalogService.searchProducts(name);
+        return ResponseEntity.ok(products);
+    }
+}
+EOF
 ```
 
 5. Add application properties for development:
@@ -277,9 +500,10 @@ public class HealthController implements InfoContributor {
 - Angular CLI (installed earlier)
 
 ### Initial Project Setup
-1. Navigate to the frontend directory:
+1. Navigate to the monorepo root directory and create frontend directory:
 ```bash
-cd p4-frontend
+cd .. # Go back to root if you're in backend
+mkdir frontend && cd frontend
 ```
 
 2. Create a new Nx workspace with Angular preset:
@@ -304,6 +528,324 @@ ng g @nx/angular:lib shared
 npm install @angular/cdk @angular/material @angular/flex-layout
 npm install ng-zorro-antd
 npm install @ngx-translate/core @ngx-translate/http-loader
+```
+
+6. Set up internationalization files for Arabic/English support:
+```bash
+# Create translation files directory
+mkdir -p src/assets/i18n
+
+# Create English translation file
+cat > src/assets/i18n/en.json << 'EOF'
+{
+  "WELCOME_MESSAGE": "Welcome to P4 B2B Marketplace",
+  "NAVIGATION": {
+    "HOME": "Home",
+    "CATALOG": "Catalog",
+    "RFQ": "RFQ",
+    "ORDERS": "Orders",
+    "ACCOUNT": "Account"
+  },
+  "BUTTONS": {
+    "LOGIN": "Login",
+    "SIGNUP": "Sign Up",
+    "SEARCH": "Search"
+  },
+  "CATALOG": {
+    "TITLE": "Product Catalog",
+    "SEARCH_PLACEHOLDER": "Search products...",
+    "NO_PRODUCTS": "No products found."
+  }
+}
+EOF
+
+# Create Arabic translation file
+cat > src/assets/i18n/ar.json << 'EOF'
+{
+  "WELCOME_MESSAGE": "مرحبا بكم في سوق بيزنيس لبيزنيس",
+  "NAVIGATION": {
+    "HOME": "الرئيسية",
+    "CATALOG": "المنتجات",
+    "RFQ": "طلب عروض الأسعار",
+    "ORDERS": "الطلبات",
+    "ACCOUNT": "الحساب"
+  },
+  "BUTTONS": {
+    "LOGIN": "تسجيل الدخول",
+    "SIGNUP": "إنشاء حساب",
+    "SEARCH": "بحث"
+  },
+  "CATALOG": {
+    "TITLE": "كتالوج المنتجات",
+    "SEARCH_PLACEHOLDER": "ابحث عن المنتجات...",
+    "NO_PRODUCTS": "لم يتم العثور على منتجات."
+  }
+}
+EOF
+```
+
+7. Create a basic catalog component to test integration:
+```bash
+# Generate catalog component
+ng generate component catalog
+```
+
+Then update the generated catalog component files:
+
+```bash
+# Update src/app/catalog/catalog.component.ts
+cat > src/app/catalog/catalog.component.ts << 'EOF'
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { NzCardModule } from 'ng-zorro-antd/card';
+import { NzInputModule } from 'ng-zorro-antd/input';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+import { NzGridModule } from 'ng-zorro-antd/grid';
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  price: number;
+  vendorId: string;
+}
+
+@Component({
+  selector: 'app-catalog',
+  standalone: true,
+  imports: [
+    CommonModule,
+    NzCardModule,
+    NzInputModule,
+    NzButtonModule,
+    NzGridModule
+  ],
+  template: `
+    <div class="catalog-container">
+      <div class="search-section">
+        <nz-input-group [nzSuffix]="suffixIcon" size="large">
+          <input 
+            type="text" 
+            nz-input 
+            [placeholder]="'CATALOG.SEARCH_PLACEHOLDER' | translate"
+            [(ngModel)]="searchTerm"
+            (ngModelChange)="onSearchChange()"
+          />
+        </nz-input-group>
+        <ng-template #suffixIcon>
+          <span nz-icon nzType="search"></span>
+        </ng-template>
+      </div>
+
+      <div class="products-grid">
+        <div nz-row [nzGutter]="[16, 16]">
+          <div nz-col nzSpan="8" *ngFor="let product of filteredProducts">
+            <nz-card 
+              [nzTitle]="product.name" 
+              [nzExtra]="extraTemplate"
+              class="product-card">
+              <p>{{ product.description }}</p>
+              <p class="price">${{ product.price }}</p>
+              <button nz-button nzType="primary">View Details</button>
+            </nz-card>
+          </div>
+        </div>
+      </div>
+
+      <div class="no-products" *ngIf="filteredProducts.length === 0">
+        {{ 'CATALOG.NO_PRODUCTS' | translate }}
+      </div>
+    </div>
+  `,
+  styles: [`
+    .catalog-container {
+      padding: 20px;
+    }
+    
+    .search-section {
+      margin-bottom: 30px;
+    }
+    
+    .products-grid {
+      margin-top: 20px;
+    }
+    
+    .product-card {
+      height: 200px;
+    }
+    
+    .price {
+      font-size: 18px;
+      font-weight: bold;
+      color: #1890ff;
+      margin: 10px 0;
+    }
+    
+    .no-products {
+      text-align: center;
+      padding: 40px;
+      font-size: 18px;
+      color: #8c8c8c;
+    }
+  `]
+})
+export class CatalogComponent implements OnInit {
+  searchTerm: string = '';
+  products: Product[] = [];
+  filteredProducts: Product[] = [];
+
+  constructor(private translate: TranslateService) {}
+
+  ngOnInit() {
+    // Initialize with sample data
+    this.products = [
+      { id: '1', name: 'Sample Product 1', description: 'This is a sample product', price: 99.99, vendorId: 'vendor-1' },
+      { id: '2', name: 'Sample Product 2', description: 'Another sample product', price: 149.99, vendorId: 'vendor-2' },
+      { id: '3', name: 'Sample Product 3', description: 'Yet another sample product', price: 199.99, vendorId: 'vendor-1' }
+    ];
+    this.filteredProducts = [...this.products];
+  }
+
+  onSearchChange() {
+    if (!this.searchTerm) {
+      this.filteredProducts = [...this.products];
+    } else {
+      this.filteredProducts = this.products.filter(product =>
+        product.name.toLowerCase().includes(this.searchTerm.toLowerCase()) ||
+        product.description.toLowerCase().includes(this.searchTerm.toLowerCase())
+      );
+    }
+  }
+}
+EOF
+
+# Update app.component.ts to add the catalog route
+# First, create a basic routing setup
+ng generate component home
+
+# Create app.routes.ts
+cat > src/app/app.routes.ts << 'EOF'
+import { Routes } from '@angular/router';
+import { HomeComponent } from './home/home.component';
+import { CatalogComponent } from './catalog/catalog.component';
+
+export const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'catalog', component: CatalogComponent },
+  { path: '**', redirectTo: '' }
+];
+EOF
+
+# Update app.config.ts to include routing
+cat > src/app/app.config.ts << 'EOF'
+import { ApplicationConfig } from '@angular/core';
+import { provideRouter } from '@angular/router';
+import { provideHttpClient } from '@angular/common/http';
+import { provideAnimations } from '@angular/platform-browser/animations';
+
+import { routes } from './app.routes';
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideRouter(routes),
+    provideHttpClient(),
+    provideAnimations()
+  ]
+};
+EOF
+
+# Update src/app/app.component.ts to include router outlet
+cat > src/app/app.component.ts << 'EOF'
+import { Component, OnInit } from '@angular/core';
+import { TranslateService } from '@ngx-translate/core';
+import { CommonModule } from '@angular/common';
+import { RouterOutlet } from '@angular/router';
+import { NzLayoutModule } from 'ng-zorro-antd/layout';
+import { NzMenuModule } from 'ng-zorro-antd/menu';
+import { NzButtonModule } from 'ng-zorro-antd/button';
+
+@Component({
+  selector: 'app-root',
+  standalone: true,
+  imports: [
+    CommonModule, 
+    RouterOutlet,
+    NzLayoutModule,
+    NzMenuModule,
+    NzButtonModule
+  ],
+  template: `
+    <nz-layout class="app-layout">
+      <nz-header>
+        <div class="logo">P4 B2B Marketplace</div>
+        <ul nz-menu nzTheme="dark" nzMode="horizontal" class="nav-menu">
+          <li nz-menu-item [nzSelected]="true">
+            <a routerLink="/">{{ 'NAVIGATION.HOME' | translate }}</a>
+          </li>
+          <li nz-menu-item>
+            <a routerLink="/catalog">{{ 'NAVIGATION.CATALOG' | translate }}</a>
+          </li>
+          <li nz-menu-item>
+            <a>{{ 'NAVIGATION.RFQ' | translate }}</a>
+          </li>
+          <li nz-menu-item>
+            <a>{{ 'NAVIGATION.ORDERS' | translate }}</a>
+          </li>
+          <li nz-menu-item style="float: right;">
+            <button nz-button nzType="primary">{{ 'BUTTONS.LOGIN' | translate }}</button>
+          </li>
+        </ul>
+      </nz-header>
+      <nz-layout>
+        <nz-content>
+          <div class="content">
+            <router-outlet></router-outlet>
+          </div>
+        </nz-content>
+      </nz-layout>
+    </nz-layout>
+  `,
+  styles: [`
+    .app-layout {
+      min-height: 100vh;
+    }
+    
+    .logo {
+      float: left;
+      color: white;
+      font-size: 18px;
+      line-height: 64px;
+      padding: 0 20px;
+      font-weight: bold;
+    }
+    
+    .nav-menu {
+      float: left;
+    }
+    
+    .content {
+      padding: 24px;
+      min-height: 280px;
+    }
+    
+    nz-header {
+      padding: 0;
+    }
+  `]
+})
+export class AppComponent implements OnInit {
+  constructor(private translate: TranslateService) {
+    translate.addLangs(['en', 'ar']);
+    translate.setDefaultLang('en');
+  }
+
+  ngOnInit() {
+    const browserLang = this.translate.getBrowserLang();
+    this.translate.use(browserLang || 'en');
+  }
+}
+EOF
 ```
 
 6. Add internationalization support by updating `app/app.component.ts`:
@@ -376,56 +918,70 @@ html, body {
 3. Select the region closest to your users
 4. Note the connection URL (rediss://host:port)
 
-### Cloudflare R2 Setup
-1. Log into your Cloudflare dashboard
-2. Go to R2 and create a new bucket (e.g., "p4-prod-assets")
-3. Create an R2 API token with appropriate permissions
-4. Note your Account ID, Access Key ID, and Secret Access Key
+### Backblaze B2 Setup
+1. Go to [backblaze.com](https://www.backblaze.com/) and sign up for a free account
+2. Create a B2 Cloud Storage bucket (e.g., "p4-prod-assets")
+3. Create an application key with read/write access to the bucket
+4. Note your Account ID, Application Key ID, and Application Key
 
 ### Obtaining Connection Details
 For use in your deployment environment, collect:
 - **Neon**: Database URL (DB_URL)
 - **Upstash**: Redis URL (REDIS_URL)
-- **R2**: Account ID, Access Key ID, Secret Access Key, and Bucket Name
+- **B2**: Account ID, Application Key ID, Application Key, and Bucket Name
 
 ## Deployment & CI/CD Setup
 
 ### Cloudflare Pages Setup
 1. In your Cloudflare dashboard, go to Pages
 2. Click "Create a project"
-3. Connect to your GitHub account and select the `p4-frontend` repository
+3. Connect to your GitHub account and select the `p4-monorepo` repository
 4. Set build settings:
-   - Framework preset: Angular
-   - Build command: `nx build landing --prod`
-   - Build output directory: `dist/apps/landing/browser`
+   - Build command: `cd frontend/p4-frontend && npm ci && nx build landing --prod`
+   - Build output directory: `frontend/p4-frontend/dist/apps/landing/browser`
+   - Root directory: `p4-monorepo`
 5. Set environment variables:
-   - `API_BASE_URL`: URL of your backend service
-   - `ENV_NAME`: stg or prod
-   - `FLAG_SOURCE`: Path to feature flags
+   - `API_BASE_URL`: `https://your-backend-app.azurewebsites.net` (for Azure) or `https://your-backend-service.koyeb.app` (for Koyeb)
+   - `ENV_NAME`: `prod` (or `stg` for staging)
+   - `FLAG_SOURCE`: `/feature-flags.json`
 
-### Koyeb Setup
-1. In your Koyeb dashboard, click "Create App"
-2. Connect to your GitHub account and select the `p4-backend` repository
-3. Configure deployment:
-   - Runtime: Buildpack (auto-detected)
-   - Port: 8080
-4. Set environment variables:
-   - `SPRING_PROFILES_ACTIVE`: prod
-   - `DB_URL`: Your Neon database URL
-   - `DB_USERNAME`: Neon username
-   - `DB_PASSWORD`: Neon password
-   - `REDIS_URL`: Your Upstash Redis URL
-   - `R2_ACCOUNT_ID`: Cloudflare Account ID
-   - `R2_ACCESS_KEY_ID`: R2 Access Key ID
-   - `R2_SECRET_ACCESS_KEY`: R2 Secret Access Key
-   - `R2_BUCKET`: R2 Bucket name
+### Azure Setup (Primary Cloud Provider)
+1. In your Azure portal, navigate to "App Services"
+2. Create a new resource and select "App Service"
+3. Configure your app service with:
+   - Subscription: Your selected Azure subscription
+   - Resource Group: Select or create a new one
+   - Name: A globally unique name for your app
+   - Publish: Code
+   - Runtime stack: JAVA 21
+   - Java version: 21
+   - Region: Choose a region close to your users
+4. Review + create the resource and wait for deployment
+5. Once created, go to your App Service and navigate to "Deployment Center"
+6. Configure your CI/CD by connecting to your GitHub repository
+7. Set up application settings in "Configuration" > "Application Settings":
+   - `SPRING_PROFILES_ACTIVE`: `prod`
+   - `DB_URL`: `your_neon_database_url`
+   - `DB_USERNAME`: `neon_username`
+   - `DB_PASSWORD`: `neon_password`
+   - `REDIS_URL`: `your_upstash_redis_url`
+   - `B2_ACCOUNT_ID`: `your_b2_account_id`
+   - `B2_APPLICATION_KEY_ID`: `your_b2_application_key_id`
+   - `B2_APPLICATION_KEY`: `your_b2_application_key`
+   - `B2_BUCKET`: `your_b2_bucket`
+8. To deploy manually, you can package your application as a JAR file and upload it:
+   ```bash
+   cd backend
+   mvn clean package -DskipTests
+   # Then deploy using Azure CLI or the portal
+   ```
 
 ### CI/CD Workflows
 Create the following GitHub Actions workflows:
 
-#### Backend Workflow (`.github/workflows/backend.yml`)
+#### Monorepo Workflow (`.github/workflows/monorepo.yml`)
 ```yaml
-name: Backend CI/CD
+name: Monorepo CI/CD
 
 on:
   push:
@@ -434,8 +990,11 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  backend-test:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./backend
     steps:
     - uses: actions/checkout@v3
     - name: Set up JDK 21
@@ -450,31 +1009,11 @@ jobs:
     - name: Run integration tests
       run: ./mvnw verify
 
-  deploy:
+  frontend-test:
     runs-on: ubuntu-latest
-    needs: test
-    if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/'))
-    steps:
-    - uses: actions/checkout@v3
-    - name: Deploy to Koyeb
-      run: |
-        # Add deployment commands here
-        # This would typically use Koyeb CLI or API
-```
-
-#### Frontend Workflow (`.github/workflows/frontend.yml`)
-```yaml
-name: Frontend CI/CD
-
-on:
-  push:
-    branches: [ main, release/* ]
-  pull_request:
-    branches: [ main ]
-
-jobs:
-  test:
-    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./frontend/p4-frontend
     steps:
     - uses: actions/checkout@v3
     - name: Use Node.js
@@ -496,20 +1035,18 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
-    needs: test
+    needs: [backend-test, frontend-test]
     if: github.event_name == 'push' && (github.ref == 'refs/heads/main' || startsWith(github.ref, 'refs/heads/release/'))
     steps:
     - uses: actions/checkout@v3
-    - name: Use Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: '20.x'
-        
-    - name: Install dependencies
-      run: npm ci
-      
-    - name: Build
-      run: nx build landing --prod
+    - name: Deploy to Azure
+      run: |
+        # Deploy to Azure App Service
+        # This requires setting up Azure credentials and configuring the deployment
+        # Azure App Service approach supports direct JAR deployment
+        # Build and deploy the backend application
+        cd backend
+        ./mvnw clean package -DskipTests
 ```
 
 ## Next Steps
