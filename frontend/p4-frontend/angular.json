@@ -61,10 +61,10 @@
           "builder": "@angular/build:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "p4-frontend:build:production"
+              "buildTarget": "landing:build:production"
             },
             "development": {
-              "buildTarget": "p4-frontend:build:development"
+              "buildTarget": "landing:build:development"
             }
           },
           "defaultConfiguration": "development"
