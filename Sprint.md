@@ -972,7 +972,7 @@ For use in your deployment environment, collect:
 8. To deploy manually, you can package your application as a JAR file and upload it:
    ```bash
    cd backend
-   mvn clean package -DskipTests
+   ./mvnw clean package -DskipTests
    # Then deploy using Azure CLI or the portal
    ```
 
@@ -1004,10 +1004,10 @@ jobs:
         distribution: 'temurin'
         
     - name: Build with Maven
-      run: ./mvnw clean test
+      run: cd backend && ./mvnw clean test
       
     - name: Run integration tests
-      run: ./mvnw verify
+      run: cd backend && ./mvnw verify
 
   frontend-test:
     runs-on: ubuntu-latest
@@ -1023,15 +1023,19 @@ jobs:
         
     - name: Install dependencies
       run: npm ci
+      working-directory: ./frontend/p4-frontend
       
     - name: Run linting
       run: npm run lint
+      working-directory: ./frontend/p4-frontend
       
     - name: Run tests
       run: npm run test:ci
+      working-directory: ./frontend/p4-frontend
       
     - name: Build
       run: nx build landing
+      working-directory: ./frontend/p4-frontend
 
   deploy:
     runs-on: ubuntu-latest
