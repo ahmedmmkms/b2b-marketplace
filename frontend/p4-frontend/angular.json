@@ -33,9 +33,7 @@
               "src/styles.scss"
             ],
             "index": "src/index.html",
-            "output": {
-              "path": "dist/landing"
-            }
+            "outputPath": "dist/landing"
           },
           "configurations": {
             "production": {
