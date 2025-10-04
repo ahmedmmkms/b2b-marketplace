@@ -50,7 +50,10 @@
                   "maximumError": "8kB"
                 }
               ],
-              "outputHashing": "all"
+              "outputHashing": "all",
+              "output": {
+                "path": "dist/landing"
+              }
             },
             "development": {
               "optimization": false,
