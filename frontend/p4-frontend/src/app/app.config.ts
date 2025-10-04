@@ -20,7 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes),
     provideHttpClient(withInterceptorsFromDi()),
     provideAnimations(),
-    provideNzIcons(),
+    provideNzIcons([]),
     { provide: NZ_I18N, useValue: en_US },
     importProvidersFrom(
       TranslateModule.forRoot({
