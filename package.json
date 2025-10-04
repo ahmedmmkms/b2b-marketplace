@@ -1,9 +1,9 @@
 {
   "dependencies": {
-    "@angular/cdk": "^20.3.0",
-    "@angular/material": "^20.3.0",
+    "@angular/cdk": "^18.2.0",
+    "@angular/material": "^18.2.0",
     "@ngx-translate/core": "^17.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
-    "ng-zorro-antd": "^20.3.0"
+    "ng-zorro-antd": "^18.2.0"
   }
 }
