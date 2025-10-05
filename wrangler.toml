@@ -1,0 +1,9 @@
+name = "b2b-marketplace"
+compatibility_date = "2023-12-01"
+
+[env.production]
+account_id = "YOUR_ACCOUNT_ID"
+compatibility_flags = ["nodejs_compat"]
+
+[build]
+command = "cd frontend/p4-frontend && npm ci && npm run build"
