@@ -8,6 +8,8 @@ import { importProvidersFrom } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { provideNzIcons } from 'ng-zorro-antd/icon';
 import { NZ_I18N, en_US } from 'ng-zorro-antd/i18n';
+import { PerformanceMonitoringService } from './core/performance/performance-monitoring.service';
+import { AnalyticsService } from './core/analytics/analytics.service';
 
 import { routes } from './app.routes';
 
@@ -22,6 +24,8 @@ export const appConfig: ApplicationConfig = {
     provideAnimations(),
     provideNzIcons([]),
     { provide: NZ_I18N, useValue: en_US },
+    PerformanceMonitoringService,
+    AnalyticsService,
     importProvidersFrom(
       TranslateModule.forRoot({
         loader: {
