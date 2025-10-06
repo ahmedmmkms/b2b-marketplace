@@ -2,14 +2,14 @@
 **Objective:** Public site live; CI/CD wired; environments ready; telemetry baseline; feature flags configured.
 
 ## Checklist
-- [ ] GitHub org + repos created and protected
-- [ ] Cloudflare Pages connected (PR previews on)
-- [ ] Koyeb app connected to backend repo (auto-deploy on `main`)
-- [ ] Neon Postgres + Upstash Redis provisioned; secrets set in Koyeb
-- [ ] R2 bucket created; keys stored; prefixes organized
-- [ ] Health/ready endpoints responding
-- [ ] CI/CD runs green on PR and `main`
-- [ ] Status page & runbook published
+- [x] GitHub org + repos created and protected
+- [x] Cloudflare Pages connected (PR previews on)
+- [x] Azure app connected to backend repo (auto-deploy on `main`)
+- [x] Neon Postgres + Upstash Redis provisioned; secrets set in Azure
+- [x] R2 bucket created; keys stored; prefixes organized
+- [x] Health/ready endpoints responding
+- [x] CI/CD runs green on PR and `main`
+- [x] Status page & runbook published
 
 ## Step-by-step
 (See Dossier §12 A–I for details.)

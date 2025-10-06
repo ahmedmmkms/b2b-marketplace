@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>P4 B2B Marketplace - Status Page</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .header {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .status-container {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        .status-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .status-item:last-child {
+            border-bottom: none;
+        }
+        .status-indicator {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        .status-good {
+            background-color: #4caf50;
+        }
+        .status-minor {
+            background-color: #ff9800;
+        }
+        .status-major {
+            background-color: #f44336;
+        }
+        .incident {
+            background-color: #fff3cd;
+            border-left: 4px solid #ffc107;
+            padding: 10px;
+            margin: 10px 0;
+        }
+        .history-item {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f8f9fa;
+            border-radius: 4px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>P4 B2B Marketplace Status</h1>
+        <p>Last updated: <span id="last-updated"></span></p>
+        <div>
+            <span class="status-indicator status-good"></span>
+            <strong>Operational</strong>
+        </div>
+    </div>
+
+    <div class="status-container">
+        <h2>System Status</h2>
+        <div class="status-item">
+            <span>Frontend (Cloudflare)</span>
+            <span>
+                <span class="status-indicator status-good"></span>
+                Operational
+            </span>
+        </div>
+        <div class="status-item">
+            <span>Backend (Azure)</span>
+            <span>
+                <span class="status-indicator status-good"></span>
+                Operational
+            </span>
+        </div>
+        <div class="status-item">
+            <span>Database (Neon Postgres)</span>
+            <span>
+                <span class="status-indicator status-good"></span>
+                Operational
+            </span>
+        </div>
+        <div class="status-item">
+            <span>Cache (Upstash Redis)</span>
+            <span>
+                <span class="status-indicator status-good"></span>
+                Operational
+            </span>
+        </div>
+        <div class="status-item">
+            <span>Storage (R2)</span>
+            <span>
+                <span class="status-indicator status-good"></span>
+                Operational
+            </span>
+        </div>
+        <div class="status-item">
+            <span>CI/CD Pipeline</span>
+            <span>
+                <span class="status-indicator status-good"></span>
+                Operational
+            </span>
+        </div>
+    </div>
+
+    <div class="status-container">
+        <h2>Current Incidents</h2>
+        <p>No incidents reported.</p>
+        <!-- Example of how to show an incident when needed:
+        <div class="incident">
+            <h3>Sample Incident Title</h3>
+            <p><strong>Start time:</strong> YYYY-MM-DD HH:MM UTC</p>
+            <p><strong>Status:</strong> Investigating</p>
+            <p>Description of the incident and impact...</p>
+        </div>
+        -->
+    </div>
+
+    <div class="status-container">
+        <h2>Recent History</h2>
+        <div class="history-item">
+            <h3>Maintenance completed</h3>
+            <p><strong>Time:</strong> YYYY-MM-DD HH:MM - HH:MM UTC</p>
+            <p>Completed scheduled maintenance on the database. No issues reported.</p>
+        </div>
+        <div class="history-item">
+            <h3>Performance degradation resolved</h3>
+            <p><strong>Time:</strong> YYYY-MM-DD HH:MM - HH:MM UTC</p>
+            <p>Resolved performance issues with the search functionality. Service fully restored.</p>
+        </div>
+    </div>
+
+    <div class="status-container">
+        <h2>Subscribe to Updates</h2>
+        <p>Get notified of incidents by email or webhook: <a href="#">Subscribe</a></p>
+    </div>
+
+    <script>
+        // Update the "Last updated" field with the current time
+        document.getElementById('last-updated').textContent = new Date().toISOString();
+    </script>
+</body>
+</html>
