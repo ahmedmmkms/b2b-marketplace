@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -299,35 +299,41 @@ interface Vendor {
     }
   `]
 })
-export class VendorOnboardingComponent {
+export class VendorOnboardingComponent implements OnInit {
   currentStep = 0;
   maxSteps = 3;
 
-  basicInfoForm = this.fb.group({
-    name: ['', [Validators.required]],
-    description: ['', [Validators.required]],
-    contactPerson: ['', [Validators.required]],
-    contactEmail: ['', [Validators.required, Validators.email]],
-    contactPhone: ['', [Validators.required]],
-    taxNumber: ['', [Validators.required]]
-  });
-
-  addressForm = this.fb.group({
-    street: ['', [Validators.required]],
-    city: ['', [Validators.required]],
-    state: ['', [Validators.required]],
-    country: ['', [Validators.required]],
-    postalCode: ['', [Validators.required]]
-  });
-
-  documentsForm = this.fb.group({
-    registrationDate: [null, [Validators.required]]
-  });
+  basicInfoForm: any;
+  addressForm: any;
+  documentsForm: any;
 
   licenseFileList: any[] = [];
   additionalFileList: any[] = [];
 
   constructor(private http: HttpClient, private fb: FormBuilder) {}
+
+  ngOnInit() {
+    this.basicInfoForm = this.fb.group({
+      name: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      contactPerson: ['', [Validators.required]],
+      contactEmail: ['', [Validators.required, Validators.email]],
+      contactPhone: ['', [Validators.required]],
+      taxNumber: ['', [Validators.required]]
+    });
+
+    this.addressForm = this.fb.group({
+      street: ['', [Validators.required]],
+      city: ['', [Validators.required]],
+      state: ['', [Validators.required]],
+      country: ['', [Validators.required]],
+      postalCode: ['', [Validators.required]]
+    });
+
+    this.documentsForm = this.fb.group({
+      registrationDate: [null, [Validators.required]]
+    });
+  }
 
   nextStep() {
     if (this.currentStep < this.maxSteps - 1) {

@@ -12,6 +12,7 @@ import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzModalModule, NzModalService } from 'ng-zorro-antd/modal';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { VendorDetailsModalComponent } from './vendor-details-modal.component';
 
 interface Vendor {
   id: string;
@@ -149,7 +150,8 @@ export class VendorApprovalQueueComponent implements OnInit {
 
   constructor(
     private http: HttpClient,
-    private modalService: NzModalService
+    private modalService: NzModalService,
+    private translate: TranslateService
   ) {}
 
   ngOnInit() {
@@ -244,22 +246,30 @@ export class VendorApprovalQueueComponent implements OnInit {
   }
 
   viewVendorDetails(vendor: Vendor) {
-    this.modalService.create({
-      nzTitle: `${vendor.name} - ${'VENDOR.DETAILS' | translate}`,
+    // Get the translated text outside of the template literal
+    const detailsText = this.translate.instant('VENDOR.DETAILS');
+    
+    // Create the modal with the vendor details component
+    const modal = this.modalService.create({
+      nzTitle: `${vendor.name} - ${detailsText}`,
       nzContent: VendorDetailsModalComponent,
-      nzComponentParams: {
-        vendor: vendor
-      },
       nzClosable: true,
       nzWidth: 700,
       nzFooter: null
     });
+    
+    // Set the vendor data after the modal is created
+    const instance = modal.getContentComponent();
+    instance.vendor = vendor;
   }
 
   approveVendor(vendor: Vendor) {
+    const approveText = this.translate.instant('VENDOR.APPROVE_VENDOR');
+    const confirmationText = this.translate.instant('VENDOR.APPROVE_CONFIRMATION');
+    
     this.modalService.confirm({
-      nzTitle: `${'VENDOR.APPROVE_VENDOR' | translate}: ${vendor.name}`,
-      nzContent: 'VENDOR.APPROVE_CONFIRMATION',
+      nzTitle: `${approveText}: ${vendor.name}`,
+      nzContent: confirmationText,
       nzOnOk: () => {
         // In a real app, this would be an API call
         // this.http.post(`http://localhost:8080/api/admin/vendors/${vendor.id}/approve`, {})
@@ -285,9 +295,12 @@ export class VendorApprovalQueueComponent implements OnInit {
   }
 
   rejectVendor(vendor: Vendor) {
+    const rejectText = this.translate.instant('VENDOR.REJECT_VENDOR');
+    const confirmationText = this.translate.instant('VENDOR.REJECT_CONFIRMATION');
+    
     this.modalService.confirm({
-      nzTitle: `${'VENDOR.REJECT_VENDOR' | translate}: ${vendor.name}`,
-      nzContent: 'VENDOR.REJECT_CONFIRMATION',
+      nzTitle: `${rejectText}: ${vendor.name}`,
+      nzContent: confirmationText,
       nzOnOk: () => {
         // In a real app, this would be an API call
         // this.http.post(`http://localhost:8080/api/admin/vendors/${vendor.id}/reject`, {})

@@ -146,7 +146,7 @@ interface MediaAsset {
           <!-- Products display -->
           <div class="products-section">
             <div class="results-summary">
-              {{ 'CATALOG.SHOWING_RESULTS' | translate: { start: (currentPage - 1) * pageSize + 1, end: Math.min(currentPage * pageSize, totalProducts), total: totalProducts } }}
+              {{ 'CATALOG.SHOWING_RESULTS' | translate: { start: (currentPage - 1) * pageSize + 1, end: calculateEndResultCount(), total: totalProducts } }}
             </div>
             
             <div *ngIf="isListView; else gridView" class="list-view">
@@ -160,7 +160,7 @@ interface MediaAsset {
                       [nzTitle]="product.name"
                       [nzDescription]="product.description">
                       <nz-list-item-meta-avatar>
-                        <img *ngIf="product.mediaAssets?.[0]" [src]="getMediaUrl(product.mediaAssets[0])" [alt]="product.name" class="product-image">
+                        <img *ngIf="product.mediaAssets?.[0]" [src]="getMediaUrl(product.mediaAssets?.[0])" [alt]="product.name" class="product-image">
                         <div *ngIf="!product.mediaAssets?.[0]" class="no-image-placeholder">
                           <span nz-icon nzType="picture" nzTheme="outline"></span>
                         </div>
@@ -194,7 +194,7 @@ interface MediaAsset {
                       class="product-card">
                       <ng-template #coverTemplate>
                         <img 
-                          [src]="getMediaUrl(product.mediaAssets[0])" 
+                          [src]="getMediaUrl(product.mediaAssets?.[0])" 
                           [alt]="product.name" 
                           class="product-cover-image">
                       </ng-template>
@@ -475,6 +475,9 @@ export class CatalogComponent implements OnInit, OnDestroy, AfterViewInit {
   isRTL: boolean = false;
   
   private destroy$ = new Subject<void>();
+  
+  // Store filtered products for analytics tracking
+  filteredProducts: Product[] = [];
 
   constructor(
     private translate: TranslateService, 
@@ -487,7 +490,7 @@ export class CatalogComponent implements OnInit, OnDestroy, AfterViewInit {
     // Detect RTL based on current language
     this.translate.onLangChange.pipe(takeUntil(this.destroy$)).subscribe(event => {
       this.isRTL = event.lang === 'ar';
-      this.location.go(location.path()); // Refresh location for RTL update
+      this.location.go(this.location.path()); // Refresh location for RTL update
     });
     
     // Initialize with sample data
@@ -595,14 +598,14 @@ export class CatalogComponent implements OnInit, OnDestroy, AfterViewInit {
   applyFilters() {
     // Track filter event before applying filters
     const activeFilters: { [key: string]: any } = {};
-    if (this.searchTerm) activeFilters.search = this.searchTerm;
+    if (this.searchTerm) activeFilters['search'] = this.searchTerm;
     if (this.minPrice !== null || this.maxPrice !== null) {
-      activeFilters.price = { min: this.minPrice, max: this.maxPrice };
+      activeFilters['price'] = { min: this.minPrice, max: this.maxPrice };
     }
     const selectedCategories = this.categories.filter(cat => cat.selected).map(cat => cat.name);
-    if (selectedCategories.length > 0) activeFilters.categories = selectedCategories;
+    if (selectedCategories.length > 0) activeFilters['categories'] = selectedCategories;
     const selectedVendors = this.vendors.filter(vendor => vendor.selected).map(vendor => vendor.name);
-    if (selectedVendors.length > 0) activeFilters.vendors = selectedVendors;
+    if (selectedVendors.length > 0) activeFilters['vendors'] = selectedVendors;
 
     // This would typically be an API call with filters
     // For now, we'll simulate filtering with sample data
@@ -642,6 +645,8 @@ export class CatalogComponent implements OnInit, OnDestroy, AfterViewInit {
       filteredProducts = filteredProducts.filter(product => product.basePrice <= (this.maxPrice || Number.MAX_VALUE));
     }
     
+    // Update filteredProducts for tracking
+    this.filteredProducts = filteredProducts;
     this.totalProducts = filteredProducts.length;
     
     // Track filter event after applying filters
@@ -721,6 +726,10 @@ export class CatalogComponent implements OnInit, OnDestroy, AfterViewInit {
 
   trackByFacet(index: number, item: any) {
     return item.id;
+  }
+
+  calculateEndResultCount(): number {
+    return Math.min(this.currentPage * this.pageSize, this.totalProducts);
   }
 
   trackByFacetValue(index: number, item: any) {

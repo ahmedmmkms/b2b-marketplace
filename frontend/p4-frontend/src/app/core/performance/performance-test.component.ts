@@ -1,5 +1,3 @@
-// src/app/core/performance/performance-test.component.ts
-
 import { Component, OnInit } from '@angular/core';
 import { TranslateModule } from '@ngx-translate/core';
 import { CommonModule } from '@angular/common';
@@ -10,6 +8,7 @@ import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
+import { NzIconModule } from 'ng-zorro-antd/icon';
 import { PerformanceMonitoringService, PerformanceReport } from './performance-monitoring.service';
 import { HttpClient } from '@angular/common/http';
 
@@ -33,7 +32,8 @@ interface TestResult {
     NzTagModule,
     NzProgressModule,
     NzAlertModule,
-    NzSpinModule
+    NzSpinModule,
+    NzIconModule
   ],
   template: `
     <div class="performance-test-container">
@@ -50,7 +50,7 @@ interface TestResult {
             [nzLoading]="isRunningTests"
             (click)="runPerformanceTests()"
             [disabled]="isRunningTests">
-            <span nz-icon [nzType]="isRunningTests ? 'sync' : 'thunderbolt'"></span>
+            <i nz-icon [nzType]="isRunningTests ? 'sync' : 'thunderbolt'"></i>
             {{ 'PERFORMANCE.RUN_TESTS' | translate }}
           </button>
           <button 
@@ -89,7 +89,7 @@ interface TestResult {
               <div class="metric-label">{{ 'PERFORMANCE.P99' | translate }}</div>
               <div class="metric-value">{{ searchReport.p99 | number:'1.0-0' }}ms</div>
               <nz-progress 
-                [nzPercent]="Math.min(100, searchReport.p99 / 500 * 100)" 
+                [nzPercent]="calculateProgress(searchReport.p99, 500)" 
                 [nzStatus]="searchReport.p99 < 750 ? 'success' : 'exception'">
               </nz-progress>
             </div>
@@ -287,7 +287,11 @@ export class PerformanceTestComponent implements OnInit {
     return Math.min(100, (value / target) * 100);
   }
 
-  getProgressStatus(value: number, successThreshold: number, exceptionThreshold: number): string {
+  calculateProgress(value: number, target: number): number {
+    return Math.min(100, (value / target) * 100);
+  }
+
+  getProgressStatus(value: number, successThreshold: number, exceptionThreshold: number): 'success' | 'exception' | 'normal' | 'active' {
     if (value < successThreshold) {
       return 'success';
     } else if (value < exceptionThreshold) {

@@ -6,7 +6,8 @@ import { FeatureFlagName } from './feature-flag.types';
 import { Subscription } from 'rxjs';
 
 @Directive({
-  selector: '[appFeatureFlag]'
+  selector: '[appFeatureFlag]',
+  standalone: true
 })
 export class FeatureFlagDirective implements OnInit, OnDestroy {
   private subscription?: Subscription;
