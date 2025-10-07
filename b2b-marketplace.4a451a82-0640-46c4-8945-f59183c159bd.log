@@ -1,178 +1,556 @@
-2025-10-07T03:38:43.7782449Z Container info: WEBSITE_INSTANCE_ID = eb29e038db1dfe94e64ea0cae36cd79f8ad9a8c3a7a5dd9f089252d285612fc6 ; WEBSITE_SITE_NAME = b2b-marketplace
-2025-10-07T03:38:43.7854948Z Add public certificates to keystore if exists...
-2025-10-07T03:38:43.7856234Z Add private certificates to keystore if exists...
-2025-10-07T03:38:43.7859976Z Configuring max heap = 1024 MB
-2025-10-07T03:38:43.8030761Z STARTUP_FILE=
-2025-10-07T03:38:43.8031196Z STARTUP_COMMAND=
-2025-10-07T03:38:43.8031296Z No STARTUP_FILE available.
-2025-10-07T03:38:43.8031337Z No STARTUP_COMMAND defined.
-2025-10-07T03:38:44.3789314Z Mangled result from Jar entry point parser is: __COM_MICROSOFT_AZURE_APPSERVICE_JARENTRYPOINT_PREFIX__org.springframework.boot.loader.launch.JarLauncher__COM_MICROSOFT_AZURE_APPSERVICE_JARENTRYPOINT_SUFFIX__
-2025-10-07T03:38:44.4091286Z Extracted jar entry point. Class name is: 'org.springframework.boot.loader.launch.JarLauncher'
-2025-10-07T03:38:44.4245749Z Defaulting to UTF-8
-2025-10-07T03:38:44.4248208Z Running command: java -cp /home/site/wwwroot/app.jar:/usr/local/appservice/lib/azure.appservice.jar: -Djava.util.logging.config.file=/usr/local/appservice/logging.properties -Dfile.encoding=UTF-8 -Xmx1024M -Djava.net.preferIPv4Stack=true  -Dserver.port=80 -XX:ErrorFile=/home/LogFiles/java_error_b2b-marketplace_10-30-0-62_%p.log -XX:+CrashOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/LogFiles/java_memdump_b2b-marketplace_10-30-0-62.log -Duser.dir=/home/site/wwwroot org.springframework.boot.loader.launch.JarLauncher
-2025-10-07T03:38:44.4253791Z Launched child process with pid: 69
-2025-10-07T03:38:44.4360548Z [Telemetry] APP_JAR_PATH: /home/site/wwwroot/app.jar:/usr/local/appservice/lib/azure.appservice.jar
-2025-10-07T03:38:44.4361111Z x-ms-applog:informational:base64:QVBQX0pBUl9QQVRIOiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjovdXNyL2xvY2FsL2FwcHNlcnZpY2UvbGliL2F6dXJlLmFwcHNlcnZpY2UuamFy
-2025-10-07T03:38:44.4361166Z x-ms-telemetry:informational:base64:QVBQX0pBUl9QQVRIOiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjovdXNyL2xvY2FsL2FwcHNlcnZpY2UvbGliL2F6dXJlLmFwcHNlcnZpY2UuamFy
-2025-10-07T03:38:44.5101836Z [Telemetry] JARs in /home/site/wwwroot/app.jar: spring-boot-3.4.0.jar,spring-boot-autoconfigure-3.4.0.jar,logback-classic-1.5.12.jar,logback-core-1.5.12.jar,log4j-to-slf4j-2.24.1.jar,log4j-api-2.24.1.jar,jul-to-slf4j-2.0.16.jar,jakarta.annotation-api-2.1.1.jar,snakeyaml-2.3.jar,jackson-databind-2.18.1.jar,jackson-datatype-jdk8-2.18.1.jar,jackson-module-parameter-names-2.18.1.jar,tomcat-embed-core-10.1.33.jar,tomcat-embed-websocket-10.1.33.jar,spring-web-6.2.0.jar,spring-beans-6.2.0.jar,spring-webmvc-6.2.0.jar,spring-context-6.2.0.jar,spring-expression-6.2.0.jar,spring-boot-actuator-autoconfigure-3.4.0.jar,spring-boot-actuator-3.4.0.jar,micrometer-observation-1.14.1.jar,micrometer-commons-1.14.1.jar,micrometer-jakarta9-1.14.1.jar,micrometer-core-1.14.1.jar,HdrHistogram-2.2.2.jar,LatencyUtils-2.0.3.jar,tomcat-embed-el-10.1.33.jar,hibernate-validator-8.0.1.Final.jar,jakarta.validation-api-3.0.2.jar,jboss-logging-3.6.1.Final.jar,classmate-1.7.0.jar,HikariCP-5.1.0.jar,spring-jdbc-6.2.0.jar,hibernate-core-6.6.2.Final.jar,jakarta.persistence-api-3.1.0.jar,jakarta.transaction-api-2.0.1.jar,hibernate-commons-annotations-7.0.3.Final.jar,jandex-3.2.0.jar,byte-buddy-1.15.10.jar,jaxb-runtime-4.0.5.jar,jaxb-core-4.0.5.jar,angus-activation-2.0.2.jar,txw2-4.0.5.jar,istack-commons-runtime-4.1.2.jar,jakarta.inject-api-2.0.1.jar,antlr4-runtime-4.13.0.jar,spring-data-jpa-3.4.0.jar,spring-data-commons-3.4.0.jar,spring-orm-6.2.0.jar,spring-tx-6.2.0.jar,spring-aspects-6.2.0.jar,aspectjweaver-1.9.22.1.jar,spring-aop-6.2.0.jar,spring-security-config-6.4.1.jar,spring-security-core-6.4.1.jar,spring-security-crypto-6.4.1.jar,spring-security-web-6.4.1.jar,spring-context-support-6.2.0.jar,spring-batch-core-5.2.0.jar,spring-batch-infrastructure-5.2.0.jar,spring-retry-2.0.10.jar,flyway-core-10.21.0.jar,jackson-dataformat-toml-2.18.1.jar,jackson-core-2.18.1.jar,jackson-datatype-jsr310-2.18.1.jar,jackson-annotations-2.18.1.jar,flyway-database-postgresql-10.21.0.jar,springdoc-openapi-starter-webmvc-ui-2.1.0.jar,springdoc-openapi-starter-webmvc-api-2.1.0.jar,springdoc-openapi-starter-common-2.1.0.jar,swagger-core-jakarta-2.2.9.jar,swagger-annotations-jakarta-2.2.9.jar,swagger-models-jakarta-2.2.9.jar,jackson-dataformat-yaml-2.18.1.jar,swagger-ui-4.18.2.jar,java-uuid-generator-4.3.0.jar,slf4j-api-2.0.16.jar,opencsv-5.9.jar,commons-lang3-3.17.0.jar,commons-text-1.11.0.jar,commons-beanutils-1.9.4.jar,commons-logging-1.2.jar,commons-collections-3.2.2.jar,commons-collections4-4.4.jar,s3-2.25.26.jar,aws-xml-protocol-2.25.26.jar,aws-query-protocol-2.25.26.jar,protocol-core-2.25.26.jar,arns-2.25.26.jar,profiles-2.25.26.jar,crt-core-2.25.26.jar,http-auth-2.25.26.jar,identity-spi-2.25.26.jar,http-auth-spi-2.25.26.jar,reactive-streams-1.0.4.jar,http-auth-aws-2.25.26.jar,checksums-2.25.26.jar,checksums-spi-2.25.26.jar,sdk-core-2.25.26.jar,auth-2.25.26.jar,eventstream-1.0.1.jar,http-client-spi-2.25.26.jar,regions-2.25.26.jar,annotations-2.25.26.jar,utils-2.25.26.jar,aws-core-2.25.26.jar,metrics-spi-2.25.26.jar,json-utils-2.25.26.jar,third-party-jackson-core-2.25.26.jar,endpoints-spi-2.25.26.jar,apache-client-2.25.26.jar,httpclient-4.5.13.jar,httpcore-4.4.16.jar,commons-codec-1.17.1.jar,netty-nio-client-2.25.26.jar,netty-codec-http-4.1.115.Final.jar,netty-codec-http2-4.1.115.Final.jar,netty-codec-4.1.115.Final.jar,netty-transport-4.1.115.Final.jar,netty-common-4.1.115.Final.jar,netty-buffer-4.1.115.Final.jar,netty-handler-4.1.115.Final.jar,netty-transport-native-unix-common-4.1.115.Final.jar,netty-transport-classes-epoll-4.1.115.Final.jar,netty-resolver-4.1.115.Final.jar,h2-2.3.232.jar,postgresql-42.7.4.jar,checker-qual-3.42.0.jar,jakarta.xml.bind-api-4.0.2.jar,jakarta.activation-api-2.1.3.jar,spring-core-6.2.0.jar,spring-jcl-6.2.0.jar,spring-boot-jarmode-tools-3.4.0.jar
-2025-10-07T03:38:44.5111862Z x-ms-applog:informational:base64:SkFScyBpbiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjogc3ByaW5nLWJvb3QtMy40LjAuamFyLHNwcmluZy1ib290LWF1dG9jb25maWd1cmUtMy40LjAuamFyLGxvZ2JhY2stY2xhc3NpYy0xLjUuMTIuamFyLGxvZ2JhY2stY29yZS0xLjUuMTIuamFyLGxvZzRqLXRvLXNsZjRqLTIuMjQuMS5qYXIsbG9nNGotYXBpLTIuMjQuMS5qYXIsanVsLXRvLXNsZjRqLTIuMC4xNi5qYXIsamFrYXJ0YS5hbm5vdGF0aW9uLWFwaS0yLjEuMS5qYXIsc25ha2V5YW1sLTIuMy5qYXIsamFja3Nvbi1kYXRhYmluZC0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtamRrOC0yLjE4LjEuamFyLGphY2tzb24tbW9kdWxlLXBhcmFtZXRlci1uYW1lcy0yLjE4LjEuamFyLHRvbWNhdC1lbWJlZC1jb3JlLTEwLjEuMzMuamFyLHRvbWNhdC1lbWJlZC13ZWJzb2NrZXQtMTAuMS4zMy5qYXIsc3ByaW5nLXdlYi02LjIuMC5qYXIsc3ByaW5nLWJlYW5zLTYuMi4wLmphcixzcHJpbmctd2VibXZjLTYuMi4wLmphcixzcHJpbmctY29udGV4dC02LjIuMC5qYXIsc3ByaW5nLWV4cHJlc3Npb24tNi4yLjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLWF1dG9jb25maWd1cmUtMy40LjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLTMuNC4wLmphcixtaWNyb21ldGVyLW9ic2VydmF0aW9uLTEuMTQuMS5qYXIsbWljcm9tZXRlci1jb21tb25zLTEuMTQuMS5qYXIsbWljcm9tZXRlci1qYWthcnRhOS0xLjE0LjEuamFyLG1pY3JvbWV0ZXItY29yZS0xLjE0LjEuamFyLEhkckhpc3RvZ3JhbS0yLjIuMi5qYXIsTGF0ZW5jeVV0aWxzLTIuMC4zLmphcix0b21jYXQtZW1iZWQtZWwtMTAuMS4zMy5qYXIsaGliZXJuYXRlLXZhbGlkYXRvci04LjAuMS5GaW5hbC5qYXIsamFrYXJ0YS52YWxpZGF0aW9uLWFwaS0zLjAuMi5qYXIsamJvc3MtbG9nZ2luZy0zLjYuMS5GaW5hbC5qYXIsY2xhc3NtYXRlLTEuNy4wLmphcixIaWthcmlDUC01LjEuMC5qYXIsc3ByaW5nLWpkYmMtNi4yLjAuamFyLGhpYmVybmF0ZS1jb3JlLTYuNi4yLkZpbmFsLmphcixqYWthcnRhLnBlcnNpc3RlbmNlLWFwaS0zLjEuMC5qYXIsamFrYXJ0YS50cmFuc2FjdGlvbi1hcGktMi4wLjEuamFyLGhpYmVybmF0ZS1jb21tb25zLWFubm90YXRpb25zLTcuMC4zLkZpbmFsLmphcixqYW5kZXgtMy4yLjAuamFyLGJ5dGUtYnVkZHktMS4xNS4xMC5qYXIsamF4Yi1ydW50aW1lLTQuMC41LmphcixqYXhiLWNvcmUtNC4wLjUuamFyLGFuZ3VzLWFjdGl2YXRpb24tMi4wLjIuamFyLHR4dzItNC4wLjUuamFyLGlzdGFjay1jb21tb25zLXJ1bnRpbWUtNC4xLjIuamFyLGpha2FydGEuaW5qZWN0LWFwaS0yLjAuMS5qYXIsYW50bHI0LXJ1bnRpbWUtNC4xMy4wLmphcixzcHJpbmctZGF0YS1qcGEtMy40LjAuamFyLHNwcmluZy1kYXRhLWNvbW1vbnMtMy40LjAuamFyLHNwcmluZy1vcm0tNi4yLjAuamFyLHNwcmluZy10eC02LjIuMC5qYXIsc3ByaW5nLWFzcGVjdHMtNi4yLjAuamFyLGFzcGVjdGp3ZWF2ZXItMS45LjIyLjEuamFyLHNwcmluZy1hb3AtNi4yLjAuamFyLHNwcmluZy1zZWN1cml0eS1jb25maWctNi40LjEuamFyLHNwcmluZy1zZWN1cml0eS1jb3JlLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktY3J5cHRvLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktd2ViLTYuNC4xLmphcixzcHJpbmctY29udGV4dC1zdXBwb3J0LTYuMi4wLmphcixzcHJpbmctYmF0Y2gtY29yZS01LjIuMC5qYXIsc3ByaW5nLWJhdGNoLWluZnJhc3RydWN0dXJlLTUuMi4wLmphcixzcHJpbmctcmV0cnktMi4wLjEwLmphcixmbHl3YXktY29yZS0xMC4yMS4wLmphcixqYWNrc29uLWRhdGFmb3JtYXQtdG9tbC0yLjE4LjEuamFyLGphY2tzb24tY29yZS0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtanNyMzEwLTIuMTguMS5qYXIsamFja3Nvbi1hbm5vdGF0aW9ucy0yLjE4LjEuamFyLGZseXdheS1kYXRhYmFzZS1wb3N0Z3Jlc3FsLTEwLjIxLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItd2VibXZjLXVpLTIuMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLXdlYm12Yy1hcGktMi4xLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItY29tbW9uLTIuMS4wLmphcixzd2FnZ2VyLWNvcmUtamFrYXJ0YS0yLjIuOS5qYXIsc3dhZ2dlci1hbm5vdGF0aW9ucy1qYWthcnRhLTIuMi45Lmphcixzd2FnZ2VyLW1vZGVscy1qYWthcnRhLTIuMi45LmphcixqYWNrc29uLWRhdGFmb3JtYXQteWFtbC0yLjE4LjEuamFyLHN3YWdnZXItdWktNC4xOC4yLmphcixqYXZhLXV1aWQtZ2VuZXJhdG9yLTQuMy4wLmphcixzbGY0ai1hcGktMi4wLjE2LmphcixvcGVuY3N2LTUuOS5qYXIsY29tbW9ucy1sYW5nMy0zLjE3LjAuamFyLGNvbW1vbnMtdGV4dC0xLjExLjAuamFyLGNvbW1vbnMtYmVhbnV0aWxzLTEuOS40Lmphcixjb21tb25zLWxvZ2dpbmctMS4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zLTMuMi4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zNC00LjQuamFyLHMzLTIuMjUuMjYuamFyLGF3cy14bWwtcHJvdG9jb2wtMi4yNS4yNi5qYXIsYXdzLXF1ZXJ5LXByb3RvY29sLTIuMjUuMjYuamFyLHByb3RvY29sLWNvcmUtMi4yNS4yNi5qYXIsYXJucy0yLjI1LjI2Lmphcixwcm9maWxlcy0yLjI1LjI2LmphcixjcnQtY29yZS0yLjI1LjI2LmphcixodHRwLWF1dGgtMi4yNS4yNi5qYXIsaWRlbnRpdHktc3BpLTIuMjUuMjYuamFyLGh0dHAtYXV0aC1zcGktMi4yNS4yNi5qYXIscmVhY3RpdmUtc3RyZWFtcy0xLjAuNC5qYXIsaHR0cC1hdXRoLWF3cy0yLjI1LjI2LmphcixjaGVja3N1bXMtMi4yNS4yNi5qYXIsY2hlY2tzdW1zLXNwaS0yLjI1LjI2LmphcixzZGstY29yZS0yLjI1LjI2LmphcixhdXRoLTIuMjUuMjYuamFyLGV2ZW50c3RyZWFtLTEuMC4xLmphcixodHRwLWNsaWVudC1zcGktMi4yNS4yNi5qYXIscmVnaW9ucy0yLjI1LjI2Lmphcixhbm5vdGF0aW9ucy0yLjI1LjI2Lmphcix1dGlscy0yLjI1LjI2Lmphcixhd3MtY29yZS0yLjI1LjI2LmphcixtZXRyaWNzLXNwaS0yLjI1LjI2Lmphcixqc29uLXV0aWxzLTIuMjUuMjYuamFyLHRoaXJkLXBhcnR5LWphY2tzb24tY29yZS0yLjI1LjI2LmphcixlbmRwb2ludHMtc3BpLTIuMjUuMjYuamFyLGFwYWNoZS1jbGllbnQtMi4yNS4yNi5qYXIsaHR0cGNsaWVudC00LjUuMTMuamFyLGh0dHBjb3JlLTQuNC4xNi5qYXIsY29tbW9ucy1jb2RlYy0xLjE3LjEuamFyLG5ldHR5LW5pby1jbGllbnQtMi4yNS4yNi5qYXIsbmV0dHktY29kZWMtaHR0cC00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy1odHRwMi00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy00LjEuMTE1LkZpbmFsLmphcixuZXR0eS10cmFuc3BvcnQtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktY29tbW9uLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LWJ1ZmZlci00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1oYW5kbGVyLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LXRyYW5zcG9ydC1uYXRpdmUtdW5peC1jb21tb24tNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktdHJhbnNwb3J0LWNsYXNzZXMtZXBvbGwtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktcmVzb2x2ZXItNC4xLjExNS5GaW5hbC5qYXIsaDItMi4zLjIzMi5qYXIscG9zdGdyZXNxbC00Mi43LjQuamFyLGNoZWNrZXItcXVhbC0zLjQyLjAuamFyLGpha2FydGEueG1sLmJpbmQtYXBpLTQuMC4yLmphcixqYWthcnRhLmFjdGl2YXRpb24tYXBpLTIuMS4zLmphcixzcHJpbmctY29yZS02LjIuMC5qYXIsc3ByaW5nLWpjbC02LjIuMC5qYXIsc3ByaW5nLWJvb3QtamFybW9kZS10b29scy0zLjQuMC5qYXI=
-2025-10-07T03:38:44.5112248Z x-ms-telemetry:informational:base64:SkFScyBpbiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjogc3ByaW5nLWJvb3QtMy40LjAuamFyLHNwcmluZy1ib290LWF1dG9jb25maWd1cmUtMy40LjAuamFyLGxvZ2JhY2stY2xhc3NpYy0xLjUuMTIuamFyLGxvZ2JhY2stY29yZS0xLjUuMTIuamFyLGxvZzRqLXRvLXNsZjRqLTIuMjQuMS5qYXIsbG9nNGotYXBpLTIuMjQuMS5qYXIsanVsLXRvLXNsZjRqLTIuMC4xNi5qYXIsamFrYXJ0YS5hbm5vdGF0aW9uLWFwaS0yLjEuMS5qYXIsc25ha2V5YW1sLTIuMy5qYXIsamFja3Nvbi1kYXRhYmluZC0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtamRrOC0yLjE4LjEuamFyLGphY2tzb24tbW9kdWxlLXBhcmFtZXRlci1uYW1lcy0yLjE4LjEuamFyLHRvbWNhdC1lbWJlZC1jb3JlLTEwLjEuMzMuamFyLHRvbWNhdC1lbWJlZC13ZWJzb2NrZXQtMTAuMS4zMy5qYXIsc3ByaW5nLXdlYi02LjIuMC5qYXIsc3ByaW5nLWJlYW5zLTYuMi4wLmphcixzcHJpbmctd2VibXZjLTYuMi4wLmphcixzcHJpbmctY29udGV4dC02LjIuMC5qYXIsc3ByaW5nLWV4cHJlc3Npb24tNi4yLjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLWF1dG9jb25maWd1cmUtMy40LjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLTMuNC4wLmphcixtaWNyb21ldGVyLW9ic2VydmF0aW9uLTEuMTQuMS5qYXIsbWljcm9tZXRlci1jb21tb25zLTEuMTQuMS5qYXIsbWljcm9tZXRlci1qYWthcnRhOS0xLjE0LjEuamFyLG1pY3JvbWV0ZXItY29yZS0xLjE0LjEuamFyLEhkckhpc3RvZ3JhbS0yLjIuMi5qYXIsTGF0ZW5jeVV0aWxzLTIuMC4zLmphcix0b21jYXQtZW1iZWQtZWwtMTAuMS4zMy5qYXIsaGliZXJuYXRlLXZhbGlkYXRvci04LjAuMS5GaW5hbC5qYXIsamFrYXJ0YS52YWxpZGF0aW9uLWFwaS0zLjAuMi5qYXIsamJvc3MtbG9nZ2luZy0zLjYuMS5GaW5hbC5qYXIsY2xhc3NtYXRlLTEuNy4wLmphcixIaWthcmlDUC01LjEuMC5qYXIsc3ByaW5nLWpkYmMtNi4yLjAuamFyLGhpYmVybmF0ZS1jb3JlLTYuNi4yLkZpbmFsLmphcixqYWthcnRhLnBlcnNpc3RlbmNlLWFwaS0zLjEuMC5qYXIsamFrYXJ0YS50cmFuc2FjdGlvbi1hcGktMi4wLjEuamFyLGhpYmVybmF0ZS1jb21tb25zLWFubm90YXRpb25zLTcuMC4zLkZpbmFsLmphcixqYW5kZXgtMy4yLjAuamFyLGJ5dGUtYnVkZHktMS4xNS4xMC5qYXIsamF4Yi1ydW50aW1lLTQuMC41LmphcixqYXhiLWNvcmUtNC4wLjUuamFyLGFuZ3VzLWFjdGl2YXRpb24tMi4wLjIuamFyLHR4dzItNC4wLjUuamFyLGlzdGFjay1jb21tb25zLXJ1bnRpbWUtNC4xLjIuamFyLGpha2FydGEuaW5qZWN0LWFwaS0yLjAuMS5qYXIsYW50bHI0LXJ1bnRpbWUtNC4xMy4wLmphcixzcHJpbmctZGF0YS1qcGEtMy40LjAuamFyLHNwcmluZy1kYXRhLWNvbW1vbnMtMy40LjAuamFyLHNwcmluZy1vcm0tNi4yLjAuamFyLHNwcmluZy10eC02LjIuMC5qYXIsc3ByaW5nLWFzcGVjdHMtNi4yLjAuamFyLGFzcGVjdGp3ZWF2ZXItMS45LjIyLjEuamFyLHNwcmluZy1hb3AtNi4yLjAuamFyLHNwcmluZy1zZWN1cml0eS1jb25maWctNi40LjEuamFyLHNwcmluZy1zZWN1cml0eS1jb3JlLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktY3J5cHRvLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktd2ViLTYuNC4xLmphcixzcHJpbmctY29udGV4dC1zdXBwb3J0LTYuMi4wLmphcixzcHJpbmctYmF0Y2gtY29yZS01LjIuMC5qYXIsc3ByaW5nLWJhdGNoLWluZnJhc3RydWN0dXJlLTUuMi4wLmphcixzcHJpbmctcmV0cnktMi4wLjEwLmphcixmbHl3YXktY29yZS0xMC4yMS4wLmphcixqYWNrc29uLWRhdGFmb3JtYXQtdG9tbC0yLjE4LjEuamFyLGphY2tzb24tY29yZS0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtanNyMzEwLTIuMTguMS5qYXIsamFja3Nvbi1hbm5vdGF0aW9ucy0yLjE4LjEuamFyLGZseXdheS1kYXRhYmFzZS1wb3N0Z3Jlc3FsLTEwLjIxLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItd2VibXZjLXVpLTIuMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLXdlYm12Yy1hcGktMi4xLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItY29tbW9uLTIuMS4wLmphcixzd2FnZ2VyLWNvcmUtamFrYXJ0YS0yLjIuOS5qYXIsc3dhZ2dlci1hbm5vdGF0aW9ucy1qYWthcnRhLTIuMi45Lmphcixzd2FnZ2VyLW1vZGVscy1qYWthcnRhLTIuMi45LmphcixqYWNrc29uLWRhdGFmb3JtYXQteWFtbC0yLjE4LjEuamFyLHN3YWdnZXItdWktNC4xOC4yLmphcixqYXZhLXV1aWQtZ2VuZXJhdG9yLTQuMy4wLmphcixzbGY0ai1hcGktMi4wLjE2LmphcixvcGVuY3N2LTUuOS5qYXIsY29tbW9ucy1sYW5nMy0zLjE3LjAuamFyLGNvbW1vbnMtdGV4dC0xLjExLjAuamFyLGNvbW1vbnMtYmVhbnV0aWxzLTEuOS40Lmphcixjb21tb25zLWxvZ2dpbmctMS4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zLTMuMi4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zNC00LjQuamFyLHMzLTIuMjUuMjYuamFyLGF3cy14bWwtcHJvdG9jb2wtMi4yNS4yNi5qYXIsYXdzLXF1ZXJ5LXByb3RvY29sLTIuMjUuMjYuamFyLHByb3RvY29sLWNvcmUtMi4yNS4yNi5qYXIsYXJucy0yLjI1LjI2Lmphcixwcm9maWxlcy0yLjI1LjI2LmphcixjcnQtY29yZS0yLjI1LjI2LmphcixodHRwLWF1dGgtMi4yNS4yNi5qYXIsaWRlbnRpdHktc3BpLTIuMjUuMjYuamFyLGh0dHAtYXV0aC1zcGktMi4yNS4yNi5qYXIscmVhY3RpdmUtc3RyZWFtcy0xLjAuNC5qYXIsaHR0cC1hdXRoLWF3cy0yLjI1LjI2LmphcixjaGVja3N1bXMtMi4yNS4yNi5qYXIsY2hlY2tzdW1zLXNwaS0yLjI1LjI2LmphcixzZGstY29yZS0yLjI1LjI2LmphcixhdXRoLTIuMjUuMjYuamFyLGV2ZW50c3RyZWFtLTEuMC4xLmphcixodHRwLWNsaWVudC1zcGktMi4yNS4yNi5qYXIscmVnaW9ucy0yLjI1LjI2Lmphcixhbm5vdGF0aW9ucy0yLjI1LjI2Lmphcix1dGlscy0yLjI1LjI2Lmphcixhd3MtY29yZS0yLjI1LjI2LmphcixtZXRyaWNzLXNwaS0yLjI1LjI2Lmphcixqc29uLXV0aWxzLTIuMjUuMjYuamFyLHRoaXJkLXBhcnR5LWphY2tzb24tY29yZS0yLjI1LjI2LmphcixlbmRwb2ludHMtc3BpLTIuMjUuMjYuamFyLGFwYWNoZS1jbGllbnQtMi4yNS4yNi5qYXIsaHR0cGNsaWVudC00LjUuMTMuamFyLGh0dHBjb3JlLTQuNC4xNi5qYXIsY29tbW9ucy1jb2RlYy0xLjE3LjEuamFyLG5ldHR5LW5pby1jbGllbnQtMi4yNS4yNi5qYXIsbmV0dHktY29kZWMtaHR0cC00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy1odHRwMi00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy00LjEuMTE1LkZpbmFsLmphcixuZXR0eS10cmFuc3BvcnQtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktY29tbW9uLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LWJ1ZmZlci00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1oYW5kbGVyLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LXRyYW5zcG9ydC1uYXRpdmUtdW5peC1jb21tb24tNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktdHJhbnNwb3J0LWNsYXNzZXMtZXBvbGwtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktcmVzb2x2ZXItNC4xLjExNS5GaW5hbC5qYXIsaDItMi4zLjIzMi5qYXIscG9zdGdyZXNxbC00Mi43LjQuamFyLGNoZWNrZXItcXVhbC0zLjQyLjAuamFyLGpha2FydGEueG1sLmJpbmQtYXBpLTQuMC4yLmphcixqYWthcnRhLmFjdGl2YXRpb24tYXBpLTIuMS4zLmphcixzcHJpbmctY29yZS02LjIuMC5qYXIsc3ByaW5nLWpjbC02LjIuMC5qYXIsc3ByaW5nLWJvb3QtamFybW9kZS10b29scy0zLjQuMC5qYXI=
-2025-10-07T03:38:44.5119496Z Waiting for main process to exit. GLOBAL_PID_MAIN=69
-2025-10-07T03:38:44.5119641Z Waiting for GLOBAL_PID_MAIN == 69
-2025-10-07T03:38:45.7693269Z Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
-2025-10-07T03:38:52.0049252Z
-2025-10-07T03:38:52.0051532Z   .   ____          _            __ _ _
-2025-10-07T03:38:52.0051665Z  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
-2025-10-07T03:38:52.0051712Z ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
-2025-10-07T03:38:52.0051751Z  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
-2025-10-07T03:38:52.0051787Z   '  |____| .__|_| |_|_| |_\__, | / / / /
-2025-10-07T03:38:52.0051884Z  =========|_|==============|___/=/_/_/_/
-2025-10-07T03:38:52.005192Z
-2025-10-07T03:38:52.0389145Z  :: Spring Boot ::                (v3.4.0)
-2025-10-07T03:38:52.0463343Z
-2025-10-07T03:38:52.9900623Z 2025-10-07T03:38:52.986Z  INFO 69 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : Starting P4BackendApplication v0.0.1-SNAPSHOT using Java 21.0.7 with PID 69 (/home/site/wwwroot/app.jar started by root in /home/site/wwwroot)
-2025-10-07T03:38:52.9901395Z 2025-10-07T03:38:52.989Z DEBUG 69 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : Running with Spring Boot v3.4.0, Spring v6.2.0
-2025-10-07T03:38:52.9913627Z 2025-10-07T03:38:52.991Z  INFO 69 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : The following 1 profile is active: "prod"
-2025-10-07T03:38:55.0461907Z 2025-10-07T03:38:55.045Z  INFO 69 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-10-07T03:38:55.1763127Z 2025-10-07T03:38:55.175Z  INFO 69 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 95 ms. Found 2 JPA repository interfaces.
-2025-10-07T03:38:57.7866029Z 2025-10-07T03:38:57.786Z  INFO 69 --- [p4-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 80 (http)
-2025-10-07T03:38:57.8778282Z 2025-10-07T03:38:57.877Z  INFO 69 --- [p4-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4708 ms
-2025-10-07T03:38:57.8855848Z Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
-2025-10-07T03:38:58.1617371Z 2025-10-07T03:38:58.159Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-10-07T03:39:00.0416634Z 2025-10-07T03:39:00.041Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6921cfa
-2025-10-07T03:39:00.0437912Z 2025-10-07T03:39:00.043Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-10-07T03:39:00.0559339Z 2025-10-07T03:39:00.055Z  INFO 69 --- [p4-backend] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=***REMOVED***&sslmode=require&channelBinding=require'
-2025-10-07T03:39:00.8328391Z 2025-10-07T03:39:00.832Z  INFO 69 --- [p4-backend] [           main] o.f.c.i.resource.ResourceNameValidator   : 1 SQL migrations were detected but not run because they did not follow the filename convention.
-2025-10-07T03:39:00.8415589Z 2025-10-07T03:39:00.841Z  INFO 69 --- [p4-backend] [           main] o.f.c.i.resource.ResourceNameValidator   : Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
-2025-10-07T03:39:00.8588386Z 2025-10-07T03:39:00.858Z  INFO 69 --- [p4-backend] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=********&sslmode=require&channelBinding=require (PostgreSQL 17.5)
-2025-10-07T03:39:01.4026236Z 2025-10-07T03:39:01.402Z  INFO 69 --- [p4-backend] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.223s)
-2025-10-07T03:39:01.7301575Z 2025-10-07T03:39:01.729Z  INFO 69 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 2
-2025-10-07T03:39:01.9214794Z 2025-10-07T03:39:01.916Z  INFO 69 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - Create catalog schema"
-2025-10-07T03:39:02.1919246Z 2025-10-07T03:39:02.185Z ERROR 69 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Migration of schema "public" to version "3 - Create catalog schema" failed! Changes successfully rolled back.
-2025-10-07T03:39:02.3728908Z 2025-10-07T03:39:02.368Z  WARN 69 --- [p4-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V3__Create_catalog_schema.sql failed
-2025-10-07T03:39:02.3730489Z -------------------------------------------
-2025-10-07T03:39:02.3730542Z SQL State  : 42P07
-2025-10-07T03:39:02.3730581Z Error Code : 0
-2025-10-07T03:39:02.3730681Z Message    : ERROR: relation "product" already exists
-2025-10-07T03:39:02.373072Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
-2025-10-07T03:39:02.3730751Z Line       : 35
-2025-10-07T03:39:02.3730787Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
-2025-10-07T03:39:02.3730815Z
-2025-10-07T03:39:02.3793798Z 2025-10-07T03:39:02.373Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2025-10-07T03:39:02.6164767Z 2025-10-07T03:39:02.614Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
-2025-10-07T03:39:02.8146451Z 2025-10-07T03:39:02.811Z  INFO 69 --- [p4-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger :
-2025-10-07T03:39:02.8147078Z
-2025-10-07T03:39:02.8147138Z Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
-2025-10-07T03:39:02.9049441Z 2025-10-07T03:39:02.894Z ERROR 69 --- [p4-backend] [           main] o.s.boot.SpringApplication               : Application run failed
-2025-10-07T03:39:02.905003Z
-2025-10-07T03:39:02.9050109Z org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V3__Create_catalog_schema.sql failed
-2025-10-07T03:39:02.9050146Z -------------------------------------------
-2025-10-07T03:39:02.9050177Z SQL State  : 42P07
-2025-10-07T03:39:02.9050267Z Error Code : 0
-2025-10-07T03:39:02.9050299Z Message    : ERROR: relation "product" already exists
-2025-10-07T03:39:02.9050338Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
-2025-10-07T03:39:02.9050371Z Line       : 35
-2025-10-07T03:39:02.9050403Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
-2025-10-07T03:39:02.9050434Z
-2025-10-07T03:39:02.905048Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:325) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9050517Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9050603Z 	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970) ~[spring-context-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9050642Z 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9050679Z 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.0.jar!/:3.4.0]
-2025-10-07T03:39:02.9050739Z 	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.4.0.jar!/:3.4.0]
-2025-10-07T03:39:02.9050775Z 	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.0.jar!/:3.4.0]
-2025-10-07T03:39:02.9050811Z 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.0.jar!/:3.4.0]
-2025-10-07T03:39:02.9050846Z 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.4.0.jar!/:3.4.0]
-2025-10-07T03:39:02.905088Z 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.4.0.jar!/:3.4.0]
-2025-10-07T03:39:02.9050925Z 	at com.p4.backend.P4BackendApplication.main(P4BackendApplication.java:10) ~[!/:0.0.1-SNAPSHOT]
-2025-10-07T03:39:02.905096Z 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
-2025-10-07T03:39:02.9050992Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
-2025-10-07T03:39:02.9051026Z 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102) ~[app.jar:0.0.1-SNAPSHOT]
-2025-10-07T03:39:02.905106Z 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[app.jar:0.0.1-SNAPSHOT]
-2025-10-07T03:39:02.9051103Z 	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[app.jar:0.0.1-SNAPSHOT]
-2025-10-07T03:39:02.9051149Z Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V3__Create_catalog_schema.sql failed
-2025-10-07T03:39:02.905121Z -------------------------------------------
-2025-10-07T03:39:02.9051248Z SQL State  : 42P07
-2025-10-07T03:39:02.9051288Z Error Code : 0
-2025-10-07T03:39:02.905132Z Message    : ERROR: relation "product" already exists
-2025-10-07T03:39:02.9051357Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
-2025-10-07T03:39:02.9051387Z Line       : 35
-2025-10-07T03:39:02.9051419Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
-2025-10-07T03:39:02.9051448Z
-2025-10-07T03:39:02.9051496Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9051534Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.905182Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9051867Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9051906Z 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:288) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9051958Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9051995Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9052031Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9052063Z 	... 15 common frames omitted
-2025-10-07T03:39:02.9052097Z Caused by: org.flywaydb.core.internal.exception.FlywayMigrateException: Script V3__Create_catalog_schema.sql failed
-2025-10-07T03:39:02.9052138Z -------------------------------------------
-2025-10-07T03:39:02.905217Z SQL State  : 42P07
-2025-10-07T03:39:02.9052201Z Error Code : 0
-2025-10-07T03:39:02.9052233Z Message    : ERROR: relation "product" already exists
-2025-10-07T03:39:02.9052273Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
-2025-10-07T03:39:02.9052304Z Line       : 35
-2025-10-07T03:39:02.9052345Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
-2025-10-07T03:39:02.9052374Z
-2025-10-07T03:39:02.9052407Z 	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:399) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052446Z 	at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:283) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052482Z 	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:59) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052518Z 	at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:282) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052562Z 	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:255) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052597Z 	at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:153) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052638Z 	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:77) ~[flyway-database-postgresql-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052691Z 	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.lambda$execute$0(PostgreSQLAdvisoryLockTemplate.java:60) ~[flyway-database-postgresql-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052728Z 	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:59) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052767Z 	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:60) ~[flyway-database-postgresql-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052805Z 	at org.flywaydb.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:105) ~[flyway-database-postgresql-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052842Z 	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:149) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052885Z 	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:153) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052921Z 	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:104) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052955Z 	at org.flywaydb.core.Flyway.lambda$migrate$1(Flyway.java:231) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9052988Z 	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:213) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053022Z 	at org.flywaydb.core.Flyway.migrate(Flyway.java:177) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053074Z 	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66) ~[spring-boot-autoconfigure-3.4.0.jar!/:3.4.0]
-2025-10-07T03:39:02.905311Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1849) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9053221Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798) ~[spring-beans-6.2.0.jar!/:6.2.0]
-2025-10-07T03:39:02.9053255Z 	... 22 common frames omitted
-2025-10-07T03:39:02.905329Z Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Script V3__Create_catalog_schema.sql failed
-2025-10-07T03:39:02.9053334Z -------------------------------------------
-2025-10-07T03:39:02.9053366Z SQL State  : 42P07
-2025-10-07T03:39:02.9053395Z Error Code : 0
-2025-10-07T03:39:02.9053427Z Message    : ERROR: relation "product" already exists
-2025-10-07T03:39:02.9053464Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
-2025-10-07T03:39:02.9053494Z Line       : 35
-2025-10-07T03:39:02.9053535Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
-2025-10-07T03:39:02.9053565Z
-2025-10-07T03:39:02.9053601Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:256) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053638Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:217) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053674Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:137) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.905372Z 	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:75) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053756Z 	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:66) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053792Z 	at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:31) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053827Z 	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:65) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053862Z 	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:391) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9053904Z 	... 41 common frames omitted
-2025-10-07T03:39:02.9053936Z Caused by: org.postgresql.util.PSQLException: ERROR: relation "product" already exists
-2025-10-07T03:39:02.9053972Z 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.9054006Z 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.905404Z 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.9054075Z 	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.905412Z 	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.9054153Z 	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.9054188Z 	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.9054222Z 	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.9054254Z 	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-07T03:39:02.9054297Z 	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar!/:na]
-2025-10-07T03:39:02.9054331Z 	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar!/:na]
-2025-10-07T03:39:02.905437Z 	at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9054408Z 	at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:88) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9054444Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:212) ~[flyway-core-10.21.0.jar!/:na]
-2025-10-07T03:39:02.9054485Z 	... 47 common frames omitted
-2025-10-07T03:39:02.9054513Z
-2025-10-07T03:39:02.9724739Z Wait for pid == 69 either returned successfully or was interrupted due to a signal 69
-2025-10-07T03:39:02.972964Z Done waiting for main process. GLOBAL_PID_MAIN=69.
-2025-10-07T03:39:02.9729754Z Exiting entry script!
+2025-10-07T03:47:32.952247Z	Cloning repository...
+2025-10-07T03:47:33.609677Z	From https://github.com/ahmedmmkms/b2b-marketplace
+2025-10-07T03:47:33.61031Z	 * branch            43f5825f17abf1fc3c88c0ad4060e2b9db929f71 -> FETCH_HEAD
+2025-10-07T03:47:33.610447Z	
+2025-10-07T03:47:33.647126Z	HEAD is now at 43f5825 Fix Flyway migration V3 to be idempotent by using CREATE TABLE IF NOT EXISTS and handling index/triggers properly
+2025-10-07T03:47:33.648091Z	
+2025-10-07T03:47:33.740764Z	
+2025-10-07T03:47:33.74126Z	Using v2 root directory strategy
+2025-10-07T03:47:33.765926Z	Success: Finished cloning repository files
+2025-10-07T03:47:35.729051Z	Checking for configuration in a Wrangler configuration file (BETA)
+2025-10-07T03:47:35.729752Z	
+2025-10-07T03:47:35.731463Z	Found wrangler.toml file. Reading build configuration...
+2025-10-07T03:47:36.853027Z	A wrangler.toml file was found but it does not appear to be valid. Did you mean to use wrangler.toml to configure Pages? If so, then make sure the file is valid and contains the `pages_build_output_dir` property. Skipping file and continuing.
+2025-10-07T03:47:36.923162Z	Detected the following tools from environment: npm@10.9.2, nodejs@22.16.0
+2025-10-07T03:47:36.92374Z	Installing project dependencies: npm clean-install --progress=false
+2025-10-07T03:47:50.223797Z	
+2025-10-07T03:47:50.224059Z	added 21 packages, and audited 22 packages in 13s
+2025-10-07T03:47:50.224201Z	
+2025-10-07T03:47:50.224326Z	3 packages are looking for funding
+2025-10-07T03:47:50.224445Z	  run `npm fund` for details
+2025-10-07T03:47:50.225261Z	
+2025-10-07T03:47:50.225426Z	found 0 vulnerabilities
+2025-10-07T03:47:50.253236Z	Executing user command: cd frontend/p4-frontend && npm ci && npx nx build landing --prod
+2025-10-07T03:47:54.550384Z	npm warn deprecated rimraf@3.0.2: Rimraf versions prior to v4 are no longer supported
+2025-10-07T03:47:55.874567Z	npm warn deprecated inflight@1.0.6: This module is not supported, and leaks memory. Do not use it. Check out lru-cache if you want a good and tested way to coalesce async requests by a key value, which is much more comprehensive and powerful.
+2025-10-07T03:47:56.148801Z	npm warn deprecated glob@7.2.3: Glob versions prior to v9 are no longer supported
+2025-10-07T03:47:56.975563Z	npm warn deprecated critters@0.0.24: Ownership of Critters has moved to the Nuxt team, who will be maintaining the project going forward. If you'd like to keep using Critters, please switch to the actively-maintained fork at https://github.com/danielroe/beasties
+2025-10-07T03:48:20.106967Z	
+2025-10-07T03:48:20.107317Z	added 1330 packages, and audited 1331 packages in 29s
+2025-10-07T03:48:20.107444Z	
+2025-10-07T03:48:20.107516Z	205 packages are looking for funding
+2025-10-07T03:48:20.107574Z	  run `npm fund` for details
+2025-10-07T03:48:20.127158Z	
+2025-10-07T03:48:20.127493Z	10 vulnerabilities (6 low, 4 moderate)
+2025-10-07T03:48:20.127668Z	
+2025-10-07T03:48:20.127819Z	To address issues that do not require attention, run:
+2025-10-07T03:48:20.127941Z	  npm audit fix
+2025-10-07T03:48:20.128079Z	
+2025-10-07T03:48:20.128254Z	To address all issues (including breaking changes), run:
+2025-10-07T03:48:20.128407Z	  npm audit fix --force
+2025-10-07T03:48:20.128532Z	
+2025-10-07T03:48:20.128672Z	Run `npm audit` for details.
+2025-10-07T03:48:21.843244Z	
+2025-10-07T03:48:21.843627Z	> nx run landing:build:production
+2025-10-07T03:48:21.843747Z	
+2025-10-07T03:48:23.7541Z	[33m❯[39m Building...
+2025-10-07T03:48:34.211688Z	[32m✔[39m Building...
+2025-10-07T03:48:34.213766Z	[37mApplication bundle generation failed. [10.457 seconds][39m
+2025-10-07T03:48:34.213962Z	[37m[39m
+2025-10-07T03:48:34.216709Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-992011: The directive 'FeatureFlagDirective' appears in 'imports', but is not standalone and cannot be imported directly. It must be imported via an NgModule.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.216977Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.217169Z	[1m[31m    src/app/catalog/catalog.ts:67:4:[39m[22m
+2025-10-07T03:48:34.217318Z	[1m[31m[37m      67 │     [32mFeatureFlagDirective[37m,[39m[22m
+2025-10-07T03:48:34.218294Z	[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.218509Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.218694Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.218836Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'path' does not exist on type 'Location'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.219166Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.219353Z	[1m[31m    src/app/catalog/catalog.ts:490:32:[39m[22m
+2025-10-07T03:48:34.219551Z	[1m[31m[37m      490 │       this.location.go(location.[32mpath[37m()); // Refresh location for ...[39m[22m
+2025-10-07T03:48:34.219694Z	[1m[31m          ╵                                 [32m~~~~[0m[39m[22m
+2025-10-07T03:48:34.219813Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.219925Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.220057Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'filteredProducts' does not exist on type 'CatalogComponent'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.22019Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.220315Z	[1m[31m    src/app/catalog/catalog.ts:551:60:[39m[22m
+2025-10-07T03:48:34.220448Z	[1m[31m[37m      551 │ ...(this.searchTerm, this.[32mfilteredProducts[37m.length, undefined, dur...[39m[22m
+2025-10-07T03:48:34.220563Z	[1m[31m          ╵                           [32m~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.220774Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.220958Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.221089Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'filteredProducts' does not exist on type 'CatalogComponent'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.221234Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.221373Z	[1m[31m    src/app/catalog/catalog.ts:565:72:[39m[22m
+2025-10-07T03:48:34.221526Z	[1m[31m[37m      565 │ ...kFilter('category', category.name, this.[32mfilteredProducts[37m.length);[39m[22m
+2025-10-07T03:48:34.221641Z	[1m[31m          ╵                                            [32m~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.22176Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.22187Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.221975Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2339: Property 'filteredProducts' does not exist on type 'CatalogComponent'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.222097Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.222203Z	[1m[31m    src/app/catalog/catalog.ts:580:68:[39m[22m
+2025-10-07T03:48:34.22233Z	[1m[31m[37m      580 │ ...trackFilter('vendor', vendor.name, this.[32mfilteredProducts[37m.length);[39m[22m
+2025-10-07T03:48:34.222442Z	[1m[31m          ╵                                            [32m~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.222556Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.222655Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.222759Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'search' comes from an index signature, so it must be a[39m[22m
+2025-10-07T03:48:34.222866Z	[1m[31mccessed with ['search'].[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.222968Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.223068Z	[1m[31m    src/app/catalog/catalog.ts:598:39:[39m[22m
+2025-10-07T03:48:34.22317Z	[1m[31m[37m      598 │     if (this.searchTerm) activeFilters.[32msearch[37m = this.searchTerm;[39m[22m
+2025-10-07T03:48:34.223357Z	[1m[31m          ╵                                        [32m~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.223479Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.22359Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.2237Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'price' comes from an index signature, so it must be accessed with ['price'].[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.223851Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.223955Z	[1m[31m    src/app/catalog/catalog.ts:600:20:[39m[22m
+2025-10-07T03:48:34.224054Z	[1m[31m[37m      600 │       activeFilters.[32mprice[37m = { min: this.minPrice, max: this.maxPr...[39m[22m
+2025-10-07T03:48:34.224153Z	[1m[31m          ╵                     [32m~~~~~[0m[39m[22m
+2025-10-07T03:48:34.224357Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.224517Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.224628Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'categories' comes from an index signature, so it must be accessed with ['categories'].[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.224792Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.224901Z	[1m[31m    src/app/catalog/catalog.ts:603:53:[39m[22m
+2025-10-07T03:48:34.225Z	[1m[31m[37m      603 │ ...gories.length > 0) activeFilters.[32mcategories[37m = selectedCategories;[39m[22m
+2025-10-07T03:48:34.225108Z	[1m[31m          ╵                                     [32m~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.22521Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.225328Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.22543Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS4111: Property 'vendors' comes from an index signature, so it must be accessed with ['vendors'].[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.225648Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.225757Z	[1m[31m    src/app/catalog/catalog.ts:605:50:[39m[22m
+2025-10-07T03:48:34.225874Z	[1m[31m[37m      605 │ ...ectedVendors.length > 0) activeFilters.[32mvendors[37m = selectedVendors;[39m[22m
+2025-10-07T03:48:34.225979Z	[1m[31m          ╵                                           [32m~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.22608Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.226179Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.226293Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mCould not resolve "../../../environments/environment"[0m[39m[22m
+2025-10-07T03:48:34.226406Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.226522Z	[1m[31m    src/app/core/analytics/analytics.service.ts:5:28:[39m[22m
+2025-10-07T03:48:34.226628Z	[1m[31m[37m      5 │ import { environment } from [32m'../../../environments/environment'[37m;[39m[22m
+2025-10-07T03:48:34.226729Z	[1m[31m        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.22683Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.226928Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.227026Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2307: Cannot find module '../../../environments/environment' or its corresponding type declarations.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.227156Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.227252Z	[1m[31m    src/app/core/analytics/analyt[39m[22m[1m[31mics.service.ts:6:28:[39m[22m
+2025-10-07T03:48:34.22738Z	[1m[31m[37m      6 │ import { environment } from [32m'../../../environments/environment'[37m;[39m[22m
+2025-10-07T03:48:34.227501Z	[1m[31m        ╵                             [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.227607Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.227712Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.227968Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2739: Type '{ eventType: string; properties: { query: string; resultsCount: number; filters: { [key: string]: any; } | undefined; duration: number | undefined; }; }' is missing the following properties from type 'SearchEvent': eventId, timestamp[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.228157Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.228288Z	[1m[31m    src/app/core/analytics/analytics.service.ts:77:10:[39m[22m
+2025-10-07T03:48:34.228392Z	[1m[31m[37m      77 │     const [32msearchEvent[37m: SearchEvent = {[39m[22m
+2025-10-07T03:48:34.228496Z	[1m[31m         ╵           [32m~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.228587Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.228675Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.22878Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2739: Type '{ eventType: string; properties: { filterType: string; filterValue: string | string[]; resultsCountAfterFilter: number; }; }' is missing the following properties from type 'FilterEvent': eventId, timestamp[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.228882Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.228974Z	[1m[31m    src/app/core/analytics/analytics.service.ts:94:10:[39m[22m
+2025-10-07T03:48:34.22907Z	[1m[31m[37m      94 │     const [32mfilterEvent[37m: FilterEvent = {[39m[22m
+2025-10-07T03:48:34.229164Z	[1m[31m         ╵           [32m~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.229262Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.22946Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.229606Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2739: Type '{ eventType: string; properties: { url: string; }; }' is missing the following properties from type 'AnalyticsEvent': eventId, timestamp[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.229736Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.229835Z	[1m[31m    src/app/core/analytics/analytics.service.ts:110:10:[39m[22m
+2025-10-07T03:48:34.229921Z	[1m[31m[37m      110 │     const [32mevent[37m: AnalyticsEvent = {[39m[22m
+2025-10-07T03:48:34.230007Z	[1m[31m          ╵           [32m~~~~~[0m[39m[22m
+2025-10-07T03:48:34.230102Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.230189Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.230289Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2739: Type '{ eventType: string; properties: { elementId: string; elementName: string | undefined; }; }' is missing the following properties from type 'AnalyticsEvent': eventId, timestamp[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.230421Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.230519Z	[1m[31m    src/app/core/analytics/analytics.service.ts:124:10:[39m[22m
+2025-10-07T03:48:34.230606Z	[1m[31m[37m      124 │     const [32mevent[37m: AnalyticsEvent = {[39m[22m
+2025-10-07T03:48:34.230695Z	[1m[31m          ╵           [32[39m[22m[1m[31mm~~~~~[0m[39m[22m
+2025-10-07T03:48:34.230795Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.230884Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.230971Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Parser Error: Unexpected token 0, expected identifier, keyword, or string at column 2 in [{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}] in /opt/buildhome/repo/frontend/p4-frontend/src/app/core/feature-flags/feature-flags-management.component.ts@93:29[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.231117Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.231216Z	[1m[31m    src/app/core/feature-flags/feature-flags-management.component.ts:94:29:[39m[22m
+2025-10-07T03:48:34.231335Z	[1m[31m[37m      94 │ ...nzMarks]="[32m{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%[37m...[39m[22m
+2025-10-07T03:48:34.231438Z	[1m[31m         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.231532Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.231622Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.231724Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Parser Error: Unexpected token 0, expected identifier, keyword, or string at column 2 in [{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}] in /opt/buildhome/repo/frontend/p4-frontend/src/app/core/feature-flags/feature-flags-management.component.ts@93:29[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.23183Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.231955Z	[1m[31m    src/app/core/feature-flags/feature-flags-management.component.ts:96:42:[39m[22m
+2025-10-07T03:48:34.23205Z	[1m[31m[37m      96 │ ...<div class="rollout-text">[32m{{ flag.rolloutPercentage || 0 }}%[37m</div>[39m[22m
+2025-10-07T03:48:34.232144Z	[1m[31m         ╵                              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.232234Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.232527Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.232645Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Parser Error: Unexpected token 0, expected identifier, keyword, or string at column 2 in [{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}] in /opt/buildhome/repo/frontend/p4-frontend/src/app/core/feature-flags/feature-flags-management.component.ts@93:29[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.232774Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.232871Z	[1m[31m    src/app/core/feature-flags/feature-flags-management.component.ts:99:24:[39m[22m
+2025-10-07T03:48:34.232969Z	[1m[31m[37m      99 │ ...         <nz-tag [32m*ngFor="let tag of flag.tags"[37m [nzColor]="'blue...[39m[22m
+2025-10-07T03:48:34.233063Z	[1m[31m         ╵                     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.233159Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.233253Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.233384Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Parser Error: Unexpected token 0, expected identifier, keyword, or string at column 2 [39m[22m[1m[31min [{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}] in /opt/buildhome/repo/frontend/p4-frontend/src/app/core/feature-flags/feature-flags-management.component.ts@93:29[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.233492Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.233587Z	[1m[31m    src/app/core/feature-flags/feature-flags-management.component.ts:99:65:[39m[22m
+2025-10-07T03:48:34.233681Z	[1m[31m[37m      99 │ ...ngFor="let tag of flag.tags" [nzColor]="[32m'blue'[37m">{{ tag }}</nz-tag>[39m[22m
+2025-10-07T03:48:34.233787Z	[1m[31m         ╵                                            [32m~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.233885Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.233984Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.23408Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Parser Error: Unexpected token 0, expected identifier, keyword, or string at column 2 in [{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}] in /opt/buildhome/repo/frontend/p4-frontend/src/app/core/feature-flags/feature-flags-management.component.ts@93:29[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.234188Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.234306Z	[1m[31m    src/app/core/feature-flags/feature-flags-management.component.ts:99:73:[39m[22m
+2025-10-07T03:48:34.23441Z	[1m[31m[37m      99 │ ...ngFor="let tag of flag.tags" [nzColor]="'blue'">[32m{{ tag }}[37m</nz-tag>[39m[22m
+2025-10-07T03:48:34.234522Z	[1m[31m         ╵                                                    [32m~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.234629Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.234734Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.23483Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Parser Error: Unexpected token 0, expected identifier, keyword, or string at column 2 in [{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}] in /opt/buildhome/repo/frontend/p4-frontend/src/app/core/feature-flags/feature-flags-management.component.ts@93:29[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.234923Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.235022Z	[1m[31m    src/app/core/feature-flags/feature-flags-management.component.ts:103:26:[39m[22m
+2025-10-07T03:48:34.235114Z	[1m[31m[37m      103 │                   <button [32m*nzSpaceItem[37m nz-button nzType="default"...[39m[22m
+2025-10-07T03:48:34.235214Z	[1m[31m          ╵                           [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.235326Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.235422Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.235514Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG5002: Parser Error: Unexpected token 0, expected identifier, keyword, or string at column 2 in [{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}] in /opt/buildhome/repo/frontend/p4-frontend/src/app/core/feature-flags/feature-flags-management.component.ts@93:29[0m [1[39m[22m[1m[31mm[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.235611Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.235697Z	[1m[31m    src/app/core/feature-flags/feature-flags-management.component.ts:106:26:[39m[22m
+2025-10-07T03:48:34.235801Z	[1m[31m[37m      106 │                   <button [32m*nzSpaceItem[37m nz-button nzType="dashed" ...[39m[22m
+2025-10-07T03:48:34.2359Z	[1m[31m          ╵                           [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.236Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.236097Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.236204Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG8002: Can't bind to 'nzType' since it isn't a known property of 'span'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.236339Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.236454Z	[1m[31m    src/app/core/performance/performance-test.component.ts:53:26:[39m[22m
+2025-10-07T03:48:34.236545Z	[1m[31m[37m      53 │ ...n nz-icon [32m[nzType]="isRunningTests ? 'sync' : 'thunderbolt'"[37m></...[39m[22m
+2025-10-07T03:48:34.236636Z	[1m[31m         ╵              [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.236735Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.236832Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.236928Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG2: Type 'string' is not assignable to type 'NzProgressStatusType | undefined'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.237029Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.23712Z	[1m[31m    src/app/core/performance/performance-test.component.ts:73:17:[39m[22m
+2025-10-07T03:48:34.237222Z	[1m[31m[37m      73 │                 [[32mnzStatus[37m]="getProgressStatus(searchReport.p50, 25...[39m[22m
+2025-10-07T03:48:34.237361Z	[1m[31m         ╵                  [32m~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.237486Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.23759Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.237693Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mNG9: Property 'Math' does not exist on type 'PerformanceTestComponent'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.237802Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.237896Z	[1m[31m    src/app/core/performance/performance-test.component.ts:92:29:[39m[22m
+2025-10-07T03:48:34.237986Z	[1m[31m[37m      92 │                 [nzPercent]="[32mMath[37m.min(100, searchReport.p99 / 500 ...[39m[22m
+2025-10-07T03:48:34.238078Z	[1m[31m         ╵                              [32m~~~~[0m[39m[22m
+2025-10-07T03:48:34.238169Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.238262Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.238376Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.238473Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.271523Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:248:35:[39m[22m
+2025-10-07T03:48:34.271927Z	[1m[31m[37m      248 │       nzTitle: `${vendor.name} - ${[32m'VENDOR.DETAILS'[37m | translate}`,[39m[22m
+2025-10-07T03:48:34.272067Z	[1m[31m          ╵                                    [32m~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.272169Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.272255Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.272412Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'translate'. Did you mean 'CSSTranslate'?[0m[39m[22m[1m[31m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.272564Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.272759Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:248:54:[39m[22m
+2025-10-07T03:48:34.27287Z	[1m[31m[37m      248 │       nzTitle: `${vendor.name} - ${'VENDOR.DETAILS' | [32mtranslate[37m}`,[39m[22m
+2025-10-07T03:48:34.272963Z	[1m[31m          ╵                                                       [32m~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.273087Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.273212Z	[1m[31m  'CSSTranslate' is declared here.[39m[22m
+2025-10-07T03:48:34.273337Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.273702Z	[1m[31m    node_modules/typescript/lib/lib.dom.d.ts:5267:12:[39m[22m
+2025-10-07T03:48:34.273864Z	[1m[31m[37m      5267 │ declare var [32mCSSTranslate[37m: {[39m[22m
+2025-10-07T03:48:34.27399Z	[1m[31m           ╵             [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.274119Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.274214Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.274329Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2304: Cannot find name 'VendorDetailsModalComponent'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.274445Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.274552Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:249:17:[39m[22m
+2025-10-07T03:48:34.274656Z	[1m[31m[37m      249 │       nzContent: [32mVendorDetailsModalComponent[37m,[39m[22m
+2025-10-07T03:48:34.274758Z	[1m[31m          ╵                  [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.274854Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.274945Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.275036Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2353: Object literal may only specify known properties, and 'nzComponentParams' does not exist in type 'ModalOptions<unknown, any, any>'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.275129Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.275218Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:250:6:[39m[22m
+2025-10-07T03:48:34.275338Z	[1m[31m[37m      250 │       [32mnzComponentParams[37m: {[39m[22m
+2025-10-07T03:48:34.275435Z	[1m[31m          ╵       [32m~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.275533Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.275632Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.275708Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.275778Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.275834Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:261:18:[39m[22m
+2025-10-07T03:48:34.275891Z	[1m[31m[37m      261 │       nzTitle: `${[32m'VENDOR.APPROVE_VENDOR'[37m | translate}: ${vendor....[39m[22m
+2025-10-07T03:48:34.275954Z	[1m[31m          ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.276048Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.276146Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.276232Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'translate'. Did you mean 'CSSTranslate'?[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.276341Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.276436Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:261:44:[39m[22m
+2025-10-07T03:48:34.276545Z	[1m[31m[37m      261 │ ...zTitle: `${'VENDOR.APPROVE_VENDOR' | [32mtranslate[37m}: ${vendor.name}`,[39m[22m
+2025-10-07T03:48:34.276739Z	[1m[31m          ╵                         [39m[22m[1m[31m                [32m~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.276931Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.277055Z	[1m[31m  'CSSTranslate' is declared here.[39m[22m
+2025-10-07T03:48:34.277166Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.277281Z	[1m[31m    node_modules/typescript/lib/lib.dom.d.ts:5267:12:[39m[22m
+2025-10-07T03:48:34.277383Z	[1m[31m[37m      5267 │ declare var [32mCSSTranslate[37m: {[39m[22m
+2025-10-07T03:48:34.277493Z	[1m[31m           ╵             [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.27759Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.277703Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.277782Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2362: The left-hand side of an arithmetic operation must be of type 'any', 'number', 'bigint' or an enum type.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.277847Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.277913Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:289:18:[39m[22m
+2025-10-07T03:48:34.278008Z	[1m[31m[37m      289 │       nzTitle: `${[32m'VENDOR.REJECT_VENDOR'[37m | translate}: ${vendor.n...[39m[22m
+2025-10-07T03:48:34.278097Z	[1m[31m          ╵                   [32m~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.278192Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.278316Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.278463Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2552: Cannot find name 'translate'. Did you mean 'CSSTranslate'?[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.278584Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.278687Z	[1m[31m    src/app/vendor/vendor-approval-queue.component.ts:289:43:[39m[22m
+2025-10-07T03:48:34.278787Z	[1m[31m[37m      289 │ ...nzTitle: `${'VENDOR.REJECT_VENDOR' | [32mtranslate[37m}: ${vendor.name}`,[39m[22m
+2025-10-07T03:48:34.278884Z	[1m[31m          ╵                                         [32m~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.278976Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.279069Z	[1m[31m  'CSSTranslate' is declared here.[39m[22m
+2025-10-07T03:48:34.279165Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.279256Z	[1m[31m    node_modules/typescript/lib/lib.dom.d.ts:5267:12:[39m[22m
+2025-10-07T03:48:34.279372Z	[1m[31m[37m      5267 │ declare var [32mCSSTranslate[37m: {[39m[22m
+2025-10-07T03:48:34.279519Z	[1m[31m           ╵             [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.279631Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.27973Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.279824Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2729: Property 'fb' is used before its initialization.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.27993Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.280031Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:306:23:[39m[22m
+2025-10-07T03:48:34.280191Z	[1m[31m[37m      306 │   basicInfoForm = this.[32mfb[37m.group({[39m[22m
+2025-10-07T03:48:34.280324Z	[1m[31m          ╵                        [32m~~[0m[39m[22m
+2025-10-07T03:48:34.280441Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.280536Z	[1m[31m  'fb' is declared here.[39m[22m
+2025-10-07T03:48:34.280632Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.280722Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:330:40:[39m[22m
+2025-10-07T03:48:34.280814Z	[1m[31m[37m      330 │   constructor(private http: HttpClient, [32mprivate fb: FormBuilder[37m) {}[39m[22m
+2025-10-07T03:48:34.280907Z	[1m[31m          ╵                                         [32m~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.281Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.281091Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.281195Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2729: Property 'fb' is used before its initialization.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.281326Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.28143Z	[1m[31m    src/app/vendor/vendor-onboa[39m[22m[1m[31mrding.component.ts:315:21:[39m[22m
+2025-10-07T03:48:34.281525Z	[1m[31m[37m      315 │   addressForm = this.[32mfb[37m.group({[39m[22m
+2025-10-07T03:48:34.281682Z	[1m[31m          ╵                      [32m~~[0m[39m[22m
+2025-10-07T03:48:34.281833Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.281942Z	[1m[31m  'fb' is declared here.[39m[22m
+2025-10-07T03:48:34.282037Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.282129Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:330:40:[39m[22m
+2025-10-07T03:48:34.282221Z	[1m[31m[37m      330 │   constructor(private http: HttpClient, [32mprivate fb: FormBuilder[37m) {}[39m[22m
+2025-10-07T03:48:34.282336Z	[1m[31m          ╵                                         [32m~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.282436Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.282538Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.282638Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2729: Property 'fb' is used before its initialization.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.282774Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.282954Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:323:23:[39m[22m
+2025-10-07T03:48:34.28303Z	[1m[31m[37m      323 │   documentsForm = this.[32mfb[37m.group({[39m[22m
+2025-10-07T03:48:34.283089Z	[1m[31m          ╵                        [32m~~[0m[39m[22m
+2025-10-07T03:48:34.283149Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.283206Z	[1m[31m  'fb' is declared here.[39m[22m
+2025-10-07T03:48:34.28329Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.283393Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:330:40:[39m[22m
+2025-10-07T03:48:34.283498Z	[1m[31m[37m      330 │   constructor(private http: HttpClient, [32mprivate fb: FormBuilder[37m) {}[39m[22m
+2025-10-07T03:48:34.283588Z	[1m[31m          ╵                                         [32m~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.283688Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.283788Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.283883Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.283979Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.284069Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.284158Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:346:6:[39m[22m
+2025-10-07T03:48:34.284256Z	[1m[31m[37m      346 │       [32mname[37m: this.basicInfoForm.get('name')?.value,[39m[22m
+2025-10-07T03:48:34.284365Z	[1m[31m          ╵       [32m~~~~[0m[39m[22m
+2025-10-07T03:48:34.284464Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.284554Z	[1m[31m  The expected type comes from property 'name' which is declared here on type 'Vendor'[39m[22m
+2025-10-07T03:48:34.284649Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.284744Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:21:2:[39m[22m
+2025-10-07T03:48:34.28484Z	[1m[31m[37m      21 │   [32mname[37m: string;[39m[22m
+2025-10-07T03:48:34.284933Z	[1m[31m         ╵   [32m~~~~[0m[39m[22m
+2025-10-07T03:48:34.28503Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.285134Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.285236Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.285334Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.285439Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.285554Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:347:6:[39m[22m
+2025-10-07T03:48:34.285657Z	[1m[31m[37m      347 │       [32mdescription[37m: this.basicInfoForm.get('description')?.value,[39m[22m
+2025-10-07T03:48:34.285758Z	[1m[31m          ╵       [32m~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.285862Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.285964Z	[1m[31m  T[39m[22m[1m[31mhe expected type comes from property 'description' which is declared here on type 'Vendor'[39m[22m
+2025-10-07T03:48:34.286061Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.28634Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:22:2:[39m[22m
+2025-10-07T03:48:34.286537Z	[1m[31m[37m      22 │   [32mdescription[37m: string;[39m[22m
+2025-10-07T03:48:34.286646Z	[1m[31m         ╵   [32m~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.286762Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.286868Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.287236Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.287891Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.288048Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.288149Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:348:6:[39m[22m
+2025-10-07T03:48:34.288246Z	[1m[31m[37m      348 │       [32mcontactPerson[37m: this.basicInfoForm.get('contactPerson')?.value,[39m[22m
+2025-10-07T03:48:34.28839Z	[1m[31m          ╵       [32m~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.288506Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.288607Z	[1m[31m  The expected type comes from property 'contactPerson' which is declared here on type 'Vendor'[39m[22m
+2025-10-07T03:48:34.288709Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.288808Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:23:2:[39m[22m
+2025-10-07T03:48:34.288909Z	[1m[31m[37m      23 │   [32mcontactPerson[37m: string;[39m[22m
+2025-10-07T03:48:34.28901Z	[1m[31m         ╵   [32m~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.289111Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.289211Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.289321Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.289429Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.289641Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.28974Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:349:6:[39m[22m
+2025-10-07T03:48:34.289803Z	[1m[31m[37m      349 │       [32mcontactEmail[37m: this.basicInfoForm.get('contactEmail')?.value,[39m[22m
+2025-10-07T03:48:34.289919Z	[1m[31m          ╵       [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.289985Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.290042Z	[1m[31m  The expected type comes from property 'contactEmail' which is declared here on type 'Vendor'[39m[22m
+2025-10-07T03:48:34.290226Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.290332Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:24:2:[39m[22m
+2025-10-07T03:48:34.290448Z	[1m[31m[37m      24 │   [32mcontactEmail[37m: string;[39m[22m
+2025-10-07T03:48:34.290566Z	[1m[31m         ╵   [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.290676Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.29078Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.290973Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.291076Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.291426Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.291574Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:350:6:[39m[22m
+2025-10-07T03:48:34.291686Z	[1m[31m[37m      350 │       [32mcontactPhone[37m: this.basicInfoForm.get('contactPhone')?.value,[39m[22m
+2025-10-07T03:48:34.291798Z	[1m[31m          ╵       [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.291898Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.292002Z	[1m[31m  The expected type comes from propert[39m[22m[1m[31my 'contactPhone' which is declared here on type 'Vendor'[39m[22m
+2025-10-07T03:48:34.292103Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.29222Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:25:2:[39m[22m
+2025-10-07T03:48:34.292359Z	[1m[31m[37m      25 │   [32mcontactPhone[37m: string;[39m[22m
+2025-10-07T03:48:34.292466Z	[1m[31m         ╵   [32m~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.292567Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.292657Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.292773Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.29287Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.29297Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.293081Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:351:6:[39m[22m
+2025-10-07T03:48:34.293177Z	[1m[31m[37m      351 │       [32mtaxNumber[37m: this.basicInfoForm.get('taxNumber')?.value,[39m[22m
+2025-10-07T03:48:34.29329Z	[1m[31m          ╵       [32m~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.293378Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.293449Z	[1m[31m  The expected type comes from property 'taxNumber' which is declared here on type 'Vendor'[39m[22m
+2025-10-07T03:48:34.293523Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.293604Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:26:2:[39m[22m
+2025-10-07T03:48:34.293686Z	[1m[31m[37m      26 │   [32mtaxNumber[37m: string;[39m[22m
+2025-10-07T03:48:34.293787Z	[1m[31m         ╵   [32m~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.293894Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.294073Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.294204Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.294293Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.294377Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.294438Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:353:8:[39m[22m
+2025-10-07T03:48:34.294555Z	[1m[31m[37m      353 │         [32mstreet[37m: this.addressForm.get('street')?.value,[39m[22m
+2025-10-07T03:48:34.294674Z	[1m[31m          ╵         [32m~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.294804Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.294926Z	[1m[31m  The expected type comes from property 'street' which is declared here on type '{ street: string; city: string; state: string; country: string; postalCode: string; }'[39m[22m
+2025-10-07T03:48:34.29503Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.295136Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:28:4:[39m[22m
+2025-10-07T03:48:34.295244Z	[1m[31m[37m      28 │     [32mstreet[37m: string;[39m[22m
+2025-10-07T03:48:34.295376Z	[1m[31m         ╵     [32m~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.295495Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.295607Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.295713Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.29583Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.295914Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.296153Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:354:8:[39m[22m
+2025-10-07T03:48:34.296256Z	[1m[31m[37m      354 │         [32mcity[37m: this.addressForm.get('city')?.value,[39m[22m
+2025-10-07T03:48:34.296437Z	[1m[31m          ╵         [32m~~~~[0m[39m[22m
+2025-10-07T03:48:34.296556Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.296658Z	[1m[31m  The expected type comes from property 'city' which is declared he[39m[22m
+2025-10-07T03:48:34.296797Z	[1m[31mre on type '{ street: string; city: string; state: string; country: string; postalCode: string; }'[39m[22m
+2025-10-07T03:48:34.296904Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.297025Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:29:4:[39m[22m
+2025-10-07T03:48:34.29716Z	[1m[31m[37m      29 │     [32mcity[37m: string;[39m[22m
+2025-10-07T03:48:34.29751Z	[1m[31m         ╵     [32m~~~~[0m[39m[22m
+2025-10-07T03:48:34.297785Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.297885Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.297997Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.298108Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.298277Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.298485Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:355:8:[39m[22m
+2025-10-07T03:48:34.298692Z	[1m[31m[37m      355 │         [32mstate[37m: this.addressForm.get('state')?.value,[39m[22m
+2025-10-07T03:48:34.298812Z	[1m[31m          ╵         [32m~~~~~[0m[39m[22m
+2025-10-07T03:48:34.29888Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.299341Z	[1m[31m  The expected type comes from property 'state' which is declared here on type '{ street: string; city: string; state: string; country: string; postalCode: string; }'[39m[22m
+2025-10-07T03:48:34.29953Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.299819Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:30:4:[39m[22m
+2025-10-07T03:48:34.299932Z	[1m[31m[37m      30 │     [32mstate[37m: string;[39m[22m
+2025-10-07T03:48:34.30033Z	[1m[31m         ╵     [32m~~~~~[0m[39m[22m
+2025-10-07T03:48:34.300556Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.300653Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.300716Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.300819Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.301082Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.301292Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:356:8:[39m[22m
+2025-10-07T03:48:34.301417Z	[1m[31m[37m      356 │         [32mcountry[37m: this.addressForm.get('country')?.value,[39m[22m
+2025-10-07T03:48:34.301517Z	[1m[31m          ╵         [32m~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.301609Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.301715Z	[1m[31m  The expected type comes from property 'country' which is declared here on type '{ street: string; city: string; state: string; country: string; postalCode: string; }'[39m[22m
+2025-10-07T03:48:34.301868Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.301967Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:31:4:[39m[22m
+2025-10-07T03:48:34.302054Z	[1m[31m[37m      31 │     [32mcountry[37m: string;[39m[22m
+2025-10-07T03:48:34.302145Z	[1m[31m         ╵     [32m~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.302238Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.302355Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.302451Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'string | null | undefined' is not assignable to type 'string'.[39m[22m
+2025-10-07T03:48:34.302527Z	[1m[31m  Type 'undefined' is not assignable to type 'string'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.302609Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.302713Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:357:8:[39m[22m
+2025-10-07T03:48:34.302842Z	[1m[31m[37m      357 │         [32mpostalCode[37m: this.addressForm.get('postalCode')?.[39m[22m[1m[31mvalue[39m[22m
+2025-10-07T03:48:34.302967Z	[1m[31m          ╵         [32m~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.303055Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.303114Z	[1m[31m  The expected type comes from property 'postalCode' which is declared here on type '{ street: string; city: string; state: string; country: string; postalCode: string; }'[39m[22m
+2025-10-07T03:48:34.303307Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.303533Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:32:4:[39m[22m
+2025-10-07T03:48:34.303735Z	[1m[31m[37m      32 │     [32mpostalCode[37m: string;[39m[22m
+2025-10-07T03:48:34.303875Z	[1m[31m         ╵     [32m~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.304026Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.304136Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.304234Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS2322: Type 'null | undefined' is not assignable to type 'Date'.[39m[22m
+2025-10-07T03:48:34.304363Z	[1m[31m  Type 'undefined' is not assignable to type 'Date'.[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.304555Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.30473Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:360:6:[39m[22m
+2025-10-07T03:48:34.304906Z	[1m[31m[37m      360 │       [32mregistrationDate[37m: this.documentsForm.get('registrationDate'...[39m[22m
+2025-10-07T03:48:34.305056Z	[1m[31m          ╵       [32m~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.305226Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.305346Z	[1m[31m  The expected type comes from property 'registrationDate' which is declared here on type 'Vendor'[39m[22m
+2025-10-07T03:48:34.305558Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.305734Z	[1m[31m    src/app/vendor/vendor-onboarding.component.ts:35:2:[39m[22m
+2025-10-07T03:48:34.306135Z	[1m[31m[37m      35 │   [32mregistrationDate[37m: Date;[39m[22m
+2025-10-07T03:48:34.306374Z	[1m[31m         ╵   [32m~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.30647Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.306536Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.306595Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996008: Component VendorOnboardingComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.306662Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.306717Z	[1m[31m    src/app/vendor/vendor.module.ts:29:4:[39m[22m
+2025-10-07T03:48:34.306772Z	[1m[31m[37m      29 │     [32mVendorOnboardingComponent[37m,[39m[22m
+2025-10-07T03:48:34.306831Z	[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.306886Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.306947Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.307003Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996008: Component VendorApprovalQueueComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.307109Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.307169Z	[1m[31m    src/app/vendor/vendor.module.ts:30:4:[39m[22m
+2025-10-07T03:48:34.307224Z	[1m[31m[37m      30 │     [32mVendorApprovalQueueComponent[37m,[39m[22m
+2025-10-07T03:48:34.307312Z	[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.307557Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.307669Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.307744Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996008: Component VendorDetailsModalComponent is standalone, and cannot be declared in an NgModule. Did you mean to import it instead?[0m [1m[35m[plugin angular-c[39m[22m[1m[31mompiler][0m[39m[22m
+2025-10-07T03:48:34.307835Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.307963Z	[1m[31m    src/app/vendor/vendor.module.ts:31:4:[39m[22m
+2025-10-07T03:48:34.308079Z	[1m[31m[37m      31 │     [32mVendorDetailsModalComponent[37m[39m[22m
+2025-10-07T03:48:34.308189Z	[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.3083Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.308385Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.308444Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996004: Can't be exported from this NgModule, as it must be imported first[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.308519Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.308578Z	[1m[31m    src/app/vendor/vendor.module.ts:58:4:[39m[22m
+2025-10-07T03:48:34.308634Z	[1m[31m[37m      58 │     [32mVendorOnboardingComponent[37m,[39m[22m
+2025-10-07T03:48:34.308694Z	[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.308752Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.30881Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.308888Z	[1m[31m[31m✘ [41;31m[[41;97mERROR[41;31m][0m [1mTS-996004: Can't be exported from this NgModule, as it must be imported first[0m [1m[35m[plugin angular-compiler][0m[39m[22m
+2025-10-07T03:48:34.308973Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.309069Z	[1m[31m    src/app/vendor/vendor.module.ts:59:4:[39m[22m
+2025-10-07T03:48:34.309183Z	[1m[31m[37m      59 │     [32mVendorApprovalQueueComponent[37m[39m[22m
+2025-10-07T03:48:34.309311Z	[1m[31m         ╵     [32m~~~~~~~~~~~~~~~~~~~~~~~~~~~~[0m[39m[22m
+2025-10-07T03:48:34.309424Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.309533Z	[1m[31m[39m[22m
+2025-10-07T03:48:34.433868Z	
+2025-10-07T03:48:34.434074Z	
+2025-10-07T03:48:34.434145Z	
+2025-10-07T03:48:34.434209Z	 NX   Running target build for project landing failed
+2025-10-07T03:48:34.434314Z	
+2025-10-07T03:48:34.43439Z	Failed tasks:
+2025-10-07T03:48:34.434472Z	
+2025-10-07T03:48:34.434537Z	- landing:build:production
+2025-10-07T03:48:34.434721Z	
+2025-10-07T03:48:34.434793Z	Hint: run the command with --verbose for more details.
+2025-10-07T03:48:34.434859Z	
+2025-10-07T03:48:34.468542Z	Failed: Error while executing user command. Exited with error code: 1
+2025-10-07T03:48:34.48288Z	Failed: build command exited with code: 1
+2025-10-07T03:48:35.832264Z	Failed: error occurred while running build command

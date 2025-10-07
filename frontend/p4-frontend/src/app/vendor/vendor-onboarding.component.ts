@@ -18,22 +18,22 @@ import { HttpClient } from '@angular/common/http';
 
 interface Vendor {
   id?: string;
-  name: string;
-  description: string;
-  contactPerson: string;
-  contactEmail: string;
-  contactPhone: string;
-  taxNumber: string;
-  address: {
-    street: string;
-    city: string;
-    state: string;
-    country: string;
-    postalCode: string;
+  name?: string;
+  description?: string;
+  contactPerson?: string;
+  contactEmail?: string;
+  contactPhone?: string;
+  taxNumber?: string;
+  address?: {
+    street?: string;
+    city?: string;
+    state?: string;
+    country?: string;
+    postalCode?: string;
   };
-  businessLicense: string;
-  registrationDate: Date;
-  status: 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'REJECTED';
+  businessLicense?: string;
+  registrationDate?: Date;
+  status?: 'PENDING' | 'ACTIVE' | 'SUSPENDED' | 'REJECTED';
   approvalDate?: Date;
 }
 
@@ -342,22 +342,22 @@ export class VendorOnboardingComponent {
   }
 
   submitVendor() {
-    const vendor: Vendor = {
-      name: this.basicInfoForm.get('name')?.value,
-      description: this.basicInfoForm.get('description')?.value,
-      contactPerson: this.basicInfoForm.get('contactPerson')?.value,
-      contactEmail: this.basicInfoForm.get('contactEmail')?.value,
-      contactPhone: this.basicInfoForm.get('contactPhone')?.value,
-      taxNumber: this.basicInfoForm.get('taxNumber')?.value,
+    const vendor: Partial<Vendor> = {
+      name: this.basicInfoForm.get('name')?.value || '',
+      description: this.basicInfoForm.get('description')?.value || '',
+      contactPerson: this.basicInfoForm.get('contactPerson')?.value || '',
+      contactEmail: this.basicInfoForm.get('contactEmail')?.value || '',
+      contactPhone: this.basicInfoForm.get('contactPhone')?.value || '',
+      taxNumber: this.basicInfoForm.get('taxNumber')?.value || '',
       address: {
-        street: this.addressForm.get('street')?.value,
-        city: this.addressForm.get('city')?.value,
-        state: this.addressForm.get('state')?.value,
-        country: this.addressForm.get('country')?.value,
-        postalCode: this.addressForm.get('postalCode')?.value
+        street: this.addressForm.get('street')?.value || '',
+        city: this.addressForm.get('city')?.value || '',
+        state: this.addressForm.get('state')?.value || '',
+        country: this.addressForm.get('country')?.value || '',
+        postalCode: this.addressForm.get('postalCode')?.value || ''
       },
       businessLicense: this.licenseFileList[0]?.response?.url || '',
-      registrationDate: this.documentsForm.get('registrationDate')?.value,
+      registrationDate: this.documentsForm.get('registrationDate')?.value || new Date(),
       status: 'PENDING'
     };
 

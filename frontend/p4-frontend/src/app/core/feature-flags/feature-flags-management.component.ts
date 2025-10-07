@@ -71,7 +71,7 @@ import { FormsModule } from '@angular/forms';
             </tr>
           </thead>
           <tbody>
-            <tr *ngFor="let flag of flagTable.data">
+            <tr *ngFor="let flag of flagsArray">
               <td>
                 <code>{{ flag.key }}</code>
               </td>
@@ -79,9 +79,9 @@ import { FormsModule } from '@angular/forms';
               <td>
                 <nz-switch 
                   [ngModel]="flag.enabled"
-                  (ngModelChange)="toggleFlag(flag.key, $event)"
-                  [nzCheckedChildren]="'FEATURE_FLAGS.ENABLED' | translate"
-                  [nzUnCheckedChildren]="'FEATURE_FLAGS.DISABLED' | translate">
+                  (ngModelChange)="toggleFlag(flag.key, $event)">
+                  <span *nzCheckedChildren>{{ 'FEATURE_FLAGS.ENABLED' | translate }}</span>
+                  <span *nzUnCheckedChildren>{{ 'FEATURE_FLAGS.DISABLED' | translate }}</span>
                 </nz-switch>
               </td>
               <td style="min-width: 200px;">
@@ -90,8 +90,7 @@ import { FormsModule } from '@angular/forms';
                   (ngModelChange)="updateRollout(flag.key, $event)"
                   [nzMin]="0" 
                   [nzMax]="100"
-                  [nzStep]="5"
-                  [nzMarks]="{0: '0%', 25: '25%', 50: '50%', 75: '75%', 100: '100%'}">
+                  [nzStep]="5">
                 </nz-slider>
                 <div class="rollout-text">{{ flag.rolloutPercentage || 0 }}%</div>
               </td>

@@ -1,8 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { VendorOnboardingComponent } from './vendor-onboarding.component';
-import { VendorApprovalQueueComponent } from './vendor-approval-queue.component';
-import { VendorDetailsModalComponent } from './vendor-details-modal.component';
 import { VendorRoutingModule } from './vendor-routing.module';
 import { TranslateModule } from '@ngx-translate/core';
 import { NzFormModule } from 'ng-zorro-antd/form';
@@ -25,11 +22,6 @@ import { NzModalModule } from 'ng-zorro-antd/modal';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [
-    VendorOnboardingComponent,
-    VendorApprovalQueueComponent,
-    VendorDetailsModalComponent
-  ],
   imports: [
     CommonModule,
     VendorRoutingModule,
@@ -55,8 +47,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     ReactiveFormsModule
   ],
   exports: [
-    VendorOnboardingComponent,
-    VendorApprovalQueueComponent
+    // Components are standalone, so they export themselves
   ]
 })
 export class VendorModule { }

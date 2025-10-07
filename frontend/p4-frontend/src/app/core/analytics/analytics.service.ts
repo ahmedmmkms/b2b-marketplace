@@ -3,7 +3,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from '../../../environments/environment';
+// For standalone Angular apps, we can define environment-like constants directly
+const environment = {
+  production: false,
+  apiUrl: 'http://localhost:8080/api'
+};
 import { Observable, of } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 
@@ -74,7 +78,7 @@ export class AnalyticsService {
    * Track a search event
    */
   public trackSearch(query: string, resultsCount: number, filters?: { [key: string]: any }, duration?: number): void {
-    const searchEvent: SearchEvent = {
+    const searchEvent: Partial<SearchEvent> = {
       eventType: 'search',
       properties: {
         query,
@@ -84,14 +88,14 @@ export class AnalyticsService {
       }
     };
 
-    this.trackEvent(searchEvent);
+    this.trackEvent(searchEvent as any);
   }
 
   /**
    * Track a filter event
    */
   public trackFilter(filterType: string, filterValue: string | string[], resultsCountAfterFilter: number): void {
-    const filterEvent: FilterEvent = {
+    const filterEvent: Partial<FilterEvent> = {
       eventType: 'filter',
       properties: {
         filterType,
@@ -100,28 +104,28 @@ export class AnalyticsService {
       }
     };
 
-    this.trackEvent(filterEvent);
+    this.trackEvent(filterEvent as any);
   }
 
   /**
    * Track a page view event
    */
   public trackPageView(): void {
-    const event: AnalyticsEvent = {
+    const event: Partial<AnalyticsEvent> = {
       eventType: 'page_view',
       properties: {
         url: this.router.url
       }
     };
 
-    this.trackEvent(event);
+    this.trackEvent(event as any);
   }
 
   /**
    * Track a click event
    */
   public trackClick(elementId: string, elementName?: string): void {
-    const event: AnalyticsEvent = {
+    const event: Partial<AnalyticsEvent> = {
       eventType: 'click',
       properties: {
         elementId,
@@ -129,7 +133,7 @@ export class AnalyticsService {
       }
     };
 
-    this.trackEvent(event);
+    this.trackEvent(event as any);
   }
 
   /**
