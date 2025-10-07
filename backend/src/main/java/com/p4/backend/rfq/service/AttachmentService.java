@@ -10,7 +10,7 @@ import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.s3.S3Client;
 import software.amazon.awssdk.services.s3.model.PutObjectRequest;
 
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import java.io.InputStream;
 import java.net.URI;
 import java.util.UUID;
@@ -42,7 +42,7 @@ public class AttachmentService {
                 .build();
     }
 
-    public String uploadFile(InputStream fileStream, String originalFileName, String uploadDirectory) {
+    public String uploadFile(InputStream fileStream, String originalFileName, String uploadDirectory) throws BusinessException {
         try {
             // Generate a unique file name to avoid conflicts
             String fileExtension = originalFileName.substring(originalFileName.lastIndexOf('.'));
@@ -61,7 +61,7 @@ public class AttachmentService {
         }
     }
 
-    public String uploadRfqAttachment(InputStream fileStream, String originalFileName) {
+    public String uploadRfqAttachment(InputStream fileStream, String originalFileName) throws BusinessException {
         return uploadFile(fileStream, originalFileName, "rfq-attachments");
     }
 }

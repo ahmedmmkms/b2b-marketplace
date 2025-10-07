@@ -29,7 +29,7 @@ public class QuoteComparisonService {
     @Autowired
     private AuditService auditService;
 
-    public List<Quote> getQuotesForComparison(String rfqId) {
+    public List<Quote> getQuotesForComparison(String rfqId) throws BusinessException {
         // Validate that the RFQ exists
         Optional<Rfq> rfqOpt = rfqRepository.findById(rfqId);
         if (rfqOpt.isEmpty()) {
@@ -49,7 +49,7 @@ public class QuoteComparisonService {
         return quoteLineRepository.findByQuoteId(quoteId);
     }
 
-    public void acceptQuote(String quoteId, String acceptedByUserId) {
+    public void acceptQuote(String quoteId, String acceptedByUserId) throws BusinessException {
         Optional<Quote> quoteOpt = quoteRepository.findById(quoteId);
         if (quoteOpt.isEmpty()) {
             throw new BusinessException("Quote not found: " + quoteId);
@@ -84,10 +84,10 @@ public class QuoteComparisonService {
         
         // Log the acceptance action
         auditService.logAction(acceptedByUserId, "QUOTE", quoteId, "ACCEPT", 
-            "Quote status changed from " + oldStatus + " to ACCEPTED");
+            null, null);
     }
 
-    public void declineQuote(String quoteId, String declinedByUserId) {
+    public void declineQuote(String quoteId, String declinedByUserId) throws BusinessException {
         Optional<Quote> quoteOpt = quoteRepository.findById(quoteId);
         if (quoteOpt.isEmpty()) {
             throw new BusinessException("Quote not found: " + quoteId);
@@ -112,6 +112,6 @@ public class QuoteComparisonService {
         
         // Log the decline action
         auditService.logAction(declinedByUserId, "QUOTE", quoteId, "DECLINE", 
-            "Quote status changed from " + oldStatus + " to DECLINED");
+            null, null);
     }
 }

@@ -57,7 +57,7 @@ public class RfqQuoteFlowIntegrationTest {
     private UserRepository userRepository;
 
     @Test
-    public void testRfqToQuoteAcceptanceFlow() {
+    public void testRfqToQuoteAcceptanceFlow() throws Exception {
         // Create a test account
         Account account = new Account("Test Company", "test@example.com");
         account = accountRepository.save(account);

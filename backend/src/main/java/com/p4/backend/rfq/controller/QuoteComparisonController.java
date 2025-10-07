@@ -17,7 +17,7 @@ public class QuoteComparisonController {
     private QuoteComparisonService quoteComparisonService;
 
     @GetMapping("/rfq/{rfqId}")
-    public ResponseEntity<List<Quote>> getQuotesForComparison(@PathVariable String rfqId) {
+    public ResponseEntity<List<Quote>> getQuotesForComparison(@PathVariable String rfqId) throws Exception {
         List<Quote> quotes = quoteComparisonService.getQuotesForComparison(rfqId);
         return ResponseEntity.ok(quotes);
     }
@@ -29,13 +29,13 @@ public class QuoteComparisonController {
     }
 
     @PostMapping("/{quoteId}/accept")
-    public ResponseEntity<Void> acceptQuote(@PathVariable String quoteId, @RequestBody AcceptQuoteRequest request) {
+    public ResponseEntity<Void> acceptQuote(@PathVariable String quoteId, @RequestBody AcceptQuoteRequest request) throws Exception {
         quoteComparisonService.acceptQuote(quoteId, request.getUserId());
         return ResponseEntity.ok().build();
     }
 
     @PostMapping("/{quoteId}/decline")
-    public ResponseEntity<Void> declineQuote(@PathVariable String quoteId, @RequestBody DeclineQuoteRequest request) {
+    public ResponseEntity<Void> declineQuote(@PathVariable String quoteId, @RequestBody DeclineQuoteRequest request) throws Exception {
         quoteComparisonService.declineQuote(quoteId, request.getUserId());
         return ResponseEntity.ok().build();
     }

@@ -37,7 +37,7 @@ public class RfqService {
     private AuditService auditService;
 
     @Transactional
-    public Rfq createRfq(Rfq rfq, List<RfqLine> rfqLines, String userId) {
+    public Rfq createRfq(Rfq rfq, List<RfqLine> rfqLines, String userId) throws BusinessException {
         // Validate the account exists
         Optional<Account> accountOpt = accountRepository.findById(rfq.getAccountId());
         if (accountOpt.isEmpty()) {
@@ -83,7 +83,7 @@ public class RfqService {
         return rfqRepository.findByAccountIdAndStatus(accountId, status);
     }
 
-    public void updateRfqStatus(String rfqId, Rfq.RfqStatus newStatus, String userId) {
+    public void updateRfqStatus(String rfqId, Rfq.RfqStatus newStatus, String userId) throws BusinessException {
         Optional<Rfq> rfqOpt = rfqRepository.findById(rfqId);
         if (rfqOpt.isEmpty()) {
             throw new BusinessException("RFQ not found: " + rfqId);
@@ -95,8 +95,7 @@ public class RfqService {
         rfqRepository.save(rfq);
         
         // Log the status update action
-        auditService.logAction(userId, "RFQ", rfqId, "UPDATE_STATUS", 
-            "Status changed from " + oldStatus + " to " + newStatus);
+        auditService.logAction(userId, "RFQ", rfqId, "UPDATE_STATUS");
     }
 
     public void closeExpiredRfqs() {

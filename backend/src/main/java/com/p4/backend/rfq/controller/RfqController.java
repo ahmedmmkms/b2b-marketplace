@@ -17,7 +17,7 @@ public class RfqController {
     private RfqService rfqService;
 
     @PostMapping
-    public ResponseEntity<Rfq> createRfq(@RequestBody CreateRfqRequest request) {
+    public ResponseEntity<Rfq> createRfq(@RequestBody CreateRfqRequest request) throws Exception {
         Rfq rfq = request.getRfq();
         List<RfqLine> rfqLines = request.getRfqLines();
         
@@ -42,7 +42,7 @@ public class RfqController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Void> updateRfqStatus(@PathVariable String id, @RequestBody UpdateRfqStatusRequest request) {
+    public ResponseEntity<Void> updateRfqStatus(@PathVariable String id, @RequestBody UpdateRfqStatusRequest request) throws Exception {
         // In a real implementation, you would extract the userId from the authenticated user context
         // For now, using a placeholder userId
         String userId = "PLACEHOLDER_USER_ID"; // This should be replaced with actual user authentication

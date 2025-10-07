@@ -43,7 +43,7 @@ public class QuoteService {
     private AuditService auditService;
 
     @Transactional
-    public Quote createQuote(Quote quote, List<QuoteLine> quoteLines, String userId) {
+    public Quote createQuote(Quote quote, List<QuoteLine> quoteLines, String userId) throws BusinessException {
         // Validate that the RFQ exists and is still open
         Optional<Rfq> rfqOpt = rfqRepository.findById(quote.getRfqId());
         if (rfqOpt.isEmpty()) {
@@ -118,7 +118,7 @@ public class QuoteService {
         return quoteRepository.findByVendorId(vendorId);
     }
 
-    public void updateQuoteStatus(String quoteId, Quote.QuoteStatus newStatus, String userId) {
+    public void updateQuoteStatus(String quoteId, Quote.QuoteStatus newStatus, String userId) throws BusinessException {
         Optional<Quote> quoteOpt = quoteRepository.findById(quoteId);
         if (quoteOpt.isEmpty()) {
             throw new BusinessException("Quote not found: " + quoteId);
@@ -130,8 +130,7 @@ public class QuoteService {
         quoteRepository.save(quote);
         
         // Log the status update action
-        auditService.logAction(userId, "QUOTE", quoteId, "UPDATE_STATUS", 
-            "Status changed from " + oldStatus + " to " + newStatus);
+        auditService.logAction(userId, "QUOTE", quoteId, "UPDATE_STATUS");
     }
     
     public void expireQuotes() {

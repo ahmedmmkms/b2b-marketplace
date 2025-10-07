@@ -17,7 +17,7 @@ public class QuoteController {
     private QuoteService quoteService;
 
     @PostMapping
-    public ResponseEntity<Quote> createQuote(@RequestBody CreateQuoteRequest request) {
+    public ResponseEntity<Quote> createQuote(@RequestBody CreateQuoteRequest request) throws Exception {
         Quote quote = request.getQuote();
         List<QuoteLine> quoteLines = request.getQuoteLines();
         
@@ -48,7 +48,7 @@ public class QuoteController {
     }
 
     @PutMapping("/{id}/status")
-    public ResponseEntity<Void> updateQuoteStatus(@PathVariable String id, @RequestBody UpdateQuoteStatusRequest request) {
+    public ResponseEntity<Void> updateQuoteStatus(@PathVariable String id, @RequestBody UpdateQuoteStatusRequest request) throws Exception {
         // In a real implementation, you would extract the userId from the authenticated user context
         // For now, using a placeholder userId
         String userId = "PLACEHOLDER_USER_ID"; // This should be replaced with actual user authentication
