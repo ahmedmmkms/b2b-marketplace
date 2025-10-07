@@ -126,12 +126,12 @@ CREATE INDEX IF NOT EXISTS idx_product_slug_gin ON product USING gin(to_tsvector
 
 -- Create function to automatically update the updated_at column
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $
 BEGIN
     NEW.updated_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$$ language 'plpgsql';
+$ language 'plpgsql';
 
 -- Attach the trigger to relevant tables (triggers can't use IF NOT EXISTS, so we'll drop and recreate)
 DROP TRIGGER IF EXISTS update_vendor_updated_at ON vendor;

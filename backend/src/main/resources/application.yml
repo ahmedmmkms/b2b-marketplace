@@ -1,6 +1,8 @@
 spring:
   application:
     name: p4-backend
+  profiles:
+    active: dev
   datasource:
     url: ${DB_URL:jdbc:postgresql://localhost:5432/p4_b2b_marketplace}
     username: ${DB_USERNAME:postgres}
@@ -18,16 +20,21 @@ spring:
     multipart:
       max-file-size: 10MB
       max-request-size: 10MB
+  lifecycle:
+    timeout-per-shutdown-phase: 30s
 
 # R2 Configuration for Media Storage
 r2:
   access:
-    key: ${R2_ACCESS_KEY:your-r2-access-key}
+    key:
+      id: ${R2_ACCESS_KEY_ID:}
   secret:
-    key: ${R2_SECRET_KEY:your-r2-secret-key}
+    access:
+      key: ${R2_SECRET_ACCESS_KEY:}
   bucket:
-    name: ${R2_BUCKET_NAME:p4-prod-assets}
-  endpoint: ${R2_ENDPOINT:https://your-account-id.r2.cloudflarestorage.com}
+    name: ${R2_BUCKET:p4-prod-assets}
+  endpoint:
+    url: ${R2_ENDPOINT_URL:https://<your-account-id>.r2.cloudflarestorage.com}
 
 # Server Configuration
 server:
@@ -42,16 +49,79 @@ management:
   endpoint:
     health:
       show-details: when-authorized
+    info:
+      enabled: true
 
 # Feature Flags Configuration
 feature:
   flags:
     catalog:
-      publicBrowse: ${FEATURE_CATALOG_PUBLIC_BROWSE:true}
+      publicBrowse: ${FEATURE_CATALOG_PUBLIC_BROWSE:false}
     search:
-      enabled: ${FEATURE_SEARCH_ENABLED:true}
+      enabled: ${FEATURE_SEARCH_ENABLED:false}
+    rfq:
+      enabled: ${FEATURE_RFQ_ENABLED:false}
+    quote:
+      vendorConsole:
+        enabled: ${FEATURE_QUOTE_VENDOR_CONSOLE_ENABLED:false}
+    orders:
+      checkout: ${FEATURE_ORDERS_CHECKOUT:false}
+    payments:
+      gateway1: ${FEATURE_PAYMENTS_GATEWAY1:false}
+    wallet:
+      basic: ${FEATURE_WALLET_BASIC:false}
+    invoice:
+      vat: ${FEATURE_INVOICE_VAT:false}
+    loyalty:
+      core: ${FEATURE_LOYALTY_CORE:false}
+    credit:
+      controls: ${FEATURE_CREDIT_CONTROLS:false}
 
 # Database Seeding Configuration
 app:
   seed:
     enabled: ${SEED_ENABLED:false}
+
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+
+# Feature flags for production
+feature:
+  flags:
+    catalog:
+      publicBrowse: ${FEATURE_CATALOG_PUBLIC_BROWSE:false}
+    search:
+      enabled: ${FEATURE_SEARCH_ENABLED:false}
+    rfq:
+      enabled: ${FEATURE_RFQ_ENABLED:false}
+    quote:
+      vendorConsole:
+        enabled: ${FEATURE_QUOTE_VENDOR_CONSOLE_ENABLED:false}
+    orders:
+      checkout: ${FEATURE_ORDERS_CHECKOUT:false}
+    payments:
+      gateway1: ${FEATURE_PAYMENTS_GATEWAY1:false}
+    wallet:
+      basic: ${FEATURE_WALLET_BASIC:false}
+    invoice:
+      vat: ${FEATURE_INVOICE_VAT:false}
+    loyalty:
+      core: ${FEATURE_LOYALTY_CORE:false}
+    credit:
+      controls: ${FEATURE_CREDIT_CONTROLS:false}
+
+# R2 Configuration for production
+r2:
+  access:
+    key:
+      id: ${R2_ACCESS_KEY_ID}
+  secret:
+    access:
+      key: ${R2_SECRET_ACCESS_KEY}
+  bucket:
+    name: ${R2_BUCKET}
+  endpoint:
+    url: ${R2_ENDPOINT_URL}
