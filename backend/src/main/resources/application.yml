@@ -1,6 +1,19 @@
 spring:
   application:
     name: p4-backend
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/p4_b2b_marketplace}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:password}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: validate  # Use 'validate' for production, 'create' or 'create-drop' for development
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
   servlet:
     multipart:
       max-file-size: 10MB
@@ -37,3 +50,8 @@ feature:
       publicBrowse: ${FEATURE_CATALOG_PUBLIC_BROWSE:true}
     search:
       enabled: ${FEATURE_SEARCH_ENABLED:true}
+
+# Database Seeding Configuration
+app:
+  seed:
+    enabled: ${SEED_ENABLED:false}
