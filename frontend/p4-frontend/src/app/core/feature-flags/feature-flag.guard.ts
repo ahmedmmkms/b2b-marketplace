@@ -27,3 +27,4 @@ export const featureFlagGuard = (featureName: FeatureFlagName) => {
 // Specific guards for common features
 export const catalogPublicBrowseGuard = featureFlagGuard(FeatureFlagName.CATALOG_PUBLIC_BROWSE);
 export const searchEnabledGuard = featureFlagGuard(FeatureFlagName.SEARCH_ENABLED);
+export const ordersCheckoutGuard = featureFlagGuard(FeatureFlagName.ORDERS_CHECKOUT);

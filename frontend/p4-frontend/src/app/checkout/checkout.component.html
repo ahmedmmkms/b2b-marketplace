@@ -1,0 +1,185 @@
+<div class="checkout-container" nz-row [nzGutter]="[16, 16]">
+  <div nz-col [nzSpan]="24">
+    <h1 nz-typography translate>checkout.title</h1>
+  </div>
+
+  <div nz-col nzSpan="24" nzLg="16">
+    <!-- Contact Information -->
+    <nz-card [nzTitle]="'checkout.contactInfo' | translate" [nzBordered]="false">
+      <form nz-form [formGroup]="checkoutForm" (ngSubmit)="onSubmit()">
+        <div nz-row [nzGutter]="[16, 16]">
+          <div nz-col nzSpan="24" nzSm="12">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.email</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter a valid email">
+                <input type="email" nz-input formControlName="email" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" nzSm="12">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.firstName</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter your first name">
+                <input type="text" nz-input formControlName="firstName" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" nzSm="12">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.lastName</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter your last name">
+                <input type="text" nz-input formControlName="lastName" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" nzSm="12">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.company</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter your company name">
+                <input type="text" nz-input formControlName="company" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.address</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter your address">
+                <input type="text" nz-input formControlName="address" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" nzSm="12">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.city</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter your city">
+                <input type="text" nz-input formControlName="city" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" nzSm="6">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.country</nz-form-label>
+              <nz-form-control nzErrorTip="Please select a country">
+                <nz-select formControlName="country" translate>
+                  <nz-option [nzValue]="'US'" [nzLabel]="'country.us' | translate"></nz-option>
+                  <nz-option [nzValue]="'SA'" [nzLabel]="'country.sa' | translate"></nz-option>
+                  <nz-option [nzValue]="'AE'" [nzLabel]="'country.ae' | translate"></nz-option>
+                </nz-select>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24" nzSm="6">
+            <nz-form-item>
+              <nz-form-label [nzRequired]="true" translate>checkout.postalCode</nz-form-label>
+              <nz-form-control nzErrorTip="Please enter a valid postal code">
+                <input type="text" nz-input formControlName="postalCode" />
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+          <div nz-col nzSpan="24">
+            <nz-form-item>
+              <nz-form-label translate>checkout.notes</nz-form-label>
+              <nz-form-control>
+                <textarea nz-input formControlName="notes" [nzRows]="4" [placeholder]="'checkout.notesPlaceholder' | translate"></textarea>
+              </nz-form-control>
+            </nz-form-item>
+          </div>
+        </div>
+      </form>
+    </nz-card>
+
+    <!-- Payment Method -->
+    <nz-card [nzTitle]="'checkout.paymentMethod' | translate" [nzBordered]="false">
+      <nz-radio-group [(ngModel)]="selectedPaymentMethod" (ngModelChange)="onPaymentMethodChange($event)">
+        <div nz-row [nzGutter]="[16, 16]">
+          <div nz-col nzSpan="24" *ngFor="let method of paymentMethods">
+            <label nz-radio [nzValue]="method.id" class="payment-method">
+              <div class="payment-method-content">
+                <h4 nz-typography>{{ method.name }}</h4>
+                <p nz-typography nzType="secondary">{{ method.description }}</p>
+              </div>
+            </label>
+          </div>
+        </div>
+      </nz-radio-group>
+    </nz-card>
+  </div>
+
+  <div nz-col nzSpan="24" nzLg="8">
+    <!-- Order Summary -->
+    <nz-card [nzTitle]="'checkout.orderSummary' | translate" [nzBordered]="false">
+      <nz-spin [nzSpinning]="isLoading">
+        <div class="order-items">
+          <div class="order-item" *ngFor="let item of cartItems">
+            <div class="item-info">
+              <h5 nz-typography>{{ item.name }}</h5>
+              <p nz-typography nzType="secondary">{{ item.quantity }} x {{ item.unitPrice | currency }}</p>
+            </div>
+            <div class="item-price">
+              <p nz-typography>{{ item.total | currency }}</p>
+            </div>
+          </div>
+        </div>
+        
+        <nz-divider></nz-divider>
+        
+        <div class="order-totals">
+          <div class="total-row">
+            <span translate>checkout.subtotal</span>
+            <span>{{ subtotal | currency }}</span>
+          </div>
+          <div class="total-row">
+            <span translate>checkout.tax</span>
+            <span>{{ tax | currency }}</span>
+          </div>
+          <div class="total-row total-amount">
+            <strong translate>checkout.total</strong>
+            <strong>{{ total | currency }}</strong>
+          </div>
+        </div>
+      </nz-spin>
+      
+      <!-- Messages -->
+      <nz-alert 
+        *ngIf="errorMessage" 
+        [nzType]="'error'" 
+        [nzMessage]="errorMessage" 
+        nzShowIcon 
+        class="alert-margin"
+      ></nz-alert>
+      
+      <nz-alert 
+        *ngIf="successMessage" 
+        [nzType]="'success'" 
+        [nzMessage]="successMessage" 
+        nzShowIcon 
+        class="alert-margin"
+      ></nz-alert>
+      
+      <!-- Place Order Button -->
+      <button 
+        nz-button 
+        nzType="primary" 
+        [nzSize]="'large'" 
+        [nzBlock]="true" 
+        [disabled]="checkoutForm.invalid || isLoading"
+        (click)="onSubmit()"
+        class="place-order-btn"
+      >
+        <span *ngIf="!isLoading" translate>checkout.placeOrder</span>
+        <span *ngIf="isLoading" translate>checkout.processing</span>
+      </button>
+      
+      <button 
+        nz-button 
+        [nzSize]="'large'" 
+        [nzBlock]="true" 
+        (click)="onBack()"
+        [disabled]="isLoading"
+        class="back-btn"
+      >
+        <span translate>checkout.backToCart</span>
+      </button>
+    </nz-card>
+  </div>
+</div>
