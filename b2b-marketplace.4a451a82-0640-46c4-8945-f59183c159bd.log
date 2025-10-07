@@ -1,275 +1,178 @@
-Skip to content
-Navigation Menu
-ahmedmmkms
-b2b-marketplace
-
-Type / to search
-Code
-Issues
-Pull requests
-Actions
-Projects
-Wiki
-Security
-Insights
-Settings
-Build and deploy JAR app to Azure Web App - b2b-marketplace
-Trigger GitHub Actions: Update workflow with PostgreSQL service and r… #40
-Jobs
-Run details
-Annotations
-1 error
-build
-failed now in 35s
-Search logs
-1s
-0s
-1s
-30s
-Run cd backend
-[INFO] Scanning for projects...
-Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/3.4.0/spring-boot-starter-parent-3.4.0.pom
-Progress (1): 1.1 kB
-Progress (1): 3.6 kB
-Progress (1): 6.3 kB
-Progress (1): 11 kB 
-Progress (1): 13 kB
-                   
-Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-starter-parent/3.4.0/spring-boot-starter-parent-3.4.0.pom (13 kB at 34 kB/s)
-Downloading from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-dependencies/3.4.0/spring-boot-dependencies-3.4.0.pom
-Progress (1): 1.1 kB
-Progress (1): 2.9 kB
-Progress (1): 4.4 kB
-Progress (1): 6.7 kB
-Progress (1): 9.2 kB
-Progress (1): 11 kB 
-Progress (1): 16 kB
-Progress (1): 24 kB
-Progress (1): 30 kB
-Progress (1): 33 kB
-Progress (1): 39 kB
-Progress (1): 48 kB
-Progress (1): 53 kB
-Progress (1): 62 kB
-Progress (1): 66 kB
-Progress (1): 75 kB
-Progress (1): 82 kB
-Progress (1): 87 kB
-Progress (1): 95 kB
-Progress (1): 97 kB
-                   
-Downloaded from central: https://repo.maven.apache.org/maven2/org/springframework/boot/spring-boot-dependencies/3.4.0/spring-boot-dependencies-3.4.0.pom (97 kB at 1.4 MB/s)
-Downloading from central: https://repo.maven.apache.org/maven2/org/apache/activemq/activemq-bom/6.1.4/activemq-bom-6.1.4.pom
-Progress (1): 799 B
-Progress (1): 1.9 kB
-Progress (1): 7.9 kB
-                    
-Downloaded from central: https://repo.maven.apache.org/maven2/org/apache/activemq/activemq-bom/6.1.4/activemq-bom-6.1.4.pom (7.9 kB at 175 kB/s)
-Downloading from central: https://repo.maven.apache.org/maven2/org/apache/activemq/artemis-bom/2.37.0/artemis-bom-2.37.0.pom
-Progress (1): 786 B
-Progress (1): 3.3 kB
-      - @ConditionalOnMissingBean (types: org.springframework.boot.web.servlet.server.ServletWebServerFactory; SearchStrategy: current) did not find any beans (OnBeanCondition)
-
-   SimpleCacheConfiguration matched:
-      - Cache org.springframework.boot.autoconfigure.cache.SimpleCacheConfiguration SIMPLE cache type (CacheCondition)
-
-   SimpleMetricsExportAutoConfiguration matched:
-      - @ConditionalOnEnabledMetricsExport management.simple.metrics.export.enabled is true (OnMetricsExportEnabledCondition)
-      - @ConditionalOnBean (types: io.micrometer.core.instrument.Clock; SearchStrategy: all) found bean 'micrometerClock'; @ConditionalOnMissingBean (types: io.micrometer.core.instrument.MeterRegistry; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SimpleMetricsExportAutoConfiguration#simpleConfig matched:
-      - @ConditionalOnMissingBean (types: io.micrometer.core.instrument.simple.SimpleConfig; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringBootWebSecurityConfiguration matched:
-      - found 'session' scope (OnWebApplicationCondition)
-
-   SpringBootWebSecurityConfiguration.WebSecurityEnablerConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.security.config.annotation.web.configuration.EnableWebSecurity' (OnClassCondition)
-      - @ConditionalOnMissingBean (names: springSecurityFilterChain; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDataWebAutoConfiguration matched:
-      - @ConditionalOnClass found required classes 'org.springframework.data.web.PageableHandlerMethodArgumentResolver', 'org.springframework.web.servlet.config.annotation.WebMvcConfigurer' (OnClassCondition)
-      - found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnMissingBean (types: org.springframework.data.web.PageableHandlerMethodArgumentResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDataWebAutoConfiguration#pageableCustomizer matched:
-      - @ConditionalOnMissingBean (types: org.springframework.data.web.config.PageableHandlerMethodArgumentResolverCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDataWebAutoConfiguration#sortCustomizer matched:
-      - @ConditionalOnMissingBean (types: org.springframework.data.web.config.SortHandlerMethodArgumentResolverCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDataWebAutoConfiguration#springDataWebSettings matched:
-      - @ConditionalOnMissingBean (types: org.springframework.data.web.config.SpringDataWebSettings; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfigProperties matched:
-      - @ConditionalOnProperty (springdoc.api-docs.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-
-   SpringDocConfiguration matched:
-      - @ConditionalOnWebApplication (required) found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnProperty (springdoc.api-docs.enabled) matched (OnPropertyCondition)
-
-   SpringDocConfiguration#fileSupportConverter matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.converters.FileSupportConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#objectMapperProvider matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.providers.ObjectMapperProvider; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#openAPIBuilder matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.service.OpenAPIService; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#operationBuilder matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.service.OperationService; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#parameterBuilder matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.service.GenericParameterService; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#polymorphicModelConverter matched:
-      - @ConditionalOnProperty (springdoc.model-converters.polymorphic-converter.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnMissingBean (types: org.springdoc.core.converters.PolymorphicModelConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#requestBodyBuilder matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.service.RequestBodyService; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#responseSupportConverter matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.converters.ResponseSupportConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#schemaPropertyDeprecatingConverter matched:
-      - @ConditionalOnProperty (springdoc.model-converters.deprecating-converter.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnMissingBean (types: org.springdoc.core.converters.SchemaPropertyDeprecatingConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#securityParser matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.service.SecurityService; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#springDocCustomizers matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.customizers.SpringDocCustomizers; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration#springDocProviders matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.providers.SpringDocProviders; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration.SpringDocSpringDataWebPropertiesProvider matched:
-      - @ConditionalOnClass found required class 'org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties' (OnClassCondition)
-
-   SpringDocConfiguration.SpringDocSpringDataWebPropertiesProvider#springDataWebPropertiesProvider matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.providers.SpringDataWebPropertiesProvider; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocConfiguration.WebConversionServiceConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.boot.autoconfigure.web.format.WebConversionService' (OnClassCondition)
-
-   SpringDocPageableConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.data.domain.Pageable' (OnClassCondition)
-      - @ConditionalOnWebApplication (required) found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnProperty (springdoc.api-docs.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-
-   SpringDocPageableConfiguration#delegatingMethodParameterCustomizer matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.customizers.DelegatingMethodParameterCustomizer; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocPageableConfiguration#pageableOpenAPIConverter matched:
-      - @ConditionalOnProperty (springdoc.model-converters.pageable-converter.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnMissingBean (types: org.springdoc.core.converters.PageableOpenAPIConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocSecurityConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.security.web.SecurityFilterChain' (OnClassCondition)
-      - @ConditionalOnWebApplication (required) found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnExpression (#{${springdoc.api-docs.enabled:true} and ${springdoc.enable-spring-security:true}}) resulted in true (OnExpressionCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-
-   SpringDocSecurityConfiguration.SpringSecurityLoginEndpointConfiguration matched:
-      - @ConditionalOnClass found required class 'jakarta.servlet.Filter' (OnClassCondition)
-
-   SpringDocSortConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.data.domain.Sort' (OnClassCondition)
-      - @ConditionalOnWebApplication (required) found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnProperty (springdoc.api-docs.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-
-   SpringDocSortConfiguration#sortOpenAPIConverter matched:
-      - @ConditionalOnProperty (springdoc.model-converters.sort-converter.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnMissingBean (types: org.springdoc.core.converters.SortOpenAPIConverter; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocUIConfiguration matched:
-      - @ConditionalOnWebApplication (required) found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnExpression (#{${springdoc.api-docs.enabled:true}}) resulted in true (OnExpressionCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-
-   SpringDocWebMvcConfiguration matched:
-      - found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnProperty (springdoc.api-docs.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-
-   SpringDocWebMvcConfiguration#openApiResource matched:
-      - @ConditionalOnProperty (springdoc.use-management-port=false) matched (OnPropertyCondition)
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.api.OpenApiWebMvcResource; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocWebMvcConfiguration#requestBuilder matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.core.service.RequestService; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocWebMvcConfiguration#responseBuilder matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.service.GenericResponseService; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocWebMvcConfiguration#springWebProvider matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.core.providers.SpringWebProvider; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SpringDocWebMvcConfiguration.SpringDocWebMvcActuatorConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.boot.actuate.endpoint.web.servlet.WebMvcEndpointHandlerMapping' (OnClassCondition)
-
-   SpringDocWebMvcConfiguration.SpringDocWebMvcRouterConfiguration matched:
-      - @ConditionalOnClass found required class 'org.springframework.web.servlet.function.RouterFunction' (OnClassCondition)
-
-   SpringDocWebMvcConfiguration.SpringDocWebMvcRouterConfiguration#routerFunctionProvider matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.core.providers.RouterFunctionWebMvcProvider; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SqlInitializationAutoConfiguration matched:
-      - @ConditionalOnProperty (spring.sql.init.enabled) matched (OnPropertyCondition)
-      - NoneNestedConditions 0 matched 1 did not; NestedCondition on SqlInitializationAutoConfiguration.SqlInitializationModeCondition.ModeIsNever @ConditionalOnProperty (spring.sql.init.mode=never) did not find property 'mode' (SqlInitializationAutoConfiguration.SqlInitializationModeCondition)
-
-   SslAutoConfiguration#sslBundleRegistry matched:
-      - @ConditionalOnMissingBean (types: org.springframework.boot.ssl.SslBundleRegistry,org.springframework.boot.ssl.SslBundles; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SslHealthContributorAutoConfiguration matched:
-      - @ConditionalOnEnabledHealthIndicator management.health.defaults.enabled is considered true (OnEnabledHealthIndicatorCondition)
-
-   SslHealthContributorAutoConfiguration#sslHealthIndicator matched:
-      - @ConditionalOnMissingBean (names: sslHealthIndicator; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SslHealthContributorAutoConfiguration#sslInfo matched:
-      - @ConditionalOnMissingBean (types: org.springframework.boot.info.SslInfo; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   StartupTimeMetricsListenerAutoConfiguration matched:
-      - @ConditionalOnClass found required class 'io.micrometer.core.instrument.MeterRegistry' (OnClassCondition)
-      - @ConditionalOnBean (types: io.micrometer.core.instrument.MeterRegistry; SearchStrategy: all) found bean 'simpleMeterRegistry' (OnBeanCondition)
-
-   StartupTimeMetricsListenerAutoConfiguration#startupTimeMetrics matched:
-      - @ConditionalOnMissingBean (types: org.springframework.boot.actuate.metrics.startup.StartupTimeMetricsListener; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SwaggerConfig matched:
-      - found 'session' scope (OnWebApplicationCondition)
-      - @ConditionalOnProperty (springdoc.swagger-ui.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-
-   SwaggerConfig#indexPageTransformer matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.ui.SwaggerIndexTransformer; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SwaggerConfig#swaggerConfigResource matched:
-      - @ConditionalOnProperty (springdoc.use-management-port=false) matched (OnPropertyCondition)
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.ui.SwaggerConfigResource; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SwaggerConfig#swaggerResourceResolver matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.ui.SwaggerResourceResolver; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SwaggerConfig#swaggerWebMvcConfigurer matched:
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.ui.SwaggerWebMvcConfigurer; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SwaggerConfig#swaggerWelcome matched:
-      - @ConditionalOnProperty (springdoc.use-management-port=false) matched (OnPropertyCondition)
-      - @ConditionalOnMissingBean (types: org.springdoc.webmvc.ui.SwaggerWelcomeWebMvc; SearchStrategy: all) did not find any beans (OnBeanCondition)
-
-   SwaggerUiConfigParameters matched:
-      - @ConditionalOnProperty (springdoc.swagger-ui.enabled) matched (OnPropertyCondition)
-      - @ConditionalOnBean (types: org.springdoc.core.configuration.SpringDocConfiguration; SearchStrategy: all) found bean 'org.springdoc.core.configuration.SpringDocConfiguration' (OnBeanCondition)
-0s
-0s
-0s
-0s
-Trigger GitHub Actions: Update workflow with PostgreSQL service and r… · ahmedmmkms/b2b-marketplace@cffcee2 
+2025-10-07T03:38:43.7782449Z Container info: WEBSITE_INSTANCE_ID = eb29e038db1dfe94e64ea0cae36cd79f8ad9a8c3a7a5dd9f089252d285612fc6 ; WEBSITE_SITE_NAME = b2b-marketplace
+2025-10-07T03:38:43.7854948Z Add public certificates to keystore if exists...
+2025-10-07T03:38:43.7856234Z Add private certificates to keystore if exists...
+2025-10-07T03:38:43.7859976Z Configuring max heap = 1024 MB
+2025-10-07T03:38:43.8030761Z STARTUP_FILE=
+2025-10-07T03:38:43.8031196Z STARTUP_COMMAND=
+2025-10-07T03:38:43.8031296Z No STARTUP_FILE available.
+2025-10-07T03:38:43.8031337Z No STARTUP_COMMAND defined.
+2025-10-07T03:38:44.3789314Z Mangled result from Jar entry point parser is: __COM_MICROSOFT_AZURE_APPSERVICE_JARENTRYPOINT_PREFIX__org.springframework.boot.loader.launch.JarLauncher__COM_MICROSOFT_AZURE_APPSERVICE_JARENTRYPOINT_SUFFIX__
+2025-10-07T03:38:44.4091286Z Extracted jar entry point. Class name is: 'org.springframework.boot.loader.launch.JarLauncher'
+2025-10-07T03:38:44.4245749Z Defaulting to UTF-8
+2025-10-07T03:38:44.4248208Z Running command: java -cp /home/site/wwwroot/app.jar:/usr/local/appservice/lib/azure.appservice.jar: -Djava.util.logging.config.file=/usr/local/appservice/logging.properties -Dfile.encoding=UTF-8 -Xmx1024M -Djava.net.preferIPv4Stack=true  -Dserver.port=80 -XX:ErrorFile=/home/LogFiles/java_error_b2b-marketplace_10-30-0-62_%p.log -XX:+CrashOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/LogFiles/java_memdump_b2b-marketplace_10-30-0-62.log -Duser.dir=/home/site/wwwroot org.springframework.boot.loader.launch.JarLauncher
+2025-10-07T03:38:44.4253791Z Launched child process with pid: 69
+2025-10-07T03:38:44.4360548Z [Telemetry] APP_JAR_PATH: /home/site/wwwroot/app.jar:/usr/local/appservice/lib/azure.appservice.jar
+2025-10-07T03:38:44.4361111Z x-ms-applog:informational:base64:QVBQX0pBUl9QQVRIOiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjovdXNyL2xvY2FsL2FwcHNlcnZpY2UvbGliL2F6dXJlLmFwcHNlcnZpY2UuamFy
+2025-10-07T03:38:44.4361166Z x-ms-telemetry:informational:base64:QVBQX0pBUl9QQVRIOiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjovdXNyL2xvY2FsL2FwcHNlcnZpY2UvbGliL2F6dXJlLmFwcHNlcnZpY2UuamFy
+2025-10-07T03:38:44.5101836Z [Telemetry] JARs in /home/site/wwwroot/app.jar: spring-boot-3.4.0.jar,spring-boot-autoconfigure-3.4.0.jar,logback-classic-1.5.12.jar,logback-core-1.5.12.jar,log4j-to-slf4j-2.24.1.jar,log4j-api-2.24.1.jar,jul-to-slf4j-2.0.16.jar,jakarta.annotation-api-2.1.1.jar,snakeyaml-2.3.jar,jackson-databind-2.18.1.jar,jackson-datatype-jdk8-2.18.1.jar,jackson-module-parameter-names-2.18.1.jar,tomcat-embed-core-10.1.33.jar,tomcat-embed-websocket-10.1.33.jar,spring-web-6.2.0.jar,spring-beans-6.2.0.jar,spring-webmvc-6.2.0.jar,spring-context-6.2.0.jar,spring-expression-6.2.0.jar,spring-boot-actuator-autoconfigure-3.4.0.jar,spring-boot-actuator-3.4.0.jar,micrometer-observation-1.14.1.jar,micrometer-commons-1.14.1.jar,micrometer-jakarta9-1.14.1.jar,micrometer-core-1.14.1.jar,HdrHistogram-2.2.2.jar,LatencyUtils-2.0.3.jar,tomcat-embed-el-10.1.33.jar,hibernate-validator-8.0.1.Final.jar,jakarta.validation-api-3.0.2.jar,jboss-logging-3.6.1.Final.jar,classmate-1.7.0.jar,HikariCP-5.1.0.jar,spring-jdbc-6.2.0.jar,hibernate-core-6.6.2.Final.jar,jakarta.persistence-api-3.1.0.jar,jakarta.transaction-api-2.0.1.jar,hibernate-commons-annotations-7.0.3.Final.jar,jandex-3.2.0.jar,byte-buddy-1.15.10.jar,jaxb-runtime-4.0.5.jar,jaxb-core-4.0.5.jar,angus-activation-2.0.2.jar,txw2-4.0.5.jar,istack-commons-runtime-4.1.2.jar,jakarta.inject-api-2.0.1.jar,antlr4-runtime-4.13.0.jar,spring-data-jpa-3.4.0.jar,spring-data-commons-3.4.0.jar,spring-orm-6.2.0.jar,spring-tx-6.2.0.jar,spring-aspects-6.2.0.jar,aspectjweaver-1.9.22.1.jar,spring-aop-6.2.0.jar,spring-security-config-6.4.1.jar,spring-security-core-6.4.1.jar,spring-security-crypto-6.4.1.jar,spring-security-web-6.4.1.jar,spring-context-support-6.2.0.jar,spring-batch-core-5.2.0.jar,spring-batch-infrastructure-5.2.0.jar,spring-retry-2.0.10.jar,flyway-core-10.21.0.jar,jackson-dataformat-toml-2.18.1.jar,jackson-core-2.18.1.jar,jackson-datatype-jsr310-2.18.1.jar,jackson-annotations-2.18.1.jar,flyway-database-postgresql-10.21.0.jar,springdoc-openapi-starter-webmvc-ui-2.1.0.jar,springdoc-openapi-starter-webmvc-api-2.1.0.jar,springdoc-openapi-starter-common-2.1.0.jar,swagger-core-jakarta-2.2.9.jar,swagger-annotations-jakarta-2.2.9.jar,swagger-models-jakarta-2.2.9.jar,jackson-dataformat-yaml-2.18.1.jar,swagger-ui-4.18.2.jar,java-uuid-generator-4.3.0.jar,slf4j-api-2.0.16.jar,opencsv-5.9.jar,commons-lang3-3.17.0.jar,commons-text-1.11.0.jar,commons-beanutils-1.9.4.jar,commons-logging-1.2.jar,commons-collections-3.2.2.jar,commons-collections4-4.4.jar,s3-2.25.26.jar,aws-xml-protocol-2.25.26.jar,aws-query-protocol-2.25.26.jar,protocol-core-2.25.26.jar,arns-2.25.26.jar,profiles-2.25.26.jar,crt-core-2.25.26.jar,http-auth-2.25.26.jar,identity-spi-2.25.26.jar,http-auth-spi-2.25.26.jar,reactive-streams-1.0.4.jar,http-auth-aws-2.25.26.jar,checksums-2.25.26.jar,checksums-spi-2.25.26.jar,sdk-core-2.25.26.jar,auth-2.25.26.jar,eventstream-1.0.1.jar,http-client-spi-2.25.26.jar,regions-2.25.26.jar,annotations-2.25.26.jar,utils-2.25.26.jar,aws-core-2.25.26.jar,metrics-spi-2.25.26.jar,json-utils-2.25.26.jar,third-party-jackson-core-2.25.26.jar,endpoints-spi-2.25.26.jar,apache-client-2.25.26.jar,httpclient-4.5.13.jar,httpcore-4.4.16.jar,commons-codec-1.17.1.jar,netty-nio-client-2.25.26.jar,netty-codec-http-4.1.115.Final.jar,netty-codec-http2-4.1.115.Final.jar,netty-codec-4.1.115.Final.jar,netty-transport-4.1.115.Final.jar,netty-common-4.1.115.Final.jar,netty-buffer-4.1.115.Final.jar,netty-handler-4.1.115.Final.jar,netty-transport-native-unix-common-4.1.115.Final.jar,netty-transport-classes-epoll-4.1.115.Final.jar,netty-resolver-4.1.115.Final.jar,h2-2.3.232.jar,postgresql-42.7.4.jar,checker-qual-3.42.0.jar,jakarta.xml.bind-api-4.0.2.jar,jakarta.activation-api-2.1.3.jar,spring-core-6.2.0.jar,spring-jcl-6.2.0.jar,spring-boot-jarmode-tools-3.4.0.jar
+2025-10-07T03:38:44.5111862Z x-ms-applog:informational:base64:SkFScyBpbiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjogc3ByaW5nLWJvb3QtMy40LjAuamFyLHNwcmluZy1ib290LWF1dG9jb25maWd1cmUtMy40LjAuamFyLGxvZ2JhY2stY2xhc3NpYy0xLjUuMTIuamFyLGxvZ2JhY2stY29yZS0xLjUuMTIuamFyLGxvZzRqLXRvLXNsZjRqLTIuMjQuMS5qYXIsbG9nNGotYXBpLTIuMjQuMS5qYXIsanVsLXRvLXNsZjRqLTIuMC4xNi5qYXIsamFrYXJ0YS5hbm5vdGF0aW9uLWFwaS0yLjEuMS5qYXIsc25ha2V5YW1sLTIuMy5qYXIsamFja3Nvbi1kYXRhYmluZC0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtamRrOC0yLjE4LjEuamFyLGphY2tzb24tbW9kdWxlLXBhcmFtZXRlci1uYW1lcy0yLjE4LjEuamFyLHRvbWNhdC1lbWJlZC1jb3JlLTEwLjEuMzMuamFyLHRvbWNhdC1lbWJlZC13ZWJzb2NrZXQtMTAuMS4zMy5qYXIsc3ByaW5nLXdlYi02LjIuMC5qYXIsc3ByaW5nLWJlYW5zLTYuMi4wLmphcixzcHJpbmctd2VibXZjLTYuMi4wLmphcixzcHJpbmctY29udGV4dC02LjIuMC5qYXIsc3ByaW5nLWV4cHJlc3Npb24tNi4yLjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLWF1dG9jb25maWd1cmUtMy40LjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLTMuNC4wLmphcixtaWNyb21ldGVyLW9ic2VydmF0aW9uLTEuMTQuMS5qYXIsbWljcm9tZXRlci1jb21tb25zLTEuMTQuMS5qYXIsbWljcm9tZXRlci1qYWthcnRhOS0xLjE0LjEuamFyLG1pY3JvbWV0ZXItY29yZS0xLjE0LjEuamFyLEhkckhpc3RvZ3JhbS0yLjIuMi5qYXIsTGF0ZW5jeVV0aWxzLTIuMC4zLmphcix0b21jYXQtZW1iZWQtZWwtMTAuMS4zMy5qYXIsaGliZXJuYXRlLXZhbGlkYXRvci04LjAuMS5GaW5hbC5qYXIsamFrYXJ0YS52YWxpZGF0aW9uLWFwaS0zLjAuMi5qYXIsamJvc3MtbG9nZ2luZy0zLjYuMS5GaW5hbC5qYXIsY2xhc3NtYXRlLTEuNy4wLmphcixIaWthcmlDUC01LjEuMC5qYXIsc3ByaW5nLWpkYmMtNi4yLjAuamFyLGhpYmVybmF0ZS1jb3JlLTYuNi4yLkZpbmFsLmphcixqYWthcnRhLnBlcnNpc3RlbmNlLWFwaS0zLjEuMC5qYXIsamFrYXJ0YS50cmFuc2FjdGlvbi1hcGktMi4wLjEuamFyLGhpYmVybmF0ZS1jb21tb25zLWFubm90YXRpb25zLTcuMC4zLkZpbmFsLmphcixqYW5kZXgtMy4yLjAuamFyLGJ5dGUtYnVkZHktMS4xNS4xMC5qYXIsamF4Yi1ydW50aW1lLTQuMC41LmphcixqYXhiLWNvcmUtNC4wLjUuamFyLGFuZ3VzLWFjdGl2YXRpb24tMi4wLjIuamFyLHR4dzItNC4wLjUuamFyLGlzdGFjay1jb21tb25zLXJ1bnRpbWUtNC4xLjIuamFyLGpha2FydGEuaW5qZWN0LWFwaS0yLjAuMS5qYXIsYW50bHI0LXJ1bnRpbWUtNC4xMy4wLmphcixzcHJpbmctZGF0YS1qcGEtMy40LjAuamFyLHNwcmluZy1kYXRhLWNvbW1vbnMtMy40LjAuamFyLHNwcmluZy1vcm0tNi4yLjAuamFyLHNwcmluZy10eC02LjIuMC5qYXIsc3ByaW5nLWFzcGVjdHMtNi4yLjAuamFyLGFzcGVjdGp3ZWF2ZXItMS45LjIyLjEuamFyLHNwcmluZy1hb3AtNi4yLjAuamFyLHNwcmluZy1zZWN1cml0eS1jb25maWctNi40LjEuamFyLHNwcmluZy1zZWN1cml0eS1jb3JlLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktY3J5cHRvLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktd2ViLTYuNC4xLmphcixzcHJpbmctY29udGV4dC1zdXBwb3J0LTYuMi4wLmphcixzcHJpbmctYmF0Y2gtY29yZS01LjIuMC5qYXIsc3ByaW5nLWJhdGNoLWluZnJhc3RydWN0dXJlLTUuMi4wLmphcixzcHJpbmctcmV0cnktMi4wLjEwLmphcixmbHl3YXktY29yZS0xMC4yMS4wLmphcixqYWNrc29uLWRhdGFmb3JtYXQtdG9tbC0yLjE4LjEuamFyLGphY2tzb24tY29yZS0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtanNyMzEwLTIuMTguMS5qYXIsamFja3Nvbi1hbm5vdGF0aW9ucy0yLjE4LjEuamFyLGZseXdheS1kYXRhYmFzZS1wb3N0Z3Jlc3FsLTEwLjIxLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItd2VibXZjLXVpLTIuMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLXdlYm12Yy1hcGktMi4xLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItY29tbW9uLTIuMS4wLmphcixzd2FnZ2VyLWNvcmUtamFrYXJ0YS0yLjIuOS5qYXIsc3dhZ2dlci1hbm5vdGF0aW9ucy1qYWthcnRhLTIuMi45Lmphcixzd2FnZ2VyLW1vZGVscy1qYWthcnRhLTIuMi45LmphcixqYWNrc29uLWRhdGFmb3JtYXQteWFtbC0yLjE4LjEuamFyLHN3YWdnZXItdWktNC4xOC4yLmphcixqYXZhLXV1aWQtZ2VuZXJhdG9yLTQuMy4wLmphcixzbGY0ai1hcGktMi4wLjE2LmphcixvcGVuY3N2LTUuOS5qYXIsY29tbW9ucy1sYW5nMy0zLjE3LjAuamFyLGNvbW1vbnMtdGV4dC0xLjExLjAuamFyLGNvbW1vbnMtYmVhbnV0aWxzLTEuOS40Lmphcixjb21tb25zLWxvZ2dpbmctMS4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zLTMuMi4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zNC00LjQuamFyLHMzLTIuMjUuMjYuamFyLGF3cy14bWwtcHJvdG9jb2wtMi4yNS4yNi5qYXIsYXdzLXF1ZXJ5LXByb3RvY29sLTIuMjUuMjYuamFyLHByb3RvY29sLWNvcmUtMi4yNS4yNi5qYXIsYXJucy0yLjI1LjI2Lmphcixwcm9maWxlcy0yLjI1LjI2LmphcixjcnQtY29yZS0yLjI1LjI2LmphcixodHRwLWF1dGgtMi4yNS4yNi5qYXIsaWRlbnRpdHktc3BpLTIuMjUuMjYuamFyLGh0dHAtYXV0aC1zcGktMi4yNS4yNi5qYXIscmVhY3RpdmUtc3RyZWFtcy0xLjAuNC5qYXIsaHR0cC1hdXRoLWF3cy0yLjI1LjI2LmphcixjaGVja3N1bXMtMi4yNS4yNi5qYXIsY2hlY2tzdW1zLXNwaS0yLjI1LjI2LmphcixzZGstY29yZS0yLjI1LjI2LmphcixhdXRoLTIuMjUuMjYuamFyLGV2ZW50c3RyZWFtLTEuMC4xLmphcixodHRwLWNsaWVudC1zcGktMi4yNS4yNi5qYXIscmVnaW9ucy0yLjI1LjI2Lmphcixhbm5vdGF0aW9ucy0yLjI1LjI2Lmphcix1dGlscy0yLjI1LjI2Lmphcixhd3MtY29yZS0yLjI1LjI2LmphcixtZXRyaWNzLXNwaS0yLjI1LjI2Lmphcixqc29uLXV0aWxzLTIuMjUuMjYuamFyLHRoaXJkLXBhcnR5LWphY2tzb24tY29yZS0yLjI1LjI2LmphcixlbmRwb2ludHMtc3BpLTIuMjUuMjYuamFyLGFwYWNoZS1jbGllbnQtMi4yNS4yNi5qYXIsaHR0cGNsaWVudC00LjUuMTMuamFyLGh0dHBjb3JlLTQuNC4xNi5qYXIsY29tbW9ucy1jb2RlYy0xLjE3LjEuamFyLG5ldHR5LW5pby1jbGllbnQtMi4yNS4yNi5qYXIsbmV0dHktY29kZWMtaHR0cC00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy1odHRwMi00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy00LjEuMTE1LkZpbmFsLmphcixuZXR0eS10cmFuc3BvcnQtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktY29tbW9uLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LWJ1ZmZlci00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1oYW5kbGVyLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LXRyYW5zcG9ydC1uYXRpdmUtdW5peC1jb21tb24tNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktdHJhbnNwb3J0LWNsYXNzZXMtZXBvbGwtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktcmVzb2x2ZXItNC4xLjExNS5GaW5hbC5qYXIsaDItMi4zLjIzMi5qYXIscG9zdGdyZXNxbC00Mi43LjQuamFyLGNoZWNrZXItcXVhbC0zLjQyLjAuamFyLGpha2FydGEueG1sLmJpbmQtYXBpLTQuMC4yLmphcixqYWthcnRhLmFjdGl2YXRpb24tYXBpLTIuMS4zLmphcixzcHJpbmctY29yZS02LjIuMC5qYXIsc3ByaW5nLWpjbC02LjIuMC5qYXIsc3ByaW5nLWJvb3QtamFybW9kZS10b29scy0zLjQuMC5qYXI=
+2025-10-07T03:38:44.5112248Z x-ms-telemetry:informational:base64:SkFScyBpbiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjogc3ByaW5nLWJvb3QtMy40LjAuamFyLHNwcmluZy1ib290LWF1dG9jb25maWd1cmUtMy40LjAuamFyLGxvZ2JhY2stY2xhc3NpYy0xLjUuMTIuamFyLGxvZ2JhY2stY29yZS0xLjUuMTIuamFyLGxvZzRqLXRvLXNsZjRqLTIuMjQuMS5qYXIsbG9nNGotYXBpLTIuMjQuMS5qYXIsanVsLXRvLXNsZjRqLTIuMC4xNi5qYXIsamFrYXJ0YS5hbm5vdGF0aW9uLWFwaS0yLjEuMS5qYXIsc25ha2V5YW1sLTIuMy5qYXIsamFja3Nvbi1kYXRhYmluZC0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtamRrOC0yLjE4LjEuamFyLGphY2tzb24tbW9kdWxlLXBhcmFtZXRlci1uYW1lcy0yLjE4LjEuamFyLHRvbWNhdC1lbWJlZC1jb3JlLTEwLjEuMzMuamFyLHRvbWNhdC1lbWJlZC13ZWJzb2NrZXQtMTAuMS4zMy5qYXIsc3ByaW5nLXdlYi02LjIuMC5qYXIsc3ByaW5nLWJlYW5zLTYuMi4wLmphcixzcHJpbmctd2VibXZjLTYuMi4wLmphcixzcHJpbmctY29udGV4dC02LjIuMC5qYXIsc3ByaW5nLWV4cHJlc3Npb24tNi4yLjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLWF1dG9jb25maWd1cmUtMy40LjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLTMuNC4wLmphcixtaWNyb21ldGVyLW9ic2VydmF0aW9uLTEuMTQuMS5qYXIsbWljcm9tZXRlci1jb21tb25zLTEuMTQuMS5qYXIsbWljcm9tZXRlci1qYWthcnRhOS0xLjE0LjEuamFyLG1pY3JvbWV0ZXItY29yZS0xLjE0LjEuamFyLEhkckhpc3RvZ3JhbS0yLjIuMi5qYXIsTGF0ZW5jeVV0aWxzLTIuMC4zLmphcix0b21jYXQtZW1iZWQtZWwtMTAuMS4zMy5qYXIsaGliZXJuYXRlLXZhbGlkYXRvci04LjAuMS5GaW5hbC5qYXIsamFrYXJ0YS52YWxpZGF0aW9uLWFwaS0zLjAuMi5qYXIsamJvc3MtbG9nZ2luZy0zLjYuMS5GaW5hbC5qYXIsY2xhc3NtYXRlLTEuNy4wLmphcixIaWthcmlDUC01LjEuMC5qYXIsc3ByaW5nLWpkYmMtNi4yLjAuamFyLGhpYmVybmF0ZS1jb3JlLTYuNi4yLkZpbmFsLmphcixqYWthcnRhLnBlcnNpc3RlbmNlLWFwaS0zLjEuMC5qYXIsamFrYXJ0YS50cmFuc2FjdGlvbi1hcGktMi4wLjEuamFyLGhpYmVybmF0ZS1jb21tb25zLWFubm90YXRpb25zLTcuMC4zLkZpbmFsLmphcixqYW5kZXgtMy4yLjAuamFyLGJ5dGUtYnVkZHktMS4xNS4xMC5qYXIsamF4Yi1ydW50aW1lLTQuMC41LmphcixqYXhiLWNvcmUtNC4wLjUuamFyLGFuZ3VzLWFjdGl2YXRpb24tMi4wLjIuamFyLHR4dzItNC4wLjUuamFyLGlzdGFjay1jb21tb25zLXJ1bnRpbWUtNC4xLjIuamFyLGpha2FydGEuaW5qZWN0LWFwaS0yLjAuMS5qYXIsYW50bHI0LXJ1bnRpbWUtNC4xMy4wLmphcixzcHJpbmctZGF0YS1qcGEtMy40LjAuamFyLHNwcmluZy1kYXRhLWNvbW1vbnMtMy40LjAuamFyLHNwcmluZy1vcm0tNi4yLjAuamFyLHNwcmluZy10eC02LjIuMC5qYXIsc3ByaW5nLWFzcGVjdHMtNi4yLjAuamFyLGFzcGVjdGp3ZWF2ZXItMS45LjIyLjEuamFyLHNwcmluZy1hb3AtNi4yLjAuamFyLHNwcmluZy1zZWN1cml0eS1jb25maWctNi40LjEuamFyLHNwcmluZy1zZWN1cml0eS1jb3JlLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktY3J5cHRvLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktd2ViLTYuNC4xLmphcixzcHJpbmctY29udGV4dC1zdXBwb3J0LTYuMi4wLmphcixzcHJpbmctYmF0Y2gtY29yZS01LjIuMC5qYXIsc3ByaW5nLWJhdGNoLWluZnJhc3RydWN0dXJlLTUuMi4wLmphcixzcHJpbmctcmV0cnktMi4wLjEwLmphcixmbHl3YXktY29yZS0xMC4yMS4wLmphcixqYWNrc29uLWRhdGFmb3JtYXQtdG9tbC0yLjE4LjEuamFyLGphY2tzb24tY29yZS0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtanNyMzEwLTIuMTguMS5qYXIsamFja3Nvbi1hbm5vdGF0aW9ucy0yLjE4LjEuamFyLGZseXdheS1kYXRhYmFzZS1wb3N0Z3Jlc3FsLTEwLjIxLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItd2VibXZjLXVpLTIuMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLXdlYm12Yy1hcGktMi4xLjAuamFyLHNwcmluZ2RvYy1vcGVuYXBpLXN0YXJ0ZXItY29tbW9uLTIuMS4wLmphcixzd2FnZ2VyLWNvcmUtamFrYXJ0YS0yLjIuOS5qYXIsc3dhZ2dlci1hbm5vdGF0aW9ucy1qYWthcnRhLTIuMi45Lmphcixzd2FnZ2VyLW1vZGVscy1qYWthcnRhLTIuMi45LmphcixqYWNrc29uLWRhdGFmb3JtYXQteWFtbC0yLjE4LjEuamFyLHN3YWdnZXItdWktNC4xOC4yLmphcixqYXZhLXV1aWQtZ2VuZXJhdG9yLTQuMy4wLmphcixzbGY0ai1hcGktMi4wLjE2LmphcixvcGVuY3N2LTUuOS5qYXIsY29tbW9ucy1sYW5nMy0zLjE3LjAuamFyLGNvbW1vbnMtdGV4dC0xLjExLjAuamFyLGNvbW1vbnMtYmVhbnV0aWxzLTEuOS40Lmphcixjb21tb25zLWxvZ2dpbmctMS4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zLTMuMi4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zNC00LjQuamFyLHMzLTIuMjUuMjYuamFyLGF3cy14bWwtcHJvdG9jb2wtMi4yNS4yNi5qYXIsYXdzLXF1ZXJ5LXByb3RvY29sLTIuMjUuMjYuamFyLHByb3RvY29sLWNvcmUtMi4yNS4yNi5qYXIsYXJucy0yLjI1LjI2Lmphcixwcm9maWxlcy0yLjI1LjI2LmphcixjcnQtY29yZS0yLjI1LjI2LmphcixodHRwLWF1dGgtMi4yNS4yNi5qYXIsaWRlbnRpdHktc3BpLTIuMjUuMjYuamFyLGh0dHAtYXV0aC1zcGktMi4yNS4yNi5qYXIscmVhY3RpdmUtc3RyZWFtcy0xLjAuNC5qYXIsaHR0cC1hdXRoLWF3cy0yLjI1LjI2LmphcixjaGVja3N1bXMtMi4yNS4yNi5qYXIsY2hlY2tzdW1zLXNwaS0yLjI1LjI2LmphcixzZGstY29yZS0yLjI1LjI2LmphcixhdXRoLTIuMjUuMjYuamFyLGV2ZW50c3RyZWFtLTEuMC4xLmphcixodHRwLWNsaWVudC1zcGktMi4yNS4yNi5qYXIscmVnaW9ucy0yLjI1LjI2Lmphcixhbm5vdGF0aW9ucy0yLjI1LjI2Lmphcix1dGlscy0yLjI1LjI2Lmphcixhd3MtY29yZS0yLjI1LjI2LmphcixtZXRyaWNzLXNwaS0yLjI1LjI2Lmphcixqc29uLXV0aWxzLTIuMjUuMjYuamFyLHRoaXJkLXBhcnR5LWphY2tzb24tY29yZS0yLjI1LjI2LmphcixlbmRwb2ludHMtc3BpLTIuMjUuMjYuamFyLGFwYWNoZS1jbGllbnQtMi4yNS4yNi5qYXIsaHR0cGNsaWVudC00LjUuMTMuamFyLGh0dHBjb3JlLTQuNC4xNi5qYXIsY29tbW9ucy1jb2RlYy0xLjE3LjEuamFyLG5ldHR5LW5pby1jbGllbnQtMi4yNS4yNi5qYXIsbmV0dHktY29kZWMtaHR0cC00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy1odHRwMi00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy00LjEuMTE1LkZpbmFsLmphcixuZXR0eS10cmFuc3BvcnQtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktY29tbW9uLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LWJ1ZmZlci00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1oYW5kbGVyLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LXRyYW5zcG9ydC1uYXRpdmUtdW5peC1jb21tb24tNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktdHJhbnNwb3J0LWNsYXNzZXMtZXBvbGwtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktcmVzb2x2ZXItNC4xLjExNS5GaW5hbC5qYXIsaDItMi4zLjIzMi5qYXIscG9zdGdyZXNxbC00Mi43LjQuamFyLGNoZWNrZXItcXVhbC0zLjQyLjAuamFyLGpha2FydGEueG1sLmJpbmQtYXBpLTQuMC4yLmphcixqYWthcnRhLmFjdGl2YXRpb24tYXBpLTIuMS4zLmphcixzcHJpbmctY29yZS02LjIuMC5qYXIsc3ByaW5nLWpjbC02LjIuMC5qYXIsc3ByaW5nLWJvb3QtamFybW9kZS10b29scy0zLjQuMC5qYXI=
+2025-10-07T03:38:44.5119496Z Waiting for main process to exit. GLOBAL_PID_MAIN=69
+2025-10-07T03:38:44.5119641Z Waiting for GLOBAL_PID_MAIN == 69
+2025-10-07T03:38:45.7693269Z Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2025-10-07T03:38:52.0049252Z
+2025-10-07T03:38:52.0051532Z   .   ____          _            __ _ _
+2025-10-07T03:38:52.0051665Z  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2025-10-07T03:38:52.0051712Z ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2025-10-07T03:38:52.0051751Z  \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2025-10-07T03:38:52.0051787Z   '  |____| .__|_| |_|_| |_\__, | / / / /
+2025-10-07T03:38:52.0051884Z  =========|_|==============|___/=/_/_/_/
+2025-10-07T03:38:52.005192Z
+2025-10-07T03:38:52.0389145Z  :: Spring Boot ::                (v3.4.0)
+2025-10-07T03:38:52.0463343Z
+2025-10-07T03:38:52.9900623Z 2025-10-07T03:38:52.986Z  INFO 69 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : Starting P4BackendApplication v0.0.1-SNAPSHOT using Java 21.0.7 with PID 69 (/home/site/wwwroot/app.jar started by root in /home/site/wwwroot)
+2025-10-07T03:38:52.9901395Z 2025-10-07T03:38:52.989Z DEBUG 69 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : Running with Spring Boot v3.4.0, Spring v6.2.0
+2025-10-07T03:38:52.9913627Z 2025-10-07T03:38:52.991Z  INFO 69 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : The following 1 profile is active: "prod"
+2025-10-07T03:38:55.0461907Z 2025-10-07T03:38:55.045Z  INFO 69 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-07T03:38:55.1763127Z 2025-10-07T03:38:55.175Z  INFO 69 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 95 ms. Found 2 JPA repository interfaces.
+2025-10-07T03:38:57.7866029Z 2025-10-07T03:38:57.786Z  INFO 69 --- [p4-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 80 (http)
+2025-10-07T03:38:57.8778282Z 2025-10-07T03:38:57.877Z  INFO 69 --- [p4-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 4708 ms
+2025-10-07T03:38:57.8855848Z Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2025-10-07T03:38:58.1617371Z 2025-10-07T03:38:58.159Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-10-07T03:39:00.0416634Z 2025-10-07T03:39:00.041Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@6921cfa
+2025-10-07T03:39:00.0437912Z 2025-10-07T03:39:00.043Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-10-07T03:39:00.0559339Z 2025-10-07T03:39:00.055Z  INFO 69 --- [p4-backend] [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=***REMOVED***&sslmode=require&channelBinding=require'
+2025-10-07T03:39:00.8328391Z 2025-10-07T03:39:00.832Z  INFO 69 --- [p4-backend] [           main] o.f.c.i.resource.ResourceNameValidator   : 1 SQL migrations were detected but not run because they did not follow the filename convention.
+2025-10-07T03:39:00.8415589Z 2025-10-07T03:39:00.841Z  INFO 69 --- [p4-backend] [           main] o.f.c.i.resource.ResourceNameValidator   : Set 'validateMigrationNaming' to true to fail fast and see a list of the invalid file names.
+2025-10-07T03:39:00.8588386Z 2025-10-07T03:39:00.858Z  INFO 69 --- [p4-backend] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=********&sslmode=require&channelBinding=require (PostgreSQL 17.5)
+2025-10-07T03:39:01.4026236Z 2025-10-07T03:39:01.402Z  INFO 69 --- [p4-backend] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 3 migrations (execution time 00:00.223s)
+2025-10-07T03:39:01.7301575Z 2025-10-07T03:39:01.729Z  INFO 69 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 2
+2025-10-07T03:39:01.9214794Z 2025-10-07T03:39:01.916Z  INFO 69 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "3 - Create catalog schema"
+2025-10-07T03:39:02.1919246Z 2025-10-07T03:39:02.185Z ERROR 69 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Migration of schema "public" to version "3 - Create catalog schema" failed! Changes successfully rolled back.
+2025-10-07T03:39:02.3728908Z 2025-10-07T03:39:02.368Z  WARN 69 --- [p4-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V3__Create_catalog_schema.sql failed
+2025-10-07T03:39:02.3730489Z -------------------------------------------
+2025-10-07T03:39:02.3730542Z SQL State  : 42P07
+2025-10-07T03:39:02.3730581Z Error Code : 0
+2025-10-07T03:39:02.3730681Z Message    : ERROR: relation "product" already exists
+2025-10-07T03:39:02.373072Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
+2025-10-07T03:39:02.3730751Z Line       : 35
+2025-10-07T03:39:02.3730787Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-07T03:39:02.3730815Z
+2025-10-07T03:39:02.3793798Z 2025-10-07T03:39:02.373Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-10-07T03:39:02.6164767Z 2025-10-07T03:39:02.614Z  INFO 69 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+2025-10-07T03:39:02.8146451Z 2025-10-07T03:39:02.811Z  INFO 69 --- [p4-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger :
+2025-10-07T03:39:02.8147078Z
+2025-10-07T03:39:02.8147138Z Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-07T03:39:02.9049441Z 2025-10-07T03:39:02.894Z ERROR 69 --- [p4-backend] [           main] o.s.boot.SpringApplication               : Application run failed
+2025-10-07T03:39:02.905003Z
+2025-10-07T03:39:02.9050109Z org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V3__Create_catalog_schema.sql failed
+2025-10-07T03:39:02.9050146Z -------------------------------------------
+2025-10-07T03:39:02.9050177Z SQL State  : 42P07
+2025-10-07T03:39:02.9050267Z Error Code : 0
+2025-10-07T03:39:02.9050299Z Message    : ERROR: relation "product" already exists
+2025-10-07T03:39:02.9050338Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
+2025-10-07T03:39:02.9050371Z Line       : 35
+2025-10-07T03:39:02.9050403Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-07T03:39:02.9050434Z
+2025-10-07T03:39:02.905048Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:325) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9050517Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9050603Z 	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970) ~[spring-context-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9050642Z 	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9050679Z 	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-07T03:39:02.9050739Z 	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-07T03:39:02.9050775Z 	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-07T03:39:02.9050811Z 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-07T03:39:02.9050846Z 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-07T03:39:02.905088Z 	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-07T03:39:02.9050925Z 	at com.p4.backend.P4BackendApplication.main(P4BackendApplication.java:10) ~[!/:0.0.1-SNAPSHOT]
+2025-10-07T03:39:02.905096Z 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+2025-10-07T03:39:02.9050992Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+2025-10-07T03:39:02.9051026Z 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102) ~[app.jar:0.0.1-SNAPSHOT]
+2025-10-07T03:39:02.905106Z 	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[app.jar:0.0.1-SNAPSHOT]
+2025-10-07T03:39:02.9051103Z 	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[app.jar:0.0.1-SNAPSHOT]
+2025-10-07T03:39:02.9051149Z Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V3__Create_catalog_schema.sql failed
+2025-10-07T03:39:02.905121Z -------------------------------------------
+2025-10-07T03:39:02.9051248Z SQL State  : 42P07
+2025-10-07T03:39:02.9051288Z Error Code : 0
+2025-10-07T03:39:02.905132Z Message    : ERROR: relation "product" already exists
+2025-10-07T03:39:02.9051357Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
+2025-10-07T03:39:02.9051387Z Line       : 35
+2025-10-07T03:39:02.9051419Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-07T03:39:02.9051448Z
+2025-10-07T03:39:02.9051496Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9051534Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.905182Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9051867Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9051906Z 	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:288) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9051958Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9051995Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9052031Z 	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9052063Z 	... 15 common frames omitted
+2025-10-07T03:39:02.9052097Z Caused by: org.flywaydb.core.internal.exception.FlywayMigrateException: Script V3__Create_catalog_schema.sql failed
+2025-10-07T03:39:02.9052138Z -------------------------------------------
+2025-10-07T03:39:02.905217Z SQL State  : 42P07
+2025-10-07T03:39:02.9052201Z Error Code : 0
+2025-10-07T03:39:02.9052233Z Message    : ERROR: relation "product" already exists
+2025-10-07T03:39:02.9052273Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
+2025-10-07T03:39:02.9052304Z Line       : 35
+2025-10-07T03:39:02.9052345Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-07T03:39:02.9052374Z
+2025-10-07T03:39:02.9052407Z 	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:399) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052446Z 	at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:283) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052482Z 	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:59) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052518Z 	at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:282) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052562Z 	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:255) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052597Z 	at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:153) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052638Z 	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:77) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052691Z 	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.lambda$execute$0(PostgreSQLAdvisoryLockTemplate.java:60) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052728Z 	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:59) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052767Z 	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:60) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052805Z 	at org.flywaydb.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:105) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052842Z 	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:149) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052885Z 	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:153) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052921Z 	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:104) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052955Z 	at org.flywaydb.core.Flyway.lambda$migrate$1(Flyway.java:231) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9052988Z 	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:213) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053022Z 	at org.flywaydb.core.Flyway.migrate(Flyway.java:177) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053074Z 	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66) ~[spring-boot-autoconfigure-3.4.0.jar!/:3.4.0]
+2025-10-07T03:39:02.905311Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1849) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9053221Z 	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-07T03:39:02.9053255Z 	... 22 common frames omitted
+2025-10-07T03:39:02.905329Z Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Script V3__Create_catalog_schema.sql failed
+2025-10-07T03:39:02.9053334Z -------------------------------------------
+2025-10-07T03:39:02.9053366Z SQL State  : 42P07
+2025-10-07T03:39:02.9053395Z Error Code : 0
+2025-10-07T03:39:02.9053427Z Message    : ERROR: relation "product" already exists
+2025-10-07T03:39:02.9053464Z Location   : db/migration/V3__Create_catalog_schema.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V3__Create_catalog_schema.sql)
+2025-10-07T03:39:02.9053494Z Line       : 35
+2025-10-07T03:39:02.9053535Z Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-07T03:39:02.9053565Z
+2025-10-07T03:39:02.9053601Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:256) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053638Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:217) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053674Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:137) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.905372Z 	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:75) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053756Z 	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:66) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053792Z 	at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:31) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053827Z 	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:65) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053862Z 	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:391) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9053904Z 	... 41 common frames omitted
+2025-10-07T03:39:02.9053936Z Caused by: org.postgresql.util.PSQLException: ERROR: relation "product" already exists
+2025-10-07T03:39:02.9053972Z 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.9054006Z 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.905404Z 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.9054075Z 	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.905412Z 	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.9054153Z 	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.9054188Z 	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.9054222Z 	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.9054254Z 	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-07T03:39:02.9054297Z 	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar!/:na]
+2025-10-07T03:39:02.9054331Z 	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar!/:na]
+2025-10-07T03:39:02.905437Z 	at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9054408Z 	at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:88) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9054444Z 	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:212) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-07T03:39:02.9054485Z 	... 47 common frames omitted
+2025-10-07T03:39:02.9054513Z
+2025-10-07T03:39:02.9724739Z Wait for pid == 69 either returned successfully or was interrupted due to a signal 69
+2025-10-07T03:39:02.972964Z Done waiting for main process. GLOBAL_PID_MAIN=69.
+2025-10-07T03:39:02.9729754Z Exiting entry script!

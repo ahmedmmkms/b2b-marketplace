@@ -2,7 +2,7 @@
 -- Tables for product catalog with attributes and media assets
 
 -- Create vendor table
-CREATE TABLE vendor (
+CREATE TABLE IF NOT EXISTS vendor (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     name VARCHAR(255) NOT NULL,
     description TEXT,
@@ -18,7 +18,7 @@ CREATE TABLE vendor (
 );
 
 -- Create product_attribute table to store attribute definitions
-CREATE TABLE product_attribute (
+CREATE TABLE IF NOT EXISTS product_attribute (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     name VARCHAR(255) NOT NULL,
     display_name VARCHAR(255) NOT NULL,
@@ -32,7 +32,7 @@ CREATE TABLE product_attribute (
 );
 
 -- Create product table (updated version)
-CREATE TABLE product (
+CREATE TABLE IF NOT EXISTS product (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     name VARCHAR(255) NOT NULL,
     slug VARCHAR(255) UNIQUE,  -- URL-friendly identifier
@@ -65,7 +65,7 @@ CREATE TABLE product (
 );
 
 -- Create product_attribute_value table to store actual attribute values for products
-CREATE TABLE product_attribute_value (
+CREATE TABLE IF NOT EXISTS product_attribute_value (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     product_id VARCHAR(26) NOT NULL REFERENCES product(id) ON DELETE CASCADE,
     attribute_id VARCHAR(26) NOT NULL REFERENCES product_attribute(id),
@@ -79,7 +79,7 @@ CREATE TABLE product_attribute_value (
 );
 
 -- Create media_asset table for storing product images and other media
-CREATE TABLE media_asset (
+CREATE TABLE IF NOT EXISTS media_asset (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     name VARCHAR(255) NOT NULL,  -- Display name
     filename VARCHAR(255) NOT NULL,  -- Original filename
@@ -98,7 +98,7 @@ CREATE TABLE media_asset (
 );
 
 -- Create product_media table for linking products to their media assets
-CREATE TABLE product_media (
+CREATE TABLE IF NOT EXISTS product_media (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     product_id VARCHAR(26) NOT NULL REFERENCES product(id) ON DELETE CASCADE,
     media_asset_id VARCHAR(26) NOT NULL REFERENCES media_asset(id) ON DELETE CASCADE,
@@ -107,33 +107,40 @@ CREATE TABLE product_media (
     UNIQUE(product_id, media_asset_id)
 );
 
--- Create indexes for better performance
-CREATE INDEX idx_product_vendor_id ON product(vendor_id);
-CREATE INDEX idx_product_status ON product(status);
-CREATE INDEX idx_product_category ON product(category_id);
-CREATE INDEX idx_product_sku ON product(sku);
-CREATE INDEX idx_product_slug ON product(slug);
-CREATE INDEX idx_vendor_status ON vendor(status);
-CREATE INDEX idx_media_asset_type ON media_asset(media_type);
-CREATE INDEX idx_media_asset_status ON media_asset(status);
-CREATE INDEX idx_product_attribute_name ON product_attribute(name);
-CREATE INDEX idx_product_attribute_type ON product_attribute(attribute_type);
+-- Create indexes for better performance (using CREATE INDEX IF NOT EXISTS)
+CREATE INDEX IF NOT EXISTS idx_product_vendor_id ON product(vendor_id);
+CREATE INDEX IF NOT EXISTS idx_product_status ON product(status);
+CREATE INDEX IF NOT EXISTS idx_product_category ON product(category_id);
+CREATE INDEX IF NOT EXISTS idx_product_sku ON product(sku);
+CREATE INDEX IF NOT EXISTS idx_product_slug ON product(slug);
+CREATE INDEX IF NOT EXISTS idx_vendor_status ON vendor(status);
+CREATE INDEX IF NOT EXISTS idx_media_asset_type ON media_asset(media_type);
+CREATE INDEX IF NOT EXISTS idx_media_asset_status ON media_asset(status);
+CREATE INDEX IF NOT EXISTS idx_product_attribute_name ON product_attribute(name);
+CREATE INDEX IF NOT EXISTS idx_product_attribute_type ON product_attribute(attribute_type);
 
--- Add full-text search support
-CREATE INDEX idx_product_name_gin ON product USING gin(to_tsvector('english', name));
-CREATE INDEX idx_product_description_gin ON product USING gin(to_tsvector('english', description));
-CREATE INDEX idx_product_slug_gin ON product USING gin(to_tsvector('english', slug));
+-- Add full-text search support (using CREATE INDEX IF NOT EXISTS)
+CREATE INDEX IF NOT EXISTS idx_product_name_gin ON product USING gin(to_tsvector('english', name));
+CREATE INDEX IF NOT EXISTS idx_product_description_gin ON product USING gin(to_tsvector('english', description));
+CREATE INDEX IF NOT EXISTS idx_product_slug_gin ON product USING gin(to_tsvector('english', slug));
 
 -- Create function to automatically update the updated_at column
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $$
+RETURNS TRIGGER AS $
 BEGIN
-    NEW updated_at = CURRENT_TIMESTAMP;
+    NEW.updated_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$$ language 'plpgsql';
+$ language 'plpgsql';
 
--- Attach the trigger to relevant tables
+-- Attach the trigger to relevant tables (triggers can't use IF NOT EXISTS, so we'll drop and recreate)
+DROP TRIGGER IF EXISTS update_vendor_updated_at ON vendor;
+DROP TRIGGER IF EXISTS update_product_updated_at ON product;
+DROP TRIGGER IF EXISTS update_product_attribute_updated_at ON product_attribute;
+DROP TRIGGER IF EXISTS update_media_asset_updated_at ON media_asset;
+DROP TRIGGER IF EXISTS update_product_attribute_value_updated_at ON product_attribute_value;
+
+-- Create triggers
 CREATE TRIGGER update_vendor_updated_at BEFORE UPDATE ON vendor FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_product_updated_at BEFORE UPDATE ON product FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_product_attribute_updated_at BEFORE UPDATE ON product_attribute FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
