@@ -121,7 +121,16 @@ public class CatalogCsvService {
         product.setTaxClass(csvProduct.getTaxClass());
         product.setMetaTitle(csvProduct.getMetaTitle());
         product.setMetaDescription(csvProduct.getMetaDescription());
-        product.setMetaKeywords(csvProduct.getMetaKeywords());
+        // Convert comma-separated string to array for metaKeywords
+        String metaKeywordsStr = csvProduct.getMetaKeywords();
+        String[] metaKeywordsArray = (metaKeywordsStr != null && !metaKeywordsStr.trim().isEmpty()) 
+            ? metaKeywordsStr.split(",\\s*") 
+            : new String[0];
+        // Convert to JSON string format for metaKeywords
+        String metaKeywordsJson = metaKeywordsArray != null && metaKeywordsArray.length > 0
+            ? "[\"" + String.join("\",\"", metaKeywordsArray) + "\"]"
+            : "[]";
+        product.setMetaKeywords(metaKeywordsJson);
         
         // Weight
         if (csvProduct.getWeight() != null && !csvProduct.getWeight().trim().isEmpty()) {

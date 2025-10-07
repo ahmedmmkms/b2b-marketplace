@@ -192,7 +192,7 @@ public class DatabaseSeeder implements CommandLineRunner {
         asset.setTitle(title);
         asset.setCaption(caption);
         asset.setAltText(title);
-        asset.setTags("product,image");
+        asset.setTags("[\"product\",\"image\"]");
         asset.setIsPrimary(true);
         return asset;
     }

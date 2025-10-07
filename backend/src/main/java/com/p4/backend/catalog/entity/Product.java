@@ -55,7 +55,7 @@ public class Product extends BaseEntity {
     @Column(name = "meta_description")
     private String metaDescription;
     
-    @Column(name = "meta_keywords")
+    @Column(name = "meta_keywords", columnDefinition = "text")
     private String metaKeywords;
     
     private BigDecimal weight;
@@ -93,6 +93,7 @@ public class Product extends BaseEntity {
         super();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.metaKeywords = "[]"; // Initialize as JSON string for metaKeywords
     }
     
     public Product(String name, String vendorId) {
@@ -101,6 +102,7 @@ public class Product extends BaseEntity {
         this.vendorId = vendorId;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.metaKeywords = "[]"; // Initialize as JSON string for metaKeywords
     }
     
     // Getters and setters

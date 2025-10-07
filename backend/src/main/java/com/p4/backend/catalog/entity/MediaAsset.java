@@ -31,7 +31,8 @@ public class MediaAsset extends BaseEntity {
     @Column(columnDefinition = "TEXT")
     private String caption; // Caption or description
     
-    private String tags; // Comma-separated tags for search
+    @Column(name = "tags", columnDefinition = "text")
+    private String tags; // Tags for search (as JSON string)
     
     @Enumerated(EnumType.STRING)
     @Column(name = "media_type", nullable = false, length = 20)
@@ -55,6 +56,7 @@ public class MediaAsset extends BaseEntity {
         super();
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.tags = "[]"; // Initialize as JSON string for tags
     }
     
     public MediaAsset(String name, String filename, String filePath, MediaType mediaType) {
@@ -65,6 +67,7 @@ public class MediaAsset extends BaseEntity {
         this.mediaType = mediaType;
         this.createdAt = LocalDateTime.now();
         this.updatedAt = LocalDateTime.now();
+        this.tags = "[]"; // Initialize as JSON string for tags
     }
     
     // Getters and setters
