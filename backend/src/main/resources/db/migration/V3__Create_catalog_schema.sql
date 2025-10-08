@@ -1,7 +1,229 @@
--- P4-S1-T002: Create complete catalog schema including product, vendor, media_asset, and attribute sets
--- Tables for product catalog with attributes and media assets
+-- P4-S1-T002: Complete catalog schema - update existing tables and create new ones
+-- This migration adds columns to existing tables and creates new tables for the catalog feature
 
--- Create vendor table
+-- Add missing columns to the existing product table (from V1)
+-- Only add columns that don't already exist, using conditional logic
+
+-- Add slug column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'slug') THEN
+      ALTER TABLE product ADD COLUMN slug VARCHAR(255);
+      ALTER TABLE product ADD CONSTRAINT uk_product_slug UNIQUE (slug);
+   END IF;
+END
+$$;
+
+-- Add short_description column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'short_description') THEN
+      ALTER TABLE product ADD COLUMN short_description VARCHAR(500);
+   END IF;
+END
+$$;
+
+-- Add sku column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'sku') THEN
+      ALTER TABLE product ADD COLUMN sku VARCHAR(100);
+      ALTER TABLE product ADD CONSTRAINT uk_product_sku UNIQUE (sku);
+   END IF;
+END
+$$;
+
+-- Add upc column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'upc') THEN
+      ALTER TABLE product ADD COLUMN upc VARCHAR(50);
+   END IF;
+END
+$$;
+
+-- Add gtin column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'gtin') THEN
+      ALTER TABLE product ADD COLUMN gtin VARCHAR(50);
+   END IF;
+END
+$$;
+
+-- Add mpn column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'mpn') THEN
+      ALTER TABLE product ADD COLUMN mpn VARCHAR(100);
+   END IF;
+END
+$$;
+
+-- Add brand column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'brand') THEN
+      ALTER TABLE product ADD COLUMN brand VARCHAR(100);
+   END IF;
+END
+$$;
+
+-- Add category_id column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'category_id') THEN
+      ALTER TABLE product ADD COLUMN category_id VARCHAR(26);
+   END IF;
+END
+$$;
+
+-- Add vendor_id column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'vendor_id') THEN
+      ALTER TABLE product ADD COLUMN vendor_id VARCHAR(26);
+   END IF;
+END
+$$;
+
+-- Add status column to product if not exists
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'status') THEN
+      ALTER TABLE product ADD COLUMN status VARCHAR(20) DEFAULT 'DRAFT';
+      -- Note: Adding check constraint separately due to complexity
+   END IF;
+END
+$$;
+
+-- Add currency column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'currency') THEN
+      ALTER TABLE product ADD COLUMN currency VARCHAR(3) DEFAULT 'USD';
+   END IF;
+END
+$$;
+
+-- Add base_price column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'base_price') THEN
+      ALTER TABLE product ADD COLUMN base_price DECIMAL(19, 4);
+   END IF;
+END
+$$;
+
+-- Add tax_class column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'tax_class') THEN
+      ALTER TABLE product ADD COLUMN tax_class VARCHAR(50);
+   END IF;
+END
+$$;
+
+-- Add meta_title column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'meta_title') THEN
+      ALTER TABLE product ADD COLUMN meta_title VARCHAR(255);
+   END IF;
+END
+$$;
+
+-- Add meta_description column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'meta_description') THEN
+      ALTER TABLE product ADD COLUMN meta_description VARCHAR(500);
+   END IF;
+END
+$$;
+
+-- Add meta_keywords column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'meta_keywords') THEN
+      ALTER TABLE product ADD COLUMN meta_keywords TEXT;
+   END IF;
+END
+$$;
+
+-- Add weight column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'weight') THEN
+      ALTER TABLE product ADD COLUMN weight DECIMAL(10, 3);
+   END IF;
+END
+$$;
+
+-- Add dimensions column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'dimensions') THEN
+      ALTER TABLE product ADD COLUMN dimensions JSONB;
+   END IF;
+END
+$$;
+
+-- Add packaging_info column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'packaging_info') THEN
+      ALTER TABLE product ADD COLUMN packaging_info JSONB;
+   END IF;
+END
+$$;
+
+-- Add min_order_qty column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'min_order_qty') THEN
+      ALTER TABLE product ADD COLUMN min_order_qty INTEGER DEFAULT 1;
+   END IF;
+END
+$$;
+
+-- Add moq column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'moq') THEN
+      ALTER TABLE product ADD COLUMN moq INTEGER;
+   END IF;
+END
+$$;
+
+-- Add inventory_tracking column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'inventory_tracking') THEN
+      ALTER TABLE product ADD COLUMN inventory_tracking BOOLEAN DEFAULT FALSE;
+   END IF;
+END
+$$;
+
+-- Add inventory_qty column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'inventory_qty') THEN
+      ALTER TABLE product ADD COLUMN inventory_qty INTEGER DEFAULT 0;
+   END IF;
+END
+$$;
+
+-- Add inventory_status column if it doesn't exist
+DO $$
+BEGIN
+   IF NOT EXISTS (SELECT 1 FROM information_schema.columns WHERE table_name = 'product' AND column_name = 'inventory_status') THEN
+      ALTER TABLE product ADD COLUMN inventory_status VARCHAR(20) DEFAULT 'IN_STOCK';
+   END IF;
+END
+$$;
+
+-- Create vendor table (if it doesn't already exist)
 CREATE TABLE IF NOT EXISTS vendor (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     name VARCHAR(255) NOT NULL,
@@ -17,6 +239,40 @@ CREATE TABLE IF NOT EXISTS vendor (
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
+-- Update the vendor_id column in product table to reference the vendor table
+-- Add the foreign key constraint if it doesn't exist
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints 
+                   WHERE constraint_name = 'fk_product_vendor' 
+                   AND table_name = 'product') THEN
+        ALTER TABLE product ADD CONSTRAINT fk_product_vendor FOREIGN KEY (vendor_id) REFERENCES vendor(id);
+    END IF;
+END
+$$;
+
+-- Add check constraint for product status if it doesn't exist
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints 
+                   WHERE constraint_name = 'chk_product_status' 
+                   AND table_name = 'product') THEN
+        ALTER TABLE product ADD CONSTRAINT chk_product_status CHECK (status IN ('DRAFT', 'PUBLISHED', 'UNPUBLISHED', 'SUSPENDED'));
+    END IF;
+END
+$$;
+
+-- Add check constraint for product inventory_status if it doesn't exist
+DO $$
+BEGIN
+    IF NOT EXISTS (SELECT 1 FROM information_schema.table_constraints 
+                   WHERE constraint_name = 'chk_product_inventory_status' 
+                   AND table_name = 'product') THEN
+        ALTER TABLE product ADD CONSTRAINT chk_product_inventory_status CHECK (inventory_status IN ('IN_STOCK', 'OUT_OF_STOCK', 'BACKORDER', 'DISCONTINUED'));
+    END IF;
+END
+$$;
+
 -- Create product_attribute table to store attribute definitions
 CREATE TABLE IF NOT EXISTS product_attribute (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
@@ -27,39 +283,6 @@ CREATE TABLE IF NOT EXISTS product_attribute (
     is_searchable BOOLEAN DEFAULT FALSE,
     is_filterable BOOLEAN DEFAULT FALSE,
     validation_rules JSONB,  -- Store validation constraints as JSON
-    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-);
-
--- Create product table (updated version)
-CREATE TABLE IF NOT EXISTS product (
-    id VARCHAR(26) PRIMARY KEY,  -- ULID format
-    name VARCHAR(255) NOT NULL,
-    slug VARCHAR(255) UNIQUE,  -- URL-friendly identifier
-    description TEXT,
-    short_description VARCHAR(500),
-    sku VARCHAR(100) UNIQUE,  -- Stock Keeping Unit
-    upc VARCHAR(50),  -- Universal Product Code
-    gtin VARCHAR(50),  -- Global Trade Item Number
-    mpn VARCHAR(100),  -- Manufacturer Part Number
-    brand VARCHAR(100),
-    category_id VARCHAR(26),  -- Reference to category table if exists
-    vendor_id VARCHAR(26) NOT NULL REFERENCES vendor(id),
-    status VARCHAR(20) DEFAULT 'DRAFT' CHECK (status IN ('DRAFT', 'PUBLISHED', 'UNPUBLISHED', 'SUSPENDED')),
-    currency VARCHAR(3) DEFAULT 'USD',  -- Default currency
-    base_price DECIMAL(19, 4),  -- Base price without currency
-    tax_class VARCHAR(50),  -- Tax classification
-    meta_title VARCHAR(255),
-    meta_description VARCHAR(500),
-    meta_keywords TEXT,
-    weight DECIMAL(10, 3),  -- Weight in kg
-    dimensions JSONB,  -- Length, width, height as JSON
-    packaging_info JSONB,  -- Packaging details
-    min_order_qty INTEGER DEFAULT 1,
-    moq INTEGER,  -- Minimum Order Quantity
-    inventory_tracking BOOLEAN DEFAULT FALSE,
-    inventory_qty INTEGER DEFAULT 0,
-    inventory_status VARCHAR(20) DEFAULT 'IN_STOCK' CHECK (inventory_status IN ('IN_STOCK', 'OUT_OF_STOCK', 'BACKORDER', 'DISCONTINUED')),
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
@@ -120,11 +343,13 @@ CREATE INDEX IF NOT EXISTS idx_product_attribute_name ON product_attribute(name)
 CREATE INDEX IF NOT EXISTS idx_product_attribute_type ON product_attribute(attribute_type);
 
 -- Add full-text search support (using CREATE INDEX IF NOT EXISTS)
-CREATE INDEX IF NOT EXISTS idx_product_name_gin ON product USING gin(to_tsvector('english', name));
-CREATE INDEX IF NOT EXISTS idx_product_description_gin ON product USING gin(to_tsvector('english', description));
-CREATE INDEX IF NOT EXISTS idx_product_slug_gin ON product USING gin(to_tsvector('english', slug));
+-- Only create these indexes after all required columns exist
+CREATE INDEX IF NOT EXISTS idx_product_name_gin ON product USING gin(to_tsvector('english', COALESCE(name, '')));
+CREATE INDEX IF NOT EXISTS idx_product_description_gin ON product USING gin(to_tsvector('english', COALESCE(description, '')));
+CREATE INDEX IF NOT EXISTS idx_product_slug_gin ON product USING gin(to_tsvector('english', COALESCE(slug, '')));
 
--- Create function to automatically update the updated_at column
+-- Create function to automatically update the updated_at column (if it doesn't exist)
+-- This function is likely already created by V2, but we'll recreate if needed
 CREATE OR REPLACE FUNCTION update_updated_at_column()
 RETURNS TRIGGER AS $$
 BEGIN
