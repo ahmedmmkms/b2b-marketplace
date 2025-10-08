@@ -39,3 +39,4 @@ frontend/**/.nx/
 
 ### Environment ###
 .env
+env_setup.bat
