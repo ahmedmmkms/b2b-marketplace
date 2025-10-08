@@ -22,12 +22,12 @@ CREATE INDEX IF NOT EXISTS idx_audit_log_created_at ON audit_log(created_at);
 
 -- Create function to automatically update the created_at column (though it's default)
 CREATE OR REPLACE FUNCTION update_audit_log_created_at_column()
-RETURNS TRIGGER AS $
+RETURNS TRIGGER AS $$
 BEGIN
     NEW.created_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$ language 'plpgsql';
+$$ language 'plpgsql';
 
 -- Create trigger for audit_log table
 CREATE TRIGGER update_audit_log_created_at BEFORE UPDATE ON audit_log FOR EACH ROW EXECUTE FUNCTION update_audit_log_created_at_column();

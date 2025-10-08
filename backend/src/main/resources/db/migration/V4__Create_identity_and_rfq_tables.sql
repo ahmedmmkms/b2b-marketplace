@@ -134,10 +134,10 @@ CREATE TABLE IF NOT EXISTS message_thread (
 CREATE INDEX IF NOT EXISTS idx_account_email ON account(company_email);
 CREATE INDEX IF NOT EXISTS idx_account_status ON account(status);
 CREATE INDEX IF NOT EXISTS idx_account_type ON account(type);
-CREATE INDEX IF NOT EXISTS idx_user_email ON \"user\"(email);
-CREATE INDEX IF NOT EXISTS idx_user_username ON \"user\"(username);
-CREATE INDEX IF NOT EXISTS idx_user_account_id ON \"user\"(account_id);
-CREATE INDEX IF NOT EXISTS idx_user_status ON \"user\"(status);
+CREATE INDEX IF NOT EXISTS idx_user_email ON "user"(email);
+CREATE INDEX IF NOT EXISTS idx_user_username ON "user"(username);
+CREATE INDEX IF NOT EXISTS idx_user_account_id ON "user"(account_id);
+CREATE INDEX IF NOT EXISTS idx_user_status ON "user"(status);
 CREATE INDEX IF NOT EXISTS idx_rfq_account_id ON rfq(account_id);
 CREATE INDEX IF NOT EXISTS idx_rfq_status ON rfq(status);
 CREATE INDEX IF NOT EXISTS idx_rfq_valid_until ON rfq(valid_until);
@@ -152,7 +152,7 @@ CREATE INDEX IF NOT EXISTS idx_message_thread_rfq_id ON message_thread(rfq_id);
 CREATE INDEX IF NOT EXISTS idx_message_thread_quote_id ON message_thread(quote_id);
 
 -- Add foreign key constraints
-ALTER TABLE \"user\" ADD CONSTRAINT fk_user_account_id FOREIGN KEY (account_id) REFERENCES account(id);
+ALTER TABLE "user" ADD CONSTRAINT fk_user_account_id FOREIGN KEY (account_id) REFERENCES account(id);
 ALTER TABLE rfq_line ADD CONSTRAINT fk_rfq_line_rfq_id FOREIGN KEY (rfq_id) REFERENCES rfq(id);
 ALTER TABLE quote ADD CONSTRAINT fk_quote_rfq_id FOREIGN KEY (rfq_id) REFERENCES rfq(id);
 ALTER TABLE quote ADD CONSTRAINT fk_quote_vendor_id FOREIGN KEY (vendor_id) REFERENCES account(id);
@@ -163,20 +163,18 @@ ALTER TABLE message_thread ADD CONSTRAINT fk_message_thread_quote_id FOREIGN KEY
 
 -- Create function to automatically update the updated_at column
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $
+RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$ language 'plpgsql';
+$$ language 'plpgsql';
 
 -- Create triggers to automatically update updated_at column
 CREATE TRIGGER update_account_updated_at BEFORE UPDATE ON account FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_user_updated_at BEFORE UPDATE ON \"user\" FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_user_updated_at BEFORE UPDATE ON "user" FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_rfq_updated_at BEFORE UPDATE ON rfq FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_rfq_line_updated_at BEFORE UPDATE ON rfq_line FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_quote_updated_at BEFORE UPDATE ON quote FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_quote_line_updated_at BEFORE UPDATE ON quote_line FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_message_thread_updated_at BEFORE UPDATE ON message_thread FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-
-
