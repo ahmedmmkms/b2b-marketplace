@@ -23,7 +23,7 @@ def load_db_config():
         'host': result.hostname,
         'database': result.path[1:],  # Remove leading '/'
         'user': result.username,
-        'password': result.password,
+        'password': os.getenv('DB_PASSWORD', result.password),
         'port': result.port,
         'sslmode': 'require',
         'channel_binding': 'require'

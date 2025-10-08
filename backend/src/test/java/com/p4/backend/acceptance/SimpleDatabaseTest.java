@@ -17,7 +17,7 @@ public class SimpleDatabaseTest {
     
     // Separate credentials (if needed for debugging)
     private static final String DB_USERNAME = System.getenv().getOrDefault("DB_USERNAME", "neondb_owner");
-    private static final String DB_PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "***REMOVED***");
+    private static final String DB_PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "");
 
     @Test
     public void testDatabaseConnectionWithURL() {

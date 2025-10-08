@@ -25,13 +25,13 @@ public class DirectServiceConnectionTest {
     private static final String DB_URL = System.getenv().getOrDefault("DB_URL",
             "jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb");
     private static final String DB_USERNAME = System.getenv().getOrDefault("DB_USERNAME", "neondb_owner");
-    private static final String DB_PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "***REMOVED***");
+    private static final String DB_PASSWORD = System.getenv().getOrDefault("DB_PASSWORD", "");
 
     // Backblaze B2 connection parameters
-    private static final String B2_ACCOUNT_ID = System.getenv().getOrDefault("B2_ACCOUNT_ID", "***REMOVED***");
-    private static final String B2_APPLICATION_KEY_ID = System.getenv().getOrDefault("B2_APPLICATION_KEY_ID", "***REMOVED***");
-    private static final String B2_APPLICATION_KEY = System.getenv().getOrDefault("B2_APPLICATION_KEY", "***REMOVED***");
-    private static final String B2_BUCKET = System.getenv().getOrDefault("B2_BUCKET", "***REMOVED***");
+    private static final String B2_ACCOUNT_ID = System.getenv().getOrDefault("B2_ACCOUNT_ID", "");
+    private static final String B2_APPLICATION_KEY_ID = System.getenv().getOrDefault("B2_APPLICATION_KEY_ID", "");
+    private static final String B2_APPLICATION_KEY = System.getenv().getOrDefault("B2_APPLICATION_KEY", "");
+    private static final String B2_BUCKET = System.getenv().getOrDefault("B2_BUCKET", "");
 
     @Test
     public void testNeonDatabaseConnection() {

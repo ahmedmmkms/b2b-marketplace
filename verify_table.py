@@ -5,7 +5,7 @@ def verify_table():
         'host': 'ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech',
         'database': 'neondb',
         'user': 'neondb_owner',
-        'password': '***REMOVED***',
+        'password': os.getenv('DB_PASSWORD', ''),
         'sslmode': 'require',
         'channel_binding': 'require'
     }
