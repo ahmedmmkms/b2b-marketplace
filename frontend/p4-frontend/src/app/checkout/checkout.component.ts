@@ -89,9 +89,7 @@ export class CheckoutComponent implements OnInit {
   ngOnInit(): void {
     // Initialize payment method form control separately
     this.checkoutForm.addControl('paymentMethod', this.fb.control('WALLET'));
-  }
-
-  ngOnInit(): void {
+    
     // Check if feature is enabled
     // In a real implementation, we would check the feature flag here
   }
