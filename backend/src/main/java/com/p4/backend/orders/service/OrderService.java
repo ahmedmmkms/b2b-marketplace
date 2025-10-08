@@ -4,7 +4,10 @@ import com.p4.backend.orders.entity.*;
 import com.p4.backend.orders.repository.OrderRepository;
 import com.p4.backend.rfq.entity.Quote;
 import com.p4.backend.rfq.entity.QuoteLine;
+import com.p4.backend.rfq.entity.Rfq;
+import com.p4.backend.rfq.repository.QuoteLineRepository;
 import com.p4.backend.rfq.repository.QuoteRepository;
+import com.p4.backend.rfq.repository.RfqRepository;
 import com.p4.backend.shared.vo.Money;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,31 +29,47 @@ public class OrderService {
     @Autowired
     private QuoteRepository quoteRepository;
 
+    @Autowired
+    private QuoteLineRepository quoteLineRepository;
+
+    @Autowired
+    private RfqRepository rfqRepository;
+
     @Transactional
     public Optional<Order> createOrderFromAcceptedQuote(String quoteId) {
         // Find the accepted quote
         Optional<Quote> quoteOpt = quoteRepository.findById(quoteId);
-        if (quoteOpt.isEmpty() || quoteOpt.get().getStatus() != com.p4.backend.rfq.entity.QuoteStatus.ACCEPTED) {
+        if (quoteOpt.isEmpty() || quoteOpt.get().getStatus() != com.p4.backend.rfq.entity.Quote.QuoteStatus.ACCEPTED) {
             return Optional.empty();
         }
 
         Quote quote = quoteOpt.get();
 
+        // Get quote lines using the quoteLineRepository
+        List<QuoteLine> quoteLines = quoteLineRepository.findByQuoteId(quoteId);
+
+        // Get the associated RFQ to get account IDs
+        Optional<Rfq> rfqOpt = rfqRepository.findById(quote.getRfqId());
+        if (rfqOpt.isEmpty()) {
+            return Optional.empty(); // Can't create order without associated RFQ
+        }
+        Rfq rfq = rfqOpt.get();
+
         // Create order lines from quote lines
         List<OrderLine> orderLines = new ArrayList<>();
         Money totalAmount = Money.zero(quote.getCurrency());
 
-        for (QuoteLine quoteLine : quote.getQuoteLines()) {
-            // Calculate line total by multiplying unit price by quantity
-            BigDecimal lineTotalAmount = quoteLine.getUnitPrice().getAmount().multiply(BigDecimal.valueOf(quoteLine.getQuantity()));
-            Money lineTotal = new Money(lineTotalAmount, quoteLine.getUnitPrice().getCurrency());
+        for (QuoteLine quoteLine : quoteLines) {
+            // Create Money object from BigDecimal values
+            Money unitPrice = new Money(quoteLine.getUnitPrice(), quote.getCurrency());
+            Money lineTotal = new Money(quoteLine.getLineTotal(), quote.getCurrency());
 
             OrderLine orderLine = new OrderLine(
                 null, // Order will be set later
-                quoteLine.getProductId(),
-                quoteLine.getProductName(), // Preserve the product name as it was at quote time
+                quoteLine.getRfqLineId(), // Using rfqLineId as the product reference
+                "Product from RFQ", // Need to get product name from elsewhere in a full implementation
                 quoteLine.getQuantity(),
-                quoteLine.getUnitPrice(),
+                unitPrice,
                 lineTotal
             );
 
@@ -64,8 +83,8 @@ public class OrderService {
         // Create the order
         Order order = new Order(
             quote.getId(),
-            quote.getBuyerAccountId(),
-            quote.getVendorAccountId(),
+            rfq.getAccountId(), // Get buyer account ID from the associated RFQ
+            quote.getVendorId(), // Use the vendor ID from the quote
             poNumber,
             totalAmount,
             orderLines

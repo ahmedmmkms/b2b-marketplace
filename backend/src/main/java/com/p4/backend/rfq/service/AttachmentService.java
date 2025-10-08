@@ -18,16 +18,19 @@ import java.util.UUID;
 @Service
 public class AttachmentService {
 
-    @Value("${r2.access.key.id}")
+    @Value("${b2.account.id}")
     private String accessKeyId;
 
-    @Value("${r2.secret.access.key}")
+    @Value("${b2.application.key.id}")
+    private String applicationKeyId;
+
+    @Value("${b2.secret.access.key}")
     private String secretAccessKey;
 
-    @Value("${r2.bucket.name}")
+    @Value("${b2.bucket.name}")
     private String bucketName;
 
-    @Value("${r2.endpoint.url}")
+    @Value("${b2.endpoint.url}")
     private String endpointUrl;
 
     private S3Client s3Client;
@@ -37,7 +40,7 @@ public class AttachmentService {
         AwsBasicCredentials awsCreds = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
         this.s3Client = S3Client.builder()
                 .endpointOverride(URI.create(endpointUrl))
-                .region(Region.US_EAST_1) // Cloudflare R2 uses us-east-1 region
+                .region(Region.US_EAST_1) // Backblaze B2 uses us-east-1 compatible region
                 .credentialsProvider(StaticCredentialsProvider.create(awsCreds))
                 .build();
     }
@@ -57,7 +60,7 @@ public class AttachmentService {
 
             return uniqueFileName;
         } catch (Exception e) {
-            throw new BusinessException("Failed to upload file to R2: " + e.getMessage());
+            throw new BusinessException("Failed to upload file to Backblaze B2: " + e.getMessage());
         }
     }
 

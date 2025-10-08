@@ -6,8 +6,9 @@ import com.p4.backend.orders.repository.OrderRepository;
 import com.p4.backend.orders.service.OrderService;
 import com.p4.backend.payments.service.PaymentService;
 import com.p4.backend.rfq.entity.Quote;
-import com.p4.backend.rfq.entity.QuoteStatus;
+import com.p4.backend.rfq.entity.Rfq;
 import com.p4.backend.rfq.repository.QuoteRepository;
+import com.p4.backend.rfq.repository.RfqRepository;
 import com.p4.backend.shared.util.UlidUtil;
 import com.p4.backend.shared.vo.Money;
 import com.p4.backend.wallet.entity.Wallet;
@@ -19,6 +20,7 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -41,6 +43,9 @@ class CheckoutSyntheticTest {
     private QuoteRepository quoteRepository;
 
     @Autowired
+    private RfqRepository rfqRepository;
+
+    @Autowired
     private OrderRepository orderRepository;
 
     @Test
@@ -48,6 +53,11 @@ class CheckoutSyntheticTest {
         // Setup: Create a mock accepted quote
         Quote mockQuote = createMockQuote();
         quoteRepository.save(mockQuote);
+
+        // Create the associated RFQ for the quote
+        Rfq mockRfq = new Rfq(mockQuote.getRfqId(), "Test Contact", "test@example.com", LocalDateTime.now().plusDays(30));
+        mockRfq.setAccountId("test-buyer-account-id"); // Set the buyer account ID in the RFQ
+        rfqRepository.save(mockRfq);
 
         // Step 1: Create order from accepted quote
         Optional<Order> orderOpt = orderService.createOrderFromAcceptedQuote(mockQuote.getId());
@@ -57,7 +67,7 @@ class CheckoutSyntheticTest {
 
         // Step 2: Create a wallet for the buyer
         Money initialBalance = new Money(new BigDecimal("1000.00"), "USD");
-        Optional<Wallet> walletOpt = walletService.createWallet(mockQuote.getBuyerAccountId(), initialBalance);
+        Optional<Wallet> walletOpt = walletService.createWallet(mockRfq.getAccountId(), initialBalance);
         assertTrue(walletOpt.isPresent(), "Wallet should be created");
 
         // Step 3: Process payment with wallet
@@ -80,6 +90,11 @@ class CheckoutSyntheticTest {
         // Setup: Create a mock accepted quote
         Quote mockQuote = createMockQuote();
         quoteRepository.save(mockQuote);
+
+        // Create the associated RFQ for the quote
+        Rfq mockRfq = new Rfq(mockQuote.getRfqId(), "Test Contact", "test@example.com", LocalDateTime.now().plusDays(30));
+        mockRfq.setAccountId("test-buyer-account-id"); // Set the buyer account ID in the RFQ
+        rfqRepository.save(mockRfq);
 
         // Step 1: Create order from accepted quote
         Optional<Order> orderOpt = orderService.createOrderFromAcceptedQuote(mockQuote.getId());
@@ -111,9 +126,9 @@ class CheckoutSyntheticTest {
     private Quote createMockQuote() {
         Quote quote = new Quote();
         quote.setId(UlidUtil.generateUlid());
-        quote.setBuyerAccountId(UlidUtil.generateUlid());
-        quote.setVendorAccountId(UlidUtil.generateUlid());
-        quote.setStatus(QuoteStatus.ACCEPTED); // This is key for the order creation
+        quote.setRfqId(UlidUtil.generateUlid());  // Need to set the RFQ ID instead of direct account IDs
+        quote.setVendorId(UlidUtil.generateUlid());  // Use vendorId instead of vendorAccountId
+        quote.setStatus(Quote.QuoteStatus.ACCEPTED); // This is key for the order creation
         quote.setCurrency("USD");
         // Add quote lines would go here in a full implementation
         return quote;

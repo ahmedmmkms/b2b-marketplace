@@ -69,7 +69,7 @@ public class PaymentService {
 
             // Update the order status based on payment result
             if (payment.getStatus() == PaymentStatus.COMPLETED) {
-                order.setStatus(OrderStatus.PLACED);
+                order.setStatus(com.p4.backend.orders.entity.OrderStatus.PLACED);
                 order.setUpdatedAt(LocalDateTime.now());
                 Order updatedOrder = orderRepository.save(order);
                 
@@ -168,8 +168,8 @@ public class PaymentService {
                     Optional<Order> orderOpt = orderRepository.findById(payment.getOrderId());
                     if (orderOpt.isPresent()) {
                         Order order = orderOpt.get();
-                        if (order.getStatus() == OrderStatus.PENDING) {
-                            order.setStatus(OrderStatus.PLACED);
+                        if (order.getStatus() == com.p4.backend.orders.entity.OrderStatus.PENDING) {
+                            order.setStatus(com.p4.backend.orders.entity.OrderStatus.PLACED);
                             order.setUpdatedAt(LocalDateTime.now());
                             orderRepository.save(order);
                         }

@@ -51,32 +51,35 @@ public class MediaAssetService {
     @Autowired
     private MediaAssetRepository mediaAssetRepository;
     
-    @Value("${r2.access.key}")
-    private String accessKey;
+    @Value("${b2.account.id}")
+    private String accessKeyId;
     
-    @Value("${r2.secret.key}")
-    private String secretKey;
+    @Value("${b2.application.key.id}")
+    private String applicationKeyId;
     
-    @Value("${r2.bucket.name}")
+    @Value("${b2.secret.access.key}")
+    private String secretAccessKey;
+    
+    @Value("${b2.bucket.name}")
     private String bucketName;
     
-    @Value("${r2.endpoint}")
+    @Value("${b2.endpoint.url}")
     private String endpoint;
     
     private S3Client s3Client;
     private S3Presigner s3Presigner;
     
     public MediaAssetService() {
-        // Initialize S3 client with R2-specific configuration
+        // Initialize S3 client with Backblaze B2-specific configuration
     }
     
     private void initializeS3Clients() {
         if (s3Client == null) {
-            AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKey, secretKey);
+            AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(accessKeyId, secretAccessKey);
             
             s3Client = S3Client.builder()
                     .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-                    .region(Region.US_EAST_1) // Cloudflare R2 uses this region
+                    .region(Region.US_EAST_1) // Backblaze B2 uses us-east-1 compatible region
                     .endpointOverride(URI.create(endpoint))
                     .build();
                     
@@ -89,7 +92,7 @@ public class MediaAssetService {
     }
     
     /**
-     * Uploads a media file to R2 storage
+     * Uploads a media file to Backblaze B2 storage
      */
     public MediaAsset uploadMedia(MultipartFile file) throws IOException {
         // Validate file
@@ -105,7 +108,7 @@ public class MediaAssetService {
         String filePath = "media/" + uniqueFileName;  // Organize by media prefix
         
         try {
-            // Upload to R2
+            // Upload to Backblaze B2
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
                     .bucket(bucketName)
                     .key(filePath)
@@ -130,7 +133,7 @@ public class MediaAssetService {
             return mediaAssetRepository.save(mediaAsset);
             
         } catch (S3Exception e) {
-            logger.error("Error uploading file to R2: {}", e.getMessage());
+            logger.error("Error uploading file to Backblaze B2: {}", e.getMessage());
             throw new RuntimeException("Failed to upload file: " + e.getMessage(), e);
         }
     }
@@ -199,7 +202,7 @@ public class MediaAssetService {
     }
     
     /**
-     * Deletes a media asset from both R2 and database
+     * Deletes a media asset from both Backblaze B2 and database
      */
     public void deleteMediaAsset(String id) {
         MediaAsset mediaAsset = getMediaAsset(id);
@@ -208,7 +211,7 @@ public class MediaAssetService {
         initializeS3Clients();
         
         try {
-            // Delete from R2 storage
+            // Delete from Backblaze B2 storage
             DeleteObjectRequest deleteObjectRequest = DeleteObjectRequest.builder()
                     .bucket(bucketName)
                     .key(mediaAsset.getFilePath())
@@ -220,7 +223,7 @@ public class MediaAssetService {
             mediaAssetRepository.deleteById(id);
             
         } catch (S3Exception e) {
-            logger.error("Error deleting file from R2: {}", e.getMessage());
+            logger.error("Error deleting file from Backblaze B2: {}", e.getMessage());
             throw new RuntimeException("Failed to delete file: " + e.getMessage(), e);
         }
     }

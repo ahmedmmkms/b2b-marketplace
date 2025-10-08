@@ -2,10 +2,10 @@ package com.p4.backend.shared.config;
 
 import com.p4.backend.catalog.entity.*;
 import com.p4.backend.catalog.repository.*;
-import com.p4.backend.shared.util.UlidUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -19,6 +19,9 @@ import java.util.Set;
 
 @Component
 public class DatabaseSeeder implements CommandLineRunner {
+    
+    @Value("${app.seed.enabled:false}")
+    private boolean seedingEnabled;
 
     private static final Logger logger = LoggerFactory.getLogger(DatabaseSeeder.class);
     
@@ -45,6 +48,12 @@ public class DatabaseSeeder implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
         logger.info("Starting database seeding process...");
+        
+        // Check if seeding is enabled
+        if (!seedingEnabled) {
+            logger.info("Database seeding is disabled. Skipping seeding process.");
+            return;
+        }
         
         // Check if database is already seeded
         if (vendorRepository.count() > 0) {

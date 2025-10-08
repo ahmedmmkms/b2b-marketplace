@@ -15,7 +15,7 @@ public class MediaAsset extends BaseEntity {
     private String filename; // Original filename
     
     @Column(name = "file_path", nullable = false, length = 1000)
-    private String filePath; // Path in storage (e.g., R2 bucket path)
+    private String filePath; // Path in storage (e.g., Backblaze B2 bucket path)
     
     @Column(name = "mime_type")
     private String mimeType; // MIME type of the file
