@@ -59,3 +59,4 @@ spring:
   flyway:
     enabled: true
     locations: classpath:db/migration
+    repair-on-validation-error: true  # Repair checksum mismatches automatically
