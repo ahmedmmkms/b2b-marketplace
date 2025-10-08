@@ -1,0 +1,48 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+    username: ${DB_USERNAME:neondb_owner}
+    password: ${DB_PASSWORD:***REMOVED***}
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      data-source-properties:
+        sslmode: require
+        channel_binding: require
+  jpa:
+    hibernate:
+      ddl-auto: none  # Don't create/update schema, use existing
+    show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+  redis:
+    url: ${REDIS_URL:redis://default:***REMOVED***@adjusted-sunbird-17703.upstash.io:6379}
+
+# Feature Flags for Neon Profile
+feature:
+  flags:
+    catalog:
+      publicBrowse: ${FEATURE_CATALOG_PUBLIC_BROWSE:true}
+    search:
+      enabled: ${FEATURE_SEARCH_ENABLED:true}
+
+# Database Seeding Configuration for Neon Profile
+app:
+  seed:
+    enabled: false  # Disable seeding to prevent startup failures
+
+# Backblaze B2 Configuration for Neon Profile
+b2:
+  account:
+    id: ${B2_ACCOUNT_ID:***REMOVED***}
+  application:
+    key:
+      id: ${B2_APPLICATION_KEY_ID:***REMOVED***}
+  secret:
+    access:
+      key: ${B2_APPLICATION_KEY:***REMOVED***}
+  bucket:
+    name: ${B2_BUCKET:***REMOVED***}
+  endpoint:
+    url: ${B2_ENDPOINT_URL:https://s3.us-east-005.backblazeb2.com}
