@@ -61,3 +61,4 @@ spring:
     locations: classpath:db/migration
     validate-on-migrate: true  # Keep validation enabled for security
     repair-on-migration-validation-error: true  # This will repair when validation fails
+    clean-on-validation-error: false  # Only enable this in development environments!
