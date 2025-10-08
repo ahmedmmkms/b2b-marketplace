@@ -19,7 +19,7 @@ CREATE TABLE IF NOT EXISTS account (
 );
 
 -- Create user table
-CREATE TABLE IF NOT EXISTS \"user\" (
+CREATE TABLE IF NOT EXISTS "user" (
     id VARCHAR(26) PRIMARY KEY,  -- ULID format
     username VARCHAR(255) UNIQUE NOT NULL,
     email VARCHAR(255) UNIQUE NOT NULL,
@@ -155,7 +155,7 @@ CREATE INDEX IF NOT EXISTS idx_message_thread_quote_id ON message_thread(quote_i
 ALTER TABLE \"user\" ADD CONSTRAINT fk_user_account_id FOREIGN KEY (account_id) REFERENCES account(id);
 ALTER TABLE rfq_line ADD CONSTRAINT fk_rfq_line_rfq_id FOREIGN KEY (rfq_id) REFERENCES rfq(id);
 ALTER TABLE quote ADD CONSTRAINT fk_quote_rfq_id FOREIGN KEY (rfq_id) REFERENCES rfq(id);
-ALTER TABLE quote ADD CONSTRAINT fk_quote_vendor_id FOREIGN KEY (vendor_id) REFERENCES vendor(id);
+ALTER TABLE quote ADD CONSTRAINT fk_quote_vendor_id FOREIGN KEY (vendor_id) REFERENCES account(id);
 ALTER TABLE quote_line ADD CONSTRAINT fk_quote_line_quote_id FOREIGN KEY (quote_id) REFERENCES quote(id);
 ALTER TABLE quote_line ADD CONSTRAINT fk_quote_line_rfq_line_id FOREIGN KEY (rfq_line_id) REFERENCES rfq_line(id);
 ALTER TABLE message_thread ADD CONSTRAINT fk_message_thread_rfq_id FOREIGN KEY (rfq_id) REFERENCES rfq(id);
@@ -178,3 +178,5 @@ CREATE TRIGGER update_rfq_line_updated_at BEFORE UPDATE ON rfq_line FOR EACH ROW
 CREATE TRIGGER update_quote_updated_at BEFORE UPDATE ON quote FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_quote_line_updated_at BEFORE UPDATE ON quote_line FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_message_thread_updated_at BEFORE UPDATE ON message_thread FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+
+
