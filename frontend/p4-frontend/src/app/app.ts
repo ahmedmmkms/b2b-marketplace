@@ -32,10 +32,10 @@ import { TranslateModule } from '@ngx-translate/core';
             <a routerLink="/catalog">{{ 'NAVIGATION.CATALOG' | translate }}</a>
           </li>
           <li nz-menu-item>
-            <a>{{ 'NAVIGATION.RFQ' | translate }}</a>
+            <a routerLink="/rfq">{{ 'NAVIGATION.RFQ' | translate }}</a>
           </li>
           <li nz-menu-item>
-            <a>{{ 'NAVIGATION.ORDERS' | translate }}</a>
+            <a routerLink="/orders">{{ 'NAVIGATION.ORDERS' | translate }}</a>
           </li>
           <li nz-menu-item style="float: right;">
             <button nz-button nzType="primary">{{ 'BUTTONS.LOGIN' | translate }}</button>

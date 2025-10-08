@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { CommonModule, NgOptimizedImage } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, FormsModule, Validators } from '@angular/forms';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzInputModule } from 'ng-zorro-antd/input';
@@ -11,6 +11,7 @@ import { NzRadioModule } from 'ng-zorro-antd/radio';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzSpinModule } from 'ng-zorro-antd/spin';
 import { NzAlertModule } from 'ng-zorro-antd/alert';
+import { NzDividerModule } from 'ng-zorro-antd/divider';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { Observable } from 'rxjs';
 import { TranslateModule, TranslateService } from '@ngx-translate/core';
@@ -27,6 +28,7 @@ interface PaymentMethod {
   imports: [
     CommonModule,
     ReactiveFormsModule,
+    FormsModule,
     NzFormModule,
     NzGridModule,
     NzInputModule,
@@ -37,6 +39,7 @@ interface PaymentMethod {
     NzTypographyModule,
     NzSpinModule,
     NzAlertModule,
+    NzDividerModule,
     TranslateModule,
     RouterLink
   ],
@@ -50,7 +53,6 @@ export class CheckoutComponent implements OnInit {
     { id: 'CREDIT_CARD', name: 'Credit Card', description: 'Pay with credit card (Sandbox)' },
     { id: 'BANK_TRANSFER', name: 'Bank Transfer', description: 'Pay with bank transfer' }
   ];
-  selectedPaymentMethod: string = 'WALLET';
   isLoading = false;
   errorMessage: string | null = null;
   successMessage: string | null = null;
@@ -85,12 +87,21 @@ export class CheckoutComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    // Initialize payment method form control separately
+    this.checkoutForm.addControl('paymentMethod', this.fb.control('WALLET'));
+  }
+
+  ngOnInit(): void {
     // Check if feature is enabled
     // In a real implementation, we would check the feature flag here
   }
 
   onPaymentMethodChange(method: string): void {
-    this.selectedPaymentMethod = method;
+    this.checkoutForm.get('paymentMethod')?.setValue(method);
+  }
+
+  get selectedPaymentMethod(): string {
+    return this.checkoutForm.get('paymentMethod')?.value || 'WALLET';
   }
 
   onSubmit(): void {

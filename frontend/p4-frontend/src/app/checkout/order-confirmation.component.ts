@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { CommonModule, DatePipe } from '@angular/common';
 import { NzCardModule } from 'ng-zorro-antd/card';
 import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { NzIconModule } from 'ng-zorro-antd/icon';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { Router, RouterLink } from '@angular/router';
 import { TranslateModule } from '@ngx-translate/core';
 
@@ -16,8 +17,10 @@ import { TranslateModule } from '@ngx-translate/core';
     NzButtonModule,
     NzTypographyModule,
     NzIconModule,
+    NzGridModule,
     TranslateModule,
-    RouterLink
+    RouterLink,
+    DatePipe
   ],
   template: `
     <div class="confirmation-container">

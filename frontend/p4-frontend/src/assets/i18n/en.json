@@ -17,5 +17,22 @@
     "TITLE": "Product Catalog",
     "SEARCH_PLACEHOLDER": "Search products...",
     "NO_PRODUCTS": "No products found."
+  },
+  "RFQ": {
+    "TITLE": "Request for Quotation",
+    "SUBTITLE": "Create and manage your RFQs",
+    "DESCRIPTION": "Submit requests for quotations to vendors and compare their offers.",
+    "CREATE_NEW": "Create New RFQ",
+    "MY_RFQS": "My RFQs",
+    "VIEW": "View",
+    "EDIT": "Edit"
+  },
+  "ORDERS": {
+    "TITLE": "My Orders",
+    "SUBTITLE": "Track and manage your orders",
+    "DESCRIPTION": "View your order history and track the status of your purchases.",
+    "MY_ORDERS": "My Orders",
+    "VIEW_DETAILS": "View Details",
+    "TRACK": "Track"
   }
 }

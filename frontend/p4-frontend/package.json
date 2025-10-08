@@ -45,6 +45,7 @@
     "@angular/compiler-cli": "^18.2.0",
     "@nx/angular": "21.6.3",
     "@nx/workspace": "21.6.3",
+    "@playwright/test": "^1.56.0",
     "@schematics/angular": "^18.2.0",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^18.18.0",

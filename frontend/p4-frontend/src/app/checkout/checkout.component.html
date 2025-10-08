@@ -90,7 +90,7 @@
 
     <!-- Payment Method -->
     <nz-card [nzTitle]="'checkout.paymentMethod' | translate" [nzBordered]="false">
-      <nz-radio-group [(ngModel)]="selectedPaymentMethod" (ngModelChange)="onPaymentMethodChange($event)">
+      <nz-radio-group formControlName="paymentMethod">
         <div nz-row [nzGutter]="[16, 16]">
           <div nz-col nzSpan="24" *ngFor="let method of paymentMethods">
             <label nz-radio [nzValue]="method.id" class="payment-method">
