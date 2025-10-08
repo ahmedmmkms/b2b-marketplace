@@ -40,3 +40,8 @@ frontend/**/.nx/
 ### Environment ###
 .env
 env_setup.bat
+
+### Logs ###
+*.log
+**/*.log
+b2b-marketplace.*.log
