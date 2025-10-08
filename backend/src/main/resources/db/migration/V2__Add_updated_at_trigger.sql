@@ -1,4 +1,2 @@
--- For H2 compatibility during tests, we will not implement the trigger
--- The updated_at column will be managed by the application layer during tests
--- PostgreSQL triggers will be implemented in production environment
--- This approach allows tests to run with H2 while maintaining production functionality
+-- This trigger is implemented specifically for PostgreSQL
+-- This ensures consistency across all environments since we're using PostgreSQL everywhere

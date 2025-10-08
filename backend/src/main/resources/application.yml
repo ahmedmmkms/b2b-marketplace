@@ -4,21 +4,18 @@ spring:
   profiles:
     active: dev
   datasource:
-    url: ${DB_URL:jdbc:h2:mem:testdb}
-    username: sa
-    password: 
-    driver-class-name: org.h2.Driver
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/p4_dev}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
-      ddl-auto: create-drop  # Use 'create-drop' for development
+      ddl-auto: update  # Use 'update' for default behavior
     show-sql: true
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.H2Dialect
+        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: true
-  h2:
-    console:
-      enabled: true
   servlet:
     multipart:
       max-file-size: 10MB

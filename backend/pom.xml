@@ -88,11 +88,7 @@
 			<artifactId>s3</artifactId>
 			<version>2.25.26</version>
 		</dependency>
-		<dependency>
-			<groupId>com.h2database</groupId>
-			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
-		</dependency>
+		<!-- H2 database dependency removed - only using PostgreSQL for all environments -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
