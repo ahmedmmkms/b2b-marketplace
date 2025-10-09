@@ -43,6 +43,24 @@ public class Order {
     })
     private Money totalAmount;
 
+    // New tax-related fields
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "subtotal_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "subtotal_currency"))
+    })
+    private Money subtotalAmount; // The amount before tax
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "tax_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "tax_currency"))
+    })
+    private Money taxAmount; // The total tax amount
+
+    @Column(name = "tax_establishment_id")
+    private String taxEstablishmentId; // Reference to the tax registration used for this order
+
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private List<OrderLine> orderLines;
 
@@ -72,6 +90,24 @@ public class Order {
         this.vendorAccountId = vendorAccountId;
         this.poNumber = poNumber;
         this.totalAmount = totalAmount;
+        this.orderLines = orderLines;
+        this.status = OrderStatus.PENDING;
+        this.placedAt = LocalDateTime.now();
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // New constructor with tax information
+    public Order(String quoteId, String buyerAccountId, String vendorAccountId, String poNumber, Money totalAmount, 
+                 Money subtotalAmount, Money taxAmount, String taxEstablishmentId, List<OrderLine> orderLines) {
+        this.id = UlidUtil.generateUlid();
+        this.quoteId = quoteId;
+        this.buyerAccountId = buyerAccountId;
+        this.vendorAccountId = vendorAccountId;
+        this.poNumber = poNumber;
+        this.totalAmount = totalAmount;
+        this.subtotalAmount = subtotalAmount;
+        this.taxAmount = taxAmount;
+        this.taxEstablishmentId = taxEstablishmentId;
         this.orderLines = orderLines;
         this.status = OrderStatus.PENDING;
         this.placedAt = LocalDateTime.now();
@@ -186,5 +222,29 @@ public class Order {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public Money getSubtotalAmount() {
+        return subtotalAmount;
+    }
+
+    public void setSubtotalAmount(Money subtotalAmount) {
+        this.subtotalAmount = subtotalAmount;
+    }
+
+    public Money getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(Money taxAmount) {
+        this.taxAmount = taxAmount;
+    }
+
+    public String getTaxEstablishmentId() {
+        return taxEstablishmentId;
+    }
+
+    public void setTaxEstablishmentId(String taxEstablishmentId) {
+        this.taxEstablishmentId = taxEstablishmentId;
     }
 }

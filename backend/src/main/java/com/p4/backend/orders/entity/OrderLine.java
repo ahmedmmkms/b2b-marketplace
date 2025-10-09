@@ -44,6 +44,19 @@ public class OrderLine {
     })
     private Money lineTotal;
 
+    @Column(name = "tax_class", length = 50)
+    private String taxClass; // VAT tax class for this line item
+
+    @Column(name = "tax_rate", precision = 5, scale = 4)
+    private java.math.BigDecimal taxRate; // The VAT rate applied to this line
+
+    @Embedded
+    @AttributeOverrides({
+            @AttributeOverride(name = "amount", column = @Column(name = "tax_amount_amount")),
+            @AttributeOverride(name = "currency", column = @Column(name = "tax_amount_currency"))
+    })
+    private Money taxAmount; // The calculated tax amount for this line
+
     @Column(name = "created_at", nullable = false, updatable = false)
     private LocalDateTime createdAt;
 
@@ -61,6 +74,21 @@ public class OrderLine {
         this.quantity = quantity;
         this.unitPrice = unitPrice;
         this.lineTotal = lineTotal;
+        this.createdAt = LocalDateTime.now();
+    }
+
+    // New constructor with tax information
+    public OrderLine(Order order, String productId, String productName, Integer quantity, Money unitPrice, Money lineTotal, 
+                     String taxClass, java.math.BigDecimal taxRate, Money taxAmount) {
+        this.order = order;
+        this.productId = productId;
+        this.productName = productName;
+        this.quantity = quantity;
+        this.unitPrice = unitPrice;
+        this.lineTotal = lineTotal;
+        this.taxClass = taxClass;
+        this.taxRate = taxRate;
+        this.taxAmount = taxAmount;
         this.createdAt = LocalDateTime.now();
     }
 
@@ -135,5 +163,29 @@ public class OrderLine {
 
     public void setUpdatedAt(LocalDateTime updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getTaxClass() {
+        return taxClass;
+    }
+
+    public void setTaxClass(String taxClass) {
+        this.taxClass = taxClass;
+    }
+
+    public java.math.BigDecimal getTaxRate() {
+        return taxRate;
+    }
+
+    public void setTaxRate(java.math.BigDecimal taxRate) {
+        this.taxRate = taxRate;
+    }
+
+    public Money getTaxAmount() {
+        return taxAmount;
+    }
+
+    public void setTaxAmount(Money taxAmount) {
+        this.taxAmount = taxAmount;
     }
 }

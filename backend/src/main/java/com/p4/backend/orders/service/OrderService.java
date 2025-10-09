@@ -1,6 +1,7 @@
 package com.p4.backend.orders.service;
 
 import com.p4.backend.orders.entity.*;
+import com.p4.backend.invoicing.service.VatCalculationService;
 import com.p4.backend.orders.repository.OrderRepository;
 import com.p4.backend.rfq.entity.Quote;
 import com.p4.backend.rfq.entity.QuoteLine;
@@ -35,6 +36,9 @@ public class OrderService {
     @Autowired
     private RfqRepository rfqRepository;
 
+    @Autowired
+    private VatCalculationService vatCalculationService;
+
     @Transactional
     public Optional<Order> createOrderFromAcceptedQuote(String quoteId) {
         // Find the accepted quote
@@ -64,13 +68,20 @@ public class OrderService {
             Money unitPrice = new Money(quoteLine.getUnitPrice(), quote.getCurrency());
             Money lineTotal = new Money(quoteLine.getLineTotal(), quote.getCurrency());
 
+            // For simplicity, assuming tax class comes from a product attribute in a real implementation
+            // Here we'll use a default tax class
+            String taxClass = "STANDARD"; // Default tax class - in a real system this would come from product data
+
             OrderLine orderLine = new OrderLine(
                 null, // Order will be set later
                 quoteLine.getRfqLineId(), // Using rfqLineId as the product reference
                 "Product from RFQ", // Need to get product name from elsewhere in a full implementation
                 quoteLine.getQuantity(),
                 unitPrice,
-                lineTotal
+                lineTotal,
+                taxClass,           // Tax class
+                null,               // Tax rate (will be calculated)
+                null                // Tax amount (will be calculated)
             );
 
             orderLines.add(orderLine);
@@ -80,7 +91,7 @@ public class OrderService {
         // Generate a unique PO number
         String poNumber = "PO-" + UUID.randomUUID().toString().substring(0, 8).toUpperCase();
 
-        // Create the order
+        // Create the order without tax information initially
         Order order = new Order(
             quote.getId(),
             rfq.getAccountId(), // Get buyer account ID from the associated RFQ
@@ -95,9 +106,73 @@ public class OrderService {
             orderLine.setOrder(order);
         }
 
-        // Save the order with cascade to order lines
+        // Set the order reference in each order line
+        for (OrderLine orderLine : orderLines) {
+            orderLine.setOrder(order);
+        }
+
+        // Calculate VAT for the order - this would typically happen after we know the tax establishment
+        // For this implementation, we'll use a default tax establishment ID
+        // In a real system, this would be determined based on the vendor's tax registration
+        
+        // For now, we'll save the order first, then update tax information
+        // This is a simplified approach - in a complete solution we would determine the 
+        // tax establishment and calculate tax before saving
         Order savedOrder = orderRepository.save(order);
+        
+        // TODO: In a complete implementation, we would:
+        // 1. Determine the appropriate tax establishment based on vendor location/registration
+        // 2. Calculate VAT using vatCalculationService
+        // 3. Update the order with tax information
+        // 4. Update each order line with specific tax rates and amounts
+        
         return Optional.of(savedOrder);
+    }
+
+    @Transactional
+    public Optional<Order> calculateAndApplyVatToOrder(String orderId, String establishmentId) {
+        Optional<Order> orderOpt = orderRepository.findById(orderId);
+        if (orderOpt.isEmpty()) {
+            return Optional.empty();
+        }
+
+        Order order = orderOpt.get();
+        
+        // Calculate VAT for the order
+        VatCalculationService.VatCalculationResult vatResult = 
+            vatCalculationService.calculateVatForOrder(order, establishmentId);
+        
+        // Update the order with tax information
+        order.setTaxEstablishmentId(establishmentId);
+        order.setSubtotalAmount(new Money(vatResult.getSubtotal(), order.getTotalAmount().getCurrency()));
+        order.setTaxAmount(new Money(vatResult.getTotalTax(), order.getTotalAmount().getCurrency()));
+        
+        // Calculate new total
+        Money newTotal = new Money(vatResult.getTotalAmount(), order.getTotalAmount().getCurrency());
+        order.setTotalAmount(newTotal);
+        
+        // For each order line, update tax information
+        for (OrderLine orderLine : order.getOrderLines()) {
+            if (orderLine.getTaxClass() != null) {
+                java.math.BigDecimal lineSubtotal = orderLine.getUnitPrice().getAmount()
+                    .multiply(java.math.BigDecimal.valueOf(orderLine.getQuantity()));
+                
+                java.math.BigDecimal taxRate = vatCalculationService.getVatRateForTaxClass(
+                    "SA", // This should come from tax establishment - using "SA" for Saudi Arabia as example
+                    orderLine.getTaxClass(), 
+                    order.getCreatedAt().toLocalDate()
+                );
+                
+                java.math.BigDecimal taxAmount = lineSubtotal.multiply(taxRate)
+                    .setScale(2, java.math.RoundingMode.HALF_UP);
+                
+                orderLine.setTaxRate(taxRate);
+                orderLine.setTaxAmount(new Money(taxAmount, order.getTotalAmount().getCurrency()));
+            }
+        }
+        
+        Order updatedOrder = orderRepository.save(order);
+        return Optional.of(updatedOrder);
     }
 
     @Transactional
