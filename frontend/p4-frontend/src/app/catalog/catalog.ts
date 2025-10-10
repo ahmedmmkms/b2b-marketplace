@@ -69,115 +69,170 @@ interface MediaAsset {
     TranslateModule
   ],
   template: `
-    <div class="catalog-container" [dir]="isRTL ? 'rtl' : 'ltr'">
+    <div class="catalog-container" [attr.dir]="isRTL ? 'rtl' : 'ltr'" role="main" aria-label="Product Catalog">
       <!-- Feature flag check - only show catalog if feature is enabled -->
       <ng-container *appFeatureFlag="FeatureFlagName.CATALOG_PUBLIC_BROWSE; else featureDisabled">
-        <div class="toolbar">
-          <nz-input-group size="large" class="search-section">
-            <input 
-              type="text" 
-              nz-input 
-              [placeholder]="'CATALOG.SEARCH_PLACEHOLDER' | translate"
-              [(ngModel)]="searchTerm"
-              (ngModelChange)="onSearchChange()"
-            />
-            <span *nzSuffix nz-icon nzType="search"></span>
-          </nz-input-group>
-          
-          <div class="view-controls">
-            <nz-switch
-              [(ngModel)]="isListView"
-              [nzCheckedChildren]="'CATALOG.LIST_VIEW' | translate"
-              [nzUnCheckedChildren]="'CATALOG.GRID_VIEW' | translate">
-            </nz-switch>
-            
-            <div class="pagination">
-              <nz-pagination 
-                [(nzPageIndex)]="currentPage" 
-                [(nzPageSize)]="pageSize" 
-                [nzTotal]="totalProducts"
-                [nzShowSizeChanger]="true"
-                [nzPageSizeOptions]="[12, 20, 30, 50]"
-                (nzPageIndexChange)="onPageChange($event)"
-                (nzPageSizeChange)="onPageSizeChange($event)">
-              </nz-pagination>
-            </div>
-          </div>
-        </div>
-
-        <!-- Facets/Sidebar for filters -->
-        <div class="main-content">
-          <div class="filters-sidebar" *ngIf="!isListView">
-            <h3>{{ 'CATALOG.FILTERS' | translate }}</h3>
-            
-            <div class="filter-group">
-              <h4>{{ 'CATALOG.CATEGORIES' | translate }}</h4>
-              <nz-tag 
-                *ngFor="let category of categories" 
-                [nzMode]="'checkable'"
-                [(nzChecked)]="category.selected"
-                (nzCheckedChange)="onCategoryChange(category.id, $event)">
-                {{ category.name }}
-              </nz-tag>
+        <header class="catalog-header">
+          <h1 class="sr-only">{{ 'CATALOG.TITLE' | translate }}</h1>
+          <div class="toolbar">
+            <div class="search-section">
+              <nz-input-group size="large">
+                <input 
+                  type="search" 
+                  nz-input 
+                  [placeholder]="'CATALOG.SEARCH_PLACEHOLDER' | translate"
+                  [(ngModel)]="searchTerm"
+                  (ngModelChange)="onSearchChange()"
+                  [attr.aria-label]="'CATALOG.SEARCH_PLACEHOLDER' | translate"
+                />
+                <span *nzSuffix nz-icon nzType="search" [attr.aria-hidden]="true"></span>
+              </nz-input-group>
             </div>
             
-            <div class="filter-group">
-              <h4>{{ 'CATALOG.VENDORS' | translate }}</h4>
-              <nz-tag 
-                *ngFor="let vendor of vendors" 
-                [nzMode]="'checkable'"
-                [(nzChecked)]="vendor.selected"
-                (nzCheckedChange)="onVendorChange(vendor.id, $event)">
-                {{ vendor.name }}
-              </nz-tag>
-            </div>
-            
-            <div class="filter-group">
-              <h4>{{ 'CATALOG.PRICE_RANGE' | translate }}</h4>
-              <div class="price-filter">
-                <nz-input-group nzAddOnBefore="Min" nzAddOnAfter="Max">
-                  <input type="number" nz-input [(ngModel)]="minPrice" placeholder="0">
-                  <input type="number" nz-input [(ngModel)]="maxPrice" placeholder="1000">
-                </nz-input-group>
+            <div class="view-controls">
+              <label for="view-switch" class="sr-only">{{ 'CATALOG.VIEW_MODE' | translate }}</label>
+              <nz-switch
+                id="view-switch"
+                [(ngModel)]="isListView"
+                [nzCheckedChildren]="'CATALOG.LIST_VIEW' | translate"
+                [nzUnCheckedChildren]="'CATALOG.GRID_VIEW' | translate">
+              </nz-switch>
+              
+              <div class="pagination">
+                <nz-pagination 
+                  [(nzPageIndex)]="currentPage" 
+                  [(nzPageSize)]="pageSize" 
+                  [nzTotal]="totalProducts"
+                  [nzShowSizeChanger]="true"
+                  [nzPageSizeOptions]="[12, 20, 30, 50]"
+                  [nzShowQuickJumper]="true"
+                  (nzPageIndexChange)="onPageChange($event)"
+                  (nzPageSizeChange)="onPageSizeChange($event)"
+                  [attr.aria-label]="'CATALOG.PAGINATION_NAVIGATION' | translate">
+                </nz-pagination>
               </div>
             </div>
           </div>
+        </header>
+
+        <!-- Facets/Sidebar for filters -->
+        <div class="main-content">
+          <aside class="filters-sidebar" *ngIf="!isListView" [attr.aria-label]="'CATALOG.FILTERS_SIDEBAR' | translate">
+            <h2>{{ 'CATALOG.FILTERS' | translate }}</h2>
+            
+            <div class="filter-group">
+              <h3 id="category-filter">{{ 'CATALOG.CATEGORIES' | translate }}</h3>
+              <ul role="list" class="filter-list" [attr.aria-describedby]="'category-filter'">
+                <li *ngFor="let category of categories; trackBy: trackByFacetValue" class="filter-item">
+                  <label class="filter-label">
+                    <input 
+                      type="checkbox"
+                      [checked]="category.selected"
+                      (change)="onCategoryChangeSafe(category.id, $event)"
+                      class="filter-checkbox"
+                      [attr.aria-label]="'CATALOG.FILTER_BY_CATEGORY' | translate: { category: category.name }"
+                    />
+                    <span class="filter-text">{{ category.name }}</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="filter-group">
+              <h3 id="vendor-filter">{{ 'CATALOG.VENDORS' | translate }}</h3>
+              <ul role="list" class="filter-list" [attr.aria-describedby]="'vendor-filter'">
+                <li *ngFor="let vendor of vendors; trackBy: trackByFacetValue" class="filter-item">
+                  <label class="filter-label">
+                    <input 
+                      type="checkbox"
+                      [checked]="vendor.selected"
+                      (change)="onVendorChangeSafe(vendor.id, $event)"
+                      class="filter-checkbox"
+                      [attr.aria-label]="'CATALOG.FILTER_BY_VENDOR' | translate: { vendor: vendor.name }"
+                    />
+                    <span class="filter-text">{{ vendor.name }}</span>
+                  </label>
+                </li>
+              </ul>
+            </div>
+            
+            <div class="filter-group">
+              <h3 id="price-filter">{{ 'CATALOG.PRICE_RANGE' | translate }}</h3>
+              <div class="price-filter" [attr.aria-describedby]="'price-filter'">
+                <div class="price-inputs">
+                  <nz-input-group nzAddOnBefore="{{ 'CATALOG.MIN_PRICE' | translate }}">
+                    <input 
+                      type="number" 
+                      nz-input 
+                      [(ngModel)]="minPrice" 
+                      placeholder="0"
+                      (change)="onPriceFilterChange()"
+                      [attr.aria-label]="'CATALOG.MIN_PRICE' | translate"
+                    >
+                  </nz-input-group>
+                  
+                  <nz-input-group nzAddOnBefore="{{ 'CATALOG.MAX_PRICE' | translate }}">
+                    <input 
+                      type="number" 
+                      nz-input 
+                      [(ngModel)]="maxPrice" 
+                      placeholder="1000"
+                      (change)="onPriceFilterChange()"
+                      [attr.aria-label]="'CATALOG.MAX_PRICE' | translate"
+                    >
+                  </nz-input-group>
+                </div>
+                
+                <button 
+                  nz-button 
+                  nzType="default" 
+                  (click)="resetPriceFilters()"
+                  class="reset-price-filters">
+                  {{ 'BUTTONS.RESET' | translate }}
+                </button>
+              </div>
+            </div>
+          </aside>
           
           <!-- Products display -->
-          <div class="products-section">
-            <div class="results-summary">
+          <section class="products-section" [attr.aria-label]="'CATALOG.PRODUCTS_SECTION' | translate">
+            <div class="results-summary" role="status" aria-live="polite">
               {{ 'CATALOG.SHOWING_RESULTS' | translate: { start: (currentPage - 1) * pageSize + 1, end: calculateEndResultCount(), total: totalProducts } }}
             </div>
             
-            <div *ngIf="isListView; else gridView" class="list-view">
-              <nz-list 
-                [nzDataSource]="currentProducts"
-                [nzItemLayout]="'horizontal'"
-                [nzRenderItem]="listItem">
-                <ng-template #listItem let-product>
-                  <nz-list-item>
-                    <nz-list-item-meta
-                      [nzTitle]="product.name"
-                      [nzDescription]="product.description">
-                      <nz-list-item-meta-avatar>
-                        <img *ngIf="product.mediaAssets?.[0]" [src]="getMediaUrl(product.mediaAssets?.[0])" [alt]="product.name" class="product-image">
-                        <div *ngIf="!product.mediaAssets?.[0]" class="no-image-placeholder">
-                          <span nz-icon nzType="picture" nzTheme="outline"></span>
-                        </div>
-                      </nz-list-item-meta-avatar>
-                    </nz-list-item-meta>
-                    <div nz-list-item-actions>
-                      <button nz-button nzType="primary">{{ 'BUTTONS.VIEW_DETAILS' | translate }}</button>
-                      <button nz-button nzType="default">{{ 'BUTTONS.ADD_TO_CART' | translate }}</button>
+            <div *ngIf="isListView; else gridView" class="list-view" role="list" [attr.aria-label]="'CATALOG.LIST_VIEW_PRODUCTS' | translate">
+              <div *ngFor="let product of currentProducts; trackBy: trackByProduct" class="list-item" role="listitem">
+                <div class="product-content">
+                  <div class="product-image-container">
+                    <img 
+                      *ngIf="product.mediaAssets?.[0]" 
+                      [src]="getMediaUrl(product.mediaAssets?.[0])" 
+                      [alt]="product.name" 
+                      class="product-image"
+                      loading="lazy">
+                    <div *ngIf="!product.mediaAssets?.[0]" class="no-image-placeholder" role="img" [attr.aria-label]="'CATALOG.NO_IMAGE' | translate">
+                      <span nz-icon nzType="picture" nzTheme="outline"></span>
                     </div>
-                    <div class="product-price">{{ formatPrice(product.basePrice, product.currency) }}</div>
-                  </nz-list-item>
-                </ng-template>
-              </nz-list>
+                  </div>
+                  
+                  <div class="product-details">
+                    <h3 class="product-title">{{ product.name }}</h3>
+                    <p class="product-description">{{ product.description }}</p>
+                    <div class="product-price" [attr.aria-label]="'CATALOG.PRICE' | translate: { price: formatPrice(product.basePrice, product.currency) }">
+                      {{ formatPrice(product.basePrice, product.currency) }}
+                    </div>
+                  </div>
+                  
+                  <div class="product-actions">
+                    <button nz-button nzType="primary" (click)="viewProductDetails(product.id)">{{ 'BUTTONS.VIEW_DETAILS' | translate }}</button>
+                    <button nz-button nzType="default" (click)="addToCart(product.id)">{{ 'BUTTONS.ADD_TO_CART' | translate }}</button>
+                  </div>
+                </div>
+              </div>
             </div>
             
             <ng-template #gridView>
-              <div class="grid-view">
+              <div class="grid-view" role="list" [attr.aria-label]="'CATALOG.GRID_VIEW_PRODUCTS' | translate">
                 <div nz-row [nzGutter]="[16, 16]">
                   <div 
                     nz-col 
@@ -188,27 +243,52 @@ interface MediaAsset {
                     nzMd="12" 
                     nzSm="12" 
                     nzXs="24" 
-                    *ngFor="let product of currentProducts">
+                    *ngFor="let product of currentProducts; trackBy: trackByProduct"
+                    class="grid-item"
+                    role="listitem">
                     <nz-card 
                       [nzCover]="product.mediaAssets?.[0] ? coverTemplate : undefined"
-                      class="product-card">
+                      class="product-card"
+                      [attr.aria-label]="product.name">
                       <ng-template #coverTemplate>
                         <img 
                           [src]="getMediaUrl(product.mediaAssets?.[0])" 
                           [alt]="product.name" 
-                          class="product-cover-image">
+                          class="product-cover-image"
+                          loading="lazy">
                       </ng-template>
                       
                       <nz-card-meta
-                        [nzTitle]="product.name"
+                        [nzTitle]="titleTemplate"
                         [nzDescription]="product.shortDescription || product.description">
+                        <ng-template #titleTemplate>
+                          <h3 class="product-card-title">{{ product.name }}</h3>
+                        </ng-template>
                       </nz-card-meta>
                       
                       <div class="product-footer">
-                        <div class="product-price">{{ formatPrice(product.basePrice, product.currency) }}</div>
-                        <div class="product-actions">
-                          <button nz-button nzType="primary" nzSize="small">{{ 'BUTTONS.VIEW_DETAILS' | translate }}</button>
-                          <button nz-button nzType="default" nzSize="small">{{ 'BUTTONS.ADD_TO_CART' | translate }}</button>
+                        <div class="product-price" [attr.aria-label]="'CATALOG.PRICE' | translate: { price: formatPrice(product.basePrice, product.currency) }">
+                          {{ formatPrice(product.basePrice, product.currency) }}
+                        </div>
+                        <div class="product-actions" role="group" [attr.aria-label]="'CATALOG.PRODUCT_ACTIONS' | translate">
+                          <button 
+                            nz-button 
+                            nzType="primary" 
+                            nzSize="small" 
+                            (click)="viewProductDetails(product.id)"
+                            [attr.aria-label]="getAriaLabelForViewDetails(product.name)">
+                            <span nz-icon nzType="search" nzTheme="outline"></span>
+                            {{ 'BUTTONS.VIEW_DETAILS' | translate }}
+                          </button>
+                          <button 
+                            nz-button 
+                            nzType="default" 
+                            nzSize="small" 
+                            (click)="addToCart(product.id)"
+                            [attr.aria-label]="getAriaLabelForAddToCart(product.name)">
+                            <span nz-icon nzType="shopping-cart" nzTheme="outline"></span>
+                            {{ 'BUTTONS.ADD_TO_CART' | translate }}
+                          </button>
                         </div>
                       </div>
                     </nz-card>
@@ -225,14 +305,16 @@ interface MediaAsset {
                 [nzTotal]="totalProducts"
                 [nzShowSizeChanger]="true"
                 [nzPageSizeOptions]="[12, 20, 30, 50]"
+                [nzShowQuickJumper]="true"
                 (nzPageIndexChange)="onPageChange($event)"
-                (nzPageSizeChange)="onPageSizeChange($event)">
+                (nzPageSizeChange)="onPageSizeChange($event)"
+                [attr.aria-label]="'CATALOG.PAGINATION_NAVIGATION' | translate">
               </nz-pagination>
             </div>
-          </div>
+          </section>
         </div>
 
-        <div class="no-products" *ngIf="totalProducts === 0">
+        <div class="no-products" *ngIf="totalProducts === 0" role="status" aria-live="polite">
           {{ 'CATALOG.NO_PRODUCTS' | translate }}
         </div>
       </ng-container>
@@ -242,7 +324,8 @@ interface MediaAsset {
           [nzType]="'info'"
           [nzMessage]="'CATALOG.FEATURE_DISABLED_TITLE' | translate"
           [nzDescription]="'CATALOG.FEATURE_DISABLED_DESCRIPTION' | translate"
-          nzShowIcon>
+          nzShowIcon
+          role="alert">
         </nz-alert>
       </ng-template>
     </div>
@@ -253,10 +336,27 @@ interface MediaAsset {
       direction: ltr;
     }
     
+    /* Screen reader only class */
+    .sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border: 0;
+    }
+    
+    .catalog-header {
+      margin-bottom: 24px;
+    }
+    
     .toolbar {
       display: flex;
       justify-content: space-between;
-      align-items: center;
+      align-items: flex-start;
       flex-wrap: wrap;
       gap: 16px;
       margin-bottom: 24px;
@@ -271,12 +371,14 @@ interface MediaAsset {
     
     .view-controls {
       display: flex;
-      align-items: center;
+      flex-direction: column;
+      align-items: flex-end;
       gap: 16px;
+      width: 250px;
     }
     
     .pagination {
-      margin-left: 16px;
+      width: 100%;
     }
     
     .main-content {
@@ -285,13 +387,16 @@ interface MediaAsset {
     }
     
     .filters-sidebar {
-      width: 250px;
+      width: 280px;
       background: #fafafa;
       padding: 16px;
       border-radius: 4px;
+      height: fit-content;
+      position: sticky;
+      top: 20px;
     }
     
-    .filters-sidebar h3 {
+    .filters-sidebar h2 {
       margin-top: 0;
       margin-bottom: 16px;
       padding-bottom: 8px;
@@ -302,14 +407,49 @@ interface MediaAsset {
       margin-bottom: 24px;
     }
     
-    .filter-group h4 {
+    .filter-group h3 {
       margin: 0 0 12px 0;
-      font-size: 14px;
+      font-size: 16px;
       font-weight: 600;
+    }
+    
+    .filter-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+    
+    .filter-item {
+      margin-bottom: 8px;
+    }
+    
+    .filter-label {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      padding: 4px 0;
+    }
+    
+    .filter-checkbox {
+      margin-right: 8px;
+    }
+    
+    .filter-text {
+      flex: 1;
     }
     
     .price-filter {
       margin-top: 8px;
+    }
+    
+    .price-inputs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    
+    .reset-price-filters {
+      width: 100%;
     }
     
     .products-section {
@@ -319,37 +459,82 @@ interface MediaAsset {
     .results-summary {
       margin-bottom: 16px;
       color: #8c8c8c;
+      font-weight: 500;
     }
     
     .list-view {
       margin-top: 16px;
     }
     
+    .list-item {
+      border-bottom: 1px solid #e8e8e8;
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+    
+    .product-content {
+      display: grid;
+      grid-template-columns: 100px 1fr auto;
+      gap: 16px;
+      align-items: start;
+    }
+    
+    .product-image-container {
+      width: 80px;
+      height: 80px;
+    }
+    
     .product-image {
-      width: 64px;
-      height: 64px;
+      width: 100%;
+      height: 100%;
       object-fit: cover;
       border-radius: 4px;
     }
     
     .no-image-placeholder {
-      width: 64px;
-      height: 64px;
+      width: 100%;
+      height: 100%;
       display: flex;
       align-items: center;
       justify-content: center;
       background: #f5f5f5;
       border-radius: 4px;
+      color: #8c8c8c;
+    }
+    
+    .product-details {
+      flex: 1;
+    }
+    
+    .product-title {
+      margin: 0 0 8px 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+    
+    .product-description {
+      margin: 0 0 8px 0;
+      color: #595959;
     }
     
     .product-price {
       font-size: 18px;
       font-weight: bold;
       color: #1890ff;
-      margin-top: 8px;
+    }
+    
+    .product-actions {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      align-self: center;
     }
     
     .grid-view {
+      margin-bottom: 16px;
+    }
+    
+    .grid-item {
       margin-bottom: 16px;
     }
     
@@ -364,17 +549,18 @@ interface MediaAsset {
       object-fit: cover;
     }
     
+    .product-card-title {
+      margin: 0;
+      font-size: 16px;
+      font-weight: 600;
+    }
+    
     .product-footer {
       margin-top: auto;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding-top: 12px;
-    }
-    
-    .product-actions {
-      display: flex;
-      gap: 8px;
     }
     
     .pagination-bottom {
@@ -388,6 +574,38 @@ interface MediaAsset {
       padding: 40px;
       font-size: 18px;
       color: #8c8c8c;
+    }
+    
+    /* Focus styles for accessibility */
+    input:focus,
+    button:focus,
+    select:focus {
+      outline: 2px solid #1890ff;
+      outline-offset: 2px;
+    }
+    
+    /* High contrast mode support */
+    @media (prefers-contrast: high) {
+      .catalog-container {
+        border: 1px solid #000;
+      }
+      
+      .filters-sidebar {
+        border: 1px solid #000;
+      }
+      
+      .product-card {
+        border: 1px solid #d9d9d9;
+      }
+    }
+    
+    /* Reduced motion support */
+    @media (prefers-reduced-motion: reduce) {
+      * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+      }
     }
     
     /* RTL support */
@@ -416,6 +634,15 @@ interface MediaAsset {
       flex-direction: row-reverse;
     }
     
+    .catalog-container[dir="rtl"] .product-content {
+      grid-template-columns: auto 1fr 100px;
+    }
+    
+    .catalog-container[dir="rtl"] .filter-checkbox {
+      margin-right: 0;
+      margin-left: 8px;
+    }
+    
     @media (max-width: 768px) {
       .toolbar {
         flex-direction: column;
@@ -427,7 +654,8 @@ interface MediaAsset {
       }
       
       .view-controls {
-        justify-content: center;
+        width: 100%;
+        align-items: stretch;
       }
       
       .main-content {
@@ -436,11 +664,20 @@ interface MediaAsset {
       
       .filters-sidebar {
         width: 100%;
-        order: 2;
+        position: static;
       }
       
       .results-summary {
         text-align: center;
+      }
+      
+      .product-content {
+        grid-template-columns: 1fr;
+      }
+      
+      .product-actions {
+        flex-direction: row;
+        justify-content: center;
       }
     }
   `]
@@ -734,5 +971,45 @@ export class CatalogComponent implements OnInit, OnDestroy, AfterViewInit {
 
   trackByFacetValue(index: number, item: any) {
     return item.name;
+  }
+
+  viewProductDetails(productId: string) {
+    // Placeholder for navigating to product details
+    console.log('View product details:', productId);
+  }
+
+  addToCart(productId: string) {
+    // Placeholder for adding product to cart
+    console.log('Add to cart:', productId);
+  }
+
+  resetPriceFilters() {
+    this.minPrice = null;
+    this.maxPrice = null;
+    this.onPriceFilterChange();
+  }
+
+  onCategoryChangeSafe(categoryId: string, event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target) {
+      this.onCategoryChange(categoryId, target.checked);
+    }
+  }
+
+  onVendorChangeSafe(vendorId: string, event: Event) {
+    const target = event.target as HTMLInputElement;
+    if (target) {
+      this.onVendorChange(vendorId, target.checked);
+    }
+  }
+
+  getAriaLabelForViewDetails(productName: string): string {
+    // Using translate service to get the translated text and append the product name
+    return `${this.translate.instant('BUTTONS.VIEW_DETAILS')} ${productName}`;
+  }
+
+  getAriaLabelForAddToCart(productName: string): string {
+    // Using translate service to get the translated text and append the product name
+    return `${this.translate.instant('BUTTONS.ADD_TO_CART')} ${productName}`;
   }
 }
