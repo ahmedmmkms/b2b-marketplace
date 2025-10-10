@@ -1,0 +1,11 @@
+name = "p4-frontend"
+compatibility_date = "2023-10-25"
+
+[env.production]
+  account_id = "your-account-id"  # Replace with your actual Cloudflare account ID
+  
+[env.development]
+  account_id = "your-account-id"  # Replace with your actual Cloudflare account ID
+
+# This is a placeholder for Cloudflare Pages deployment configuration
+# The actual deployment is handled through the Cloudflare dashboard

@@ -1,0 +1,6 @@
+# https://developers.cloudflare.com/pages/functions/routing/
+# This file defines routing rules for Cloudflare Pages
+
+# SPA fallback - all routes not matching static assets go to index.html
+----------------
+/* /index.html 200

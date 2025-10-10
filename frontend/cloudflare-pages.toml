@@ -1,0 +1,29 @@
+[build]
+  command = "npm run build"
+  output = "dist/apps/landing/browser"
+
+[env.production]
+  NODE_VERSION = "20"
+  NX_CACHE = "0"
+
+[env.development]
+  NODE_VERSION = "20"
+  NX_CACHE = "0"
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "DENY"
+    X-XSS-Protection = "1; mode=block"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+
+[[headers]]
+  for = "/assets/*"
+  [headers.values]
+    Cache-Control = "public, immutable, max-age=31536000"
+
+[[headers]]
+  for = "/favicon.ico"
+  [headers.values]
+    Cache-Control = "public, max-age=86400"

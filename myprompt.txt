@@ -1,0 +1,317 @@
+You are a senior front-end architect and brand-focused product designer. 
+Task: DROP the current Angular frontend and REBUILD a fresh, production-ready Angular 18 + Nx workspace that reflects the implemented functionality of the P4 GCC/MENA B2B marketplace. Deliver a catchy, engaging landing-first experience with strong B2B branding.
+
+# OUTPUT CONTRACT (VERY IMPORTANT)
+- Output a single self-contained response in this order:
+  1) High-level summary (3–6 bullets).
+  2) Final repo tree (folders/files).
+  3) Step-by-step setup & commands (dev, build, test, i18n, lint, format).
+  4) Environment variables (.env.example) and feature flags.
+  5) Angular/Nx workspace files (key files with full code where necessary).
+  6) Critical pages/components (landing, catalog, RFQ, quotes, compare, checkout, wallet, invoices, loyalty, profile, admin) with representative full .ts/.html/.scss for each feature shell and at least one real list+detail page.
+  7) Theming & branding: light/dark tokens, Arabic (RTL) styles, typography scale, brand color palette.
+  8) i18n dictionaries: en/ and ar/ JSON with 50+ keys covering core flows.
+  9) Generated OpenAPI client code integration (explain codegen step + usage snippet).
+  10) CI/CD: Cloudflare Pages config, PR previews, caching, preview env vars, route rules.
+  11) README.md content (full) including troubleshooting.
+
+# PROJECT CONTEXT (P4)
+- Region: GCC/MENA. Bilingual EN/AR with full RTL, correct collation/sorting for Arabic.
+- Branding: B2B marketplace for enterprises; confident, modern, trustworthy; “desert sunrise to royal blues”. Name placeholder: BRAND_NAME. Use LOGO_SVG placeholder.
+- Architecture: Modular monolith backend (Spring Boot 3, Java 21), domains: catalog, search (Postgres FTS), rfq/quote, orders, payments, invoicing/VAT, wallet/credit, loyalty, identity/access, ops/audit, shared-kernel.
+- Feature flags (initial): 
+  catalog.publicBrowse, search.enabled, rfq.enabled, quote.vendorConsole, orders.checkout, payments.gateway1, wallet.basic, invoice.vat, loyalty.core, credit.controls
+- Non-functionals: availability ≥99.9%, p95 search <500ms (front-end must minimize network/chatty calls), checkout median <2s, ASVS L2 mindset, RBAC/ABAC, audit hooks, observability.
+
+# TECH REQUIREMENTS
+- Angular 18 + Nx workspace, strict mode, standalone components, Angular Material + NG-ZORRO together (careful style isolation).
+- State management: @ngrx/signals or @ngrx/component-store per app/core features (avoid global monolith store).
+- Routing: feature-based, lazy-loaded; guards for RBAC/ABAC; preloading strategy for public catalog.
+- Styling: SCSS; CSS logical properties for RTL; theming via tokens; Material + ZORRO theme harmonized.
+- i18n: @angular/localize; separate en/ar message JSONs; dynamic dir=rtl switch; locale-aware pipes.
+- Accessibility: semantic landmarks, focus management, keyboard nav, aria-* for controls.
+- Performance: route-level code splitting; cache headers via Cloudflare Pages; image optimization (next-gen formats via Cloudflare); skeleton loaders + optimistic UI for RFQ/quotes.
+- PWA: add manifest, icons, offline shell for landing + catalog browse.
+- Telemetry: capture core web vitals, route perf marks, API error mapping; abstract logger to send to console in dev and to backend/Cloudflare analytics in prod.
+- Security UX: CSP-friendly; sanitize HTML; CSRF-safe fetch; HTTP-only tokens; interceptors; retry/backoff.
+
+# LANDING & BRAND EXPERIENCE (HERO SELL)
+- “BRAND_NAME — GCC/MENA B2B Marketplace” hero with bold claim: “Source smarter. Negotiate faster. Buy with confidence.”
+- Pillars section: “RFQ→Quote→PO”, “VAT-Ready Invoicing”, “Wallet & Credit”, “Tiered Loyalty”, “Arabic/English & RTL”.
+- Proof/trust bar: vendor badges, SLA mention, uptime note (“≥99.9%”), “VAT across GCC”.
+- CTA: “Explore Catalog” (public browse) + “Join as Vendor” + “Request a Demo”.
+- Micro-animations (Angular + CSS) kept subtle; SSR not required; ensure CLS-safe.
+
+# APPS & ROUTES
+Create an Nx workspace with:
+- apps/landing (public site)
+  Routes:
+    / (hero, features, vendors, pricing-for-enterprise, FAQ, contact)
+    /catalog (public browse with filters, FTS, price list display if flag on)
+    /product/:id (details with media carousel, attributes)
+    /rfq (create RFQ wizard when rfq.enabled)
+    /compare (quote compare table)
+    /auth/(login|register|forgot)
+    /account (buyer profile, company profile, cost centers)
+    /wallet (balance, transactions, top-up stub)
+    /orders (list/detail)
+    /invoices (list/detail with VAT badge and PDF link)
+    /loyalty (tier dashboard, earn/burn)
+    /admin (guarded; vendor onboarding, approvals)
+- libs/ui (shared components: header, footer, logo, language-switcher, theme-switcher, card, table, paginator)
+- libs/data-access (API clients, models, DTOs, feature flag service, auth service)
+- libs/feature-* per domain: feature-catalog, feature-rfq, feature-quotes, feature-orders, feature-payments, feature-invoicing, feature-wallet, feature-loyalty, feature-identity
+- libs/util (date, currency, collation for Arabic, ULID helpers)
+- libs/styles (global.scss, tokens.scss, mixins for RTL)
+
+# OPENAPI INTEGRATION
+- Pull module OpenAPI specs from backend endpoints (per domain). Provide a pnpm script:
+  "codegen": "openapi -i http://localhost:8080/openapi/catalog.yaml -o libs/data-access/src/lib/api/catalog --client angular ... (repeat per domain)"
+- Generate typed Angular services; wrap in data-access service layer (adapter pattern).
+- Use keyset/cursor pagination models and ULIDs.
+- Provide example: CatalogService.searchProducts(query, pageKey).
+
+# FEATURE FLAGS
+- Implement FeatureFlagService reading from:
+  1) env vars at build
+  2) a JSON fetched at runtime (/assets/flags.json) with ETag caching
+  3) a query param override (?ff=rfq.enabled:on)
+- Add structural directives *ffIf="flagName" and route guards.
+
+# AUTH & RBAC/ABAC
+- JWT via httpOnly cookie; retrieve user roles/claims via /me endpoint.
+- Route guards: RoleGuard, ClaimGuard; directive [ability] for ABAC checks on buttons.
+- Hide disabled features in UI using flags + ability checks.
+
+# SEARCH & FTS (INITIAL)
+- Integrate with Postgres FTS endpoint; client-side debounced search; highlight terms; filter chips.
+- Future-ready hook for Elasticsearch.
+
+# THEME & BRAND TOKENS
+- tokens.scss: spacing scale, radii, shadow, brand colors:
+  --brand-50…900 desert-sunrise (warm), --brand-alt-50…900 royal-blue (trust)
+  Surface scales for light/dark; WCAG AA for body text.
+- Typography: Inter/Almarai (Arabic) with fallback; fluid sizes.
+- RTL support: :host([dir='rtl']) overrides for paddings/margins/chevrons.
+
+# i18n KEYS (MINIMUM)
+Provide en.json + ar.json with ≥50 keys covering: navigation, landing hero, features, catalog labels, RFQ wizard steps, quotes compare labels, checkout, wallet, invoices (VAT), loyalty tiers, profile, admin strings, errors, toasts.
+
+# TESTING & QUALITY
+- Unit: Jest + @testing-library/angular for critical components.
+- E2E: Playwright (happy-path: browse→RFQ→quote compare→checkout stub).
+- Lint: ESLint + Angular ESLint; Stylelint for SCSS.
+- Formatting: Prettier strict.
+- Commit hooks: Husky + lint-staged.
+
+# CI/CD (CLOUDFLARE PAGES)
+- Provide cloudflare-pages.yml with:
+  - Node LTS cache
+  - pnpm install, nx build landing
+  - artifact upload
+  - preview branch URLs
+  - env variable wiring (API_BASE_URL, LOCALE_DEFAULT, FF_JSON_URL)
+- Add _headers and _redirects for SPA fallback and caching.
+
+# ENV VARS EXAMPLE (.env.example)
+API_BASE_URL=
+LOCALE_DEFAULT=en
+FF_JSON_URL=/assets/flags.json
+SENTRY_DSN=
+APP_BRAND_NAME=BRAND_NAME
+
+# ACCEPTANCE CRITERIA
+- Running `pnpm install && pnpm nx serve landing` shows the branded landing with EN/AR toggle and RTL switch.
+- Flags toggle visibility of RFQ, quotes compare, checkout, wallet, VAT badges, loyalty.
+- API calls use generated OpenAPI clients (mock if no backend).
+- Lighthouse: Performance ≥90 on landing with images mocked; Accessibility ≥95.
+- Playwright E2E passes locally.
+- README includes clear steps for dev/build/deploy and troubleshooting.
+
+# STYLE GUIDELINES
+- Minimalist, enterprise-grade; ample whitespace; card-based grids; data tables with sticky headers and row actions; toasts for actions.
+- Subtle motion only (reduce-motion respected).
+- Arabic typography balanced; numerals locale-aware; correct date/currency.
+
+# DELIVERABLES
+- Provide full code for:
+  - apps/landing/src/app/app.config.ts, app.routes.ts
+  - Header/Footer/LanguageSwitcher/ThemeSwitcher (full files)
+  - Landing hero section (HTML/TS/SCSS)
+  - One complete domain flow: Catalog list + Product detail (with API service usage)
+  - RFQ wizard skeleton (3–4 steps, guarded by flag)
+  - FeatureFlagService, ffIf directive, RoleGuard sample
+  - i18n files (en.json, ar.json)
+  - tokens.scss, global.scss
+  - cloudflare-pages.yml, _headers, _redirects
+  - README.md (full)
+- Provide stubs (file skeletons) for remaining features with clear TODOs and example selectors.
+
+# TONE
+- Confident, helpful, concise. Prefer code over prose. 
+- Make it eye-catching yet enterprise-ready. 
+- Ensure everything is coherent and runnable.
+
+
+# STRICT i18n + RTL REQUIREMENTS (NON-NEGOTIABLE)
+Implement complete bilingual English/Arabic support with runtime language switching and pixel-correct RTL.
+
+## Functional Requirements
+- Languages: EN (default), AR (ar-EG).
+- Runtime switch (no rebuild): a language toggle in the header that also flips direction (ltr/rtl).
+- Persist locale+direction in localStorage and sync with URL (?lang=en|ar).
+- All dates, numbers, and currencies must respect the active locale (Angular pipes + Intl APIs).
+- Sorting and search collation must use Intl.Collator with 'ar' sensitivity when AR is active.
+- Input UX in RTL: numeric inputs remain LTR; text fields match active direction.
+
+## Angular Implementation (MUST OUTPUT THESE FILES)
+1) apps/landing/src/main.ts
+   - registerLocaleData for en-GB and ar-EG.
+   - Bootstrap with appConfig providers for i18n.
+2) apps/landing/src/app/app.config.ts
+   - Provide LOCALE_ID dynamically via an InjectionToken computed from LanguageService.
+   - Provide Directionality with DOCUMENT.dir sync (html dir attribute).
+   - HTTP interceptors inject Accept-Language header (en-US or ar-EG).
+   - Provide NG-ZORRO i18n (en_GB / ar_EG).
+3) apps/landing/src/app/core/i18n/language.service.ts
+   - API:
+     - get locale$(): Observable<'en-GB'|'ar-EG'>
+     - get dir$(): Observable<'ltr'|'rtl'>
+     - setLanguage(lang: 'en'|'ar'): void (updates locale, dir, html[dir], localStorage, URL param)
+     - getCollator(): Intl.Collator (respects current lang)
+   - Initialize from URL (?lang=...), else localStorage, else default 'en'.
+4) apps/landing/src/app/shared/components/language-switcher/**
+   - A header control with two buttons (EN | AR).
+   - Visually indicate active language; accessible (aria-pressed).
+5) apps/landing/src/assets/i18n/en.json and ar.json
+   - ≥80 keys covering nav, landing hero, catalog, RFQ wizard, quotes compare, checkout, wallet, invoices (VAT), loyalty, profile, admin, errors, toasts.
+6) apps/landing/src/styles/tokens.scss + global.scss
+   - Use CSS logical properties (margin-inline, padding-inline, inset-inline, border-start-end-radius, etc.).
+   - :root[dir="rtl"] overrides for chevrons/arrows and stepper direction.
+   - Ensure numeric fields stay LTR in RTL: input[type="number"], .num { direction:ltr; unicode-bidi:plaintext; }
+7) NG-ZORRO + Angular Material RTL
+   - Provide NzI18nService locale switch on lang change.
+   - Use Directionality for Material components; test mat-menu, mat-stepper in RTL.
+8) Locale-aware Pipes & Utilities
+   - CurrencyPipe with currency from environment (e.g., 'AED', 'SAR') but locale from LanguageService.
+   - DatePipe with active locale.
+   - util/collation.ts exposing sortByLocalized(labelGetter) using LanguageService.getCollator().
+9) Router Integration
+   - A LangGuard reads ?lang and applies LanguageService.setLanguage().
+   - Router link helper to preserve ?lang across navigation.
+10) SEO/Meta
+   - <html lang="en|ar"> toggled with the language.
+   - <meta name="viewport"> ok; add <meta http-equiv="content-language"> according to active lang.
+
+## Example Code (QWEN MUST OUTPUT CONCRETE FILES)
+
+### main.ts (snippet)
+import { registerLocaleData } from '@angular/common';
+import enGb from '@angular/common/locales/en-GB';
+import arEg from '@angular/common/locales/ar-EG';
+registerLocaleData(enGb);
+registerLocaleData(arEg);
+
+### app.config.ts (snippet)
+import { LOCALE_ID, InjectionToken } from '@angular/core';
+export const ACTIVE_LOCALE = new InjectionToken<string>('ACTIVE_LOCALE');
+
+providers: [
+  {
+    provide: ACTIVE_LOCALE,
+    useFactory: (svc: LanguageService) => svc.currentLocale(),
+    deps: [LanguageService]
+  },
+  { provide: LOCALE_ID, useExisting: ACTIVE_LOCALE },
+  {
+    provide: HTTP_INTERCEPTORS,
+    multi: true,
+    useClass: AcceptLanguageInterceptor // adds Accept-Language: en-US or ar-EG
+  },
+  {
+    provide: Directionality,
+    useFactory: (svc: LanguageService, doc: Document) => {
+      const dir = svc.currentDir();
+      doc.documentElement.setAttribute('dir', dir);
+      return { value: dir, change: svc.dir$ };
+    },
+    deps: [LanguageService, DOCUMENT]
+  },
+  // NG-ZORRO locale bridged to LanguageService changes
+]
+
+### language.service.ts (core API)
+- Holds BehaviorSubjects for locale ('en-GB'|'ar-EG') and dir ('ltr'|'rtl').
+- setLanguage('ar') => locale 'ar-EG', dir 'rtl', html[dir]=rtl, localStorage/lang updated, notify zorro/material.
+- getCollator(): new Intl.Collator(this.isArabic ? 'ar' : 'en', { sensitivity: 'base', numeric: true });
+
+### language-switcher.component.html (snippet)
+<button [attr.aria-pressed]="(lang$|async)==='en'" (click)="set('en')">EN</button>
+<button [attr.aria-pressed]="(lang$|async)==='ar'" (click)="set('ar')">العربية</button>
+
+### en.json / ar.json (MUST cover)
+{
+  "nav.catalog": "Catalog",
+  "nav.rfq": "RFQ",
+  "nav.quotes": "Quotes",
+  "nav.orders": "Orders",
+  "nav.invoices": "Invoices",
+  "nav.wallet": "Wallet",
+  "nav.loyalty": "Loyalty",
+  "nav.profile": "Profile",
+  "cta.explore": "Explore Catalog",
+  "cta.vendorJoin": "Join as Vendor",
+  "landing.hero.title": "Source smarter. Negotiate faster.",
+  "landing.hero.subtitle": "The GCC/MENA B2B marketplace built for enterprises.",
+  "catalog.filters.search": "Search products",
+  "catalog.filters.sort": "Sort",
+  "catalog.price": "Price",
+  "catalog.vendor": "Vendor",
+  "rfq.wizard.title": "Request for Quote",
+  "rfq.step.details": "Details",
+  "rfq.step.lines": "Lines",
+  "rfq.step.attach": "Attachments",
+  "rfq.step.submit": "Submit",
+  "quotes.compare.title": "Compare Quotes",
+  "checkout.title": "Checkout",
+  "wallet.balance": "Balance",
+  "invoice.vatBadge": "VAT-Ready",
+  "loyalty.tier": "Tier",
+  "profile.company": "Company",
+  "admin.vendorOnboarding": "Vendor Onboarding",
+  "error.generic": "Something went wrong",
+  "toast.saved": "Saved successfully"
+}
+
+(Provide full Arabic equivalents, ensuring correct tone and business terminology, e.g., "كتالوج", "طلب عرض سعر", "فاتورة ضريبية", "محفظة", "برنامج الولاء". ≥80 keys total.)
+
+## Testing (MUST PROVIDE TESTS)
+- Unit tests for LanguageService: switching, persistence, collator behavior.
+- Component tests for LanguageSwitcher (aria-pressed, toggling dir).
+- E2E (Playwright):
+  - Assert html[dir] toggles.
+  - Assert landing hero text changes with lang.
+  - Assert numeric input preserves LTR under RTL.
+  - Assert sorting differs when AR (collation) vs EN.
+
+## Acceptance Criteria (BLOCKERS if unmet)
+- Toggling language switches: html[dir], <html lang>, NG-ZORRO locale, Material Directionality, pipes output.
+- All navigations preserve ?lang query param.
+- Lighthouse Accessibility ≥95 in both EN and AR pages.
+- No layout breakage when dir=rtl across: header, tables, stepper, dropdowns, pagination.
+- Tables show correct localized sorting using Intl.Collator when AR is active.
+
+The frontend code must be in folder "./frontend/"
+
+use the following env variables if needed, mantain secrets guidelines in coding: 
+SPRING_PROFILES_ACTIVE=prod
+DB_URL=jdbc:postgresql://neondb_owner:npg_QTE70VJgbcdp@ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+DB_USERNAME=neondb_owner
+DB_PASSWORD=npg_QTE70VJgbcdp
+REDIS_URL=redis://default:AUUnAAIncDI1ZWRkMmFkMDE2ZjA0MmYxYmEyNWVlYzM1Y2ExODMxNHAyMTc3MDM@adjusted-sunbird-17703.upstash.io:6379
+B2_ACCOUNT_ID=43f8cd5d949d
+B2_APPLICATION_KEY_ID=00543f8cd5d949d0000000001
+B2_APPLICATION_KEY=K005iS73v7srQkqax39ZRy3ZJ/Yth+w
+B2_BUCKET=64735f483c0da5ed9994091d
+B2_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
+API_URL_BASE=https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net

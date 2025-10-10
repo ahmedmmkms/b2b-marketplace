@@ -1,0 +1,74 @@
+// Mixins for RTL support
+@mixin logical-margin($start: null, $end: null, $top: null, $bottom: null) {
+  @if $start {
+    margin-#{var(--start)}: #{$start};
+  }
+  @if $end {
+    margin-#{var(--end)}: #{$end};
+  }
+  @if $top {
+    margin-top: #{$top};
+  }
+  @if $bottom {
+    margin-bottom: #{$bottom};
+  }
+}
+
+@mixin logical-padding($start: null, $end: null, $top: null, $bottom: null) {
+  @if $start {
+    padding-#{var(--start)}: #{$start};
+  }
+  @if $end {
+    padding-#{var(--end)}: #{$end};
+  }
+  @if $top {
+    padding-top: #{$top};
+  }
+  @if $bottom {
+    padding-bottom: #{$bottom};
+  }
+}
+
+@mixin logical-border($start: null, $end: null, $top: null, $bottom: null) {
+  @if $start {
+    border-#{var(--border-start)}: #{$start};
+  }
+  @if $end {
+    border-#{var(--border-end)}: #{$end};
+  }
+  @if $top {
+    border-top: #{$top};
+  }
+  @if $bottom {
+    border-bottom: #{$bottom};
+  }
+}
+
+@mixin logical-radius($start-top: null, $end-top: null, $start-bottom: null, $end-bottom: null) {
+  @if $start-top {
+    border-#{var(--rounded-start)}: #{$start-top};
+  }
+  @if $end-top {
+    border-#{var(--rounded-end)}: #{$end-top};
+  }
+  @if $start-bottom {
+    border-#{var(--rounded-start-bottom)}: #{$start-bottom};
+  }
+  @if $end-bottom {
+    border-#{var(--rounded-end-bottom)}: #{$end-bottom};
+  }
+}
+
+// Helper mixin to apply RTL-specific styles
+@mixin rtl {
+  [dir="rtl"] & {
+    @content;
+  }
+}
+
+// Helper mixin to apply LTR-specific styles
+@mixin ltr {
+  [dir="ltr"] & {
+    @content;
+  }
+}

@@ -1,0 +1,81 @@
+<header class="header" [attr.dir]="$any(languageService.direction$ | async)">
+  <div class="container">
+    <div class="header-content">
+      <div class="brand-section">
+        <a routerLink="/" class="logo">
+          <span class="logo-text">BRAND_NAME</span>
+        </a>
+      </div>
+      
+      <nav class="nav-menu">
+        <a 
+          routerLink="/catalog" 
+          routerLinkActive="active"
+          class="nav-link">
+          {{ 'nav.catalog' | translate }}
+        </a>
+        
+        <a 
+          *p4FfIf="'rfq.enabled'"
+          routerLink="/rfq" 
+          routerLinkActive="active"
+          class="nav-link">
+          {{ 'nav.rfq' | translate }}
+        </a>
+        
+        <a 
+          *p4FfIf="'quote.vendorConsole'"
+          routerLink="/quotes" 
+          routerLinkActive="active"
+          class="nav-link">
+          {{ 'nav.quotes' | translate }}
+        </a>
+        
+        <a 
+          *p4FfIf="'orders.checkout'"
+          routerLink="/orders" 
+          routerLinkActive="active"
+          class="nav-link">
+          {{ 'nav.orders' | translate }}
+        </a>
+        
+        <a 
+          *p4FfIf="'invoice.vat'"
+          routerLink="/invoices" 
+          routerLinkActive="active"
+          class="nav-link">
+          {{ 'nav.invoices' | translate }}
+        </a>
+        
+        <a 
+          *p4FfIf="'wallet.basic'"
+          routerLink="/wallet" 
+          routerLinkActive="active"
+          class="nav-link">
+          {{ 'nav.wallet' | translate }}
+        </a>
+        
+        <a 
+          *p4FfIf="'loyalty.core'"
+          routerLink="/loyalty" 
+          routerLinkActive="active"
+          class="nav-link">
+          {{ 'nav.loyalty' | translate }}
+        </a>
+      </nav>
+      
+      <div class="header-actions">
+        <p4-language-switcher></p4-language-switcher>
+        
+        <div class="user-section">
+          <a routerLink="/auth/login" class="btn btn-outline">
+            {{ 'auth.login' | translate }}
+          </a>
+          <a routerLink="/auth/register" class="btn btn-primary">
+            {{ 'auth.register' | translate }}
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

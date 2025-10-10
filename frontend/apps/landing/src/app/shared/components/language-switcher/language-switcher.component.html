@@ -1,0 +1,19 @@
+<div class="language-switcher" [attr.dir]="languageService.getCurrentDirection()">
+  <button 
+    class="lang-btn" 
+    [class.active]="getCurrentLang() === 'en'"
+    [attr.aria-pressed]="getCurrentLang() === 'en'"
+    (click)="setLanguage('en')"
+    aria-label="Switch to English">
+    EN
+  </button>
+  <span class="divider">|</span>
+  <button 
+    class="lang-btn" 
+    [class.active]="getCurrentLang() === 'ar'"
+    [attr.aria-pressed]="getCurrentLang() === 'ar'"
+    (click)="setLanguage('ar')"
+    aria-label="Switch to Arabic">
+    العربية
+  </button>
+</div>
