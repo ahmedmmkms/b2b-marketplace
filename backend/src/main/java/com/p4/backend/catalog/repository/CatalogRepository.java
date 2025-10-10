@@ -57,4 +57,35 @@ public interface CatalogRepository extends JpaRepository<Product, String> {
     // Find published products for public browsing
     @Query("SELECT p FROM Product p WHERE p.status = com.p4.backend.catalog.entity.Product$ProductStatus.PUBLISHED")
     Page<Product> findPublishedProducts(Pageable pageable);
+    
+    // Advanced search with faceted filtering
+    @Query(value = "SELECT * FROM product p WHERE " +
+           "(:query IS NULL OR " +
+           "  to_tsvector('english', coalesce(p.name, '') || ' ' || coalesce(p.description, '') || ' ' || coalesce(p.sku, '')) " +
+           "  @@ plainto_tsquery('english', :query)) AND " +
+           "p.status = 'PUBLISHED' AND " +
+           "(:vendorId IS NULL OR p.vendor_id = :vendorId) AND " +
+           "(:categoryId IS NULL OR p.category_id = :categoryId) AND " +
+           "(:inventoryStatus IS NULL OR p.inventory_status = :inventoryStatus) AND " +
+           "(:minPrice IS NULL OR p.base_price >= :minPrice) AND " +
+           "(:maxPrice IS NULL OR p.base_price <= :maxPrice)",
+           countQuery = "SELECT count(*) FROM product p WHERE " +
+           "(:query IS NULL OR " +
+           "  to_tsvector('english', coalesce(p.name, '') || ' ' || coalesce(p.description, '') || ' ' || coalesce(p.sku, '')) " +
+           "  @@ plainto_tsquery('english', :query)) AND " +
+           "p.status = 'PUBLISHED' AND " +
+           "(:vendorId IS NULL OR p.vendor_id = :vendorId) AND " +
+           "(:categoryId IS NULL OR p.category_id = :categoryId) AND " +
+           "(:inventoryStatus IS NULL OR p.inventory_status = :inventoryStatus) AND " +
+           "(:minPrice IS NULL OR p.base_price >= :minPrice) AND " +
+           "(:maxPrice IS NULL OR p.base_price <= :maxPrice)",
+           nativeQuery = true)
+    Page<Product> findByAdvancedSearch(
+            @Param("query") String query,
+            @Param("vendorId") String vendorId,
+            @Param("categoryId") String categoryId,
+            @Param("inventoryStatus") String inventoryStatus,
+            @Param("minPrice") java.math.BigDecimal minPrice,
+            @Param("maxPrice") java.math.BigDecimal maxPrice,
+            Pageable pageable);
 }

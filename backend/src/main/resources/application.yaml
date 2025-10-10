@@ -25,16 +25,23 @@ management:
   endpoints:
     web:
       exposure:
-        include: health,info,metrics
+        include: health,info,metrics,prometheus
   endpoint:
     health:
       show-details: when-authorized
     info:
       enabled: true
+    prometheus:
+      enabled: true
+  metrics:
+    export:
+      prometheus:
+        enabled: true
 logging:
   level:
     com.p4: DEBUG
     org.springframework.security: DEBUG
+    org.springframework.web: DEBUG
 ---
 spring:
   config:

@@ -9,6 +9,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -70,6 +72,32 @@ public class CatalogService {
     // Method for public catalog browsing (only published products) without pagination
     public List<Product> getBrowsableProducts() {
         return catalogRepository.findByStatus(Product.ProductStatus.PUBLISHED);
+    }
+    
+    // Advanced search with faceted filtering
+    public Page<Product> searchWithFacets(String query, 
+                                         String vendorId, 
+                                         String categoryId, 
+                                         String inventoryStatus,
+                                         BigDecimal minPrice, 
+                                         BigDecimal maxPrice,
+                                         int page, 
+                                         int size) {
+        Pageable pageable = PageRequest.of(page, size, Sort.by("name"));
+        return catalogRepository.findByAdvancedSearch(query, vendorId, categoryId, inventoryStatus, minPrice, maxPrice, pageable);
+    }
+    
+    // Method to get available categories for faceted search
+    public List<String> getAvailableCategories() {
+        // This would typically come from a category service, but for now returning a sample list
+        // In a real implementation, you would query the database for distinct categories
+        return Arrays.asList("Electronics", "Automotive", "Home & Garden", "Industrial", "Health & Beauty", "Sports");
+    }
+    
+    // Method to get available vendors for faceted search
+    public List<String> getAvailableVendors() {
+        // In a real implementation, you would query the database for distinct vendors
+        return Arrays.asList("Vendor A", "Vendor B", "Vendor C", "Vendor D");
     }
     
     // Method to check product availability

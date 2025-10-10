@@ -1206,22 +1206,113 @@ jobs:
         ./mvnw clean package -DskipTests
 ```
 
-## Next Steps
+## Sprint 6: Hardening & Open Beta
 
-After completing this setup:
+### Sprint Overview
+**Objective:** Perf, a11y/RTL polish, security review, widen access.
+- Performance optimization and hardening
+- Accessibility and RTL improvements
+- Security review and enhancements
+- Open beta preparation and rollout
 
-1. **Sprint 0 Initial Development**:
-   - Implement basic health/ready endpoints in the backend
-   - Create a simple landing page in the frontend
-   - Set up your CI/CD pipelines
-   - Deploy to staging environments
+### Sprint 6 Tasks
 
-2. **Verify Setup**:
-   - Confirm your backend health endpoint is accessible
-   - Ensure frontend builds and deploys successfully
-   - Test that all service connections work properly
+#### P4-S6-T001 — Search tuning; cache headers; DB indexes review
+- [ ] Review and optimize PostgreSQL full-text search queries
+- [ ] Fine-tune search ranking algorithms for better relevance
+- [ ] Implement search caching to reduce database load
+- [ ] Add faceted filtering to enhance search capabilities
+- [ ] Optimize search response times to meet performance budgets (p95 < 500 ms)
 
-3. **Begin Sprint 0 Tasks**:
-   - Follow the detailed task list in your P4 Dossier
-   - Start with creating domain skeletons
-   - Implement basic feature flag functionality
+#### P4-S6-T002 — A11y audit (contrast, focus, keyboard, AR language tags)
+- [ ] Conduct comprehensive accessibility audit using tools like axe-core
+- [ ] Check for sufficient color contrast ratios (minimum 4.5:1 for normal text, 3:1 for large text)
+- [ ] Ensure proper focus management and visible focus indicators
+- [ ] Verify keyboard navigation works for all interactive elements
+- [ ] Add proper ARIA attributes and roles where needed
+- [ ] Test screen reader compatibility
+- [ ] Ensure all form elements have proper labels
+
+#### P4-S6-T003 — Security sweep (headers, rate-limits, secrets rotation)
+- [ ] Implement security headers (HSTS, CSP, etc.)
+- [ ] Implement rate limiting for API endpoints
+- [ ] Plan secrets rotation procedures
+- [ ] Perform security scanning of dependencies
+- [ ] Review authentication and authorization implementations
+
+#### P4-S6-T004 — Error budget dashboards + alerts; SLO gates for deploy
+- [ ] Set up monitoring for error rates and establish error budget thresholds
+- [ ] Create dashboards to visualize error budget consumption
+- [ ] Configure alerts for when error budget consumption exceeds defined thresholds
+- [ ] Implement SLO gates for deployments
+- [ ] Define SLOs for key metrics (availability, latency, error rates)
+
+#### P4-S6-T005 — Public API docs (OpenAPI) + client SDK publish
+- [ ] Enhance OpenAPI documentation with detailed descriptions and examples
+- [ ] Generate and publish client SDKs for major platforms
+- [ ] Set up public documentation portal with API reference
+- [ ] Create API usage guides and tutorials for developers
+
+#### P4-S6-T006 — Lift flags to beta cohort; vendor onboarding outside pilot
+- [ ] Review all current feature flags to determine which ones are ready for beta release
+- [ ] Create a beta cohort user group with specific access permissions
+- [ ] Gradually enable feature flags for the beta cohort following a rollout schedule
+- [ ] Modify vendor onboarding workflow to remove pilot-specific restrictions
+- [ ] Implement proper validation and approval processes for public vendor signups
+
+#### P4-S6-T007 — Run restore drill (Neon), object restore from R2
+- [ ] Perform database restore drills to ensure backup integrity
+- [ ] Test object storage (R2) restore procedures
+- [ ] Document the restore procedures in the runbook
+- [ ] Validate that restores can be performed within acceptable RTO/RPO targets
+
+#### P4-S6-T008 — Frontend complete redesign and rebuild with elegant landing page and catchy theme
+- [ ] Implement modern UI/UX design principles with focus on user experience
+- [ ] Create an elegant, professional landing page with compelling value proposition
+- [ ] Develop a catchy and consistent theme throughout the application
+- [ ] Ensure consistent design language across all pages and components
+- [ ] Create reusable UI components library
+- [ ] Implement smooth animations and transitions
+
+#### P4-S6-T009 — Implement advanced search features with faceted filtering
+- [ ] Add faceted filtering to search functionality
+- [ ] Implement advanced search options (price range, category, vendor, etc.)
+- [ ] Optimize search performance with proper indexing
+- [ ] Add search result sorting options
+
+#### P4-S6-T010 — Performance optimization and bundle size reduction
+- [ ] Analyze frontend bundle size and identify optimization opportunities
+- [ ] Implement lazy loading for modules that are not immediately needed
+- [ ] Optimize images and assets for faster loading
+- [ ] Implement code splitting strategies
+- [ ] Optimize backend API response times and reduce payload sizes
+
+#### P4-S6-T011 — Integration testing for all major user flows
+- [ ] Create comprehensive integration tests for all major user flows
+- [ ] Test cross-module interactions
+- [ ] Verify API endpoints work correctly with different input parameters
+- [ ] Test database operations and data consistency
+
+#### P4-S6-T012 — Comprehensive end-to-end testing automation
+- [ ] Set up end-to-end testing automation using Playwright
+- [ ] Create test scenarios that cover both English and Arabic interfaces
+- [ ] Implement automated accessibility tests as part of the CI pipeline
+- [ ] Run end-to-end tests in staging environment to simulate real user behavior
+
+### Next Steps
+
+After completing Sprint 6:
+
+1. **Monitor Open Beta**:
+   - Collect feedback from beta users
+   - Monitor system performance and error rates
+   - Address any issues discovered during the beta
+
+2. **Prepare for Production**:
+   - Complete any remaining hardening tasks
+   - Finalize security measures
+   - Ensure all monitoring and alerting are in place
+
+3. **Plan for Sprints 7+**:
+   - Analyze feedback from the open beta
+   - Prioritize features and improvements for subsequent sprints

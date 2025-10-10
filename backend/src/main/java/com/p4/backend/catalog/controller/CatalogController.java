@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -24,21 +26,47 @@ public class CatalogController {
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
         Page<Product> products = catalogService.getBrowsableProducts(page, size);
-        return ResponseEntity.ok(products);
+        
+        // Generate an ETag based on the content and pagination info
+        String etag = generateETag(products.getContent().toString() + page + size);
+        
+        return ResponseEntity.ok()
+                .header("ETag", etag)
+                .header("Cache-Control", "public, max-age=300") // Cache for 5 minutes
+                .body(products);
     }
     
     // Admin/All products endpoint
     @GetMapping("/all")
     public ResponseEntity<List<Product>> getAllProducts() {
         List<Product> products = catalogService.getAllProducts();
-        return ResponseEntity.ok(products);
+        
+        // Generate an ETag based on the content
+        String etag = generateETag(products.toString());
+        
+        return ResponseEntity.ok()
+                .header("ETag", etag)
+                .header("Cache-Control", "no-cache") // Don't cache admin endpoints
+                .body(products);
     }
     
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProductById(@PathVariable String id) {
         Optional<Product> product = catalogService.getProductById(id);
-        return product.map(ResponseEntity::ok)
-                     .orElse(ResponseEntity.notFound().build());
+        
+        if (product.isPresent()) {
+            Product productEntity = product.get();
+            
+            // Generate an ETag based on the product content and last modified
+            String etag = generateETag(productEntity.getId() + productEntity.getUpdatedAt());
+            
+            return ResponseEntity.ok()
+                    .header("ETag", etag)
+                    .header("Cache-Control", "public, max-age=900") // Cache for 15 minutes
+                    .body(productEntity);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     
     @PostMapping
@@ -119,5 +147,76 @@ public class CatalogController {
             "hasNext", ftsResults.hasNext(),
             "hasPrevious", ftsResults.hasPrevious()
         ));
+    }
+    
+    // Faceted search endpoint with advanced filtering
+    @GetMapping("/search/faceted")
+    public ResponseEntity<Page<Product>> facetedSearch(
+            @RequestParam(required = false) String q,
+            @RequestParam(required = false) String vendorId,
+            @RequestParam(required = false) String categoryId,
+            @RequestParam(required = false) String inventoryStatus,
+            @RequestParam(required = false) java.math.BigDecimal minPrice,
+            @RequestParam(required = false) java.math.BigDecimal maxPrice,
+            @RequestParam(defaultValue = "0") int page,
+            @RequestParam(defaultValue = "20") int size) {
+        Page<Product> results = catalogService.searchWithFacets(q, vendorId, categoryId, inventoryStatus, minPrice, maxPrice, page, size);
+        
+        // Generate an ETag based on the search parameters and results
+        String etag = generateETag((q != null ? q : "") + 
+                                 (vendorId != null ? vendorId : "") + 
+                                 (categoryId != null ? categoryId : "") + 
+                                 (inventoryStatus != null ? inventoryStatus : "") + 
+                                 (minPrice != null ? minPrice.toString() : "") + 
+                                 (maxPrice != null ? maxPrice.toString() : "") + 
+                                 page + size + results.getContent().toString());
+        
+        return ResponseEntity.ok()
+                .header("ETag", etag)
+                .header("Cache-Control", "public, max-age=300") // Cache for 5 minutes
+                .body(results);
+    }
+    
+    // Get available facets for search
+    @GetMapping("/facets")
+    public ResponseEntity<Map<String, Object>> getFacets() {
+        Map<String, Object> facets = Map.of(
+            "categories", catalogService.getAvailableCategories(),
+            "vendors", catalogService.getAvailableVendors()
+        );
+        
+        // Generate an ETag for the facets data
+        String etag = generateETag(facets.toString());
+        
+        return ResponseEntity.ok()
+                .header("ETag", etag)
+                .header("Cache-Control", "public, max-age=3600") // Cache for 1 hour
+                .body(facets);
+    }
+    
+    /**
+     * Generate an ETag for the given content
+     * @param content the content to generate ETag for
+     * @return the generated ETag
+     */
+    private String generateETag(String content) {
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(content.getBytes("UTF-8"));
+            StringBuilder hexString = new StringBuilder();
+            
+            for (byte b : hash) {
+                String hex = Integer.toHexString(0xff & b);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+            
+            return "\"" + hexString.toString() + "\"";
+        } catch (Exception e) {
+            // If there's an error generating the ETag, return a simple hash
+            return "\"" + content.hashCode() + "\"";
+        }
     }
 }

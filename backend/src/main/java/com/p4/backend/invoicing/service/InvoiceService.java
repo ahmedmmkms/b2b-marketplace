@@ -67,7 +67,7 @@ public class InvoiceService {
         // Validate tax establishment exists
         Optional<TaxRegistration> taxRegOpt = taxRegistrationRepository.findById(request.getEstablishmentId());
         if (taxRegOpt.isEmpty()) {
-            throw new BusinessException("Tax establishment not found: " + request.getEstablishmentId());
+            throw new RuntimeException(new BusinessException("Tax establishment not found: " + request.getEstablishmentId()));
         }
         
         // Create the invoice entity
@@ -138,23 +138,26 @@ public class InvoiceService {
         List<InvoiceLine> savedLines = invoiceLineRepository.saveAll(invoiceLines);
         invoice.setInvoiceLines(savedLines);
         
+        // Save the invoice first
+        Invoice savedInvoice = invoiceRepository.save(invoice);
+        
         // Use telemetry to record the invoice generation operation
         invoiceTelemetryService.recordInvoiceGenerationTime(() -> {
             // Generate and store PDF
             try {
-                String pdfLocation = invoicePdfService.generateAndUploadInvoicePdf(invoice.getId());
-                invoice.setPdfLocation(pdfLocation);
-                invoice = invoiceRepository.save(invoice);
+                String pdfLocation = invoicePdfService.generateAndUploadInvoicePdf(savedInvoice.getId());
+                savedInvoice.setPdfLocation(pdfLocation);
+                invoiceRepository.save(savedInvoice);
             } catch (Exception e) {
-                log.error("Failed to generate PDF for invoice: {}", invoice.getId(), e);
+                log.error("Failed to generate PDF for invoice: {}", savedInvoice.getId(), e);
                 // We don't fail the invoice creation if PDF generation fails, but log the error
             }
         });
         
         log.info("Successfully created invoice: {} for order: {}, total amount: {}", 
-                invoice.getInvoiceNumber(), request.getOrderId(), totalAmount);
+                savedInvoice.getInvoiceNumber(), request.getOrderId(), totalAmount);
         
-        return mapToResponse(invoice);
+        return mapToResponse(savedInvoice);
     }
     
     @Transactional
@@ -164,7 +167,7 @@ public class InvoiceService {
         // Validate the original invoice exists
         Optional<Invoice> originalInvoiceOpt = invoiceRepository.findById(request.getInvoiceId());
         if (originalInvoiceOpt.isEmpty()) {
-            throw new BusinessException("Original invoice not found: " + request.getInvoiceId());
+            throw new RuntimeException(new BusinessException("Original invoice not found: " + request.getInvoiceId()));
         }
         
         Invoice originalInvoice = originalInvoiceOpt.get();
@@ -172,7 +175,7 @@ public class InvoiceService {
         // Validate tax establishment exists
         Optional<TaxRegistration> taxRegOpt = taxRegistrationRepository.findById(request.getEstablishmentId());
         if (taxRegOpt.isEmpty()) {
-            throw new BusinessException("Tax establishment not found: " + request.getEstablishmentId());
+            throw new RuntimeException(new BusinessException("Tax establishment not found: " + request.getEstablishmentId()));
         }
         
         // Create the credit note entity
@@ -255,12 +258,12 @@ public class InvoiceService {
         
         Optional<CreditNote> creditNoteOpt = creditNoteRepository.findById(creditNoteId);
         if (creditNoteOpt.isEmpty()) {
-            throw new BusinessException("Credit note not found: " + creditNoteId);
+            throw new RuntimeException(new BusinessException("Credit note not found: " + creditNoteId));
         }
         
         CreditNote creditNote = creditNoteOpt.get();
         if (creditNote.getStatus() != CreditNote.CreditNoteStatus.DRAFT) {
-            throw new BusinessException("Only draft credit notes can be issued, current status: " + creditNote.getStatus());
+            throw new RuntimeException(new BusinessException("Only draft credit notes can be issued, current status: " + creditNote.getStatus()));
         }
         
         creditNote.setStatus(CreditNote.CreditNoteStatus.ISSUED);
@@ -277,7 +280,7 @@ public class InvoiceService {
         // For this implementation, we'll get the tax registration to know the country
         Optional<TaxRegistration> taxRegOpt = taxRegistrationRepository.findById(establishmentId);
         if (taxRegOpt.isEmpty()) {
-            throw new BusinessException("Tax establishment not found: " + establishmentId);
+            throw new RuntimeException(new BusinessException("Tax establishment not found: " + establishmentId));
         }
         
         String countryCode = taxRegOpt.get().getCountryCode();
@@ -338,7 +341,7 @@ public class InvoiceService {
     public InvoiceResponse getInvoiceById(String invoiceId) {
         Optional<Invoice> invoiceOpt = invoiceRepository.findById(invoiceId);
         if (invoiceOpt.isEmpty()) {
-            throw new BusinessException("Invoice not found: " + invoiceId);
+            throw new RuntimeException(new BusinessException("Invoice not found: " + invoiceId));
         }
         
         Invoice invoice = invoiceOpt.get();
@@ -358,7 +361,7 @@ public class InvoiceService {
     public String getInvoicePdfSignedUrl(String invoiceId) {
         Optional<Invoice> invoiceOpt = invoiceRepository.findById(invoiceId);
         if (invoiceOpt.isEmpty()) {
-            throw new BusinessException("Invoice not found: " + invoiceId);
+            throw new RuntimeException(new BusinessException("Invoice not found: " + invoiceId));
         }
         
         Invoice invoice = invoiceOpt.get();
@@ -384,12 +387,12 @@ public class InvoiceService {
         
         Optional<Invoice> invoiceOpt = invoiceRepository.findById(invoiceId);
         if (invoiceOpt.isEmpty()) {
-            throw new BusinessException("Invoice not found: " + invoiceId);
+            throw new RuntimeException(new BusinessException("Invoice not found: " + invoiceId));
         }
         
         Invoice invoice = invoiceOpt.get();
         if (invoice.getStatus() != Invoice.InvoiceStatus.DRAFT) {
-            throw new BusinessException("Only draft invoices can be issued, current status: " + invoice.getStatus());
+            throw new RuntimeException(new BusinessException("Only draft invoices can be issued, current status: " + invoice.getStatus()));
         }
         
         invoice.setStatus(Invoice.InvoiceStatus.ISSUED);

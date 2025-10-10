@@ -38,7 +38,7 @@ public class VatCalculationService {
         // Get the tax registration to know the country
         Optional<TaxRegistration> taxRegOpt = taxRegistrationRepository.findById(establishmentId);
         if (taxRegOpt.isEmpty()) {
-            throw new BusinessException("Tax establishment not found: " + establishmentId);
+            throw new RuntimeException(new BusinessException("Tax establishment not found: " + establishmentId));
         }
         
         String countryCode = taxRegOpt.get().getCountryCode();
