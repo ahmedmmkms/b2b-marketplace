@@ -66,11 +66,26 @@ export class AnalyticsService {
       referrer: document.referrer
     };
 
-    // Log to console in development
+    // Enhanced logging for debugging
+    console.log('DEBUG: Tracking analytics event:', {
+      eventType: fullEvent.eventType,
+      eventId: fullEvent.eventId,
+      sessionId: fullEvent.sessionId,
+      timestamp: fullEvent.timestamp,
+      properties: fullEvent.properties
+    });
+
     if (environment.production) {
-      this.sendEventToBackend(fullEvent).subscribe();
+      this.sendEventToBackend(fullEvent).subscribe({
+        next: (response) => console.log('DEBUG: Analytics event sent successfully', { eventId: fullEvent.eventId, response }),
+        error: (error) => console.error('DEBUG: Failed to send analytics event', { eventId: fullEvent.eventId, error })
+      });
     } else {
-      console.log('Analytics event:', fullEvent);
+      // Still send in development for testing
+      this.sendEventToBackend(fullEvent).subscribe({
+        next: (response) => console.log('DEBUG: Analytics event sent in development mode', { eventId: fullEvent.eventId, response }),
+        error: (error) => console.error('DEBUG: Failed to send analytics event in development', { eventId: fullEvent.eventId, error })
+      });
     }
   }
 

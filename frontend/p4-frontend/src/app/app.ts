@@ -169,11 +169,11 @@ export class App implements OnInit {
 
   onNavItemClick(route: string): void {
     // This method can be used to track navigation clicks or perform other actions
-    console.log('Navigating to:', route);
+    console.log('DEBUG: Navigating to:', route, 'Current URL:', this.router.url);
   }
 
   onLoginClick(): void {
     // This method can be used to handle login functionality
-    console.log('Login button clicked');
+    console.log('DEBUG: Login button clicked');
   }
 }

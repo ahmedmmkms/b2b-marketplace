@@ -116,10 +116,18 @@ export class PerformanceMonitoringService {
   public recordMetric(metric: PerformanceMetric): void {
     this.metrics.push(metric);
     
+    // Enhanced logging for debugging
+    console.log('DEBUG: Recording performance metric:', {
+      metricId: metric.metricId,
+      duration: metric.duration,
+      context: metric.context,
+      timestamp: metric.timestamp
+    });
+    
     // In a real app, we would also send this to a backend service
     this.sendMetricToBackend(metric).subscribe({
-      next: () => console.log('Performance metric sent successfully'),
-      error: (error) => console.error('Failed to send performance metric', error)
+      next: (response) => console.log('DEBUG: Performance metric sent successfully', { metricId: metric.metricId, response }),
+      error: (error) => console.error('DEBUG: Failed to send performance metric', { metricId: metric.metricId, error })
     });
   }
 

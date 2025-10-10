@@ -81,20 +81,27 @@ export class FeatureFlagsService {
    * Initialize feature flags from local storage or API
    */
   private initializeFlags(): void {
+    console.log('DEBUG: Initializing feature flags');
+    
     // First, try to load from local storage
     const savedFlags = this.loadFromLocalStorage();
     if (savedFlags) {
+      console.log('DEBUG: Loaded feature flags from local storage:', savedFlags);
       this.flagsSubject.next(savedFlags);
       return;
     }
 
+    console.log('DEBUG: No saved flags found, loading from API or using defaults');
+    
     // If no saved flags, load from API or use defaults
     this.loadFlagsFromApi().subscribe({
       next: (flags) => {
+        console.log('DEBUG: Loaded feature flags from API:', flags);
         this.flagsSubject.next(flags);
         this.saveToLocalStorage(flags);
       },
-      error: () => {
+      error: (error) => {
+        console.error('DEBUG: Failed to load feature flags from API, using defaults:', error);
         // If API fails, use default flags
         this.flagsSubject.next(this.defaultFlags);
         this.saveToLocalStorage(this.defaultFlags);
@@ -120,10 +127,16 @@ export class FeatureFlagsService {
    */
   public isFeatureEnabled(featureName: FeatureFlagName): boolean {
     const flags = this.flagsSubject.value;
-    if (!flags || !flags[featureName]) {
-      return this.defaultFlags[featureName]?.enabled || false;
-    }
-    return flags[featureName].enabled;
+    const result = flags && flags[featureName] ? flags[featureName].enabled : this.defaultFlags[featureName]?.enabled || false;
+    
+    console.log('DEBUG: Checking feature flag:', {
+      featureName,
+      result,
+      currentFlags: flags ? flags[featureName] : null,
+      defaultFlag: this.defaultFlags[featureName]
+    });
+    
+    return result;
   }
 
   /**

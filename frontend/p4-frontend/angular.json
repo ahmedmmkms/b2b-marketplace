@@ -52,7 +52,9 @@
             "development": {
               "optimization": false,
               "extractLicenses": false,
-              "sourceMap": true
+              "sourceMap": true,
+              "namedChunks": true,
+              "verbose": true
             }
           },
           "defaultConfiguration": "production"
@@ -64,7 +66,8 @@
               "buildTarget": "landing:build:production"
             },
             "development": {
-              "buildTarget": "landing:build:development"
+              "buildTarget": "landing:build:development",
+              "verbose": true
             }
           },
           "defaultConfiguration": "development"
