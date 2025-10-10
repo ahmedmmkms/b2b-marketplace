@@ -5,14 +5,14 @@
 This is a comprehensive B2B marketplace project targeting the GCC/MENA region, designed with an incremental delivery approach. The project aims to launch a VAT-ready, multi-vendor B2B marketplace featuring RFQ→Quote→PO flows, invoicing, wallets/credit limits, and tiered loyalty programs.
 
 ### Key Technologies
-- **Backend:** Java 21, Spring Boot 3, PostgreSQL 16 (Neon), Redis (Upstash), S3-compatible object storage (Cloudflare R2)
+- **Backend:** Java 21, Spring Boot 3, PostgreSQL 16 (Neon), Redis (Upstash), S3-compatible object storage (Backblaze B2)
 - **Frontend:** Angular 18 + Nx, Angular Material + NG-ZORRO, i18n (EN/AR), RTL support
 - **Hosting (free tiers):** 
   - Frontend: Cloudflare Pages (GitHub auto-deploy, PR previews)
   - Backend: Koyeb free instance (GitHub auto-deploy)
   - Database: Neon Free (Postgres)
   - Cache/Rate-limit: Upstash Redis Free
-  - Object Storage: Cloudflare R2 "Forever Free"
+  - Object Storage: Backblaze B2
 
 ### Architecture
 - **Pattern:** Modular monolith (hexagonal architecture) with domains as modules with ports/adapters; planned to split later if needed
@@ -20,10 +20,10 @@ This is a comprehensive B2B marketplace project targeting the GCC/MENA region, d
 
 ## Project Structure & Files
 
-The project currently contains planning and specification documents:
-- `P4_Dossier.md`: Main project specification, includes product scope, architecture overview, data model, API principles, and detailed sprint plans
-- `Sprint0_Runbook.md`: Step-by-step guide for Sprint 0 setup and delivery
-- `Tasks_Index.md`: Comprehensive index of all planned tasks across multiple sprints
+The project contains both frontend and backend code:
+- `frontend/p4-frontend/`: Angular 18 application with Nx workspace
+- `backend/`: Spring Boot 3 application with Java 21
+- Planning and specification documents like `P4_Dossier.md`, `Sprint0_Runbook.md`, and `Tasks_Index.md`
 
 ## Sprint Planning
 
@@ -80,18 +80,18 @@ Key entities include:
 
 ## Building and Running
 
-The project is in the initial setup phase with no actual code repositories created yet. Based on the specifications:
-
 ### Backend (Spring Boot)
 - Java 21 with Spring Boot 3
-- Gradle or Maven build system (TBD from actual project setup)
-- Environment-specific configurations via application-*.yaml profiles
+- Maven build system (pom.xml)
+- Run with: `./mvnw spring-boot:run` or `java -jar target/p4-backend-0.0.1-SNAPSHOT.jar`
+- Environment-specific configurations via application-*.yml profiles
 - Database migrations via Flyway
 
 ### Frontend (Angular)
 - Angular 18 + Nx workspace
-- Build with `nx build [app-name]`
-- Development server with `nx serve [app-name]`
+- Build with: `ng build` or `nx build landing`
+- Development server with: `ng serve` or `nx serve landing`
+- Tests with: `ng test` or `nx test landing`
 
 ### Development Workflow
 1. Clone frontend and backend repositories separately
@@ -123,7 +123,7 @@ Initial feature flag register includes: `catalog.publicBrowse`, `search.enabled`
 
 ## Current Status
 
-The project is currently in the Sprint 0 planning phase, focused on setting up the development environment, repositories, CI/CD pipelines, and basic infrastructure. No actual code repositories exist yet; only the planning documents are present in this directory.
+The project is currently in the implementation phase, with Sprint 0 already completed as indicated by the checked items in `Sprint0_Runbook.md`. Both frontend and backend repositories have been set up with basic configurations and dependency structures in place.
 
 ## Special Considerations
 
@@ -132,5 +132,6 @@ The project is currently in the Sprint 0 planning phase, focused on setting up t
 - VAT compliance requirements for GCC markets
 - Modular architecture to allow for future scaling and microservice decomposition
 - Comprehensive observability and monitoring requirements from day one
+- Object storage using Backblaze B2 with credentials stored in environment variables: B2_ENDPOINT_URL, B2_BUCKET, B2_APPLICATION_KEY, B2_APPLICATION_KEY_ID, B2_ACCOUNT_ID
 
 For all github commits and push, I am the sole contributer "Ahmed Mahmoud", "ahmedmmkms@hotmail.com"

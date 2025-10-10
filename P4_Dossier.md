@@ -14,7 +14,7 @@
   - Backend: **Koyeb** free instance (GitHub auto-deploy)  
   - Database: **Neon** Free (Postgres)  
   - Cache/Rate-limit: **Upstash Redis** Free  
-  - Object Storage: **Cloudflare R2** “Forever Free”
+  - Object Storage: **Backblaze B2**
 - **Day-0:** Public landing, status, health checks, telemetry baseline, feature-flag framework wired.
 
 ---
@@ -317,7 +317,7 @@ Live landing at Pages domain; API health “UP” at Koyeb; CI/CD green on push;
 1. Single database nearest to key user region.  
 2. TLS URL; set rate-limit budgets to stay under free commands.
 
-### F. Cloudflare R2 (Object Storage)
+### F. Backblaze B2 (Object Storage)
 1. Create bucket `p4-prod-assets`.  
 2. Create API token (read/write limited to bucket).  
 3. Organize prefixes: `/media/`, `/invoices/`, `/flags/`.
