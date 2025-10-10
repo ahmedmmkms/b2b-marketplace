@@ -1,0 +1,37 @@
+2025-10-10T08:07:03.4747540Z [INFO] Recompiling the module because of changed source code.
+2025-10-10T08:07:06.5547730Z [INFO] Compiling 142 source files with javac [debug parameters release 21] to target/classes
+2025-10-10T08:07:06.5552327Z [INFO] Annotation processing is enabled because one or more processors were found
+2025-10-10T08:07:06.5556334Z   on the class path. A future release of javac may disable annotation processing
+2025-10-10T08:07:06.5557282Z   unless at least one processor is specified by name (-processor), or a search
+2025-10-10T08:07:06.5558830Z   path is specified (--processor-path, --processor-module-path), or annotation
+2025-10-10T08:07:06.5559464Z   processing is enabled explicitly (-proc:only, -proc:full).
+2025-10-10T08:07:06.5560009Z   Use -Xlint:-options to suppress this message.
+2025-10-10T08:07:06.5560803Z [INFO] -------------------------------------------------------------
+2025-10-10T08:07:06.5561336Z [ERROR] COMPILATION ERROR : 
+2025-10-10T08:07:06.5561819Z [INFO] -------------------------------------------------------------
+2025-10-10T08:07:06.5563303Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/config/MonitoringConfig.java:[8,39] package io.micrometer.prometheusmetrics does not exist
+2025-10-10T08:07:06.5565710Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/config/MonitoringConfig.java:[9,39] package io.micrometer.prometheusmetrics does not exist
+2025-10-10T08:07:06.5567107Z [INFO] 2 errors 
+2025-10-10T08:07:06.5567530Z [INFO] -------------------------------------------------------------
+2025-10-10T08:07:06.5568150Z [INFO] ------------------------------------------------------------------------
+2025-10-10T08:07:06.5568674Z [INFO] BUILD FAILURE
+2025-10-10T08:07:06.5569115Z [INFO] ------------------------------------------------------------------------
+2025-10-10T08:07:06.5569634Z [INFO] Total time:  28.175 s
+2025-10-10T08:07:06.5570063Z [INFO] Finished at: 2025-10-10T08:07:06Z
+2025-10-10T08:07:06.5570950Z [INFO] ------------------------------------------------------------------------
+2025-10-10T08:07:06.5572131Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project p4-backend: Compilation failure: Compilation failure: 
+2025-10-10T08:07:06.5574153Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/config/MonitoringConfig.java:[8,39] package io.micrometer.prometheusmetrics does not exist
+2025-10-10T08:07:06.5576467Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/config/MonitoringConfig.java:[9,39] package io.micrometer.prometheusmetrics does not exist
+2025-10-10T08:07:06.5577821Z [ERROR] -> [Help 1]
+2025-10-10T08:07:06.5578138Z [ERROR] 
+2025-10-10T08:07:06.5578617Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
+2025-10-10T08:07:06.5579392Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
+2025-10-10T08:07:06.5579937Z [ERROR] 
+2025-10-10T08:07:06.5580765Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
+2025-10-10T08:07:06.5581812Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
+2025-10-10T08:07:06.5906582Z [ERROR] Process completed with exit code 1.
+
+2025-10-10T08:15:22.1243560Z [INFO] Successfully fixed the MonitoringConfig.java import issue
+2025-10-10T08:15:22.1245340Z [INFO] Changed import io.micrometer.prometheusmetrics.PrometheusConfig to io.micrometer.prometheus.PrometheusConfig
+2025-10-10T08:15:22.1246120Z [INFO] Changed import io.micrometer.prometheusmetrics.PrometheusMeterRegistry to io.micrometer.prometheus.PrometheusMeterRegistry
+2025-10-10T08:15:22.1246780Z [INFO] Build should now succeed with the correct package imports
