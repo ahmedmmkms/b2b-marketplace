@@ -47,7 +47,7 @@ public class RateLimitConfig implements WebMvcConfigurer {
                 response.addHeader("X-RateLimit-Reset", String.valueOf(System.currentTimeMillis() + Duration.ofMinutes(1).toMillis()));
                 return true;
             } else {
-                response.setStatus(HttpServletResponse.SC_TOO_MANY_REQUESTS);
+                response.setStatus(429); // SC_TOO_MANY_REQUESTS
                 response.getWriter().write("{\"error\":\"Rate limit exceeded. Please try again later.\"}");
                 return false;
             }

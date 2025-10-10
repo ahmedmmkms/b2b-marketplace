@@ -46,10 +46,13 @@ public class ErrorBudgetService {
     }
     
     public void trackError(String sloName, String endpoint) {
-        errorCounter.increment(
-            Tag.of("slo", sloName),
-            Tag.of("endpoint", endpoint)
-        );
+        Counter.builder("requests.total")
+            .description("Total number of requests")
+            .tag("status", "error")
+            .tag("slo", sloName)
+            .tag("endpoint", endpoint)
+            .register(meterRegistry)
+            .increment();
         
         // Update SLO compliance
         ServiceLevelObjective slo = slos.get(sloName);
@@ -59,10 +62,13 @@ public class ErrorBudgetService {
     }
     
     public void trackSuccess(String sloName, String endpoint) {
-        successCounter.increment(
-            Tag.of("slo", sloName),
-            Tag.of("endpoint", endpoint)
-        );
+        Counter.builder("requests.total")
+            .description("Total number of requests")
+            .tag("status", "success")
+            .tag("slo", sloName)
+            .tag("endpoint", endpoint)
+            .register(meterRegistry)
+            .increment();
         
         // Update SLO compliance
         ServiceLevelObjective slo = slos.get(sloName);
@@ -97,7 +103,7 @@ public class ErrorBudgetService {
     }
     
     // Inner class to represent an SLO
-    private static class ServiceLevelObjective {
+    public static class ServiceLevelObjective {
         private final String name;
         private final double targetPercentage;
         private final long budget;

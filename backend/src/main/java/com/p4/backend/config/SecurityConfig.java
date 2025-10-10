@@ -31,15 +31,17 @@ public class SecurityConfig {
             
             // Add security headers
             .headers(headers -> headers
-                .frameOptions().deny()  // Prevent clickjacking
-                .contentTypeOptions().and()  // Prevent content type sniffing
-                .xssProtection(xss -> xss.headerValue(org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED_BLOCK))  // Enable XSS protection
+                .frameOptions(frameOptions -> frameOptions
+                    .deny())  // Prevent clickjacking
+                .xssProtection(xss -> xss
+                    .headerValue(org.springframework.security.web.header.writers.XXssProtectionHeaderWriter.HeaderValue.ENABLED))  // Enable XSS protection
                 .httpStrictTransportSecurity(hsts -> hsts
                     .maxAgeInSeconds(31536000)  // 1 year
-                    .includeSubdomains(true)
+                    .includeSubDomains(true)  // Enable includeSubdomains
                     .preload(true)  // Allow for preload list
                 )
-                .referrerPolicy(referrer -> referrer.policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
+                .referrerPolicy(referrer -> referrer
+                    .policy(ReferrerPolicyHeaderWriter.ReferrerPolicy.STRICT_ORIGIN_WHEN_CROSS_ORIGIN))
                 .contentSecurityPolicy(csp -> csp
                     .policyDirectives("default-src 'self'; " +
                             "script-src 'self' 'unsafe-inline' 'unsafe-eval'; " +
