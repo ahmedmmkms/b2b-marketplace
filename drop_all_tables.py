@@ -1,5 +1,4 @@
 import psycopg2
-import sys
 from dotenv import load_dotenv
 import os
 from urllib.parse import urlparse
@@ -62,28 +61,31 @@ def load_db_config():
             'channel_binding': 'require'
         }
 
-def execute_migration_scripts():
-    # Load database connection parameters from .env
+def drop_all_tables():
+    """Drop all tables in the database"""
     connection_params = load_db_config()
-
-    # Read the complete migration SQL script
-    migration_file_path = "D:/Projects/b2b-marketplace/backend/src/main/resources/db/migration/V1__Create_complete_schema.sql"
-    with open(migration_file_path, 'r', encoding='utf-8') as f:
-        migration_sql = f.read()
-
+    
+    # SQL command to drop all tables
+    drop_tables_sql = """
+    DROP SCHEMA public CASCADE;
+    CREATE SCHEMA public;
+    GRANT ALL ON SCHEMA public TO neondb_owner;
+    GRANT ALL ON SCHEMA public TO public;
+    COMMENT ON SCHEMA public IS 'standard public schema';
+    """
+    
     try:
         # Connect to the database
         print("Connecting to the database...")
         conn = psycopg2.connect(**connection_params)
         cursor = conn.cursor()
         
-        print("Executing migration script...")
-        cursor.execute(migration_sql)
-        print("Migration executed successfully!")
+        print("Dropping all tables...")
+        cursor.execute(drop_tables_sql)
         
         # Commit the changes
         conn.commit()
-        print("Schema created successfully!")
+        print("All tables dropped successfully!")
         
     except psycopg2.Error as e:
         print(f"Database error: {e}")
@@ -99,4 +101,4 @@ def execute_migration_scripts():
         print("Database connection closed.")
 
 if __name__ == "__main__":
-    execute_migration_scripts()
+    drop_all_tables()
