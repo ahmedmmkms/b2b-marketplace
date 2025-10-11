@@ -1,0 +1,31 @@
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "moduleResolution": "bundler",
+    "emitDecoratorMetadata": false,
+    "target": "es2022",
+    "module": "preserve",
+    "lib": ["es2020", "dom"],
+    "baseUrl": ".",
+    "paths": {
+      "@p4/frontend/data-access": ["data-access/src/index.ts"],
+      "@p4/frontend/feature-catalog": ["feature/src/index.ts"],
+      "@p4/frontend/feature-rfq": ["feature-rfq/src/index.ts"],
+      "@p4/frontend/feature-quotes": ["feature-quotes/src/index.ts"],
+      "@p4/frontend/feature-orders": ["feature-orders/src/index.ts"],
+      "@p4/frontend/feature-payments": ["feature-payments/src/index.ts"],
+      "@p4/frontend/feature-invoicing": ["feature-invoicing/src/index.ts"],
+      "@p4/frontend/feature-wallet": ["feature-wallet/src/index.ts"],
+      "@p4/frontend/feature-loyalty": ["feature-loyalty/src/index.ts"],
+      "@p4/frontend/feature-identity": ["feature-identity/src/index.ts"],
+      "@p4/frontend/shared/components": ["shared/src/index.ts"],
+      "@p4/frontend/ui/header": ["ui/src/index.ts"],
+      "@p4/frontend/ui/footer": ["ui/src/index.ts"],
+      "@p4/frontend/util/date": ["util/src/index.ts"],
+      "@p4/frontend/util/currency": ["util/src/index.ts"],
+      "@p4/frontend/util/collation": ["util/src/index.ts"],
+      "@p4/frontend/styles": ["styles/src/index.ts"]
+    }
+  },
+  "exclude": ["node_modules", "tmp"]
+}

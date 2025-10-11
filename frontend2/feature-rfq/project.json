@@ -1,0 +1,36 @@
+{
+  "name": "feature-rfq",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "feature-rfq/src",
+  "prefix": "p4",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "feature-rfq/ng-package.json",
+        "tsConfig": "feature-rfq/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "feature-rfq/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "feature-rfq/jest.config.ts",
+        "tsConfig": "feature-rfq/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}

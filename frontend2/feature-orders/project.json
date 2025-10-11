@@ -1,0 +1,36 @@
+{
+  "name": "feature-orders",
+  "$schema": "../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "feature-orders/src",
+  "prefix": "p4",
+  "projectType": "library",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@nx/angular:ng-packagr-lite",
+      "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
+      "options": {
+        "project": "feature-orders/ng-package.json",
+        "tsConfig": "feature-orders/tsconfig.lib.json"
+      },
+      "configurations": {
+        "production": {
+          "tsConfig": "feature-orders/tsconfig.lib.prod.json"
+        },
+        "development": {}
+      },
+      "defaultConfiguration": "production"
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "feature-orders/jest.config.ts",
+        "tsConfig": "feature-orders/tsconfig.spec.json"
+      }
+    },
+    "lint": {
+      "executor": "@nx/eslint:lint"
+    }
+  }
+}
