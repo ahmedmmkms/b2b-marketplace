@@ -12,9 +12,9 @@ When setting up your Cloudflare Pages project, use the following settings:
 
 ### Build Configuration
 
-- **Build Command**: `cd frontend2 && npm ci && npm run build`
-- **Build Output Directory**: `frontend2/dist/frontend2`
-- **Root Directory**: `.` (project root)
+- **Root Directory**: `frontend2/.`
+- **Build Command**: `npm run build -- --configuration=production`
+- **Build Output Directory**: `dist/frontend2`
 
 ### Environment Variables
 
@@ -24,4 +24,5 @@ No special environment variables are needed for the build process.
 
 - The `wrangler.toml` file in the repository contains minimal configuration required for Pages.
 - The actual build command and settings should be configured in the Cloudflare dashboard as specified above.
-- The frontend build output will be in the `frontend2/dist/frontend2` directory after the build process.
+- The frontend build output will be in the `dist/frontend2` directory relative to the root directory (which is `frontend2/`).
+- The final output path from the repository root perspective will be `frontend2/dist/frontend2`.
