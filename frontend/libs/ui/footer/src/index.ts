@@ -1,1 +1,0 @@
-export { FooterComponent } from './lib/footer.component';
