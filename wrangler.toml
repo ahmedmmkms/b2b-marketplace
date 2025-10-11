@@ -1,5 +1,6 @@
 name = "b2b-marketplace"
 compatibility_date = "2023-12-01"
+pages_build_output_dir = "frontend2/dist/frontend2"
 
 [env.production]
 account_id = "YOUR_ACCOUNT_ID"
