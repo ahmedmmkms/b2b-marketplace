@@ -1,0 +1,89 @@
+{
+  "HomePage": {
+    "title": "Welcome to P4 B2B Marketplace",
+    "description": "Your VAT-ready, multi-vendor B2B marketplace for the GCC/MENA region"
+  },
+  "Navigation": {
+    "catalog": "Catalog",
+    "rfq": "RFQ",
+    "quotes": "Quotes",
+    "orders": "Orders",
+    "payments": "Payments",
+    "invoices": "Invoices",
+    "wallet": "Wallet",
+    "loyalty": "Loyalty",
+    "account": "Account",
+    "admin": "Admin",
+    "language": "Language",
+    "arabic": "العربية",
+    "english": "English"
+  },
+  "Catalog": {
+    "title": "Product Catalog",
+    "search": "Search products...",
+    "categories": "Categories",
+    "products": "Products",
+    "product_details": "Product Details",
+    "add_to_cart": "Add to Cart",
+    "out_of_stock": "Out of Stock"
+  },
+  "RFQ": {
+    "title": "Request for Quotation",
+    "create_rfq": "Create RFQ",
+    "rfq_list": "RFQ List",
+    "product": "Product",
+    "quantity": "Quantity",
+    "required_by": "Required By",
+    "description": "Description",
+    "submit": "Submit"
+  },
+  "Orders": {
+    "title": "Orders",
+    "order_list": "Order List",
+    "order_details": "Order Details",
+    "order_id": "Order ID",
+    "status": "Status",
+    "total": "Total",
+    "placed_on": "Placed On"
+  },
+  "Invoices": {
+    "title": "Invoices",
+    "invoice_list": "Invoice List",
+    "invoice_details": "Invoice Details",
+    "invoice_id": "Invoice ID",
+    "date": "Date",
+    "amount": "Amount",
+    "vat": "VAT",
+    "download_pdf": "Download PDF"
+  },
+  "Wallet": {
+    "title": "Corporate Wallet",
+    "balance": "Balance",
+    "transactions": "Transactions",
+    "credit_limit": "Credit Limit",
+    "available_credit": "Available Credit"
+  },
+  "Loyalty": {
+    "title": "Loyalty Program",
+    "points": "Points",
+    "current_tier": "Current Tier",
+    "next_tier": "Next Tier",
+    "points_to_next_tier": "Points to Next Tier",
+    "rewards": "Rewards"
+  },
+  "Common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "view": "View",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "warning": "Warning",
+    "info": "Information"
+  }
+}

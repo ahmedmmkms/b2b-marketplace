@@ -21,7 +21,7 @@ This is a comprehensive B2B marketplace project targeting the GCC/MENA region, d
 ## Project Structure & Files
 
 The project contains both frontend and backend code:
-- `frontend/p4-frontend/`: Angular 18 application with Nx workspace
+- `frontend2/`: Angular 18 application with Nx workspace
 - `backend/`: Spring Boot 3 application with Java 21
 - Planning and specification documents like `P4_Dossier.md`, `Sprint0_Runbook.md`, and `Tasks_Index.md`
 
@@ -99,20 +99,18 @@ Key entities include:
 3. Follow sprint-specific task lists in the Dossier
 4. Use the feature flag system to control functionality rollout
 
-## Development Conventions
-
-### API Principles
+## API Principles
 - REST/JSON APIs with RFC7807 error responses
 - Idempotency keys on payment/order endpoints
 - Cursor/keyset pagination using ULIDs
 - OpenAPI per module with client SDK generation for Angular
 
-### Naming Conventions
+## Naming Conventions
 - IDs: ULID strings (sortable)
 - Database: snake_case tables/columns; singular tables for entities
 - Services/modules: catalog, rfq, quotes, orders, payments, invoicing, wallet, loyalty, identity, shared-kernel
 
-### Feature Flags
+## Feature Flags
 Initial feature flag register includes: `catalog.publicBrowse`, `search.enabled`, `rfq.enabled`, `quote.vendorConsole`, `orders.checkout`, `payments.gateway1`, `wallet.basic`, `invoice.vat`, `loyalty.core`, `credit.controls`.
 
 ## Key Files and Documentation
