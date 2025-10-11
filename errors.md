@@ -1,21 +1,18 @@
-# Errors Log
-
-This file tracks errors that occur during the development process.
-
-## 2025-10-11
-
-### Nx Build Issues in Original Frontend
-- **Issue**: `NX Could not load plugin @nx/angular` error when trying to build the original frontend workspace
-- **Root Cause**: Dependency conflicts and incorrect workspace configuration causing the @nx/angular plugin to fail to load
-- **Solution**: Created a new, clean Nx workspace with Angular 18 (`frontend2`) with proper library structure
-- **Resolution**: New workspace successfully builds with all required P4 B2B marketplace libraries:
-  - All feature libraries (catalog, RFQ, quotes, orders, payments, invoicing, wallet, loyalty, identity)
-  - Shared libraries (components, data access, utilities, styling)
-  - Proper path mappings and configurations
-  - Working build system that resolves the original plugin loading issues
-
-### Frontend2 Structure
-- Properly configured Nx workspace with Angular 18
-- All necessary dependencies (Angular, NgRx, Angular Material, ng-zorro-antd)
-- Clean architecture following Nx best practices
-- Ready for P4 B2B marketplace code migration
+2025-10-11T09:03:44.941296Z	Cloning repository...
+2025-10-11T09:03:45.603523Z	From https://github.com/ahmedmmkms/b2b-marketplace
+2025-10-11T09:03:45.604007Z	 * branch            0a96b14b8c278b50e9d74542e6db1d229d71d25b -> FETCH_HEAD
+2025-10-11T09:03:45.604169Z	
+2025-10-11T09:03:45.646016Z	HEAD is now at 0a96b14 Update errors.md with Nx workspace resolution and create frontend2
+2025-10-11T09:03:45.646437Z	
+2025-10-11T09:03:45.725035Z	
+2025-10-11T09:03:45.725661Z	Using v2 root directory strategy
+2025-10-11T09:03:45.748507Z	Success: Finished cloning repository files
+2025-10-11T09:03:47.449001Z	Checking for configuration in a Wrangler configuration file (BETA)
+2025-10-11T09:03:47.449981Z	
+2025-10-11T09:03:47.45136Z	Found wrangler.toml file. Reading build configuration...
+2025-10-11T09:03:48.556427Z	A wrangler.toml file was found but it does not appear to be valid. Did you mean to use wrangler.toml to configure Pages? If so, then make sure the file is valid and contains the `pages_build_output_dir` property. Skipping file and continuing.
+2025-10-11T09:03:48.634796Z	Error: Cannot find cwd: /opt/buildhome/repo/frontend2
+2025-10-11T09:03:48.635525Z	    at Pe (/snapshot/dist/run-build.js)
+2025-10-11T09:03:48.635721Z	    at ts (/snapshot/dist/run-build.js)
+2025-10-11T09:03:48.643528Z	Failed: build command exited with code: 1
+2025-10-11T09:03:49.887303Z	Failed: error occurred while running build command
