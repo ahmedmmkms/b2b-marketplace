@@ -22,7 +22,8 @@ No special environment variables are needed for the build process.
 
 ## Notes
 
-- The `wrangler.toml` file in the repository contains minimal configuration required for Pages.
+- The `wrangler.toml` file in the repository contains minimal configuration required for Pages (name and compatibility_date).
+- The build output directory is specified in the Cloudflare dashboard, NOT in wrangler.toml.
 - The actual build command and settings should be configured in the Cloudflare dashboard as specified above.
 - The frontend build output will be in the `dist/frontend2` directory relative to the root directory (which is `frontend2/`).
 - The final output path from the repository root perspective will be `frontend2/dist/frontend2`.
