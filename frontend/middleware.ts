@@ -1,23 +1,17 @@
-// middleware.ts
 import createMiddleware from 'next-intl/middleware';
+import { locales, defaultLocale } from './src/i18n/routing';
 
 export default createMiddleware({
-  // The locales you want to support
-  locales: ['en', 'ar'],
-  
-  // The default locale
-  defaultLocale: 'en',
-
-  // When true, the locale detection and setting is done
-  // automatically by next-intl middleware
-  localeDetection: true
+  locales,
+  defaultLocale,
+  localePrefix: 'as-needed' // Remove prefix for default locale
 });
 
 export const config = {
+  // Match only internationalized pathnames
   matcher: [
-    // Skip all internal paths (_next)
-    '/((?!_next|favicon.ico|api|trpc).*)',
-    // Optional: only run on root (/) and internal pages (/dashboard)
-    // '/',
-  ],
+    '/',
+    '/(ar|en)/:path*',
+    '/((?!_next|_vercel|.*\\..*).*)'
+  ]
 };

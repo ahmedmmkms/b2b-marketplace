@@ -1,16 +1,17 @@
 import createNextIntlPlugin from 'next-intl/plugin';
 
+const withNextIntl = createNextIntlPlugin();
+
+/** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export',
-  trailingSlash: true,
+  output: 'export', // For static export compatible with Cloudflare Pages
+  trailingSlash: true, // Required for Cloudflare Pages
   images: {
-    unoptimized: true
+    unoptimized: true // Required for static exports
   },
   experimental: {
     serverComponentsExternalPackages: ['@libsql/client']
   }
 };
-
-const withNextIntl = createNextIntlPlugin('./next-intl.config.js');
 
 export default withNextIntl(nextConfig);

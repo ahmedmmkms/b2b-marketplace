@@ -1,14 +1,16 @@
-// components/NavigationHeader.tsx
+﻿// components/NavigationHeader.tsx
 'use client';
 
 import Link from 'next/link';
-import { useLocale } from 'next-intl';
-import { LanguageSwitcher } from '../libs/i18n/LanguageSwitcher';
 import { Button } from '../libs/ui/button';
 
-export default function NavigationHeader() {
-  const locale = useLocale();
-  
+type NavigationHeaderProps = {
+  locale: 'en' | 'ar';
+};
+
+export default function NavigationHeader({ locale }: NavigationHeaderProps) {
+  const localeLabel = locale === 'en' ? 'English' : 'العربية';
+
   return (
     <header className="bg-white shadow-sm">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -28,7 +30,7 @@ export default function NavigationHeader() {
                 href={`/${locale}/rfq`} 
                 className="text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium"
               >
-                {locale === 'en' ? 'RFQ' : 'طلب أسعار'}
+                {locale === 'en' ? 'RFQ' : 'طلب عرض سعر'}
               </Link>
               <Link 
                 href={`/${locale}/orders`} 
@@ -57,7 +59,7 @@ export default function NavigationHeader() {
             </nav>
           </div>
           <div className="flex items-center space-x-4">
-            <LanguageSwitcher />
+            <span className="text-sm text-gray-500">{localeLabel}</span>
             <Button variant="outline">
               {locale === 'en' ? 'Sign In' : 'تسجيل الدخول'}
             </Button>

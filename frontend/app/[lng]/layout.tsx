@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation';
 import { languages } from '../../libs/i18n/settings';
 import ClientProvider from '../client-provider';
 import NavigationHeader from '../../components/NavigationHeader';
+import { getMessages } from 'next-intl/server';
 
 export async function generateStaticParams() {
   return languages.map((lng) => ({ lng }));
@@ -20,29 +21,14 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Load messages for the current locale using static imports
-  let messages;
-  try {
-    if (lng === 'en') {
-      const enMessages = await import('../../messages/en.json');
-      messages = enMessages.default;
-    } else if (lng === 'ar') {
-      const arMessages = await import('../../messages/ar.json');
-      messages = arMessages.default;
-    } else {
-      // If we reach here, the locale is not supported
-      notFound();
-    }
-  } catch (error) {
-    console.error(`Failed to load messages for locale: ${lng}`, error);
-    notFound();
-  }
+  // Load messages for the current locale using next-intl's getMessages
+  const messages = await getMessages({ locale: lng });
 
   return (
     <html lang={lng} dir={lng === 'ar' ? 'rtl' : 'ltr'}>
       <body>
         <ClientProvider locale={lng} messages={messages}>
-          <NavigationHeader />
+          <NavigationHeader locale={lng as 'en' | 'ar'} />
           <main>
             {children}
           </main>
@@ -51,3 +37,4 @@ export default async function LocaleLayout({
     </html>
   );
 }
+

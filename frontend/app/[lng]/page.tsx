@@ -1,7 +1,6 @@
 // app/[lng]/page.tsx
 import { getTranslations } from 'next-intl/server';
 import Link from 'next/link';
-import { LanguageSwitcher } from '../../libs/i18n/LanguageSwitcher';
 
 export default async function HomePage({ params: { lng } }: { params: { lng: string } }) {
   const t = await getTranslations({ locale: lng, namespace: 'HomePage' });
@@ -18,7 +17,7 @@ export default async function HomePage({ params: { lng } }: { params: { lng: str
           >
             Browse Catalog
           </Link>
-          <LanguageSwitcher />
+          <span className="px-4 py-2 border rounded">{lng === 'en' ? 'English' : 'العربية'}</span>
         </div>
       </main>
     </div>

@@ -15,3 +15,6 @@ const nextIntlConfig = {
 };
 
 module.exports = nextIntlConfig;
+
+// For ES modules compatibility
+exports.default = nextIntlConfig;

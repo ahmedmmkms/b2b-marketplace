@@ -1,9 +1,8 @@
-// app/[lng]/product/[id]/page.tsx
+﻿// app/[lng]/product/[id]/page.tsx
 import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { Product } from '../../../../libs/api/catalog/service';
 import { Button } from '../../../../libs/ui/button';
-import { useCartStore } from '../../../../libs/store/useCartStore';
 
 // Define the static parameters for pre-building
 export async function generateStaticParams() {
@@ -28,28 +27,28 @@ export default async function ProductDetailPage({
   const mockProducts: Product[] = [
     {
       id: 'prod-1',
-      name: lng === 'en' ? 'Industrial Drill' : 'مثقاب صناعي',
-      description: lng === 'en' ? 'High-powered industrial drill for heavy-duty applications' : 'مثقاب صناعي عالي الطاقة للاستخدامات الشاقة',
+      name: lng === 'en' ? 'Industrial Drill' : '�矠 ����',
+      description: lng === 'en' ? 'High-powered industrial drill for heavy-duty applications' : '�矠 ���� ��� ���� �韫����꟢ �鬟�',
       price: 249.99,
-      category: lng === 'en' ? 'Tools' : 'أدوات',
+      category: lng === 'en' ? 'Tools' : '��ퟢ',
       inStock: true,
       quantity: 15
     },
     {
       id: 'prod-2',
-      name: lng === 'en' ? 'Safety Helmet' : 'خوذة الأمان',
-      description: lng === 'en' ? 'Protective safety helmet for construction sites' : 'خوذة واقية لمواقع البناء',
+      name: lng === 'en' ? 'Safety Helmet' : '���� ����',
+      description: lng === 'en' ? 'Protective safety helmet for construction sites' : '���� ��� ����� ��럘',
       price: 29.99,
-      category: lng === 'en' ? 'Safety' : 'سلامة',
+      category: lng === 'en' ? 'Safety' : '���',
       inStock: true,
       quantity: 50
     },
     {
       id: 'prod-3',
-      name: lng === 'en' ? 'Steel Pipe' : 'أنبوب فولاذي',
-      description: lng === 'en' ? 'Durable steel pipe for construction projects' : 'أنبوب فولاذي متين لمشاريع البناء',
+      name: lng === 'en' ? 'Steel Pipe' : '���� ��韨�',
+      description: lng === 'en' ? 'Durable steel pipe for construction projects' : '���� ��韨� ��� �꬟��� ��럘',
       price: 19.99,
-      category: lng === 'en' ? 'Construction' : 'بناء',
+      category: lng === 'en' ? 'Construction' : '�럘',
       inStock: false,
       quantity: 0
     }
@@ -61,11 +60,7 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  // Add to cart function would use the cart store in a real implementation
-  const addToCart = (productId: string) => {
-    // Implementation would use useCartStore
-    console.log(`Added product ${productId} to cart`);
-  };
+  // Add to cart interactions are disabled in the static preview.
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -88,24 +83,23 @@ export default async function ProductDetailPage({
                     </p>
                     <div className="mt-6">
                       <p className="text-2xl font-bold text-gray-900">
-                        {product.price.toFixed(2)} {lng === 'en' ? 'SAR' : 'ريال'}
+                        {product.price.toFixed(2)} {lng === 'en' ? 'SAR' : '���'}
                       </p>
                       <div className="mt-4">
                         <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
                           ${product.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
                           {product.inStock 
-                            ? (lng === 'en' ? 'In Stock' : 'متوفر') 
-                            : (lng === 'en' ? 'Out of Stock' : 'غير متوفر')}
+                            ? (lng === 'en' ? 'In Stock' : '���') 
+                            : (lng === 'en' ? 'Out of Stock' : '�� ���')}
                         </span>
                       </div>
                     </div>
                     <div className="mt-8">
-                      <Button 
+                      <Button
                         className="w-full"
                         disabled={!product.inStock}
-                        onClick={() => addToCart(product.id)}
                       >
-                        {lng === 'en' ? 'Add to Cart' : 'أضف إلى السلة'}
+                        {lng === 'en' ? 'Add to Cart' : '��� ��� ���'}
                       </Button>
                     </div>
                   </div>
