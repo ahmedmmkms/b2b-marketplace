@@ -2,6 +2,7 @@
 
 import * as React from "react"
 import { cva, type VariantProps } from "class-variance-authority"
+import { Slot } from "@radix-ui/react-slot"
 
 import { cn } from "@/libs/ui/lib/utils"
 
@@ -49,7 +50,6 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         ref={ref}
         {...props}
         // Add accessibility attributes
-        role={props.href ? "link" : "button"}
         aria-disabled={props.disabled}
       />
     )

@@ -5,6 +5,17 @@ import { Product } from '../../../../libs/api/catalog/service';
 import { Button } from '../../../../libs/ui/button';
 import { useCartStore } from '../../../../libs/store/useCartStore';
 
+// Define the static parameters for pre-building
+export async function generateStaticParams() {
+  // In a real application, you would fetch actual product IDs from your database
+  // For the demo, we'll return a few sample product IDs
+  return [
+    { id: 'prod-1' },
+    { id: 'prod-2' },
+    { id: 'prod-3' }
+  ];
+}
+
 export default async function ProductDetailPage({ 
   params: { lng, id } 
 }: { 

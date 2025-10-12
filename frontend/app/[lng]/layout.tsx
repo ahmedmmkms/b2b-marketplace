@@ -1,5 +1,4 @@
 // app/[lng]/layout.tsx
-import { dir } from 'next-intl/locale';
 import { notFound } from 'next/navigation';
 import { languages } from '../../libs/i18n/settings';
 import ClientProvider from '../client-provider';
@@ -21,10 +20,19 @@ export default async function LocaleLayout({
     notFound();
   }
 
-  // Load messages for the current locale
+  // Load messages for the current locale using static imports
   let messages;
   try {
-    messages = (await import(`../../messages/${lng}.json`)).default;
+    if (lng === 'en') {
+      const enMessages = await import('../../messages/en.json');
+      messages = enMessages.default;
+    } else if (lng === 'ar') {
+      const arMessages = await import('../../messages/ar.json');
+      messages = arMessages.default;
+    } else {
+      // If we reach here, the locale is not supported
+      notFound();
+    }
   } catch (error) {
     console.error(`Failed to load messages for locale: ${lng}`, error);
     notFound();

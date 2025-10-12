@@ -1,5 +1,6 @@
 // tests/setup.ts
 import '@testing-library/jest-dom/vitest';
+import { vi } from 'vitest';
 
 // Mock Next.js modules
 vi.mock('next/router', async () => {
