@@ -1,10 +1,15 @@
 // middleware.ts
 import createMiddleware from 'next-intl/middleware';
-import { i18n } from './libs/i18n/i18n-config';
 
 export default createMiddleware({
-  locales: i18n.locales,
-  defaultLocale: i18n.defaultLocale,
+  // The locales you want to support
+  locales: ['en', 'ar'],
+  
+  // The default locale
+  defaultLocale: 'en',
+
+  // When true, the locale detection and setting is done
+  // automatically by next-intl middleware
   localeDetection: true
 });
 

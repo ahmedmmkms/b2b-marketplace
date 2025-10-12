@@ -1,4 +1,4 @@
-/** @type {import('next-intl').NextIntlConfig} */
+// next-intl.config.js
 const nextIntlConfig = {
   // The locales you want to support
   locales: ['en', 'ar'],
