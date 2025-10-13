@@ -93,7 +93,23 @@ spring:
   config:
     activate:
       on-profile: prod
+  main:
+    allow-bean-definition-overriding: true  # Allow bean overriding as mentioned in RESOLUTION_SUMMARY.md
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/p4_dev}
+    username: ${DB_USERNAME:postgres}
+    password: ${DB_PASSWORD:postgres}
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: none  # Let Flyway handle schema changes, not Hibernate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format_sql: true
+        show_sql: false  # Disable SQL logging in production
   flyway:
+    enabled: true
     baseline-on-migrate: true
     baseline-version: 1
     baseline-description: "Base schema from existing database"
