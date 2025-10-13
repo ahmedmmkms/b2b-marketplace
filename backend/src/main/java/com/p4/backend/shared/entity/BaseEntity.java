@@ -1,9 +1,7 @@
 package com.p4.backend.shared.entity;
 
 import com.p4.backend.shared.util.UlidUtil;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.MappedSuperclass;
+import jakarta.persistence.*;
 import org.hibernate.annotations.GenericGenerator;
 
 import java.time.LocalDateTime;
@@ -15,7 +13,10 @@ public abstract class BaseEntity {
     @GenericGenerator(name = "ulid-generator", strategy = "com.p4.backend.shared.util.UlidUtil")
     private String id;
 
+    @Column(name = "created_at")
     private LocalDateTime createdAt;
+    
+    @Column(name = "updated_at")
     private LocalDateTime updatedAt;
 
     // Default constructor
