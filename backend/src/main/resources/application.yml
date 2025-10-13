@@ -57,6 +57,9 @@ management:
       show-details: when-authorized
     info:
       enabled: true
+  health:
+    mail:
+      enabled: false
 
 # Feature Flags Configuration
 feature:

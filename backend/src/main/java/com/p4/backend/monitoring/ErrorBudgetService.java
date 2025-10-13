@@ -2,8 +2,6 @@ package com.p4.backend.monitoring;
 
 import io.micrometer.core.instrument.Counter;
 import io.micrometer.core.instrument.MeterRegistry;
-import io.micrometer.core.instrument.Tag;
-import io.micrometer.core.instrument.Timer;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,28 +15,25 @@ public class ErrorBudgetService {
     @Autowired
     private MeterRegistry meterRegistry;
     
-    // Counters for tracking errors and requests
-    private Counter errorCounter;
-    private Counter successCounter;
-    
     // Map to track service-level objectives
     private final Map<String, ServiceLevelObjective> slos = new ConcurrentHashMap<>();
     
     @PostConstruct
     public void init() {
-        errorCounter = Counter.builder("requests.total")
-                .description("Total number of requests")
-                .tags("status", "error")
-                .register(meterRegistry);
-                
-        successCounter = Counter.builder("requests.total")
-                .description("Total number of requests")
-                .tags("status", "success")
-                .register(meterRegistry);
-                
         // Initialize default SLOs
         registerSlo("availability", 99.9, 10000); // 99.9% availability, 10000 requests budget
         registerSlo("latency", 95.0, 10000); // 95% of requests under latency budget, 10000 requests budget
+    }
+    
+    private Counter getCounter(String status, String sloName, String endpoint) {
+        String safeSlo = sloName != null ? sloName : "unspecified";
+        String safeEndpoint = endpoint != null ? endpoint : "unknown";
+        return meterRegistry.counter(
+                "requests.total",
+                "status", status,
+                "slo", safeSlo,
+                "endpoint", safeEndpoint
+        );
     }
     
     public void registerSlo(String name, double targetPercentage, long budget) {
@@ -46,13 +41,7 @@ public class ErrorBudgetService {
     }
     
     public void trackError(String sloName, String endpoint) {
-        Counter.builder("requests.total")
-            .description("Total number of requests")
-            .tag("status", "error")
-            .tag("slo", sloName)
-            .tag("endpoint", endpoint)
-            .register(meterRegistry)
-            .increment();
+        getCounter("error", sloName, endpoint).increment();
         
         // Update SLO compliance
         ServiceLevelObjective slo = slos.get(sloName);
@@ -62,13 +51,7 @@ public class ErrorBudgetService {
     }
     
     public void trackSuccess(String sloName, String endpoint) {
-        Counter.builder("requests.total")
-            .description("Total number of requests")
-            .tag("status", "success")
-            .tag("slo", sloName)
-            .tag("endpoint", endpoint)
-            .register(meterRegistry)
-            .increment();
+        getCounter("success", sloName, endpoint).increment();
         
         // Update SLO compliance
         ServiceLevelObjective slo = slos.get(sloName);
