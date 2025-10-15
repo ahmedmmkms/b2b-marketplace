@@ -1,0 +1,40 @@
+name: Flyway Repair Neon
+
+on:
+  workflow_dispatch:
+    inputs:
+      reason:
+        description: "Optional note describing why the repair is being run"
+        required: false
+        default: "Manual Flyway repair"
+
+jobs:
+  flyway-repair:
+    name: Execute flyway:repair
+    runs-on: ubuntu-latest
+    env:
+      DB_URL: ${{ secrets.NEON_DB_URL }}
+      DB_USERNAME: ${{ secrets.NEON_DB_USERNAME }}
+      DB_PASSWORD: ${{ secrets.NEON_DB_PASSWORD }}
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Validate Neon credentials are configured
+        run: |
+          [[ -n "${DB_URL}" ]] || { echo "Missing NEON_DB_URL secret"; exit 1; }
+          [[ -n "${DB_USERNAME}" ]] || { echo "Missing NEON_DB_USERNAME secret"; exit 1; }
+          [[ -n "${DB_PASSWORD}" ]] || { echo "Missing NEON_DB_PASSWORD secret"; exit 1; }
+
+      - name: Set up Java 21
+        uses: actions/setup-java@v4
+        with:
+          java-version: '21'
+          distribution: 'temurin'
+
+      - name: Run flyway:repair against Neon
+        working-directory: backend
+        run: |
+          chmod +x ./mvnw
+          ./mvnw flyway:repair -Dspring.profiles.active=prod --no-transfer-progress
+
