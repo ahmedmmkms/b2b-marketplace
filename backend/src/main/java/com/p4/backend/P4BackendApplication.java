@@ -11,8 +11,8 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 @EnableAspectJAutoProxy
 public class P4BackendApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(P4BackendApplication.class, args);
-	}
+    public static void main(String[] args) {
+        SpringApplication.run(P4BackendApplication.class, args);
+    }
 
 }

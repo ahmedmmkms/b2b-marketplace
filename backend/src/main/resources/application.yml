@@ -99,9 +99,9 @@ spring:
   main:
     allow-bean-definition-overriding: true  # Allow bean overriding as mentioned in RESOLUTION_SUMMARY.md
   datasource:
-    url: ${DB_URL:jdbc:postgresql://localhost:5432/p4_dev}
-    username: ${DB_USERNAME:postgres}
-    password: ${DB_PASSWORD:postgres}
+    url: ${DB_URL:jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require}
+    username: ${DB_USERNAME:neondb_owner}
+    password: ${DB_PASSWORD:npg_QTE70VJgbcdp}
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:
@@ -121,36 +121,38 @@ spring:
 feature:
   flags:
     catalog:
-      publicBrowse: ${FEATURE_CATALOG_PUBLIC_BROWSE:false}
+      publicBrowse: ${FEATURE_CATALOG_PUBLIC_BROWSE:true}
     search:
-      enabled: ${FEATURE_SEARCH_ENABLED:false}
+      enabled: ${FEATURE_SEARCH_ENABLED:true}
     rfq:
-      enabled: ${FEATURE_RFQ_ENABLED:false}
+      enabled: ${FEATURE_RFQ_ENABLED:true}
     quote:
       vendorConsole:
-        enabled: ${FEATURE_QUOTE_VENDOR_CONSOLE_ENABLED:false}
+        enabled: ${FEATURE_QUOTE_VENDOR_CONSOLE_ENABLED:true}
     orders:
-      checkout: ${FEATURE_ORDERS_CHECKOUT:false}
+      checkout: ${FEATURE_ORDERS_CHECKOUT:true}
     payments:
-      gateway1: ${FEATURE_PAYMENTS_GATEWAY1:false}
+      gateway1: ${FEATURE_PAYMENTS_GATEWAY1:true}
     wallet:
-      basic: ${FEATURE_WALLET_BASIC:false}
+      basic: ${FEATURE_WALLET_BASIC:true}
     invoice:
-      vat: ${FEATURE_INVOICE_VAT:false}
+      vat: ${FEATURE_INVOICE_VAT:true}
     loyalty:
-      core: ${FEATURE_LOYALTY_CORE:false}
+      core: ${FEATURE_LOYALTY_CORE:true}
     credit:
-      controls: ${FEATURE_CREDIT_CONTROLS:false}
+      controls: ${FEATURE_CREDIT_CONTROLS:true}
 
-# R2 Configuration for production
-r2:
-  access:
+# Backblaze B2 Configuration for Production
+b2:
+  account:
+    id: ${B2_ACCOUNT_ID:43f8cd5d949d}
+  application:
     key:
-      id: ${R2_ACCESS_KEY_ID}
+      id: ${B2_APPLICATION_KEY_ID:00543f8cd5d949d0000000001}
   secret:
     access:
-      key: ${R2_SECRET_ACCESS_KEY}
+      key: ${B2_APPLICATION_KEY:K005iS73v7srQkqax39ZRy3ZJ/Yth+w}
   bucket:
-    name: ${R2_BUCKET}
+    name: ${B2_BUCKET:64735f483c0da5ed9994091d}
   endpoint:
-    url: ${R2_ENDPOINT_URL}
+    url: ${B2_ENDPOINT_URL:https://s3.us-east-005.backblazeb2.com}

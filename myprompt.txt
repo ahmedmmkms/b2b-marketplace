@@ -1,176 +1,153 @@
-System / Role:
-You are a senior full-stack engineer. Your task is to replace an existing Angular 18 + Nx frontend (“frontend2/”) with a production-ready React stack. Keep the existing Spring Boot 3 / Java 21 backend as-is and integrate with it via OpenAPI-generated clients.
-
-Context & Requirements (from project spec):
-Build a VAT-ready, multi-vendor B2B marketplace for GCC/MENA with: Catalog & search, RFQ → Quote → Compare → PO/Order, Payments & Corporate Wallet, VAT invoicing & credit notes, Loyalty (tiers, earn/burn), Identity/Access, Observability, Feature Flags. Dual language English/Arabic with full RTL across all user-facing surfaces. Modules/domains include Catalog, Search, RFQ/Quote, Orders, Payments, Invoicing/VAT, Wallet/Credit, Loyalty, Identity/Access, Ops/Audit, Shared-Kernel. 
-
-QWEN
-
-High-level goals:
-
-Delete/retire the Angular workspace and generate a Next.js 14 (App Router) + TypeScript frontend.
-
-Set Node.js = 22.x (engines & CI).
-
-Implement all features above with EN/AR + RTL and robust a11y.
-
-Integrate with Spring Boot APIs via OpenAPI clients; keep feature flags and observability.
-
-Ready for Cloudflare Pages deploy (GitHub CI, PR previews).
-
-Tech stack (use these unless a better default is essential):
-
-Framework: Next.js 14 (App Router), React 18, TypeScript.
-
-Styling/UI: Tailwind CSS + tailwindcss-rtl (logical properties), shadcn/ui components, Radix UI primitives.
-
-State/data: TanStack Query (server caching), Zustand (light client state), Zod (schema validation).
-
-i18n/RTL: next-intl or next-i18next with locales en, ar; automatic dir switching (dir="ltr|rtl"), number/date formatting via Intl; Arabic collation for sorting.
-
-Forms: React Hook Form + Zod resolver.
-
-Dates: Day.js with locales (en, ar).
-
-Auth: JWT/OAuth2 bearer support compatible with Spring Security; pluggable provider.
-
-OpenAPI client: Generate per backend module from exposed OpenAPI docs (one client per domain: catalog, rfq, quotes, orders, payments, invoicing, wallet, loyalty, identity).
-
-Feature flags: lightweight JSON/env-driven flags; easy to swap to Unleash/Flagsmith later.
-
-Testing: Vitest + React Testing Library; Playwright for E2E.
-
-Lint/format: ESLint, Prettier, TypeScript strict.
-
-CI/CD: GitHub Actions (install Node 22, pnpm, build, test, type-check; deploy to Cloudflare Pages).
-
-Packaging: pnpm.
-
-Observability: Log request/response metadata, expose build SHA, commit link, and feature flags in a diagnostics page.
-
-Migration directives (very important):
-
-Remove Angular/Nx code under frontend2/ and references in CI.
-
-Create a new top-level frontend/ app (React).
-
-Keep backend repo untouched; only consume its APIs.
-
-Provide a readme section “Angular → React migration notes” summarizing what changed and how to run both ends locally.
-
-App capabilities & pages (minimum):
-
-Public Catalog: browse categories, product detail, media gallery; search (initially proxied to Postgres FTS).
-
-Account/Identity: sign-in/up, company profile, roles/permissions surfaces.
-
-RFQ/Quote: create RFQ, vendor quote submission (vendor console), quote compare, accept/decline.
-
-Orders & Payments: convert accepted quote → PO/Order; payment initiation; basic Corporate Wallet view.
-
-Invoicing/VAT: invoice list/detail, sequence display, PDF download hook, credit notes.
-
-Wallet/Credit: wallet balance/transactions, credit limits.
-
-Loyalty: show points, tiers, earn/burn history.
-
-Admin/Ops: feature flags toggle (local only), audit log viewer (read-only).
-
-Language toggle: site-wide language switch (EN/AR) that also flips RTL/LTR dynamically and persists per user.
-
-Accessibility: focus order, keyboard nav, color-contrast tokens, semantic landmarks.
-
-API integration details:
-
-Create .env.local variables for backend base URLs per module.
-
-Generate OpenAPI SDKs into ./frontend/libs/api/<module> and re-generate via pnpm api:generate.
-
-Use TanStack Query for all data fetching with proper caching keys per domain/entity.
-
-Use cursor/keyset pagination and ULIDs per API guidance. 
-
-QWEN
-
-Directory structure (create):
-
-frontend/
-  app/                      # Next.js App Router
-    (public)/
-      catalog/[…slug]/page.tsx
-      product/[id]/page.tsx
-    account/…
-    rfq/…
-    quotes/…
-    orders/…
-    payments/…
-    invoices/…
-    wallet/…
-    loyalty/…
-    admin/…
-    layout.tsx
-    page.tsx
-  components/
-  features/                 # per-domain feature folders
-  libs/
-    api/                    # OpenAPI-generated clients per module
-    i18n/                   # i18n config, messages
-    ui/                     # shared UI widgets
-  public/
-  styles/
-  tests/
-  next.config.mjs
-  tailwind.config.ts
-  package.json
-
-
-Internationalization/RTL tasks:
-
-Provide messages/en.json and messages/ar.json with keys for navigation, catalog, RFQ, orders, invoices, wallet, loyalty, errors.
-
-Implement <LanguageSwitcher> that flips locale + dir.
-
-Ensure logical CSS properties (margin-inline, padding-inline, start/end) and icon mirroring where appropriate.
-
-Sorting/formatting uses locale-aware Intl.Collator('ar') when Arabic is active.
-
-Node & tooling:
-
-package.json → "engines": { "node": ">=22.0.0" }.
-
-Add scripts:
-
-"dev", "build", "start", "lint", "typecheck", "test", "e2e", "api:generate".
-
-Generate a GitHub Actions workflow: Node 22, pnpm cache, lint/test/build, upload artifact; on main push, deploy to Cloudflare Pages (env placeholders).
-
-Feature flags (initial register):
-catalog.publicBrowse, search.enabled, rfq.enabled, quote.vendorConsole, orders.checkout, payments.gateway1, wallet.basic, invoice.vat, loyalty.core, credit.controls. Load from process.env/JSON at runtime. 
-
-QWEN
-
-Deliverables to produce now:
-
-New frontend/ Next.js project scaffold with all configs above.
-
-Minimal vertical slices for: Catalog list + details, RFQ create, Quote compare, Order draft, Invoice list, Wallet view, Loyalty summary.
-
-README.md with run instructions, environment variables, and Angular→React migration notes.
-
-api:generate script and example OpenAPI config to point at backend specs.
-
-GitHub Actions workflow and Cloudflare Pages config snippet.
-
-Example EN/AR message files and a working Language Switcher that demonstrates RTL flipping.
-
-Constraints & quality bar:
-
-Performance targets from the spec (e.g., p95 search < 500 ms; checkout median < 2 s) inform UI loading states and prefetching.
-
-OWASP ASVS L2 mindset; never leak secrets; structured error handling with RFC7807 mapping. 
-
-QWEN
-
-Ship with accessible components (labels, roles, focus states).
-
-Code must be clean, typed, and production-grade.
+System / Role: You are a system engineer and architect, we need to plan the current backend features to be re-implemented from scratch into tiny incremental tasks, where each task has its own acceptance tests online. Use the current techonlogy stack. Keep in mind the following online env varaiables for deployment that we need to use: 
+
+SPRING_PROFILES_ACTIVE=prod
+DB_URL=jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
+DB_USERNAME=neondb_owner
+DB_PASSWORD=npg_QTE70VJgbcdp
+REDIS_URL=redis://default:AUUnAAIncDI1ZWRkMmFkMDE2ZjA0MmYxYmEyNWVlYzM1Y2ExODMxNHAyMTc3MDM@adjusted-sunbird-17703.upstash.io:6379
+B2_ACCOUNT_ID=43f8cd5d949d
+B2_APPLICATION_KEY_ID=00543f8cd5d949d0000000001
+B2_APPLICATION_KEY=K005iS73v7srQkqax39ZRy3ZJ/Yth+w
+B2_BUCKET=64735f483c0da5ed9994091d
+B2_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
+API_URL_BASE=https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net
+
+These are the current env variables on azure:
+[
+  {
+    "name": "B2_ACCOUNT_ID",
+    "value": "43f8cd5d949d",
+    
+  },
+  {
+    "name": "B2_APPLICATION_KEY",
+    "value": "K005iS73v7srQkqax39ZRy3ZJ/Yth+w",
+    
+  },
+  {
+    "name": "B2_APPLICATION_KEY_ID",
+    "value": "00543f8cd5d949d0000000001",
+    
+  },
+  {
+    "name": "B2_BUCKET",
+    "value": "64735f483c0da5ed9994091d",
+    
+  },
+  {
+    "name": "B2_ENDPOINT_URL",
+    "value": "https://s3.us-east-005.backblazeb2.com",
+    
+  },
+  {
+    "name": "DB_PASSWORD",
+    "value": "npg_QTE70VJgbcdp",
+    
+  },
+  {
+    "name": "DB_URL",
+    "value": "jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=npg_QTE70VJgbcdp&sslmode=require&channelBinding=require",
+    
+  },
+  {
+    "name": "DB_USERNAME",
+    "value": "neondb_owner",
+    
+  },
+  {
+    "name": "FEATURE_CATALOG_PUBLIC_BROWSE",
+    "value": "true",
+    
+  },
+  {
+    "name": "FEATURE_CREDIT_CONTROLS",
+    "value": "true",
+    
+  },
+  {
+    "name": "FEATURE_INVOICE_VAT",
+    "value": "true",
+    
+  },
+  {
+    "name": "FEATURE_LOYALTY_CORE",
+    "value": "true",
+    
+  },
+  {
+    "name": "FEATURE_ORDERS_CHECKOUT",
+    "value": "true",
+    
+  },
+  {
+    "name": "FEATURE_PAYMENTS_GATEWAY1",
+    "value": "true",
+    
+  },
+  {
+    "name": "FEATURE_RFQ_ENABLED",
+    "value": "true",
+    
+  },
+  {
+    "name": "FEATURE_SEARCH_ENABLED",
+    "value": "true",
+    
+  },
+  {
+    "name": "SEED_ENABLED",
+    "value": "false",
+    
+  },
+  {
+    "name": "SPRING_MAIL_HOST",
+    "value": "smtp.gmail.com",
+    
+  },
+  {
+    "name": "SPRING_MAIL_PASSWORD",
+    "value": "your_app_password",
+    
+  },
+  {
+    "name": "SPRING_MAIL_PORT",
+    "value": "587",
+    
+  },
+  {
+    "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_AUTH",
+    "value": "true",
+    
+  },
+  {
+    "name": "SPRING_MAIL_PROPERTIES_MAIL_SMTP_STARTTLS_ENABLE",
+    "value": "true",
+    
+  },
+  {
+    "name": "SPRING_MAIL_USERNAME",
+    "value": "your_email@gmail.com",
+    
+  },
+  {
+    "name": "SPRING_MAIN_ALLOW_CIRCULAR_REFERENCES",
+    "value": "true",
+    
+  },
+  {
+    "name": "SPRING_OUTPUT_ANSI_ENABLED",
+    "value": "always",
+    
+  },
+  {
+    "name": "SPRING_PROFILES_ACTIVE",
+    "value": "prod",
+    
+  },
+  {
+    "name": "WEBSITE_ENABLE_DIAGNOSTICS",
+    "value": "true",
+    
+  }
+]
+write the new plan into plan2.md
