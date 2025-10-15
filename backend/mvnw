@@ -60,5 +60,8 @@ if [ "$MVN_DEBUG" = "true" ]; then
     MVN_DEBUG_OPTS="-Xdebug -Xnoagent -Djava.compiler=NONE -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=8000"
 fi
 
+# Set the multiModuleProjectDirectory property
+MVN_CMD_LINE="$MVN_OPTS $MVN_DEBUG_OPTS -Dmaven.multiModuleProjectDirectory=$PWD -classpath \"$MAVEN_WRAPPER_JAR\" \"$MAVEN_WRAPPER_MAIN\" \"$@\""
+
 # Run Maven
-exec $MVN_CMD $MVN_OPTS $MVN_DEBUG_OPTS -classpath "$MAVEN_WRAPPER_JAR" "$MAVEN_WRAPPER_MAIN" "$@"
+exec $MVN_CMD $MVN_CMD_LINE
