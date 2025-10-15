@@ -57,6 +57,6 @@ IF "%MVN_DEBUG%"=="true" (
 )
 
 REM Run Maven
-%MVN_CMD% %MVN_OPTS% %MVN_DEBUG_OPTS% -classpath "%MAVEN_WRAPPER_JAR%" "%MAVEN_WRAPPER_MAIN%" %*
+%MVN_CMD% %MVN_OPTS% %MVN_DEBUG_OPTS% -Dmaven.multiModuleProjectDirectory=%CD% -classpath "%MAVEN_WRAPPER_JAR%" "%MAVEN_WRAPPER_MAIN%" %*
 
 CD /d "%ORIGINAL_DIR%"
