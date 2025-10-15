@@ -79,9 +79,9 @@
             <version>2.1.0</version>
         </dependency>
         <dependency>
-            <groupId>com.fasterxml.uuid</groupId>
-            <artifactId>java-uuid-generator</artifactId>
-            <version>4.3.0</version>
+            <groupId>com.github.f4b6a3</groupId>
+            <artifactId>ulid-creator</artifactId>
+            <version>6.0.0</version>
         </dependency>
         <dependency>
             <groupId>com.opencsv</groupId>
