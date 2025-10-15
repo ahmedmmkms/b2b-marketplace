@@ -36,5 +36,10 @@ jobs:
         working-directory: backend
         run: |
           chmod +x ./mvnw
-          ./mvnw flyway:repair -Dspring.profiles.active=prod --no-transfer-progress
+          ./mvnw flyway:repair \
+            -Dspring.profiles.active=prod \
+            -Dflyway.url="${{ secrets.NEON_DB_URL }}" \
+            -Dflyway.user="${{ secrets.NEON_DB_USERNAME }}" \
+            -Dflyway.password="${{ secrets.NEON_DB_PASSWORD }}" \
+            --no-transfer-progress
 

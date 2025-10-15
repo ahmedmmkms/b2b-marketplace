@@ -29,15 +29,29 @@ def repair_flyway_migrations():
             mvnw_path = backend_path / "mvnw.cmd"
         
         if mvnw_path.exists():
-            # Run flyway repair command
-            cmd = [str(mvnw_path), "flyway:repair", "-Dspring.profiles.active=prod"]
+            # Run flyway repair command with database connection parameters
+            cmd = [
+                str(mvnw_path), 
+                "flyway:repair", 
+                "-Dspring.profiles.active=prod",
+                f"-Dflyway.url={os.getenv('DB_URL', '')}",
+                f"-Dflyway.user={os.getenv('DB_USERNAME', '')}",
+                f"-Dflyway.password={os.getenv('DB_PASSWORD', '')}"
+            ]
             result = subprocess.run(cmd, cwd=backend_path, check=True, capture_output=True, text=True)
             print("Flyway repair completed successfully using Maven:")
             print(result.stdout)
         else:
             # If Maven wrapper doesn't exist, try using mvn directly
             print("Maven wrapper not found, trying direct Maven command...")
-            cmd = ["mvn", "flyway:repair", "-Dspring.profiles.active=prod"]
+            cmd = [
+                "mvn", 
+                "flyway:repair", 
+                "-Dspring.profiles.active=prod",
+                f"-Dflyway.url={os.getenv('DB_URL', '')}",
+                f"-Dflyway.user={os.getenv('DB_USERNAME', '')}",
+                f"-Dflyway.password={os.getenv('DB_PASSWORD', '')}"
+            ]
             result = subprocess.run(cmd, cwd=backend_path, check=True, capture_output=True, text=True)
             print("Flyway repair completed successfully:")
             print(result.stdout)
