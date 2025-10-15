@@ -12,6 +12,6 @@ public class ULIDConfig {
 
     @Bean
     public Supplier<Ulid> ulidGenerator() {
-        return UlidCreator::generate;
+        return () -> UlidCreator.getUlid();
     }
 }
