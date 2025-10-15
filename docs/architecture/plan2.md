@@ -25,6 +25,8 @@ B2_APPLICATION_KEY_ID=00543f8cd5d949d0000000001
 B2_APPLICATION_KEY=K005iS73v7srQkqax39ZRy3ZJ/Yth+w
 B2_BUCKET=64735f483c0da5ed9994091d
 B2_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
+
+For all the tasks, we will test with production deployment on:
 API_URL_BASE=https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net
 ```
 
