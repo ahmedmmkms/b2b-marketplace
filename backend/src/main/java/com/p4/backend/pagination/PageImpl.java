@@ -3,8 +3,6 @@ package com.p4.backend.pagination;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import lombok.AllArgsConstructor;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.util.List;
@@ -13,7 +11,6 @@ import java.util.List;
  * Custom Page implementation that supports ULID-based cursor pagination
  */
 @NoArgsConstructor
-@AllArgsConstructor
 public class PageImpl<T> implements Page<T> {
     
     /**

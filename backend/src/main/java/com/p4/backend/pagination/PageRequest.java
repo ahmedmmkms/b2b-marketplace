@@ -2,17 +2,12 @@ package com.p4.backend.pagination;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
  * Custom PageRequest implementation that supports ULID-based cursor pagination
  */
-@Builder
 @NoArgsConstructor
-@AllArgsConstructor
 public class PageRequest implements Pageable {
     
     /**
@@ -80,6 +75,15 @@ public class PageRequest implements Pageable {
     }
     
     public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+    
+    // All-args constructor
+    public PageRequest(int offset, int size, Sort sort, String cursor, Direction direction) {
+        this.offset = offset;
+        this.size = size;
+        this.sort = sort;
+        this.cursor = cursor;
         this.direction = direction;
     }
     
