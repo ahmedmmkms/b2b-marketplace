@@ -57,14 +57,14 @@ def test_money_value_object():
             )
             
             # Check if the endpoint is accessible (any response except connection errors)
-            print(f"✓ {name} API endpoint accessible (status: {response.status_code})")
+            print(f"[PASS] {name} API endpoint accessible (status: {response.status_code})")
             
         except requests.exceptions.RequestException as e:
-            print(f"✗ {name} API endpoint not accessible: {e}")
+            print(f"[FAIL] {name} API endpoint not accessible: {e}")
             all_accessible = False
     
     if not all_accessible:
-        print("⚠ Some API endpoints are not accessible - this may be expected depending on implementation status")
+        print("[WARN] Some API endpoints are not accessible - this may be expected depending on implementation status")
     
     # Test 2: Test Money operations concept validation
     print("Test 2: Validating Money operations concept...")
@@ -166,7 +166,7 @@ def test_money_value_object():
     abs_money = negative_money.abs()
     assert abs_money.amount == Decimal('50.25'), "Absolute value failed"
     
-    print("✓ All Money operations behavior validated successfully")
+    print("[PASS] All Money operations behavior validated successfully")
     
     # Test 3: Test Money functionality via dedicated test endpoint
     print("Test 3: Testing Money functionality via dedicated API endpoint...")
@@ -193,29 +193,29 @@ def test_money_value_object():
         if response.status_code == 200:
             result = response.json()
             if result.get("operationValid", False):
-                print("✓ Money operations executed successfully in production environment")
-                print(f"✓ Original amounts: {result['originalMoney1']['amount']} and {result['originalMoney2']['amount']}")
-                print(f"✓ Sum: {result['sum']['amount']}")
-                print(f"✓ Difference: {result['difference']['amount']}")
-                print(f"✓ Product: {result['product']['amount']}")
-                print(f"✓ Quotient: {result['quotient']['amount']}")
+                print("[PASS] Money operations executed successfully in production environment")
+                print(f"[PASS] Original amounts: {result['originalMoney1']['amount']} and {result['originalMoney2']['amount']}")
+                print(f"[PASS] Sum: {result['sum']['amount']}")
+                print(f"[PASS] Difference: {result['difference']['amount']}")
+                print(f"[PASS] Product: {result['product']['amount']}")
+                print(f"[PASS] Quotient: {result['quotient']['amount']}")
             else:
-                print(f"✗ Money operations failed in production: {result.get('error', 'Unknown error')}")
+                print(f"[FAIL] Money operations failed in production: {result.get('error', 'Unknown error')}")
                 return False
         elif response.status_code == 404:
-            print("⚠ Money test endpoint not yet deployed (404 Not Found)")
+            print("[WARN] Money test endpoint not yet deployed (404 Not Found)")
             print("  This is expected if the backend hasn't been deployed with the test endpoint yet")
         elif response.status_code == 405:
-            print("⚠ Money test endpoint not available (405 Method Not Allowed)")
+            print("[WARN] Money test endpoint not available (405 Method Not Allowed)")
         else:
-            print(f"⚠ Money test endpoint returned unexpected status: {response.status_code}")
+            print(f"[WARN] Money test endpoint returned unexpected status: {response.status_code}")
             
     except requests.exceptions.RequestException as e:
-        print(f"⚠ Could not connect to Money test endpoint: {e}")
+        print(f"[WARN] Could not connect to Money test endpoint: {e}")
         print("  This is expected if the service is not yet deployed or accessible")
     
-    print("\\n✓ Money Value Object Production Acceptance Test completed successfully")
-    print("✓ The Money value object implementation is ready for use in the backend")
+    print("\\n[PASS] Money Value Object Production Acceptance Test completed successfully")
+    print("[PASS] The Money value object implementation is ready for use in the backend")
     return True
 
 
@@ -225,7 +225,7 @@ def run_tests():
         success = test_money_value_object()
         return success
     except Exception as e:
-        print(f"✗ Test failed with exception: {e}")
+        print(f"[FAIL] Test failed with exception: {e}")
         import traceback
         traceback.print_exc()
         return False
@@ -236,8 +236,8 @@ if __name__ == "__main__":
     success = run_tests()
     
     if success:
-        print("\\n✓ All tests passed!")
+        print("\\n[PASS] All tests passed!")
         sys.exit(0)
     else:
-        print("\\n✗ Some tests failed!")
+        print("\\n[FAIL] Some tests failed!")
         sys.exit(1)
