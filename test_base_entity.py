@@ -134,7 +134,7 @@ def test_base_entity_functionality():
     # Step 8: Test list operation to verify Base fields are included
     print("\n4. Testing list operation...")
     
-    list_response = requests.get(f"{BASE_URL}/api/test-entities", headers=HEADERS)
+    list_response = requests.get(f"{BASE_URL}/api/test-entities", headers=HEADERS, auth=AUTH)
     
     if list_response.status_code != 200:
         print(f"X Failed to retrieve test entities list: Status {list_response.status_code}")
