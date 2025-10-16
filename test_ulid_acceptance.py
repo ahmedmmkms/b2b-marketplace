@@ -37,13 +37,19 @@ def extract_timestamp_from_ulid(ulid: str) -> Optional[int]:
     if not is_valid_ulid(ulid):
         return None
     
+    # Define the base32 character mapping
+    base32_chars = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"
     time_component = ulid[:10]
-    try:
-        # Convert from base32 to decimal
-        timestamp_ms = int(time_component, 32)
-        return timestamp_ms
-    except ValueError:
-        return None
+    
+    timestamp_ms = 0
+    for char in time_component:
+        if char in base32_chars:
+            digit_value = base32_chars.index(char)
+            timestamp_ms = timestamp_ms * 32 + digit_value
+        else:
+            return None  # Invalid character
+    
+    return timestamp_ms
 
 def test_api_health() -> bool:
     """
