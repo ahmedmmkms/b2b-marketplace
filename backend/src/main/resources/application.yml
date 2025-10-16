@@ -52,6 +52,21 @@ b2:
   endpoint:
     url: ${B2_ENDPOINT_URL:https://api.backblazeb2.com}
 
+# Redis Configuration
+spring:
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DATABASE:0}
+    timeout: ${REDIS_TIMEOUT:2000ms}
+    jedis:
+      pool:
+        max-active: ${REDIS_POOL_MAX_ACTIVE:8}
+        max-idle: ${REDIS_POOL_MAX_IDLE:8}
+        min-idle: ${REDIS_POOL_MIN_IDLE:0}
+        max-wait: ${REDIS_POOL_MAX_WAIT:-1ms}
+
 # Server Configuration
 server:
   port: 8080
@@ -96,10 +111,12 @@ feature:
     credit:
       controls: ${FEATURE_CREDIT_CONTROLS:false}
 
-# Database Seeding Configuration
+# Application Configuration
 app:
   seed:
     enabled: ${SEED_ENABLED:false}
+  test-endpoints:
+    enabled: ${TEST_ENDPOINTS_ENABLED:false}  # Enable test endpoints for development only
 
 ---
 spring:
