@@ -67,9 +67,10 @@ public class B2FileUploadService implements FileUploadService {
         String fileKey = uploadFile(file);
         
         // Construct the public URL for the uploaded file
-        // B2 public access URL format: https://f<bucketId>.backblazeb2.com/file/<bucketName>/<fileKey>
-        // For S3-compatible access, we use the configured endpoint
-        return String.format("%s/file/%s/%s", b2Config.getEndpoint().getUrl(), b2Config.getBucket().getName(), fileKey);
+        // We use the configured endpoint with the bucket name/id specified in configuration
+        String publicUrl = String.format("%s/file/%s/%s", b2Config.getEndpoint().getUrl(), b2Config.getBucket().getName(), fileKey);
+        log.info("Generated public URL: {}", publicUrl);
+        return publicUrl;
     }
 
     private S3Client createS3Client() {
