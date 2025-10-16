@@ -41,10 +41,6 @@ public class PageRequest implements Pageable {
         return size;
     }
     
-    public Sort getSort() {
-        return sort;
-    }
-    
     public String getCursor() {
         return cursor;
     }

@@ -48,7 +48,7 @@ SET MAVEN_WRAPPER_JAR=.mvn\wrapper\maven-wrapper.jar
 SET MAVEN_WRAPPER_MAIN=org.apache.maven.wrapper.MavenWrapperMain
 
 REM Set up the command to run Maven
-SET MVN_CMD=%JAVA_HOME%\bin\java.exe
+SET "MVN_CMD=%JAVA_HOME%\bin\java.exe"
 SET MVN_OPTS=%MAVEN_OPTS%
 
 REM Check if debug flag is set
@@ -57,6 +57,6 @@ IF "%MVN_DEBUG%"=="true" (
 )
 
 REM Run Maven
-%MVN_CMD% %MVN_OPTS% %MVN_DEBUG_OPTS% -Dmaven.multiModuleProjectDirectory=%CD% -classpath "%MAVEN_WRAPPER_JAR%" "%MAVEN_WRAPPER_MAIN%" %*
+"%MVN_CMD%" %MVN_OPTS% %MVN_DEBUG_OPTS% -Dmaven.multiModuleProjectDirectory=%CD% -classpath "%MAVEN_WRAPPER_JAR%" "%MAVEN_WRAPPER_MAIN%" %*
 
 CD /d "%ORIGINAL_DIR%"

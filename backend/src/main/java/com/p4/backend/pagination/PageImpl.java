@@ -244,10 +244,28 @@ public class PageImpl<T> implements Page<T> {
         
         return new PageImpl<>(
             convertedContent,
-            getPageRequest(),
+            this.pageRequest,
             getTotalElements(),
-            isHasNext(),
-            isHasPrevious()
+            this.hasNext,
+            this.hasPrevious
         );
+    }
+    
+    // Getter methods needed for the map method
+    public PageRequest getPageRequest() {
+        return pageRequest;
+    }
+    
+    public boolean isHasNext() {
+        return hasNext;
+    }
+    
+    public boolean isHasPrevious() {
+        return hasPrevious;
+    }
+    
+    @Override
+    public java.util.Iterator<T> iterator() {
+        return content.iterator();
     }
 }
