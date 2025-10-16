@@ -37,10 +37,6 @@ public class PageRequest implements Pageable {
     private Direction direction;
     
     // Getters
-    public int getOffset() {
-        return offset;
-    }
-    
     public int getSize() {
         return size;
     }
@@ -124,7 +120,7 @@ public class PageRequest implements Pageable {
 
     @Override
     public long getOffset() {
-        return offset;
+        return (long) offset;
     }
 
     @Override
