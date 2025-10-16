@@ -24,6 +24,14 @@ public class Money {
 
     private final BigDecimal amount;
     private final Currency currency;
+    
+    public BigDecimal getAmount() {
+        return amount;
+    }
+    
+    public Currency getCurrency() {
+        return currency;
+    }
 
     /**
      * Creates a new Money object with the specified amount and currency.
