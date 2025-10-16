@@ -12,7 +12,6 @@ import java.util.List;
 /**
  * Custom Page implementation that supports ULID-based cursor pagination
  */
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class PageImpl<T> implements Page<T> {
@@ -76,6 +75,104 @@ public class PageImpl<T> implements Page<T> {
      * Whether this is the last page
      */
     private boolean last;
+    
+    // Getters
+    public List<T> getContent() {
+        return content;
+    }
+    
+    public PageRequest getPageRequest() {
+        return pageRequest;
+    }
+    
+    public String getFirstId() {
+        return firstId;
+    }
+    
+    public String getLastId() {
+        return lastId;
+    }
+    
+    public long getTotalElements() {
+        return totalElements;
+    }
+    
+    public int getTotalPages() {
+        return totalPages;
+    }
+    
+    public int getSize() {
+        return size;
+    }
+    
+    public int getNumber() {
+        return number;
+    }
+    
+    public boolean isHasNext() {
+        return hasNext;
+    }
+    
+    public boolean isHasPrevious() {
+        return hasPrevious;
+    }
+    
+    public boolean isFirst() {
+        return first;
+    }
+    
+    public boolean isLast() {
+        return last;
+    }
+    
+    // Setters
+    public void setContent(List<T> content) {
+        this.content = content;
+    }
+    
+    public void setPageRequest(PageRequest pageRequest) {
+        this.pageRequest = pageRequest;
+    }
+    
+    public void setFirstId(String firstId) {
+        this.firstId = firstId;
+    }
+    
+    public void setLastId(String lastId) {
+        this.lastId = lastId;
+    }
+    
+    public void setTotalElements(long totalElements) {
+        this.totalElements = totalElements;
+    }
+    
+    public void setTotalPages(int totalPages) {
+        this.totalPages = totalPages;
+    }
+    
+    public void setSize(int size) {
+        this.size = size;
+    }
+    
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    
+    public void setHasNext(boolean hasNext) {
+        this.hasNext = hasNext;
+    }
+    
+    public void setHasPrevious(boolean hasPrevious) {
+        this.hasPrevious = hasPrevious;
+    }
+    
+    public void setFirst(boolean first) {
+        this.first = first;
+    }
+    
+    public void setLast(boolean last) {
+        this.last = last;
+    }
     
     /**
      * Creates a new Page with cursor-based pagination parameters

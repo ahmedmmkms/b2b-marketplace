@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 /**
  * Custom PageRequest implementation that supports ULID-based cursor pagination
  */
-@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
@@ -41,6 +40,48 @@ public class PageRequest implements Pageable {
      * Direction for pagination (forward or backward)
      */
     private Direction direction;
+    
+    // Getters
+    public int getOffset() {
+        return offset;
+    }
+    
+    public int getSize() {
+        return size;
+    }
+    
+    public Sort getSort() {
+        return sort;
+    }
+    
+    public String getCursor() {
+        return cursor;
+    }
+    
+    public Direction getDirection() {
+        return direction;
+    }
+    
+    // Setters
+    public void setOffset(int offset) {
+        this.offset = offset;
+    }
+    
+    public void setSize(int size) {
+        this.size = size;
+    }
+    
+    public void setSort(Sort sort) {
+        this.sort = sort;
+    }
+    
+    public void setCursor(String cursor) {
+        this.cursor = cursor;
+    }
+    
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
     
     public enum Direction {
         FORWARD,  // Next page
