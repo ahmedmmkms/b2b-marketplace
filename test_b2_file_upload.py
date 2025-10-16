@@ -12,6 +12,10 @@ from urllib.parse import urljoin
 import tempfile
 import time
 
+# Configuration for authentication
+USERNAME = os.getenv('SECURITY_USER_NAME', 'user')
+PASSWORD = os.getenv('SECURITY_USER_PASSWORD', '112233445566')
+
 
 def test_b2_file_upload():
     """
@@ -40,7 +44,7 @@ def test_b2_file_upload():
             with open(temp_filename, 'rb') as f:
                 files = {'file': ('test_file.txt', f, 'text/plain')}
                 url = urljoin(base_url, '/api/files/upload')
-                response = requests.post(url, files=files)
+                response = requests.post(url, files=files, auth=(USERNAME, PASSWORD))
             
             print(f"Status Code: {response.status_code}")
             print(f"Response: {response.text}")
@@ -80,7 +84,7 @@ def test_b2_file_upload():
             with open(temp_filename, 'rb') as f:
                 files = {'file': ('test_public_file.txt', f, 'text/plain')}
                 url = urljoin(base_url, '/api/files/upload-public')
-                response = requests.post(url, files=files)
+                response = requests.post(url, files=files, auth=(USERNAME, PASSWORD))
             
             print(f"Status Code: {response.status_code}")
             print(f"Response: {response.text}")
@@ -125,7 +129,7 @@ def test_b2_file_upload():
                 with open(empty_filename, 'rb') as f:
                     files = {'file': ('empty_file.txt', f, 'text/plain')}
                     url = urljoin(base_url, '/api/files/upload')
-                    response = requests.post(url, files=files)
+                    response = requests.post(url, files=files, auth=(USERNAME, PASSWORD))
                 
                 print(f"Status Code: {response.status_code}")
                 print(f"Response: {response.text}")
@@ -153,7 +157,7 @@ def test_b2_file_upload():
         print("\nTest 4: Uploading without a file (should fail)...")
         try:
             url = urljoin(base_url, '/api/files/upload')
-            response = requests.post(url)
+            response = requests.post(url, auth=(USERNAME, PASSWORD))
             
             print(f"Status Code: {response.status_code}")
             print(f"Response: {response.text}")
@@ -188,7 +192,7 @@ def test_b2_file_upload():
                 with open(large_filename, 'rb') as f:
                     files = {'file': ('large_test_file.txt', f, 'text/plain')}
                     url = urljoin(base_url, '/api/files/upload')
-                    response = requests.post(url, files=files)
+                    response = requests.post(url, files=files, auth=(USERNAME, PASSWORD))
                 
                 print(f"Status Code: {response.status_code}")
                 print(f"Response: {response.text} (truncated for display)")

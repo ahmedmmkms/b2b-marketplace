@@ -33,9 +33,12 @@ public class B2FileUploadService implements FileUploadService {
             // Generate a unique file key to avoid conflicts
             String fileKey = generateFileKey(file.getOriginalFilename());
 
+            String bucketName = b2Config.getBucket().getName();
+            log.info("Attempting to upload file to B2 bucket: {}", bucketName);
+
             // Prepare the PutObjectRequest
             PutObjectRequest putObjectRequest = PutObjectRequest.builder()
-                    .bucket(b2Config.getBucket().getName())
+                    .bucket(bucketName)
                     .key(fileKey)
                     .contentType(file.getContentType())
                     .build();
@@ -48,11 +51,12 @@ public class B2FileUploadService implements FileUploadService {
             // Return the file key for reference
             return fileKey;
         } catch (S3Exception e) {
-            log.error("Error uploading file to B2: {}", e.getMessage());
-            throw new FileUploadException("Failed to upload file to B2", e);
+            log.error("S3/B2 error uploading file. Bucket: {}, Error: {}", b2Config.getBucket().getName(), e.getMessage());
+            log.error("S3 Error Code: {}, S3 Error Details: {}", e.errorCode(), e.awsErrorDetails());
+            throw new FileUploadException("Failed to upload file to B2: " + e.getMessage(), e);
         } catch (Exception e) {
             log.error("General error uploading file to B2: {}", e.getMessage());
-            throw new FileUploadException("Failed to upload file to B2", e);
+            throw new FileUploadException("Failed to upload file to B2: " + e.getMessage(), e);
         } finally {
             s3Client.close();
         }
