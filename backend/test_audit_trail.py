@@ -18,13 +18,21 @@ API_BASE_URL = os.getenv('API_URL_BASE', 'https://b2b-marketplace-dcd9azhpefdkdv
 TEST_TIMEOUT = int(os.getenv('TEST_TIMEOUT', '30'))
 API_KEY = os.getenv('API_KEY', None)  # In production, you might need authentication
 
-# Headers for requests
-HEADERS = {
-    'Content-Type': 'application/json'
+import base64
+
+# Security credentials
+SECURITY_USER_NAME = os.getenv('SECURITY_USER_NAME', 'user')
+SECURITY_USER_PASSWORD = os.getenv('SECURITY_USER_PASSWORD', '112233445566')
+
+# Create basic auth header
+credentials = f"{SECURITY_USER_NAME}:{SECURITY_USER_PASSWORD}"
+encoded_credentials = base64.b64encode(credentials.encode()).decode()
+AUTH_HEADERS = {
+    'Content-Type': 'application/json',
+    'Authorization': f'Basic {encoded_credentials}'
 }
 
-if API_KEY:
-    HEADERS['Authorization'] = f'Bearer {API_KEY}'
+HEADERS = AUTH_HEADERS
 
 def create_test_user():
     """Create a test user for audit trail testing"""
@@ -39,7 +47,7 @@ def create_test_user():
         "entityId": "TEST_ENTITY_123",
         "metadata": {
             "test_scenario": "audit_trail_verification",
-            "timestamp": datetime.utcnow().isoformat()
+            "timestamp": datetime.now().isoformat()
         }
     }
     
@@ -75,10 +83,10 @@ def test_audit_trail_creation():
     response = create_test_user()
     
     if response.status_code == 200:
-        print("✓ Audit log creation successful")
+        print("PASS: Audit log creation successful")
         return True
     else:
-        print(f"✗ Audit log creation failed: {response.status_code} - {response.text}")
+        print(f"FAIL: Audit log creation failed: {response.status_code} - {response.text}")
         return False
 
 def test_audit_trail_retrieval():
@@ -89,10 +97,10 @@ def test_audit_trail_retrieval():
     
     if response.status_code == 200:
         logs = response.json()
-        print(f"✓ Retrieved {len(logs)} audit logs for TestEntity")
+        print(f"PASS: Retrieved {len(logs)} audit logs for TestEntity")
         return True
     else:
-        print(f"✗ Audit log retrieval failed: {response.status_code} - {response.text}")
+        print(f"FAIL: Audit log retrieval failed: {response.status_code} - {response.text}")
         return False
 
 def test_recent_logs():
@@ -103,10 +111,10 @@ def test_recent_logs():
     
     if response.status_code == 200:
         logs = response.json()
-        print(f"✓ Retrieved {len(logs)} recent audit logs")
+        print(f"PASS: Retrieved {len(logs)} recent audit logs")
         return True
     else:
-        print(f"✗ Recent audit logs retrieval failed: {response.status_code} - {response.text}")
+        print(f"FAIL: Recent audit logs retrieval failed: {response.status_code} - {response.text}")
         return False
 
 def run_tests():
@@ -147,10 +155,10 @@ def run_tests():
     print("="*60)
     
     if all_passed:
-        print("✓ All audit trail tests PASSED")
+        print("All audit trail tests PASSED")
         return 0
     else:
-        print("✗ Some audit trail tests FAILED")
+        print("Some audit trail tests FAILED")
         return 1
 
 if __name__ == "__main__":

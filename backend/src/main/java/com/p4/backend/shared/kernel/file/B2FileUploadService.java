@@ -1,0 +1,92 @@
+package com.p4.backend.shared.kernel.file;
+
+import com.p4.backend.config.B2ConfigurationProperties;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
+import software.amazon.awssdk.core.sync.RequestBody;
+import software.amazon.awssdk.regions.Region;
+import software.amazon.awssdk.services.s3.S3Client;
+import software.amazon.awssdk.services.s3.model.*;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.URI;
+import java.util.UUID;
+
+@Slf4j
+@Service
+@RequiredArgsConstructor
+public class B2FileUploadService implements FileUploadService {
+
+    private final B2ConfigurationProperties b2Config;
+
+    public String uploadFile(MultipartFile file) throws FileUploadException {
+        // Initialize S3 client with B2 configuration
+        S3Client s3Client = createS3Client();
+
+        try {
+            // Generate a unique file key to avoid conflicts
+            String fileKey = generateFileKey(file.getOriginalFilename());
+
+            // Prepare the PutObjectRequest
+            PutObjectRequest putObjectRequest = PutObjectRequest.builder()
+                    .bucket(b2Config.getBucket().getName())
+                    .key(fileKey)
+                    .contentType(file.getContentType())
+                    .build();
+
+            // Upload the file
+            s3Client.putObject(putObjectRequest, RequestBody.fromInputStream(file.getInputStream(), file.getSize()));
+
+            log.info("File uploaded successfully to B2 with key: {}", fileKey);
+            
+            // Return the file key for reference
+            return fileKey;
+        } catch (S3Exception e) {
+            log.error("Error uploading file to B2: {}", e.getMessage());
+            throw new FileUploadException("Failed to upload file to B2", e);
+        } catch (Exception e) {
+            log.error("General error uploading file to B2: {}", e.getMessage());
+            throw new FileUploadException("Failed to upload file to B2", e);
+        } finally {
+            s3Client.close();
+        }
+    }
+
+    public String uploadFileWithPublicUrl(MultipartFile file) throws FileUploadException {
+        // This method uploads the file and returns a publicly accessible URL
+        String fileKey = uploadFile(file);
+        
+        // Construct the public URL for the uploaded file
+        // B2 public access URL format: https://f<bucketId>.backblazeb2.com/file/<bucketName>/<fileKey>
+        // For S3-compatible access, we use the configured endpoint
+        return String.format("%s/file/%s/%s", b2Config.getEndpoint().getUrl(), b2Config.getBucket().getName(), fileKey);
+    }
+
+    private S3Client createS3Client() {
+        AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(
+                b2Config.getApplication().getKey().getId(),
+                b2Config.getSecret().getAccess().getKey()
+        );
+
+        return S3Client.builder()
+                .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+                .region(Region.US_EAST_1) // B2 uses us-east-1 equivalent region
+                .endpointOverride(URI.create(b2Config.getEndpoint().getUrl()))
+                .build();
+    }
+
+    private String generateFileKey(String originalFilename) {
+        // Generate a unique key using UUID to avoid naming conflicts
+        String extension = "";
+        if (originalFilename != null && originalFilename.contains(".")) {
+            extension = originalFilename.substring(originalFilename.lastIndexOf('.'));
+        }
+        return String.format("uploads/%s-%s%s", UUID.randomUUID(), System.currentTimeMillis(), extension);
+    }
+}
