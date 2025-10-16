@@ -53,11 +53,11 @@ def test_api_response_wrapper():
         assert 'requestId' in data['metadata'], "Metadata should contain 'requestId' field"
         assert 'processingTime' in data['metadata'], "Metadata should contain 'processingTime' field"
         
-        print("✅ SUCCESS: Successful response follows expected format")
+        print("SUCCESS: Successful response follows expected format")
         success_count += 1
         
     except Exception as e:
-        print(f"❌ FAILED: Error testing successful response - {str(e)}")
+        print(f"FAILED: Error testing successful response - {str(e)}")
     
     # Test 2: Error response format (RFC7807 compliant)
     total_tests += 1
@@ -90,11 +90,11 @@ def test_api_response_wrapper():
         assert error['status'] == 400, f"Status should be 400, got {error['status']}"
         assert error['title'] == 'Invalid Request', f"Title should be 'Invalid Request', got {error['title']}"
         
-        print("✅ SUCCESS: Error response follows RFC7807 format")
+        print("SUCCESS: Error response follows RFC7807 format")
         success_count += 1
         
     except Exception as e:
-        print(f"❌ FAILED: Error testing error response - {str(e)}")
+        print(f"FAILED: Error testing error response - {str(e)}")
     
     # Test 3: Exception handling (should produce RFC7807 error)
     total_tests += 1
@@ -124,11 +124,11 @@ def test_api_response_wrapper():
         # Verify the values (should be a 404 error for resource not found)
         assert error['status'] == 404, f"Status should be 404, got {error['status']}"
         
-        print("✅ SUCCESS: Exception handling produces RFC7807-compliant error response")
+        print("SUCCESS: Exception handling produces RFC7807-compliant error response")
         success_count += 1
         
     except Exception as e:
-        print(f"❌ FAILED: Error testing exception handling - {str(e)}")
+        print(f"FAILED: Error testing exception handling - {str(e)}")
     
     # Test 4: Validation error response (should be RFC7807 compliant)
     total_tests += 1
@@ -159,11 +159,11 @@ def test_api_response_wrapper():
         assert error['status'] == 400, f"Status should be 400, got {error['status']}"
         assert error['title'] == 'Validation Failed', f"Title should be 'Validation Failed', got {error['title']}"
         
-        print("✅ SUCCESS: Validation error response follows RFC7807 format")
+        print("SUCCESS: Validation error response follows RFC7807 format")
         success_count += 1
         
     except Exception as e:
-        print(f"❌ FAILED: Error testing validation error response - {str(e)}")
+        print(f"FAILED: Error testing validation error response - {str(e)}")
     
     # Test 5: Valid request to validation endpoint (should return success)
     total_tests += 1
@@ -187,11 +187,11 @@ def test_api_response_wrapper():
         assert 'success' in data, "Response should contain 'success' field"
         assert data['success'] == True, "Success field should be True for successful response"
         
-        print("✅ SUCCESS: Valid request returns success response with correct format")
+        print("SUCCESS: Valid request returns success response with correct format")
         success_count += 1
         
     except Exception as e:
-        print(f"❌ FAILED: Error testing valid request - {str(e)}")
+        print(f"FAILED: Error testing valid request - {str(e)}")
     
     # Final results
     print(f"\n--- Test Results ---")
@@ -199,10 +199,10 @@ def test_api_response_wrapper():
     print(f"Success Rate: {(success_count/total_tests)*100:.1f}%")
     
     if success_count == total_tests:
-        print("🎉 All tests passed! The API response wrapper follows RFC7807 standards.")
+        print("All tests passed! The API response wrapper follows RFC7807 standards.")
         return True
     else:
-        print("⚠️  Some tests failed. Check the implementation for RFC7807 compliance.")
+        print("Some tests failed. Check the implementation for RFC7807 compliance.")
         return False
 
 

@@ -1,5 +1,6 @@
 package com.p4.backend.config;
 
+import com.p4.backend.test.Rfc7807TestController;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -14,7 +15,7 @@ import org.springframework.context.annotation.Import;
     havingValue = "true",
     matchIfMissing = false  // Disabled by default
 )
-@Import(ConfigTestController.class)
+@Import({ConfigTestController.class, Rfc7807TestController.class})
 public class TestEndpointsConfig {
     // This configuration enables test endpoints only when property is set to true
 }
