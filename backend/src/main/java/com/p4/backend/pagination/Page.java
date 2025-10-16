@@ -1,5 +1,8 @@
 package com.p4.backend.pagination;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +15,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Page<T> {
+public class PageImpl<T> implements Page<T> {
     
     /**
      * The content of the current page
@@ -83,7 +86,7 @@ public class Page<T> {
      * @param hasNext Whether there's a next page
      * @param hasPrevious Whether there's a previous page
      */
-    public Page(List<T> content, PageRequest pageRequest, long totalElements, boolean hasNext, boolean hasPrevious) {
+    public PageImpl(List<T> content, PageRequest pageRequest, long totalElements, boolean hasNext, boolean hasPrevious) {
         this.content = content;
         this.pageRequest = pageRequest;
         this.totalElements = totalElements;
@@ -143,20 +146,95 @@ public class Page<T> {
     /**
      * Creates a new Page with cursor-based pagination parameters
      */
-    public static <T> Page<T> of(List<T> content, PageRequest pageRequest, long totalElements, boolean hasNext, boolean hasPrevious) {
-        return new Page<>(content, pageRequest, totalElements, hasNext, hasPrevious);
+    public static <T> PageImpl<T> of(List<T> content, PageRequest pageRequest, long totalElements, boolean hasNext, boolean hasPrevious) {
+        return new PageImpl<>(content, pageRequest, totalElements, hasNext, hasPrevious);
     }
     
     /**
      * Creates a new Page with default values (for forward pagination)
      */
-    public static <T> Page<T> of(List<T> content, PageRequest pageRequest, long totalElements) {
+    public static <T> PageImpl<T> of(List<T> content, PageRequest pageRequest, long totalElements) {
         boolean hasNext = content.size() > pageRequest.getPageSize();
         // Adjust content to requested size if needed
         List<T> adjustedContent = content.size() > pageRequest.getPageSize() 
             ? content.subList(0, pageRequest.getPageSize()) 
             : content;
             
-        return new Page<>(adjustedContent, pageRequest, totalElements, hasNext, pageRequest.getPageNumber() > 0);
+        return new PageImpl<>(adjustedContent, pageRequest, totalElements, hasNext, pageRequest.getPageNumber() > 0);
+    }
+
+    @Override
+    public int getTotalPages() {
+        return totalPages;
+    }
+
+    @Override
+    public long getTotalElements() {
+        return totalElements;
+    }
+
+    @Override
+    public int getNumber() {
+        return number;
+    }
+
+    @Override
+    public int getSize() {
+        return size;
+    }
+
+    @Override
+    public int getNumberOfElements() {
+        return content.size();
+    }
+
+    @Override
+    public List<T> getContent() {
+        return content;
+    }
+
+    @Override
+    public boolean hasContent() {
+        return !content.isEmpty();
+    }
+
+    @Override
+    public Sort getSort() {
+        return pageRequest.getSort();
+    }
+
+    @Override
+    public boolean isFirst() {
+        return first;
+    }
+
+    @Override
+    public boolean isLast() {
+        return last;
+    }
+
+    @Override
+    public boolean hasNext() {
+        return hasNext;
+    }
+
+    @Override
+    public boolean hasPrevious() {
+        return hasPrevious;
+    }
+
+    @Override
+    public Pageable getPageable() {
+        return pageRequest;
+    }
+
+    @Override
+    public Pageable nextPageable() {
+        return hasNext() ? pageRequest.next() : Pageable.unpaged();
+    }
+
+    @Override
+    public Pageable previousPageable() {
+        return hasPrevious() ? pageRequest.previousOrFirst() : Pageable.unpaged();
     }
 }

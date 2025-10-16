@@ -1,6 +1,6 @@
 package com.p4.backend.pagination.controller;
 
-import com.p4.backend.pagination.Page;
+import com.p4.backend.pagination.PageImpl;
 import com.p4.backend.pagination.PageRequest;
 import com.p4.backend.pagination.ULIDPaginationService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class ULIDPaginationController {
      * @return Paginated results with metadata
      */
     @GetMapping("/paginated")
-    public ResponseEntity<Page<Map<String, Object>>> getPaginatedResults(
+    public ResponseEntity<PageImpl<Map<String, Object>>> getPaginatedResults(
             @RequestParam(defaultValue = "10") int size,
             @RequestParam(required = false) String cursor,
             @RequestParam(defaultValue = "FORWARD") PageRequest.Direction direction) {
@@ -53,7 +53,7 @@ public class ULIDPaginationController {
         String baseQuery = "SELECT id, name, description FROM products";
         String sortColumn = "id";
         
-        Page<Map<String, Object>> resultPage = ulidPaginationService.getPaginatedResults(
+        PageImpl<Map<String, Object>> resultPage = ulidPaginationService.getPaginatedResults(
                 baseQuery, sortColumn, cursor, direction, size);
         
         return ResponseEntity.ok(resultPage);

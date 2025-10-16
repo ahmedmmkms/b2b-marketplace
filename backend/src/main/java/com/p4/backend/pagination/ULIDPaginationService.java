@@ -37,11 +37,11 @@ public class ULIDPaginationService {
      * @param pageSize The number of items to return per page
      * @return A Page object containing the results and pagination metadata
      */
-    public <T> Page<T> getPaginatedResults(String baseQuery, 
-                                          String sortColumn, 
-                                          String cursor, 
-                                          PageRequest.Direction direction, 
-                                          int pageSize) {
+    public <T> PageImpl<T> getPaginatedResults(String baseQuery, 
+                                              String sortColumn, 
+                                              String cursor, 
+                                              PageRequest.Direction direction, 
+                                              int pageSize) {
         // Validate the cursor if provided
         if (cursor != null && !paginationUtil.isValidCursor(cursor)) {
             throw new IllegalArgumentException("Invalid cursor: " + cursor);
@@ -65,7 +65,7 @@ public class ULIDPaginationService {
         PageRequest pageRequest = PageRequest.ofCursor(cursor, pageSize, null, direction);
         
         // Create and return the Page object
-        return Page.of(adjustedResults, pageRequest, adjustedResults.size(), hasNext, hasPrevious);
+        return PageImpl.of(adjustedResults, pageRequest, adjustedResults.size(), hasNext, hasPrevious);
     }
     
     /**

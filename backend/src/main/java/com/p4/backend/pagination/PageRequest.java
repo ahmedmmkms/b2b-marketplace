@@ -104,6 +104,11 @@ public class PageRequest implements Pageable {
     }
 
     @Override
+    public Pageable withPage(int pageNumber) {
+        return new PageRequest(pageNumber * getPageSize(), getPageSize(), getSort(), null, Direction.FORWARD);
+    }
+
+    @Override
     public boolean hasPrevious() {
         return getPageNumber() > 0;
     }

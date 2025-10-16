@@ -6,7 +6,7 @@ This module provides utilities for implementing ULID-based cursor pagination in 
 
 Traditional offset-based pagination has performance issues with large datasets because the database has to count rows up to the offset position. Keyset (cursor-based) pagination provides better performance by using a unique key or set of keys to determine the starting point for the next/previous page.
 
-ULIDs (Universally Unique Lexicographically Sortable Identifiers) are ideal for cursor-based pagination because:
+ULIDs (Universally Unique Lexically Sortable Identifiers) are ideal for cursor-based pagination because:
 - They are 26-character identifiers that are unique
 - They are lexicographically sortable (time-based ordering)
 - They are URL-safe
@@ -23,8 +23,8 @@ Custom implementation of Spring's Pageable interface that supports ULID-based cu
 - `cursor`: ULID-based cursor for pagination
 - `direction`: FORWARD (next page) or BACKWARD (previous page)
 
-### Page
-Custom Page implementation with ULID-based metadata:
+### PageImpl
+Custom Page implementation implementing Spring's Page interface with ULID-based metadata:
 
 - `content`: The actual data for the current page
 - `pageRequest`: The request used to retrieve this page
@@ -51,7 +51,7 @@ Example controller showing how to implement pagination endpoints.
 ### Forward Pagination (Next Page)
 ```java
 // Get first page
-Page<Item> firstPage = paginationService.getPaginatedResults(
+PageImpl<Item> firstPage = paginationService.getPaginatedResults(
     "SELECT * FROM items",
     "id", 
     null,  // No cursor for first page
@@ -60,7 +60,7 @@ Page<Item> firstPage = paginationService.getPaginatedResults(
 );
 
 // Get next page using the lastId from the current page
-Page<Item> nextPage = paginationService.getPaginatedResults(
+PageImpl<Item> nextPage = paginationService.getPaginatedResults(
     "SELECT * FROM items",
     "id",
     firstPage.getLastId(),  // Use lastId as cursor
@@ -73,7 +73,7 @@ Page<Item> nextPage = paginationService.getPaginatedResults(
 ```java
 // Get previous page (if available)
 if (currentPage.isHasPrevious()) {
-    Page<Item> previousPage = paginationService.getPaginatedResults(
+    PageImpl<Item> previousPage = paginationService.getPaginatedResults(
         "SELECT * FROM items",
         "id",
         currentPage.getFirstId(),  // Use firstId for backward navigation
