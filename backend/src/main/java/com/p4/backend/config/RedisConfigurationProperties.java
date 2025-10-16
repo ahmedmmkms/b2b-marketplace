@@ -3,6 +3,7 @@ package com.p4.backend.config;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,7 @@ public class RedisConfigurationProperties {
 
     private String password;
 
-    @Positive
+    @PositiveOrZero
     private int database = 0;
     
     private int timeout = 2000;  // in milliseconds
