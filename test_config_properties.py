@@ -30,7 +30,7 @@ def test_config_loading():
         response = requests.get(env_endpoint, timeout=10)
         
         if response.status_code != 200:
-            print(f"❌ Failed to access /actuator/env: {response.status_code}")
+            print(f"ERROR: Failed to access /actuator/env: {response.status_code}")
             return False
             
         env_data = response.json()
@@ -97,18 +97,18 @@ def test_config_loading():
             if not found:
                 properties_missing.append(prop)
 
-        print(f"✅ Found configuration properties: {properties_found}")
+        print(f"SUCCESS: Found configuration properties: {properties_found}")
         if properties_missing:
-            print(f"⚠️  Missing configuration properties: {properties_missing}")
+            print(f"WARNING: Missing configuration properties: {properties_missing}")
         else:
-            print("✅ All expected configuration properties are available")
+            print("SUCCESS: All expected configuration properties are available")
         
         # Test /actuator/configprops endpoint to verify @ConfigurationProperties beans
         config_props_endpoint = f"{API_URL_BASE}/actuator/configprops"
         response = requests.get(config_props_endpoint, timeout=10)
         
         if response.status_code != 200:
-            print(f"❌ Failed to access /actuator/configprops: {response.status_code}")
+            print(f"ERROR: Failed to access /actuator/configprops: {response.status_code}")
             return False
             
         config_props_data = response.json()
@@ -132,21 +132,21 @@ def test_config_loading():
             else:
                 config_missing.append(config_name)
         
-        print(f"✅ Found configuration beans: {config_found}")
+        print(f"SUCCESS: Found configuration beans: {config_found}")
         if config_missing:
-            print(f"⚠️  Missing configuration beans: {config_missing}")
+            print(f"WARNING: Missing configuration beans: {config_missing}")
         else:
-            print("✅ All expected configuration beans are registered")
+            print("SUCCESS: All expected configuration beans are registered")
         
         # Overall success if we found at least some configuration properties
         success = len(properties_found) > 0 or len(config_found) > 0
         return success
 
     except requests.exceptions.RequestException as e:
-        print(f"❌ Request failed: {str(e)}")
+        print(f"ERROR: Request failed: {str(e)}")
         return False
     except Exception as e:
-        print(f"❌ Error during configuration test: {str(e)}")
+        print(f"ERROR: Error during configuration test: {str(e)}")
         return False
 
 
@@ -157,10 +157,10 @@ def main():
     success = test_config_loading()
     
     if success:
-        print("\n✅ Configuration Properties Acceptance Test PASSED")
+        print("\nSUCCESS: Configuration Properties Acceptance Test PASSED")
         return 0
     else:
-        print("\n❌ Configuration Properties Acceptance Test FAILED")
+        print("\nERROR: Configuration Properties Acceptance Test FAILED")
         return 1
 
 
