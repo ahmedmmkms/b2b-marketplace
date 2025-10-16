@@ -36,6 +36,19 @@ spring:
       max-request-size: 10MB
   lifecycle:
     timeout-per-shutdown-phase: 30s
+  # Redis Configuration
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DATABASE:0}
+    timeout: ${REDIS_TIMEOUT:2000ms}
+    jedis:
+      pool:
+        max-active: ${REDIS_POOL_MAX_ACTIVE:8}
+        max-idle: ${REDIS_POOL_MAX_IDLE:8}
+        min-idle: ${REDIS_POOL_MIN_IDLE:0}
+        max-wait: ${REDIS_POOL_MAX_WAIT:-1ms}
 
 # Backblaze B2 Configuration for Media Storage
 b2:
@@ -51,21 +64,6 @@ b2:
     name: ${B2_BUCKET:p4-prod-assets}
   endpoint:
     url: ${B2_ENDPOINT_URL:https://api.backblazeb2.com}
-
-# Redis Configuration
-spring:
-  redis:
-    host: ${REDIS_HOST:localhost}
-    port: ${REDIS_PORT:6379}
-    password: ${REDIS_PASSWORD:}
-    database: ${REDIS_DATABASE:0}
-    timeout: ${REDIS_TIMEOUT:2000ms}
-    jedis:
-      pool:
-        max-active: ${REDIS_POOL_MAX_ACTIVE:8}
-        max-idle: ${REDIS_POOL_MAX_IDLE:8}
-        min-idle: ${REDIS_POOL_MIN_IDLE:0}
-        max-wait: ${REDIS_POOL_MAX_WAIT:-1ms}
 
 # Server Configuration
 server:
@@ -153,6 +151,19 @@ spring:
     baseline-on-migrate: true
     baseline-version: 1
     baseline-description: "Base schema from existing database"
+  # Redis Configuration for Production
+  redis:
+    host: ${REDIS_HOST:localhost}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DATABASE:0}
+    timeout: ${REDIS_TIMEOUT:2000ms}
+    jedis:
+      pool:
+        max-active: ${REDIS_POOL_MAX_ACTIVE:8}
+        max-idle: ${REDIS_POOL_MAX_IDLE:8}
+        min-idle: ${REDIS_POOL_MIN_IDLE:0}
+        max-wait: ${REDIS_POOL_MAX_WAIT:-1ms}
 
 # Feature flags for production
 feature:
