@@ -81,8 +81,11 @@ public class B2FileUploadService implements FileUploadService {
 
         return S3Client.builder()
                 .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
-                .region(Region.US_EAST_1) // B2 uses us-east-1 equivalent region
+                // B2's S3-compatible API doesn't require a specific AWS region
+                // Using custom configuration to ensure compatibility with B2
+                .region(Region.US_EAST_1) // This is required but can be any valid region for S3 compatibility
                 .endpointOverride(URI.create(b2Config.getEndpoint().getUrl()))
+                .forcePathStyle(true)  // B2 requires path-style addressing
                 .build();
     }
 
