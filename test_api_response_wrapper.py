@@ -15,6 +15,9 @@ def test_api_response_wrapper():
     """
     Test script to verify RFC7807 compliance of API responses in production.
     This script tests the API endpoints to ensure they follow RFC7807 standards.
+    
+    NOTE: This test requires that test endpoints are enabled in the application
+    by setting 'app.test-endpoints.enabled=true' in the application properties.
     """
     
     # Get the base API URL from environment or use default
