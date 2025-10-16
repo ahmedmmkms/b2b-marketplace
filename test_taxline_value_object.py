@@ -17,6 +17,63 @@ API_URL_BASE = os.getenv('API_URL_BASE', 'https://b2b-marketplace-dcd9azhpefdkdv
 TEST_TIMEOUT = 30  # seconds
 
 
+class TestMoney:
+    """Test implementation to validate Money value object behavior"""
+    def __init__(self, amount, currency_code):
+        from decimal import Decimal, ROUND_HALF_UP
+        self.amount = Decimal(str(amount)).quantize(Decimal('0.01'), rounding=ROUND_HALF_UP)
+        self.currency_code = currency_code
+    
+    def add(self, other):
+        if self.currency_code != other.currency_code:
+            raise ValueError("Cannot add Money objects with different currencies")
+        return TestMoney(float(self.amount) + float(other.amount), self.currency_code)
+    
+    def subtract(self, other):
+        if self.currency_code != other.currency_code:
+            raise ValueError("Cannot subtract Money objects with different currencies")
+        return TestMoney(float(self.amount) - float(other.amount), self.currency_code)
+    
+    def multiply(self, factor):
+        return TestMoney(float(self.amount) * factor, self.currency_code)
+    
+    def divide(self, divisor):
+        if divisor == 0:
+            raise ValueError("Cannot divide by zero")
+        return TestMoney(float(self.amount) / divisor, self.currency_code)
+    
+    def is_greater_than(self, other):
+        if self.currency_code != other.currency_code:
+            raise ValueError("Cannot compare Money objects with different currencies")
+        return float(self.amount) > float(other.amount)
+    
+    def is_less_than(self, other):
+        if self.currency_code != other.currency_code:
+            raise ValueError("Cannot compare Money objects with different currencies")
+        return float(self.amount) < float(other.amount)
+    
+    def is_equal_to(self, other):
+        if self.currency_code != other.currency_code:
+            raise ValueError("Cannot compare Money objects with different currencies")
+        return float(self.amount) == float(other.amount)
+        
+    def is_positive(self):
+        return float(self.amount) > 0
+        
+    def is_negative(self):
+        return float(self.amount) < 0
+        
+    def is_zero(self):
+        return float(self.amount) == 0
+        
+    def abs(self):
+        from decimal import Decimal
+        return TestMoney(abs(float(self.amount)), self.currency_code)
+    
+    def __repr__(self):
+        return f"TestMoney({float(self.amount)}, {self.currency_code})"
+
+
 def test_taxline_value_object():
     """
     Test TaxLine value object functionality in the Azure deployment.
@@ -25,9 +82,6 @@ def test_taxline_value_object():
     
     # Test 1: Validate TaxLine operations concept in Python equivalent
     print("Test 1: Validating TaxLine operations concept...")
-    
-    # Import Money class from the existing test file to ensure compatibility
-    from test_money_value_object import TestMoney
     
     class TestTaxLine:
         """Test implementation to validate TaxLine value object behavior"""
@@ -126,7 +180,8 @@ def test_taxline_value_object():
             taxline_test_url,
             json=test_data,
             timeout=TEST_TIMEOUT,
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
+            auth=("user", "af83b8ba-a0d2-429a-9c0c-1d016d3be20c")
         )
         
         if response.status_code == 200:
@@ -180,7 +235,8 @@ def test_taxline_value_object():
             taxline_test_url,
             json=test_data_5,
             timeout=TEST_TIMEOUT,
-            headers={"Content-Type": "application/json"}
+            headers={"Content-Type": "application/json"},
+            auth=("user", "af83b8ba-a0d2-429a-9c0c-1d016d3be20c")
         )
         
         if response.status_code == 200:
