@@ -56,7 +56,6 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
             .authorizeHttpRequests(authz -> authz
-                .requestMatchers("/api/test/**").permitAll()  // Allow access to test endpoints
                 .requestMatchers("/actuator/**").permitAll()  // Allow access to actuator endpoints
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()  // Allow access to API docs
                 .anyRequest().authenticated()  // Require authentication for all other requests
