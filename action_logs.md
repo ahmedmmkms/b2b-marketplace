@@ -1,57 +1,68 @@
-2025-10-16T04:54:12.8190684Z                     
-2025-10-16T04:54:12.8191559Z Downloaded from central: https://repo.maven.apache.org/maven2/com/thoughtworks/qdox/qdox/2.0.3/qdox-2.0.3.jar (334 kB at 4.1 MB/s)
-2025-10-16T04:54:12.9273182Z [INFO] Recompiling the module because of changed source code.
-2025-10-16T04:54:12.9426790Z [INFO] Compiling 8 source files with javac [debug parameters release 21] to target/classes
-2025-10-16T04:54:14.6437080Z [INFO] Annotation processing is enabled because one or more processors were found
-2025-10-16T04:54:14.6437979Z   on the class path. A future release of javac may disable annotation processing
-2025-10-16T04:54:14.6439848Z   unless at least one processor is specified by name (-processor), or a search
-2025-10-16T04:54:14.6441627Z   path is specified (--processor-path, --processor-module-path), or annotation
-2025-10-16T04:54:14.6442110Z   processing is enabled explicitly (-proc:only, -proc:full).
-2025-10-16T04:54:14.6442635Z   Use -Xlint:-options to suppress this message.
-2025-10-16T04:54:14.6442964Z   Use -proc:none to disable annotation processing.
-2025-10-16T04:54:14.6443304Z [INFO] -------------------------------------------------------------
-2025-10-16T04:54:14.6444112Z [ERROR] COMPILATION ERROR : 
-2025-10-16T04:54:14.6444574Z [INFO] -------------------------------------------------------------
-2025-10-16T04:54:14.6445902Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/util/ULIDGeneratorService.java:[70,27] cannot find symbol
-2025-10-16T04:54:14.6447203Z   symbol:   method getUlidFromTimestamp(long)
-2025-10-16T04:54:14.6447754Z   location: class com.github.f4b6a3.ulid.UlidCreator
-2025-10-16T04:54:14.6449437Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/util/ULIDGeneratorService.java:[81,37] cannot find symbol
-2025-10-16T04:54:14.6450696Z   symbol:   method getTimestamp()
-2025-10-16T04:54:14.6451186Z   location: class com.github.f4b6a3.ulid.Ulid
-2025-10-16T04:54:14.6451640Z [INFO] 2 errors 
-2025-10-16T04:54:14.6452054Z [INFO] -------------------------------------------------------------
-2025-10-16T04:54:14.6453711Z [INFO] ------------------------------------------------------------------------
-2025-10-16T04:54:14.6454225Z [INFO] BUILD FAILURE
-2025-10-16T04:54:14.6454652Z [INFO] ------------------------------------------------------------------------
-2025-10-16T04:54:14.6482986Z [INFO] Total time:  32.373 s
-2025-10-16T04:54:14.6483670Z [INFO] Finished at: 2025-10-16T04:54:14Z
-2025-10-16T04:54:14.6484422Z [INFO] ------------------------------------------------------------------------
-2025-10-16T04:54:14.6486032Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project p4-backend: Compilation failure: Compilation failure: 
-2025-10-16T04:54:14.6488224Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/util/ULIDGeneratorService.java:[70,27] cannot find symbol
-2025-10-16T04:54:14.6489821Z [ERROR]   symbol:   method getUlidFromTimestamp(long)
-2025-10-16T04:54:14.6490616Z [ERROR]   location: class com.github.f4b6a3.ulid.UlidCreator
-2025-10-16T04:54:14.6492196Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/util/ULIDGeneratorService.java:[81,37] cannot find symbol
-2025-10-16T04:54:14.6493904Z [ERROR]   symbol:   method getTimestamp()
-2025-10-16T04:54:14.6494706Z [ERROR]   location: class com.github.f4b6a3.ulid.Ulid
-2025-10-16T04:54:14.6495446Z [ERROR] -> [Help 1]
-2025-10-16T04:54:14.6495782Z [ERROR] 
-2025-10-16T04:54:14.6496295Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-2025-10-16T04:54:14.6497093Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
-2025-10-16T04:54:14.6497707Z [ERROR] 
-2025-10-16T04:54:14.6498456Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
-2025-10-16T04:54:14.6499523Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
-2025-10-16T04:54:14.6838248Z ##[error]Process completed with exit code 1.
-2025-10-16T04:54:14.6938549Z Post job cleanup.
-2025-10-16T04:54:14.8642923Z Post job cleanup.
-2025-10-16T04:54:14.9580004Z [command]/usr/bin/git version
-2025-10-16T04:54:14.9620664Z git version 2.51.0
-2025-10-16T04:54:14.9665088Z Temporarily overriding HOME='/home/runner/work/_temp/979a2ba9-3cfa-4746-8044-334b5a7b2072' before making global git config changes
-2025-10-16T04:54:14.9666310Z Adding repository directory to the temporary git global config as a safe directory
-2025-10-16T04:54:14.9671288Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/b2b-marketplace/b2b-marketplace
-2025-10-16T04:54:14.9706069Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2025-10-16T04:54:14.9737992Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2025-10-16T04:54:14.9961643Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2025-10-16T04:54:14.9982001Z http.https://github.com/.extraheader
-2025-10-16T04:54:14.9994818Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
-2025-10-16T04:54:15.0025025Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2025-10-16T04:54:15.0339032Z Cleaning up orphan processes
+2025-10-16T05:59:23.472523721Z
+2025-10-16T05:59:23.473680416Z    .   ____          _            __ _ _
+2025-10-16T05:59:23.473691456Z   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2025-10-16T05:59:23.473696636Z  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2025-10-16T05:59:23.473721613Z   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2025-10-16T05:59:23.473726712Z    '  |____| .__|_| |_|_| |_\__, | / / / /
+2025-10-16T05:59:23.473730479Z   =========|_|==============|___/=/_/_/_/
+2025-10-16T05:59:23.473734356Z
+2025-10-16T05:59:23.473738434Z   :: Spring Boot ::                (v3.4.0)
+2025-10-16T05:59:23.473743123Z
+2025-10-16T05:59:23.878454873Z  2025-10-16T05:59:23.870Z  INFO 85 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : Starting P4BackendApplication v0.0.1-SNAPSHOT using Java 21.0.7 with PID 85 (/home/site/wwwroot/app.jar started by root in /home/site/wwwroot)
+2025-10-16T05:59:23.893808701Z  2025-10-16T05:59:23.892Z  INFO 85 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : The following 1 profile is active: "prod"
+2025-10-16T05:59:27.193639915Z  2025-10-16T05:59:27.187Z  INFO 85 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-16T05:59:27.233392639Z  2025-10-16T05:59:27.232Z  INFO 85 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 0 JPA repository interfaces.
+2025-10-16T05:59:29.235046340Z  2025-10-16T05:59:29.234Z  INFO 85 --- [p4-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 80 (http)
+2025-10-16T05:59:29.321041351Z  2025-10-16T05:59:29.320Z  INFO 85 --- [p4-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 5204 ms
+2025-10-16T05:59:29.325759562Z  Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2025-10-16T05:59:30.280019002Z  2025-10-16T05:59:30.278Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Starting...
+2025-10-16T05:59:31.419566393Z  2025-10-16T05:59:31.418Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : P4HikariCP - Added connection org.postgresql.jdbc.PgConnection@7981963f
+2025-10-16T05:59:31.423515602Z  2025-10-16T05:59:31.422Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Start completed.
+2025-10-16T05:59:31.512692171Z  2025-10-16T05:59:31.512Z  INFO 85 --- [p4-backend] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=********&sslmode=require&channelBinding=require (PostgreSQL 17.5)
+2025-10-16T05:59:31.912938296Z  2025-10-16T05:59:31.911Z  INFO 85 --- [p4-backend] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 2 migrations (execution time 00:00.157s)
+2025-10-16T05:59:32.244464879Z  2025-10-16T05:59:32.243Z  INFO 85 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 2
+2025-10-16T05:59:32.276639935Z  2025-10-16T05:59:32.275Z  INFO 85 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Schema "public" is up to date. No migration necessary.
+2025-10-16T05:59:32.796466257Z  2025-10-16T05:59:32.795Z  INFO 85 --- [p4-backend] [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-10-16T05:59:33.030064595Z  2025-10-16T05:59:33.029Z  INFO 85 --- [p4-backend] [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.6.2.Final
+2025-10-16T05:59:33.110276230Z  2025-10-16T05:59:33.109Z  INFO 85 --- [p4-backend] [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-10-16T05:59:33.762077654Z  2025-10-16T05:59:33.761Z  INFO 85 --- [p4-backend] [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-10-16T05:59:33.980386119Z  2025-10-16T05:59:33.979Z  WARN 85 --- [p4-backend] [           main] org.hibernate.orm.deprecation            : HHH90000025: PostgreSQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-10-16T05:59:34.071907910Z  2025-10-16T05:59:34.067Z  INFO 85 --- [p4-backend] [           main] org.hibernate.orm.connections.pooling    : HHH10001005: Database info:
+2025-10-16T05:59:34.071935221Z  	Database JDBC URL [Connecting through datasource 'HikariDataSource (P4HikariCP)']
+2025-10-16T05:59:34.071955559Z  	Database driver: undefined/unknown
+2025-10-16T05:59:34.071959296Z  	Database version: 17.5
+2025-10-16T05:59:34.071962702Z  	Autocommit mode: undefined/unknown
+2025-10-16T05:59:34.071966118Z  	Isolation level: undefined/unknown
+2025-10-16T05:59:34.071969515Z  	Minimum pool size: undefined/unknown
+2025-10-16T05:59:34.071972931Z  	Maximum pool size: undefined/unknown
+2025-10-16T05:59:35.118697164Z  2025-10-16T05:59:35.114Z  INFO 85 --- [p4-backend] [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-10-16T05:59:35.128770646Z  2025-10-16T05:59:35.128Z  INFO 85 --- [p4-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-10-16T05:59:35.562396699Z  2025-10-16T05:59:35.558Z  WARN 85 --- [p4-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'configTestController': Unsatisfied dependency expressed through field 'redisConfig': Error creating bean with name 'redisConfigurationProperties': Could not bind properties to 'RedisConfigurationProperties' : prefix=spring.redis, ignoreInvalidFields=false, ignoreUnknownFields=true
+2025-10-16T05:59:35.562434259Z  2025-10-16T05:59:35.558Z  INFO 85 --- [p4-backend] [           main] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+2025-10-16T05:59:35.565729241Z  2025-10-16T05:59:35.565Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Shutdown initiated...
+2025-10-16T05:59:35.696420067Z  2025-10-16T05:59:35.695Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Shutdown completed.
+2025-10-16T05:59:35.760428527Z  2025-10-16T05:59:35.742Z  INFO 85 --- [p4-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger :
+2025-10-16T05:59:35.760459074Z
+2025-10-16T05:59:35.760464635Z  Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-16T05:59:35.777241655Z  2025-10-16T05:59:35.776Z ERROR 85 --- [p4-backend] [           main] o.s.b.d.LoggingFailureAnalysisReporter   :
+2025-10-16T05:59:35.777292239Z
+2025-10-16T05:59:35.777299182Z  ***************************
+2025-10-16T05:59:35.777303600Z  APPLICATION FAILED TO START
+2025-10-16T05:59:35.777307468Z  ***************************
+2025-10-16T05:59:35.777311114Z
+2025-10-16T05:59:35.777314921Z  Description:
+2025-10-16T05:59:35.777318508Z
+2025-10-16T05:59:35.777322105Z  Failed to bind properties under 'spring.redis.jedis.pool.max-wait' to int:
+2025-10-16T05:59:35.777326072Z
+2025-10-16T05:59:35.777329619Z      Property: spring.redis.jedis.pool.max-wait
+2025-10-16T05:59:35.777333256Z      Value: "${REDIS_POOL_MAX_WAIT:-1ms}"
+2025-10-16T05:59:35.777337263Z      Origin: class path resource [application.yml] from app.jar - 166:19
+2025-10-16T05:59:35.777341201Z      Reason: failed to convert java.lang.String to int (caused by java.lang.NumberFormatException: For input string: "-1ms")
+2025-10-16T05:59:35.777345128Z
+2025-10-16T05:59:35.777348524Z  Action:
+2025-10-16T05:59:35.777351981Z
+2025-10-16T05:59:35.777355407Z  Update your application's configuration
+2025-10-16T05:59:35.777359154Z
+2025-10-16T05:59:35.840821026Z  Wait for pid == 85 either returned successfully or was interrupted due to a signal 85
+2025-10-16T05:59:35.841688205Z  Done waiting for main process. GLOBAL_PID_MAIN=85.
+2025-10-16T05:59:35.841725204Z  Exiting entry script!

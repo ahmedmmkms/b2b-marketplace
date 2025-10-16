@@ -48,7 +48,7 @@ spring:
         max-active: ${REDIS_POOL_MAX_ACTIVE:8}
         max-idle: ${REDIS_POOL_MAX_IDLE:8}
         min-idle: ${REDIS_POOL_MIN_IDLE:0}
-        max-wait: ${REDIS_POOL_MAX_WAIT:-1ms}
+        max-wait: ${REDIS_POOL_MAX_WAIT:-1}
 
 # Backblaze B2 Configuration for Media Storage
 b2:
@@ -163,7 +163,7 @@ spring:
         max-active: ${REDIS_POOL_MAX_ACTIVE:8}
         max-idle: ${REDIS_POOL_MAX_IDLE:8}
         min-idle: ${REDIS_POOL_MIN_IDLE:0}
-        max-wait: ${REDIS_POOL_MAX_WAIT:-1ms}
+        max-wait: ${REDIS_POOL_MAX_WAIT:-1}
 
 # Feature flags for production
 feature:
