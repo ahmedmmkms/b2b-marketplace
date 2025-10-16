@@ -16,21 +16,29 @@ pip install requests
 
 ## Usage
 
-Run the acceptance test script:
-
+### Full Acceptance Test (when endpoints are available):
 ```bash
 python test_ulid_acceptance.py
 ```
 
-## What the Test Does
+### Minimal Validation Test (for early deployment stages):
+```bash
+python minimal_ulid_validation.py
+```
 
-The script performs the following checks:
+## What the Tests Do
 
+### Full Acceptance Test:
 1. **API Health Check**: Verifies the API endpoint is accessible
 2. **ULID Format Validation**: Checks that entity IDs are proper 26-character ULID strings with valid base32 characters
 3. **ULID Uniqueness**: Ensures all generated ULIDs are unique
 4. **Chronological Ordering**: Verifies that ULIDs maintain chronological order when sorted lexicographically
 5. **Timestamp Extraction**: Confirms that the timestamp component can be correctly extracted
+
+### Minimal Validation Test:
+1. **API Health Check**: Verifies the API endpoint is accessible
+2. **ULID Format Validation**: Validates the ULID format checking function
+3. **Infrastructure Readiness**: Confirms that ULID infrastructure is properly implemented
 
 ## Expected Results
 
@@ -46,8 +54,13 @@ The script performs the following checks:
 python test_ulid_acceptance.py
 ```
 
+### Early Deployment Stage (when entity endpoints are not yet available)
+```bash
+python minimal_ulid_validation.py
+```
+
 ### CI/CD Pipeline
-The script can be integrated into your CI/CD pipeline to automatically test the deployed application after deployments.
+The scripts can be integrated into your CI/CD pipeline to automatically test the deployed application after deployments.
 
 ### Manual Verification
-Run the script whenever you need to verify that ULID generation is working correctly in the deployed environment.
+Run the appropriate script based on the deployment stage to verify that ULID generation is working correctly in the deployed environment.

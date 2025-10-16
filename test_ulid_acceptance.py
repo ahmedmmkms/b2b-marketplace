@@ -110,6 +110,71 @@ def test_ulid_generation_in_entities():
     
     return ulids_found
 
+def test_api_endpoints_for_ulids():
+    """
+    Test various API endpoints that might return ULIDs
+    """
+    print("\n--- Testing Other API Endpoints for ULIDs ---")
+    
+    # Test various endpoints that might be available
+    endpoints = [
+        "/actuator/health",
+        "/v3/api-docs",
+        "/error"
+    ]
+    
+    ulids_found = []
+    
+    for endpoint in endpoints:
+        print(f"\nTesting endpoint: {endpoint}")
+        
+        try:
+            response = requests.get(f"{PRODUCTION_API_URL}{endpoint}", 
+                                  headers=HEADERS, timeout=TIMEOUT)
+            
+            # For some endpoints, we might receive ULIDs in response headers
+            # Check response headers for any ULID-like values
+            for header_name, header_value in response.headers.items():
+                if is_valid_ulid(header_value):
+                    ulids_found.append(header_value)
+                    print(f"  Found ULID in header {header_name}: {header_value}")
+                    
+            # Also check if any values in the response body look like ULIDs
+            try:
+                response_data = response.json() if response.content else {}
+                ulids = find_ulids_in_data(response_data)
+                for ulid in ulids:
+                    ulids_found.append(ulid)
+                    print(f"  Found ULID in response body: {ulid}")
+            except ValueError:
+                # Response is not JSON, skip this check
+                pass
+                
+        except requests.exceptions.RequestException as e:
+            print(f"  Error accessing {endpoint}: {e}")
+        except Exception as e:
+            print(f"  Error processing response from {endpoint}: {e}")
+    
+    return ulids_found
+
+def find_ulids_in_data(data, ulids=None):
+    """
+    Recursively search through response data to find potential ULIDs
+    """
+    if ulids is None:
+        ulids = []
+        
+    if isinstance(data, str) and is_valid_ulid(data):
+        ulids.append(data)
+    elif isinstance(data, dict):
+        for key, value in data.items():
+            find_ulids_in_data(value, ulids)
+    elif isinstance(data, list):
+        for item in data:
+            find_ulids_in_data(item, ulids)
+            
+    return ulids
+
 def test_ulid_properties(ulids: List[str]) -> Dict[str, Any]:
     """
     Test properties of collected ULIDs
@@ -173,7 +238,11 @@ def run_acceptance_tests() -> bool:
     # Test 2: ULID Generation in Entities
     ulids_found = test_ulid_generation_in_entities()
     
-    # Test 3: ULID Properties
+    # Test 3: Check other endpoints for ULIDs
+    additional_ulids = test_api_endpoints_for_ulids()
+    ulids_found.extend(additional_ulids)
+    
+    # Test 4: ULID Properties
     properties_results = test_ulid_properties(ulids_found)
     
     # Final Results
