@@ -52,7 +52,7 @@ public class B2FileUploadService implements FileUploadService {
             return fileKey;
         } catch (S3Exception e) {
             log.error("S3/B2 error uploading file. Bucket: {}, Error: {}", b2Config.getBucket().getName(), e.getMessage());
-            log.error("S3 Error Code: {}, S3 Error Details: {}", e.errorCode(), e.awsErrorDetails());
+            log.error("S3 Error Code: {}, S3 Error Details: {}", e.awsErrorDetails().errorCode(), e.awsErrorDetails());
             throw new FileUploadException("Failed to upload file to B2: " + e.getMessage(), e);
         } catch (Exception e) {
             log.error("General error uploading file to B2: {}", e.getMessage());
