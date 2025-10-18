@@ -13,7 +13,7 @@ from datetime import datetime
 
 # Configuration from the architecture plan
 API_URL_BASE = os.getenv('API_URL_BASE', 'https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net')
-SECURITY_USER_NAME = os.getenv('SECURITY_USER_NAME', 'admin')
+SECURITY_USER_NAME = os.getenv('SECURITY_USER_NAME', 'user')
 SECURITY_USER_PASSWORD = os.getenv('SECURITY_USER_PASSWORD', '112233445566')
 TIMEOUT = 30
 
@@ -34,7 +34,7 @@ def create_test_account():
     
     try:
         response = requests.post(
-            f"{API_URL_BASE}/api/v1/accounts",
+            f"{API_URL_BASE}/api/accounts",
             json=account_data,
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
@@ -44,7 +44,7 @@ def create_test_account():
             print("✓ Test account created successfully")
             return response.json()
         else:
-            print(f"✗ Failed to create test account: {response.status_code} - {response.text}")
+            print(f"X Failed to create test account: {response.status_code} - {response.text}")
             return None
             
     except requests.exceptions.RequestException as e:
@@ -69,7 +69,7 @@ def create_test_user(account_id):
     
     try:
         response = requests.post(
-            f"{API_URL_BASE}/api/v1/users",
+            f"{API_URL_BASE}/api/users",
             json=user_data,
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
@@ -93,7 +93,7 @@ def get_user_by_id(user_id):
     
     try:
         response = requests.get(
-            f"{API_URL_BASE}/api/v1/users/{user_id}",
+            f"{API_URL_BASE}/api/users/{user_id}",
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
         )
@@ -116,7 +116,7 @@ def get_user_by_email(email):
     
     try:
         response = requests.get(
-            f"{API_URL_BASE}/api/v1/users/email/{email}",
+            f"{API_URL_BASE}/api/users/email/{email}",
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
         )
@@ -146,7 +146,7 @@ def update_user(user_id):
     
     try:
         response = requests.put(
-            f"{API_URL_BASE}/api/v1/users/{user_id}",
+            f"{API_URL_BASE}/api/users/{user_id}",
             json=update_data,
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
@@ -170,7 +170,7 @@ def find_users_by_account(account_id):
     
     try:
         response = requests.get(
-            f"{API_URL_BASE}/api/v1/users/account/{account_id}",
+            f"{API_URL_BASE}/api/users/account/{account_id}",
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
         )
@@ -193,7 +193,7 @@ def delete_test_user(user_id):
     
     try:
         response = requests.delete(
-            f"{API_URL_BASE}/api/v1/users/{user_id}",
+            f"{API_URL_BASE}/api/users/{user_id}",
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
         )
@@ -216,7 +216,7 @@ def delete_test_account(account_id):
     
     try:
         response = requests.delete(
-            f"{API_URL_BASE}/api/v1/accounts/{account_id}",
+            f"{API_URL_BASE}/api/accounts/{account_id}",
             auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
             timeout=TIMEOUT
         )
