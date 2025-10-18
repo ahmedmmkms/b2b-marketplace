@@ -109,6 +109,12 @@ feature:
     credit:
       controls: ${FEATURE_CREDIT_CONTROLS:false}
 
+# JWT Configuration
+jwt:
+  secret: ${JWT_SECRET:mySecretKeyMustBeLongerThan256BitsForHS512Algorithm}
+  access-token-expiration: ${JWT_ACCESS_TOKEN_EXPIRATION:900000} # 15 minutes in milliseconds
+  refresh-token-expiration: ${JWT_REFRESH_TOKEN_EXPIRATION:604800000} # 7 days in milliseconds
+
 # Application Configuration
 app:
   seed:

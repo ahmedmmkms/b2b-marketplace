@@ -7,6 +7,7 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +21,9 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+
     @PostMapping
     public ResponseEntity<ApiResponse<User>> createUser(@Valid @RequestBody User user) {
         // Check if email already exists
@@ -27,6 +31,11 @@ public class UserController {
             return ResponseEntity.badRequest()
                     .body(ApiResponse.<User>error("https://api.example.com/errors/validation", 
                             "Validation Error", 400, "User with this email already exists"));
+        }
+        
+        // Encode password before saving
+        if (user.getPasswordHash() != null && !user.getPasswordHash().isEmpty()) {
+            user.setPasswordHash(passwordEncoder.encode(user.getPasswordHash()));
         }
         
         User savedUser = userRepository.save(user);
@@ -102,8 +111,8 @@ public class UserController {
             user.setIsActive(userDetails.getIsActive());
             
             // Only update password fields if they're provided in the request
-            if (userDetails.getPasswordHash() != null) {
-                user.setPasswordHash(userDetails.getPasswordHash());
+            if (userDetails.getPasswordHash() != null && !userDetails.getPasswordHash().isEmpty()) {
+                user.setPasswordHash(passwordEncoder.encode(userDetails.getPasswordHash()));
             }
             if (userDetails.getSalt() != null) {
                 user.setSalt(userDetails.getSalt());
