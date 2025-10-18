@@ -42,13 +42,15 @@ def authenticate():
         response = requests.post(auth_url, headers=HEADERS, json=auth_payload)
         response.raise_for_status()
         
-        token = response.json().get("token")
+        data = response.json()
+        token = data.get("data", {}).get("accessToken")
         if token:
             log_message("Authentication successful")
             HEADERS["Authorization"] = f"Bearer {token}"
             return True
         else:
             log_message("Authentication failed: No token received")
+            log_message(f"Full response: {data}")
             return False
     except requests.exceptions.RequestException as e:
         log_message(f"Authentication failed: {str(e)}")
