@@ -217,7 +217,7 @@ def test_validation():
     
     # Test individual account without company name (should work)
     logger.info("Testing individual account without company name...")
-    response = requests.post(ACCOUNTS_API, headers=HEADERS, json=account_data)
+    response = requests.post(ACCOUNTS_API, headers=AUTH_HEADERS, json=account_data)
     logger.info(f"Individual account creation - Status: {response.status_code}")
     
     if response.status_code != 201:
