@@ -19,7 +19,7 @@ import java.time.LocalDateTime;
 @Setter
 public class User extends Base {
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "account_id", nullable = false)
     private Account account;
 

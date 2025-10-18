@@ -38,7 +38,10 @@ public class UserController {
     public ResponseEntity<ApiResponse<User>> getUserById(@PathVariable String id) {
         Optional<User> user = userRepository.findById(id);
         if (user.isPresent()) {
-            return ResponseEntity.ok(ApiResponse.success(user.get(), Map.of("message", "User retrieved successfully")));
+            User userEntity = user.get();
+            // Ensure account is loaded to avoid lazy initialization issues
+            userEntity.getAccount().getId(); // This will trigger the loading of the account
+            return ResponseEntity.ok(ApiResponse.success(userEntity, Map.of("message", "User retrieved successfully")));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(ApiResponse.<User>error("https://api.example.com/errors/not-found", 
@@ -49,6 +52,10 @@ public class UserController {
     @GetMapping
     public ResponseEntity<ApiResponse<List<User>>> getAllUsers() {
         List<User> users = userRepository.findAll();
+        // Ensure account is loaded for each user to avoid lazy initialization issues
+        for (User user : users) {
+            user.getAccount().getId(); // This will trigger the loading of the account
+        }
         return ResponseEntity.ok(ApiResponse.success(users, Map.of("message", "Users retrieved successfully")));
     }
 
@@ -56,7 +63,10 @@ public class UserController {
     public ResponseEntity<ApiResponse<User>> getUserByEmail(@PathVariable String email) {
         Optional<User> user = userRepository.findByEmail(email);
         if (user.isPresent()) {
-            return ResponseEntity.ok(ApiResponse.success(user.get(), Map.of("message", "User retrieved by email successfully")));
+            User userEntity = user.get();
+            // Ensure account is loaded to avoid lazy initialization issues
+            userEntity.getAccount().getId(); // This will trigger the loading of the account
+            return ResponseEntity.ok(ApiResponse.success(userEntity, Map.of("message", "User retrieved by email successfully")));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)
                     .body(ApiResponse.<User>error("https://api.example.com/errors/not-found", 
@@ -67,6 +77,10 @@ public class UserController {
     @GetMapping("/account/{accountId}")
     public ResponseEntity<ApiResponse<List<User>>> getUsersByAccountId(@PathVariable String accountId) {
         List<User> users = userRepository.findByAccountId(accountId);
+        // Ensure account is loaded for each user to avoid lazy initialization issues
+        for (User user : users) {
+            user.getAccount().getId(); // This will trigger the loading of the account
+        }
         return ResponseEntity.ok(ApiResponse.success(users, Map.of("message", "Users for account retrieved successfully")));
     }
 
@@ -96,6 +110,8 @@ public class UserController {
             }
             
             User updatedUser = userRepository.save(user);
+            // Ensure account is loaded to avoid lazy initialization issues
+            updatedUser.getAccount().getId(); // This will trigger the loading of the account
             return ResponseEntity.ok(ApiResponse.success(updatedUser, Map.of("message", "User updated successfully")));
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND)

@@ -41,8 +41,8 @@ def create_test_account():
         )
         
         if response.status_code in [200, 201]:
-            print("✓ Test account created successfully")
-            return response.json()
+            print("+ Test account created successfully")
+            return response.json()['data']  # Return the actual account object from the 'data' field
         else:
             print(f"X Failed to create test account: {response.status_code} - {response.text}")
             return None
@@ -56,8 +56,25 @@ def create_test_user(account_id):
     """Create a test user associated with the test account"""
     print("Creating test user...")
     
+    # First, get the full account details to include in the user creation
+    try:
+        account_response = requests.get(
+            f"{API_URL_BASE}/api/accounts/{account_id}",
+            auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
+            timeout=TIMEOUT
+        )
+        
+        if account_response.status_code != 200:
+            print(f"- Failed to retrieve account details: {account_response.status_code} - {account_response.text}")
+            return None
+            
+        account_details = account_response.json()['data']
+    except requests.exceptions.RequestException as e:
+        print(f"- Request error while retrieving account details: {str(e)}")
+        return None
+    
     user_data = {
-        "accountId": account_id,
+        "account": account_details,
         "firstName": "John",
         "lastName": "Doe",
         "email": f"john_doe_{int(datetime.now().timestamp())}@example.com",
@@ -76,14 +93,14 @@ def create_test_user(account_id):
         )
         
         if response.status_code in [200, 201]:
-            print("✓ Test user created successfully")
-            return response.json()
+            print("+ Test user created successfully")
+            return response.json()['data']  # Return the actual user object from the 'data' field
         else:
-            print(f"✗ Failed to create test user: {response.status_code} - {response.text}")
+            print(f"- Failed to create test user: {response.status_code} - {response.text}")
             return None
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while creating test user: {str(e)}")
+        print(f"- Request error while creating test user: {str(e)}")
         return None
 
 
@@ -99,10 +116,10 @@ def get_user_by_id(user_id):
         )
         
         if response.status_code == 200:
-            print("✓ User retrieved successfully")
-            return response.json()
+            print("+ User retrieved successfully")
+            return response.json()['data']  # Return the actual user object from the 'data' field
         else:
-            print(f"✗ Failed to retrieve user: {response.status_code} - {response.text}")
+            print(f"- Failed to retrieve user: {response.status_code} - {response.text}")
             return None
             
     except requests.exceptions.RequestException as e:
@@ -122,10 +139,10 @@ def get_user_by_email(email):
         )
         
         if response.status_code == 200:
-            print("✓ User retrieved by email successfully")
-            return response.json()
+            print("+ User retrieved by email successfully")
+            return response.json()['data']  # Return the actual user object from the 'data' field
         else:
-            print(f"✗ Failed to retrieve user by email: {response.status_code} - {response.text}")
+            print(f"- Failed to retrieve user by email: {response.status_code} - {response.text}")
             return None
             
     except requests.exceptions.RequestException as e:
@@ -153,10 +170,10 @@ def update_user(user_id):
         )
         
         if response.status_code == 200:
-            print("✓ User updated successfully")
-            return response.json()
+            print("+ User updated successfully")
+            return response.json()['data']  # Return the actual user object from the 'data' field
         else:
-            print(f"✗ Failed to update user: {response.status_code} - {response.text}")
+            print(f"- Failed to update user: {response.status_code} - {response.text}")
             return None
             
     except requests.exceptions.RequestException as e:
@@ -176,10 +193,10 @@ def find_users_by_account(account_id):
         )
         
         if response.status_code == 200:
-            print("✓ Users found successfully")
-            return response.json()
+            print("+ Users found successfully")
+            return response.json()['data']  # Return the list of users from the 'data' field
         else:
-            print(f"✗ Failed to find users: {response.status_code} - {response.text}")
+            print(f"- Failed to find users: {response.status_code} - {response.text}")
             return None
             
     except requests.exceptions.RequestException as e:
@@ -199,10 +216,10 @@ def delete_test_user(user_id):
         )
         
         if response.status_code == 204:
-            print("✓ Test user deleted successfully")
+            print("+ Test user deleted successfully")
             return True
         else:
-            print(f"✗ Failed to delete user: {response.status_code} - {response.text}")
+            print(f"- Failed to delete user: {response.status_code} - {response.text}")
             return False
             
     except requests.exceptions.RequestException as e:
@@ -222,10 +239,10 @@ def delete_test_account(account_id):
         )
         
         if response.status_code == 204:
-            print("✓ Test account deleted successfully")
+            print("+ Test account deleted successfully")
             return True
         else:
-            print(f"✗ Failed to delete account: {response.status_code} - {response.text}")
+            print(f"- Failed to delete account: {response.status_code} - {response.text}")
             return False
             
     except requests.exceptions.RequestException as e:
@@ -242,7 +259,7 @@ def run_acceptance_tests():
     # Step 1: Create a test account
     account = create_test_account()
     if not account or 'id' not in account:
-        print("✗ Test failed: Could not create test account")
+        print("- Test failed: Could not create test account")
         return False
     
     account_id = account['id']
@@ -261,58 +278,58 @@ def run_acceptance_tests():
     # Step 3: Verify that user can be retrieved by ID
     retrieved_user = get_user_by_id(user_id)
     if not retrieved_user:
-        print("✗ Test failed: Could not retrieve user by ID")
+        print("- Test failed: Could not retrieve user by ID")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
     
     # Verify the account association exists
     if 'account' not in retrieved_user or retrieved_user['account']['id'] != account_id:
-        print("✗ Test failed: User is not properly associated with the account")
+        print("- Test failed: User is not properly associated with the account")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
     
-    print("✓ User is properly associated with account")
+    print("+ User is properly associated with account")
     
     # Step 4: Verify that user can be retrieved by email
     retrieved_by_email = get_user_by_email(user['email'])
     if not retrieved_by_email:
-        print("✗ Test failed: Could not retrieve user by email")
+        print("- Test failed: Could not retrieve user by email")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
     
     # Check that the retrieved user is the same as the created user
     if retrieved_by_email['id'] != user_id:
-        print("✗ Test failed: User retrieved by email is different from created user")
+        print("- Test failed: User retrieved by email is different from created user")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
     
-    print("✓ User can be retrieved by email")
+    print("+ User can be retrieved by email")
     
     # Step 5: Test update functionality
     updated_user = update_user(user_id)
     if not updated_user:
-        print("✗ Test failed: Could not update user")
+        print("- Test failed: Could not update user")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
     
     # Verify the update worked
     if updated_user['firstName'] != 'Jane':
-        print("✗ Test failed: User update did not persist")
+        print("- Test failed: User update did not persist")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
     
-    print("✓ User update functionality works")
+    print("+ User update functionality works")
     
     # Step 6: Test finding users by account
     users_by_account = find_users_by_account(account_id)
     if not users_by_account:
-        print("✗ Test failed: Could not find users by account")
+        print("- Test failed: Could not find users by account")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
@@ -320,25 +337,25 @@ def run_acceptance_tests():
     # Verify our user is in the list
     user_found = any(u['id'] == user_id for u in users_by_account)
     if not user_found:
-        print("✗ Test failed: Created user was not found in users by account")
+        print("- Test failed: Created user was not found in users by account")
         delete_test_user(user_id)  # Cleanup
         delete_test_account(account_id)  # Cleanup
         return False
     
-    print("✓ Find users by account functionality works")
+    print("+ Find users by account functionality works")
     
     # Step 7: Cleanup - delete the test user and account
     user_deleted = delete_test_user(user_id)
     account_deleted = delete_test_account(account_id)
     
     if not user_deleted or not account_deleted:
-        print("✗ Warning: Could not clean up test data")
+        print("- Warning: Could not clean up test data")
         return False
     
-    print("✓ All cleanup operations completed successfully")
+    print("+ All cleanup operations completed successfully")
     
     print("-" * 60)
-    print("✓ All User Entity Production Acceptance Tests PASSED")
+    print("+ All User Entity Production Acceptance Tests PASSED")
     return True
 
 
@@ -346,8 +363,8 @@ if __name__ == "__main__":
     success = run_acceptance_tests()
     
     if not success:
-        print("\n✗ Some tests failed. Check the logs above for details.")
+        print("\n- Some tests failed. Check the logs above for details.")
         sys.exit(1)
     else:
-        print("\n✓ All tests passed successfully!")
+        print("\n+ All tests passed successfully!")
         sys.exit(0)
