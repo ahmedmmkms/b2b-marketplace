@@ -8,6 +8,7 @@ import com.p4.backend.shared.kernel.Money;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
@@ -21,6 +22,7 @@ import java.util.Random;
  * This component runs in all environments but only seeds if no products exist
  */
 @Component
+@Profile({"dev", "test"})
 @Order(2)
 @RequiredArgsConstructor
 @Slf4j

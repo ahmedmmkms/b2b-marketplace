@@ -12,7 +12,7 @@ import lombok.Setter;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vendors")
+@Table(name = "vendor")
 @Getter
 @Setter
 public class Vendor extends Base {
