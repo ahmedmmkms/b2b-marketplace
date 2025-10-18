@@ -1,56 +1,206 @@
-2025-10-16T18:59:28.9094185Z                    
-2025-10-16T18:59:28.9097079Z Downloaded from central: https://repo.maven.apache.org/maven2/org/codehaus/plexus/plexus-compiler-javac/2.15.0/plexus-compiler-javac-2.15.0.jar (26 kB at 330 kB/s)
-2025-10-16T18:59:29.1368157Z [INFO] Recompiling the module because of changed source code.
-2025-10-16T18:59:29.1593229Z [INFO] Compiling 49 source files with javac [debug parameters release 21] to target/classes
-2025-10-16T18:59:33.8356211Z [INFO] Annotation processing is enabled because one or more processors were found
-2025-10-16T18:59:33.8357057Z   on the class path. A future release of javac may disable annotation processing
-2025-10-16T18:59:33.8357910Z   unless at least one processor is specified by name (-processor), or a search
-2025-10-16T18:59:33.8358926Z   path is specified (--processor-path, --processor-module-path), or annotation
-2025-10-16T18:59:33.8359667Z   processing is enabled explicitly (-proc:only, -proc:full).
-2025-10-16T18:59:33.8360235Z   Use -Xlint:-options to suppress this message.
-2025-10-16T18:59:33.8360738Z   Use -proc:none to disable annotation processing.
-2025-10-16T18:59:33.8362681Z [INFO] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/Base.java: /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/Base.java uses or overrides a deprecated API.
-2025-10-16T18:59:33.8365362Z [INFO] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/Base.java: Recompile with -Xlint:deprecation for details.
-2025-10-16T18:59:33.8368163Z [INFO] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/AuditService.java: /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/AuditService.java uses unchecked or unsafe operations.
-2025-10-16T18:59:33.8371135Z [INFO] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/AuditService.java: Recompile with -Xlint:unchecked for details.
-2025-10-16T18:59:33.8372505Z [INFO] -------------------------------------------------------------
-2025-10-16T18:59:33.8373001Z [ERROR] COMPILATION ERROR : 
-2025-10-16T18:59:33.8373435Z [INFO] -------------------------------------------------------------
-2025-10-16T18:59:33.8374656Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/file/B2FileUploadService.java:[55,67] cannot find symbol
-2025-10-16T18:59:33.8376251Z   symbol:   method errorCode()
-2025-10-16T18:59:33.8376855Z   location: variable e of type software.amazon.awssdk.services.s3.model.S3Exception
-2025-10-16T18:59:33.8377469Z [INFO] 1 error
-2025-10-16T18:59:33.8377830Z [INFO] -------------------------------------------------------------
-2025-10-16T18:59:33.8398532Z [INFO] ------------------------------------------------------------------------
-2025-10-16T18:59:33.8399098Z [INFO] BUILD FAILURE
-2025-10-16T18:59:33.8399549Z [INFO] ------------------------------------------------------------------------
-2025-10-16T18:59:33.8406896Z [INFO] Total time:  35.916 s
-2025-10-16T18:59:33.8409318Z [INFO] Finished at: 2025-10-16T18:59:33Z
-2025-10-16T18:59:33.8410045Z [INFO] ------------------------------------------------------------------------
-2025-10-16T18:59:33.8417111Z [ERROR] Failed to execute goal org.apache.maven.plugins:maven-compiler-plugin:3.13.0:compile (default-compile) on project p4-backend: Compilation failure
-2025-10-16T18:59:33.8421343Z [ERROR] /home/runner/work/b2b-marketplace/b2b-marketplace/backend/src/main/java/com/p4/backend/shared/kernel/file/B2FileUploadService.java:[55,67] cannot find symbol
-2025-10-16T18:59:33.8422941Z [ERROR]   symbol:   method errorCode()
-2025-10-16T18:59:33.8424306Z [ERROR]   location: variable e of type software.amazon.awssdk.services.s3.model.S3Exception
-2025-10-16T18:59:33.8448766Z [ERROR] 
-2025-10-16T18:59:33.8449334Z [ERROR] -> [Help 1]
-2025-10-16T18:59:33.8449862Z [ERROR] 
-2025-10-16T18:59:33.8450542Z [ERROR] To see the full stack trace of the errors, re-run Maven with the -e switch.
-2025-10-16T18:59:33.8451581Z [ERROR] Re-run Maven using the -X switch to enable full debug logging.
-2025-10-16T18:59:33.8452305Z [ERROR] 
-2025-10-16T18:59:33.8453099Z [ERROR] For more information about the errors and possible solutions, please read the following articles:
-2025-10-16T18:59:33.8454302Z [ERROR] [Help 1] http://cwiki.apache.org/confluence/display/MAVEN/MojoFailureException
-2025-10-16T18:59:33.8837208Z ##[error]Process completed with exit code 1.
-2025-10-16T18:59:33.8941634Z Post job cleanup.
-2025-10-16T18:59:34.0792473Z Post job cleanup.
-2025-10-16T18:59:34.1781128Z [command]/usr/bin/git version
-2025-10-16T18:59:34.1819632Z git version 2.51.0
-2025-10-16T18:59:34.1878777Z Temporarily overriding HOME='/home/runner/work/_temp/f185a2e8-bd19-40c8-8368-817fdf6d5b28' before making global git config changes
-2025-10-16T18:59:34.1879843Z Adding repository directory to the temporary git global config as a safe directory
-2025-10-16T18:59:34.1887356Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/b2b-marketplace/b2b-marketplace
-2025-10-16T18:59:34.1939977Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
-2025-10-16T18:59:34.1986967Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
-2025-10-16T18:59:34.2261584Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
-2025-10-16T18:59:34.2291192Z http.https://github.com/.extraheader
-2025-10-16T18:59:34.2310568Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
-2025-10-16T18:59:34.2353836Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
-2025-10-16T18:59:34.2740522Z Cleaning up orphan processes
+Connected!
+2025-10-18T18:35:03.906Z No new trace in the past 2 min(s).
+2025-10-18T18:35:12.821068020Z     _|_|
+2025-10-18T18:35:12.821451924Z   _|    _|  _|_|_|_|  _|    _|  _|  _|_|    _|_|
+2025-10-18T18:35:12.821459368Z   _|_|_|_|      _|    _|    _|  _|_|      _|_|_|_|
+2025-10-18T18:35:12.821463957Z   _|    _|    _|      _|    _|  _|        _|
+2025-10-18T18:35:12.821467884Z   _|    _|  _|_|_|_|    _|_|_|  _|          _|_|_|
+2025-10-18T18:35:12.821470670Z
+2025-10-18T18:35:12.821473044Z       J A V A   O N   A P P   S E R V I C E
+2025-10-18T18:35:12.821494343Z
+2025-10-18T18:35:12.821497249Z  Documentation: https://aka.ms/appservice
+2025-10-18T18:35:12.821499643Z
+2025-10-18T18:35:12.821502058Z  **NOTE**: No files or system changes outside of /home will persist beyond your application's current session. /home is your application's persistent storage and is shared across all the server instances.
+2025-10-18T18:35:12.821507678Z
+2025-10-18T18:35:12.821511696Z
+2025-10-18T18:35:12.821515483Z  Updating /etc/ssh/sshd_config to use PORT 2222
+2025-10-18T18:35:12.845597561Z  Starting ssh service...
+2025-10-18T18:35:12.922765811Z  ssh-keygen: generating new host keys: DSA
+2025-10-18T18:35:13.711150224Z   * Starting OpenBSD Secure Shell server sshd
+2025-10-18T18:35:13.761025883Z     ...done.
+2025-10-18T18:35:13.784681165Z   * sshd is running
+2025-10-18T18:35:13.799501148Z  ## Printing build info...
+2025-10-18T18:35:13.804638141Z                                             PACKAGE |                             VERSION | COMMIT
+2025-10-18T18:35:13.804691821Z         Microsoft.AppService.WebsitesExtensionsJava |                        1.0.03101177 | 1444cc3
+2025-10-18T18:35:13.804700377Z                                                self |                        1.0.03103266 | 0a91a59e
+2025-10-18T18:35:13.805208162Z  ## Done printing build info.
+2025-10-18T18:35:13.805219904Z  Container info: WEBSITE_INSTANCE_ID = a8885ef659d8a95b1641d22a917b5dd3e957eecf7ebe63189e8bfd2d15df4289 ; WEBSITE_SITE_NAME = b2b-marketplace
+2025-10-18T18:35:13.815649587Z  Add public certificates to keystore if exists...
+2025-10-18T18:35:13.815666910Z  Add private certificates to keystore if exists...
+2025-10-18T18:35:13.816515599Z  Configuring max heap = 716 MB
+2025-10-18T18:35:13.844776114Z  STARTUP_FILE=
+2025-10-18T18:35:13.845766738Z  STARTUP_COMMAND=
+2025-10-18T18:35:13.845777909Z  No STARTUP_FILE available.
+2025-10-18T18:35:13.845783670Z  No STARTUP_COMMAND defined.
+2025-10-18T18:35:15.017501970Z  Mangled result from Jar entry point parser is: __COM_MICROSOFT_AZURE_APPSERVICE_JARENTRYPOINT_PREFIX__org.springframework.boot.loader.launch.JarLauncher__COM_MICROSOFT_AZURE_APPSERVICE_JARENTRYPOINT_SUFFIX__
+2025-10-18T18:35:15.035469395Z  Extracted jar entry point. Class name is: 'org.springframework.boot.loader.launch.JarLauncher'
+2025-10-18T18:35:15.048366550Z  Defaulting to UTF-8
+2025-10-18T18:35:15.049927226Z  Running command: java -cp /home/site/wwwroot/app.jar:/usr/local/appservice/lib/azure.appservice.jar: -Djava.util.logging.config.file=/usr/local/appservice/logging.properties -Dfile.encoding=UTF-8 -Xmx716M -Djava.net.preferIPv4Stack=true  -Dserver.port=80 -XX:ErrorFile=/home/LogFiles/java_error_b2b-marketplace_10-30-0-15_%p.log -XX:+CrashOnOutOfMemoryError -XX:+HeapDumpOnOutOfMemoryError -XX:HeapDumpPath=/home/LogFiles/java_memdump_b2b-marketplace_10-30-0-15.log -Duser.dir=/home/site/wwwroot org.springframework.boot.loader.launch.JarLauncher
+2025-10-18T18:35:15.049940390Z  Launched child process with pid: 85
+2025-10-18T18:35:15.060513331Z  [Telemetry] APP_JAR_PATH: /home/site/wwwroot/app.jar:/usr/local/appservice/lib/azure.appservice.jar
+2025-10-18T18:35:15.060532376Z  x-ms-applog:informational:base64:QVBQX0pBUl9QQVRIOiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjovdXNyL2xvY2FsL2FwcHNlcnZpY2UvbGliL2F6dXJlLmFwcHNlcnZpY2UuamFy
+2025-10-18T18:35:15.060537556Z  x-ms-telemetry:informational:base64:QVBQX0pBUl9QQVRIOiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjovdXNyL2xvY2FsL2FwcHNlcnZpY2UvbGliL2F6dXJlLmFwcHNlcnZpY2UuamFy
+2025-10-18T18:35:15.121067489Z  [Telemetry] JARs in /home/site/wwwroot/app.jar: spring-boot-3.4.0.jar,spring-boot-autoconfigure-3.4.0.jar,logback-classic-1.5.12.jar,logback-core-1.5.12.jar,log4j-to-slf4j-2.24.1.jar,log4j-api-2.24.1.jar,jul-to-slf4j-2.0.16.jar,jakarta.annotation-api-2.1.1.jar,snakeyaml-2.3.jar,jackson-databind-2.18.1.jar,jackson-datatype-jdk8-2.18.1.jar,jackson-module-parameter-names-2.18.1.jar,tomcat-embed-core-10.1.33.jar,tomcat-embed-websocket-10.1.33.jar,spring-web-6.2.0.jar,spring-beans-6.2.0.jar,spring-webmvc-6.2.0.jar,spring-context-6.2.0.jar,spring-expression-6.2.0.jar,spring-boot-actuator-autoconfigure-3.4.0.jar,spring-boot-actuator-3.4.0.jar,micrometer-observation-1.14.1.jar,micrometer-commons-1.14.1.jar,micrometer-jakarta9-1.14.1.jar,micrometer-registry-prometheus-1.14.1.jar,micrometer-core-1.14.1.jar,HdrHistogram-2.2.2.jar,LatencyUtils-2.0.3.jar,prometheus-metrics-core-1.3.3.jar,prometheus-metrics-model-1.3.3.jar,prometheus-metrics-config-1.3.3.jar,prometheus-metrics-tracer-common-1.3.3.jar,prometheus-metrics-exposition-formats-1.3.3.jar,tomcat-embed-el-10.1.33.jar,hibernate-validator-8.0.1.Final.jar,jakarta.validation-api-3.0.2.jar,jboss-logging-3.6.1.Final.jar,classmate-1.7.0.jar,HikariCP-5.1.0.jar,spring-jdbc-6.2.0.jar,hibernate-core-6.6.2.Final.jar,jakarta.persistence-api-3.1.0.jar,jakarta.transaction-api-2.0.1.jar,hibernate-commons-annotations-7.0.3.Final.jar,jandex-3.2.0.jar,byte-buddy-1.15.10.jar,jaxb-runtime-4.0.5.jar,jaxb-core-4.0.5.jar,txw2-4.0.5.jar,istack-commons-runtime-4.1.2.jar,jakarta.inject-api-2.0.1.jar,antlr4-runtime-4.13.0.jar,spring-data-jpa-3.4.0.jar,spring-data-commons-3.4.0.jar,spring-orm-6.2.0.jar,spring-tx-6.2.0.jar,slf4j-api-2.0.16.jar,spring-aspects-6.2.0.jar,spring-aop-6.2.0.jar,spring-security-config-6.4.1.jar,spring-security-core-6.4.1.jar,spring-security-crypto-6.4.1.jar,spring-security-web-6.4.1.jar,spring-context-support-6.2.0.jar,spring-batch-core-5.2.0.jar,spring-batch-infrastructure-5.2.0.jar,spring-retry-2.0.10.jar,aspectjweaver-1.9.22.1.jar,flyway-core-10.21.0.jar,jackson-dataformat-toml-2.18.1.jar,jackson-core-2.18.1.jar,jackson-datatype-jsr310-2.18.1.jar,jackson-annotations-2.18.1.jar,flyway-database-postgresql-10.21.0.jar,springdoc-openapi-starter-webmvc-ui-2.1.0.jar,springdoc-openapi-starter-webmvc-api-2.1.0.jar,springdoc-openapi-starter-common-2.1.0.jar,swagger-core-jakarta-2.2.9.jar,swagger-annotations-jakarta-2.2.9.jar,swagger-models-jakarta-2.2.9.jar,jackson-dataformat-yaml-2.18.1.jar,swagger-ui-4.18.2.jar,ulid-creator-5.2.3.jar,opencsv-5.9.jar,commons-lang3-3.17.0.jar,commons-text-1.11.0.jar,commons-beanutils-1.9.4.jar,commons-logging-1.2.jar,commons-collections-3.2.2.jar,commons-collections4-4.4.jar,s3-2.25.26.jar,aws-xml-protocol-2.25.26.jar,aws-query-protocol-2.25.26.jar,protocol-core-2.25.26.jar,arns-2.25.26.jar,profiles-2.25.26.jar,crt-core-2.25.26.jar,http-auth-2.25.26.jar,identity-spi-2.25.26.jar,http-auth-spi-2.25.26.jar,reactive-streams-1.0.4.jar,http-auth-aws-2.25.26.jar,checksums-2.25.26.jar,checksums-spi-2.25.26.jar,sdk-core-2.25.26.jar,auth-2.25.26.jar,eventstream-1.0.1.jar,http-client-spi-2.25.26.jar,regions-2.25.26.jar,annotations-2.25.26.jar,utils-2.25.26.jar,aws-core-2.25.26.jar,metrics-spi-2.25.26.jar,json-utils-2.25.26.jar,third-party-jackson-core-2.25.26.jar,endpoints-spi-2.25.26.jar,apache-client-2.25.26.jar,httpclient-4.5.13.jar,httpcore-4.4.16.jar,commons-codec-1.17.1.jar,netty-nio-client-2.25.26.jar,netty-codec-http-4.1.115.Final.jar,netty-codec-http2-4.1.115.Final.jar,netty-codec-4.1.115.Final.jar,netty-transport-4.1.115.Final.jar,netty-common-4.1.115.Final.jar,netty-buffer-4.1.115.Final.jar,netty-handler-4.1.115.Final.jar,netty-transport-native-unix-common-4.1.115.Final.jar,netty-transport-classes-epoll-4.1.115.Final.jar,netty-resolver-4.1.115.Final.jar,openhtmltopdf-core-1.0.10.jar,openhtmltopdf-pdfbox-1.0.10.jar,pdfbox-2.0.24.jar,fontbox-2.0.24.jar,xmpbox-2.0.24.jar,graphics2d-0.32.jar,openhtmltopdf-slf4j-1.0.10.jar,openhtmltopdf-svg-support-1.0.10.jar,batik-transcoder-1.14.jar,batik-anim-1.14.jar,batik-css-1.14.jar,batik-parser-1.14.jar,batik-svg-dom-1.14.jar,batik-awt-util-1.14.jar,batik-bridge-1.14.jar,batik-script-1.14.jar,batik-dom-1.14.jar,xalan-2.7.2.jar,serializer-2.7.2.jar,xml-apis-1.4.01.jar,batik-gvt-1.14.jar,batik-shared-resources-1.14.jar,batik-svggen-1.14.jar,batik-util-1.14.jar,batik-constants-1.14.jar,batik-i18n-1.14.jar,batik-xml-1.14.jar,xml-apis-ext-1.3.04.jar,batik-codec-1.14.jar,batik-ext-1.14.jar,xmlgraphics-commons-2.6.jar,commons-io-1.3.1.jar,jakarta.mail-2.0.3.jar,jakarta.activation-api-2.1.3.jar,angus-activation-2.0.2.jar,thymeleaf-spring6-3.1.2.RELEASE.jar,thymeleaf-3.1.2.RELEASE.jar,attoparser-2.0.7.RELEASE.jar,unbescape-1.1.6.RELEASE.jar,lombok-1.18.36.jar,postgresql-42.7.4.jar,checker-qual-3.42.0.jar,bucket4j-core-7.6.0.jar,jakarta.xml.bind-api-4.0.2.jar,spring-core-6.2.0.jar,spring-jcl-6.2.0.jar,spring-boot-jarmode-tools-3.4.0.jar
+2025-10-18T18:35:15.122649053Z  x-ms-applog:informational:base64:SkFScyBpbiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjogc3ByaW5nLWJvb3QtMy40LjAuamFyLHNwcmluZy1ib290LWF1dG9jb25maWd1cmUtMy40LjAuamFyLGxvZ2JhY2stY2xhc3NpYy0xLjUuMTIuamFyLGxvZ2JhY2stY29yZS0xLjUuMTIuamFyLGxvZzRqLXRvLXNsZjRqLTIuMjQuMS5qYXIsbG9nNGotYXBpLTIuMjQuMS5qYXIsanVsLXRvLXNsZjRqLTIuMC4xNi5qYXIsamFrYXJ0YS5hbm5vdGF0aW9uLWFwaS0yLjEuMS5qYXIsc25ha2V5YW1sLTIuMy5qYXIsamFja3Nvbi1kYXRhYmluZC0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtamRrOC0yLjE4LjEuamFyLGphY2tzb24tbW9kdWxlLXBhcmFtZXRlci1uYW1lcy0yLjE4LjEuamFyLHRvbWNhdC1lbWJlZC1jb3JlLTEwLjEuMzMuamFyLHRvbWNhdC1lbWJlZC13ZWJzb2NrZXQtMTAuMS4zMy5qYXIsc3ByaW5nLXdlYi02LjIuMC5qYXIsc3ByaW5nLWJlYW5zLTYuMi4wLmphcixzcHJpbmctd2VibXZjLTYuMi4wLmphcixzcHJpbmctY29udGV4dC02LjIuMC5qYXIsc3ByaW5nLWV4cHJlc3Npb24tNi4yLjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLWF1dG9jb25maWd1cmUtMy40LjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLTMuNC4wLmphcixtaWNyb21ldGVyLW9ic2VydmF0aW9uLTEuMTQuMS5qYXIsbWljcm9tZXRlci1jb21tb25zLTEuMTQuMS5qYXIsbWljcm9tZXRlci1qYWthcnRhOS0xLjE0LjEuamFyLG1pY3JvbWV0ZXItcmVnaXN0cnktcHJvbWV0aGV1cy0xLjE0LjEuamFyLG1pY3JvbWV0ZXItY29yZS0xLjE0LjEuamFyLEhkckhpc3RvZ3JhbS0yLjIuMi5qYXIsTGF0ZW5jeVV0aWxzLTIuMC4zLmphcixwcm9tZXRoZXVzLW1ldHJpY3MtY29yZS0xLjMuMy5qYXIscHJvbWV0aGV1cy1tZXRyaWNzLW1vZGVsLTEuMy4zLmphcixwcm9tZXRoZXVzLW1ldHJpY3MtY29uZmlnLTEuMy4zLmphcixwcm9tZXRoZXVzLW1ldHJpY3MtdHJhY2VyLWNvbW1vbi0xLjMuMy5qYXIscHJvbWV0aGV1cy1tZXRyaWNzLWV4cG9zaXRpb24tZm9ybWF0cy0xLjMuMy5qYXIsdG9tY2F0LWVtYmVkLWVsLTEwLjEuMzMuamFyLGhpYmVybmF0ZS12YWxpZGF0b3ItOC4wLjEuRmluYWwuamFyLGpha2FydGEudmFsaWRhdGlvbi1hcGktMy4wLjIuamFyLGpib3NzLWxvZ2dpbmctMy42LjEuRmluYWwuamFyLGNsYXNzbWF0ZS0xLjcuMC5qYXIsSGlrYXJpQ1AtNS4xLjAuamFyLHNwcmluZy1qZGJjLTYuMi4wLmphcixoaWJlcm5hdGUtY29yZS02LjYuMi5GaW5hbC5qYXIsamFrYXJ0YS5wZXJzaXN0ZW5jZS1hcGktMy4xLjAuamFyLGpha2FydGEudHJhbnNhY3Rpb24tYXBpLTIuMC4xLmphcixoaWJlcm5hdGUtY29tbW9ucy1hbm5vdGF0aW9ucy03LjAuMy5GaW5hbC5qYXIsamFuZGV4LTMuMi4wLmphcixieXRlLWJ1ZGR5LTEuMTUuMTAuamFyLGpheGItcnVudGltZS00LjAuNS5qYXIsamF4Yi1jb3JlLTQuMC41Lmphcix0eHcyLTQuMC41Lmphcixpc3RhY2stY29tbW9ucy1ydW50aW1lLTQuMS4yLmphcixqYWthcnRhLmluamVjdC1hcGktMi4wLjEuamFyLGFudGxyNC1ydW50aW1lLTQuMTMuMC5qYXIsc3ByaW5nLWRhdGEtanBhLTMuNC4wLmphcixzcHJpbmctZGF0YS1jb21tb25zLTMuNC4wLmphcixzcHJpbmctb3JtLTYuMi4wLmphcixzcHJpbmctdHgtNi4yLjAuamFyLHNsZjRqLWFwaS0yLjAuMTYuamFyLHNwcmluZy1hc3BlY3RzLTYuMi4wLmphcixzcHJpbmctYW9wLTYuMi4wLmphcixzcHJpbmctc2VjdXJpdHktY29uZmlnLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktY29yZS02LjQuMS5qYXIsc3ByaW5nLXNlY3VyaXR5LWNyeXB0by02LjQuMS5qYXIsc3ByaW5nLXNlY3VyaXR5LXdlYi02LjQuMS5qYXIsc3ByaW5nLWNvbnRleHQtc3VwcG9ydC02LjIuMC5qYXIsc3ByaW5nLWJhdGNoLWNvcmUtNS4yLjAuamFyLHNwcmluZy1iYXRjaC1pbmZyYXN0cnVjdHVyZS01LjIuMC5qYXIsc3ByaW5nLXJldHJ5LTIuMC4xMC5qYXIsYXNwZWN0andlYXZlci0xLjkuMjIuMS5qYXIsZmx5d2F5LWNvcmUtMTAuMjEuMC5qYXIsamFja3Nvbi1kYXRhZm9ybWF0LXRvbWwtMi4xOC4xLmphcixqYWNrc29uLWNvcmUtMi4xOC4xLmphcixqYWNrc29uLWRhdGF0eXBlLWpzcjMxMC0yLjE4LjEuamFyLGphY2tzb24tYW5ub3RhdGlvbnMtMi4xOC4xLmphcixmbHl3YXktZGF0YWJhc2UtcG9zdGdyZXNxbC0xMC4yMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLXdlYm12Yy11aS0yLjEuMC5qYXIsc3ByaW5nZG9jLW9wZW5hcGktc3RhcnRlci13ZWJtdmMtYXBpLTIuMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLWNvbW1vbi0yLjEuMC5qYXIsc3dhZ2dlci1jb3JlLWpha2FydGEtMi4yLjkuamFyLHN3YWdnZXItYW5ub3RhdGlvbnMtamFrYXJ0YS0yLjIuOS5qYXIsc3dhZ2dlci1tb2RlbHMtamFrYXJ0YS0yLjIuOS5qYXIsamFja3Nvbi1kYXRhZm9ybWF0LXlhbWwtMi4xOC4xLmphcixzd2FnZ2VyLXVpLTQuMTguMi5qYXIsdWxpZC1jcmVhdG9yLTUuMi4zLmphcixvcGVuY3N2LTUuOS5qYXIsY29tbW9ucy1sYW5nMy0zLjE3LjAuamFyLGNvbW1vbnMtdGV4dC0xLjExLjAuamFyLGNvbW1vbnMtYmVhbnV0aWxzLTEuOS40Lmphcixjb21tb25zLWxvZ2dpbmctMS4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zLTMuMi4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zNC00LjQuamFyLHMzLTIuMjUuMjYuamFyLGF3cy14bWwtcHJvdG9jb2wtMi4yNS4yNi5qYXIsYXdzLXF1ZXJ5LXByb3RvY29sLTIuMjUuMjYuamFyLHByb3RvY29sLWNvcmUtMi4yNS4yNi5qYXIsYXJucy0yLjI1LjI2Lmphcixwcm9maWxlcy0yLjI1LjI2LmphcixjcnQtY29yZS0yLjI1LjI2LmphcixodHRwLWF1dGgtMi4yNS4yNi5qYXIsaWRlbnRpdHktc3BpLTIuMjUuMjYuamFyLGh0dHAtYXV0aC1zcGktMi4yNS4yNi5qYXIscmVhY3RpdmUtc3RyZWFtcy0xLjAuNC5qYXIsaHR0cC1hdXRoLWF3cy0yLjI1LjI2LmphcixjaGVja3N1bXMtMi4yNS4yNi5qYXIsY2hlY2tzdW1zLXNwaS0yLjI1LjI2LmphcixzZGstY29yZS0yLjI1LjI2LmphcixhdXRoLTIuMjUuMjYuamFyLGV2ZW50c3RyZWFtLTEuMC4xLmphcixodHRwLWNsaWVudC1zcGktMi4yNS4yNi5qYXIscmVnaW9ucy0yLjI1LjI2Lmphcixhbm5vdGF0aW9ucy0yLjI1LjI2Lmphcix1dGlscy0yLjI1LjI2Lmphcixhd3MtY29yZS0yLjI1LjI2LmphcixtZXRyaWNzLXNwaS0yLjI1LjI2Lmphcixqc29uLXV0aWxzLTIuMjUuMjYuamFyLHRoaXJkLXBhcnR5LWphY2tzb24tY29yZS0yLjI1LjI2LmphcixlbmRwb2ludHMtc3BpLTIuMjUuMjYuamFyLGFwYWNoZS1jbGllbnQtMi4yNS4yNi5qYXIsaHR0cGNsaWVudC00LjUuMTMuamFyLGh0dHBjb3JlLTQuNC4xNi5qYXIsY29tbW9ucy1jb2RlYy0xLjE3LjEuamFyLG5ldHR5LW5pby1jbGllbnQtMi4yNS4yNi5qYXIsbmV0dHktY29kZWMtaHR0cC00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy1odHRwMi00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy00LjEuMTE1LkZpbmFsLmphcixuZXR0eS10cmFuc3BvcnQtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktY29tbW9uLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LWJ1ZmZlci00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1oYW5kbGVyLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LXRyYW5zcG9ydC1uYXRpdmUtdW5peC1jb21tb24tNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktdHJhbnNwb3J0LWNsYXNzZXMtZXBvbGwtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktcmVzb2x2ZXItNC4xLjExNS5GaW5hbC5qYXIsb3Blbmh0bWx0b3BkZi1jb3JlLTEuMC4xMC5qYXIsb3Blbmh0bWx0b3BkZi1wZGZib3gtMS4wLjEwLmphcixwZGZib3gtMi4wLjI0Lmphcixmb250Ym94LTIuMC4yNC5qYXIseG1wYm94LTIuMC4yNC5qYXIsZ3JhcGhpY3MyZC0wLjMyLmphcixvcGVuaHRtbHRvcGRmLXNsZjRqLTEuMC4xMC5qYXIsb3Blbmh0bWx0b3BkZi1zdmctc3VwcG9ydC0xLjAuMTAuamFyLGJhdGlrLXRyYW5zY29kZXItMS4xNC5qYXIsYmF0aWstYW5pbS0xLjE0LmphcixiYXRpay1jc3MtMS4xNC5qYXIsYmF0aWstcGFyc2VyLTEuMTQuamFyLGJhdGlrLXN2Zy1kb20tMS4xNC5qYXIsYmF0aWstYXd0LXV0aWwtMS4xNC5qYXIsYmF0aWstYnJpZGdlLTEuMTQuamFyLGJhdGlrLXNjcmlwdC0xLjE0LmphcixiYXRpay1kb20tMS4xNC5qYXIseGFsYW4tMi43LjIuamFyLHNlcmlhbGl6ZXItMi43LjIuamFyLHhtbC1hcGlzLTEuNC4wMS5qYXIsYmF0aWstZ3Z0LTEuMTQuamFyLGJhdGlrLXNoYXJlZC1yZXNvdXJjZXMtMS4xNC5qYXIsYmF0aWstc3ZnZ2VuLTEuMTQuamFyLGJhdGlrLXV0aWwtMS4xNC5qYXIsYmF0aWstY29uc3RhbnRzLTEuMTQuamFyLGJhdGlrLWkxOG4tMS4xNC5qYXIsYmF0aWsteG1sLTEuMTQuamFyLHhtbC1hcGlzLWV4dC0xLjMuMDQuamFyLGJhdGlrLWNvZGVjLTEuMTQuamFyLGJhdGlrLWV4dC0xLjE0Lmphcix4bWxncmFwaGljcy1jb21tb25zLTIuNi5qYXIsY29tbW9ucy1pby0xLjMuMS5qYXIsamFrYXJ0YS5tYWlsLTIuMC4zLmphcixqYWthcnRhLmFjdGl2YXRpb24tYXBpLTIuMS4zLmphcixhbmd1cy1hY3RpdmF0aW9uLTIuMC4yLmphcix0aHltZWxlYWYtc3ByaW5nNi0zLjEuMi5SRUxFQVNFLmphcix0aHltZWxlYWYtMy4xLjIuUkVMRUFTRS5qYXIsYXR0b3BhcnNlci0yLjAuNy5SRUxFQVNFLmphcix1bmJlc2NhcGUtMS4xLjYuUkVMRUFTRS5qYXIsbG9tYm9rLTEuMTguMzYuamFyLHBvc3RncmVzcWwtNDIuNy40LmphcixjaGVja2VyLXF1YWwtMy40Mi4wLmphcixidWNrZXQ0ai1jb3JlLTcuNi4wLmphcixqYWthcnRhLnhtbC5iaW5kLWFwaS00LjAuMi5qYXIsc3ByaW5nLWNvcmUtNi4yLjAuamFyLHNwcmluZy1qY2wtNi4yLjAuamFyLHNwcmluZy1ib290LWphcm1vZGUtdG9vbHMtMy40LjAuamFy
+2025-10-18T18:35:15.122783663Z  x-ms-telemetry:informational:base64:SkFScyBpbiAvaG9tZS9zaXRlL3d3d3Jvb3QvYXBwLmphcjogc3ByaW5nLWJvb3QtMy40LjAuamFyLHNwcmluZy1ib290LWF1dG9jb25maWd1cmUtMy40LjAuamFyLGxvZ2JhY2stY2xhc3NpYy0xLjUuMTIuamFyLGxvZ2JhY2stY29yZS0xLjUuMTIuamFyLGxvZzRqLXRvLXNsZjRqLTIuMjQuMS5qYXIsbG9nNGotYXBpLTIuMjQuMS5qYXIsanVsLXRvLXNsZjRqLTIuMC4xNi5qYXIsamFrYXJ0YS5hbm5vdGF0aW9uLWFwaS0yLjEuMS5qYXIsc25ha2V5YW1sLTIuMy5qYXIsamFja3Nvbi1kYXRhYmluZC0yLjE4LjEuamFyLGphY2tzb24tZGF0YXR5cGUtamRrOC0yLjE4LjEuamFyLGphY2tzb24tbW9kdWxlLXBhcmFtZXRlci1uYW1lcy0yLjE4LjEuamFyLHRvbWNhdC1lbWJlZC1jb3JlLTEwLjEuMzMuamFyLHRvbWNhdC1lbWJlZC13ZWJzb2NrZXQtMTAuMS4zMy5qYXIsc3ByaW5nLXdlYi02LjIuMC5qYXIsc3ByaW5nLWJlYW5zLTYuMi4wLmphcixzcHJpbmctd2VibXZjLTYuMi4wLmphcixzcHJpbmctY29udGV4dC02LjIuMC5qYXIsc3ByaW5nLWV4cHJlc3Npb24tNi4yLjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLWF1dG9jb25maWd1cmUtMy40LjAuamFyLHNwcmluZy1ib290LWFjdHVhdG9yLTMuNC4wLmphcixtaWNyb21ldGVyLW9ic2VydmF0aW9uLTEuMTQuMS5qYXIsbWljcm9tZXRlci1jb21tb25zLTEuMTQuMS5qYXIsbWljcm9tZXRlci1qYWthcnRhOS0xLjE0LjEuamFyLG1pY3JvbWV0ZXItcmVnaXN0cnktcHJvbWV0aGV1cy0xLjE0LjEuamFyLG1pY3JvbWV0ZXItY29yZS0xLjE0LjEuamFyLEhkckhpc3RvZ3JhbS0yLjIuMi5qYXIsTGF0ZW5jeVV0aWxzLTIuMC4zLmphcixwcm9tZXRoZXVzLW1ldHJpY3MtY29yZS0xLjMuMy5qYXIscHJvbWV0aGV1cy1tZXRyaWNzLW1vZGVsLTEuMy4zLmphcixwcm9tZXRoZXVzLW1ldHJpY3MtY29uZmlnLTEuMy4zLmphcixwcm9tZXRoZXVzLW1ldHJpY3MtdHJhY2VyLWNvbW1vbi0xLjMuMy5qYXIscHJvbWV0aGV1cy1tZXRyaWNzLWV4cG9zaXRpb24tZm9ybWF0cy0xLjMuMy5qYXIsdG9tY2F0LWVtYmVkLWVsLTEwLjEuMzMuamFyLGhpYmVybmF0ZS12YWxpZGF0b3ItOC4wLjEuRmluYWwuamFyLGpha2FydGEudmFsaWRhdGlvbi1hcGktMy4wLjIuamFyLGpib3NzLWxvZ2dpbmctMy42LjEuRmluYWwuamFyLGNsYXNzbWF0ZS0xLjcuMC5qYXIsSGlrYXJpQ1AtNS4xLjAuamFyLHNwcmluZy1qZGJjLTYuMi4wLmphcixoaWJlcm5hdGUtY29yZS02LjYuMi5GaW5hbC5qYXIsamFrYXJ0YS5wZXJzaXN0ZW5jZS1hcGktMy4xLjAuamFyLGpha2FydGEudHJhbnNhY3Rpb24tYXBpLTIuMC4xLmphcixoaWJlcm5hdGUtY29tbW9ucy1hbm5vdGF0aW9ucy03LjAuMy5GaW5hbC5qYXIsamFuZGV4LTMuMi4wLmphcixieXRlLWJ1ZGR5LTEuMTUuMTAuamFyLGpheGItcnVudGltZS00LjAuNS5qYXIsamF4Yi1jb3JlLTQuMC41Lmphcix0eHcyLTQuMC41Lmphcixpc3RhY2stY29tbW9ucy1ydW50aW1lLTQuMS4yLmphcixqYWthcnRhLmluamVjdC1hcGktMi4wLjEuamFyLGFudGxyNC1ydW50aW1lLTQuMTMuMC5qYXIsc3ByaW5nLWRhdGEtanBhLTMuNC4wLmphcixzcHJpbmctZGF0YS1jb21tb25zLTMuNC4wLmphcixzcHJpbmctb3JtLTYuMi4wLmphcixzcHJpbmctdHgtNi4yLjAuamFyLHNsZjRqLWFwaS0yLjAuMTYuamFyLHNwcmluZy1hc3BlY3RzLTYuMi4wLmphcixzcHJpbmctYW9wLTYuMi4wLmphcixzcHJpbmctc2VjdXJpdHktY29uZmlnLTYuNC4xLmphcixzcHJpbmctc2VjdXJpdHktY29yZS02LjQuMS5qYXIsc3ByaW5nLXNlY3VyaXR5LWNyeXB0by02LjQuMS5qYXIsc3ByaW5nLXNlY3VyaXR5LXdlYi02LjQuMS5qYXIsc3ByaW5nLWNvbnRleHQtc3VwcG9ydC02LjIuMC5qYXIsc3ByaW5nLWJhdGNoLWNvcmUtNS4yLjAuamFyLHNwcmluZy1iYXRjaC1pbmZyYXN0cnVjdHVyZS01LjIuMC5qYXIsc3ByaW5nLXJldHJ5LTIuMC4xMC5qYXIsYXNwZWN0andlYXZlci0xLjkuMjIuMS5qYXIsZmx5d2F5LWNvcmUtMTAuMjEuMC5qYXIsamFja3Nvbi1kYXRhZm9ybWF0LXRvbWwtMi4xOC4xLmphcixqYWNrc29uLWNvcmUtMi4xOC4xLmphcixqYWNrc29uLWRhdGF0eXBlLWpzcjMxMC0yLjE4LjEuamFyLGphY2tzb24tYW5ub3RhdGlvbnMtMi4xOC4xLmphcixmbHl3YXktZGF0YWJhc2UtcG9zdGdyZXNxbC0xMC4yMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLXdlYm12Yy11aS0yLjEuMC5qYXIsc3ByaW5nZG9jLW9wZW5hcGktc3RhcnRlci13ZWJtdmMtYXBpLTIuMS4wLmphcixzcHJpbmdkb2Mtb3BlbmFwaS1zdGFydGVyLWNvbW1vbi0yLjEuMC5qYXIsc3dhZ2dlci1jb3JlLWpha2FydGEtMi4yLjkuamFyLHN3YWdnZXItYW5ub3RhdGlvbnMtamFrYXJ0YS0yLjIuOS5qYXIsc3dhZ2dlci1tb2RlbHMtamFrYXJ0YS0yLjIuOS5qYXIsamFja3Nvbi1kYXRhZm9ybWF0LXlhbWwtMi4xOC4xLmphcixzd2FnZ2VyLXVpLTQuMTguMi5qYXIsdWxpZC1jcmVhdG9yLTUuMi4zLmphcixvcGVuY3N2LTUuOS5qYXIsY29tbW9ucy1sYW5nMy0zLjE3LjAuamFyLGNvbW1vbnMtdGV4dC0xLjExLjAuamFyLGNvbW1vbnMtYmVhbnV0aWxzLTEuOS40Lmphcixjb21tb25zLWxvZ2dpbmctMS4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zLTMuMi4yLmphcixjb21tb25zLWNvbGxlY3Rpb25zNC00LjQuamFyLHMzLTIuMjUuMjYuamFyLGF3cy14bWwtcHJvdG9jb2wtMi4yNS4yNi5qYXIsYXdzLXF1ZXJ5LXByb3RvY29sLTIuMjUuMjYuamFyLHByb3RvY29sLWNvcmUtMi4yNS4yNi5qYXIsYXJucy0yLjI1LjI2Lmphcixwcm9maWxlcy0yLjI1LjI2LmphcixjcnQtY29yZS0yLjI1LjI2LmphcixodHRwLWF1dGgtMi4yNS4yNi5qYXIsaWRlbnRpdHktc3BpLTIuMjUuMjYuamFyLGh0dHAtYXV0aC1zcGktMi4yNS4yNi5qYXIscmVhY3RpdmUtc3RyZWFtcy0xLjAuNC5qYXIsaHR0cC1hdXRoLWF3cy0yLjI1LjI2LmphcixjaGVja3N1bXMtMi4yNS4yNi5qYXIsY2hlY2tzdW1zLXNwaS0yLjI1LjI2LmphcixzZGstY29yZS0yLjI1LjI2LmphcixhdXRoLTIuMjUuMjYuamFyLGV2ZW50c3RyZWFtLTEuMC4xLmphcixodHRwLWNsaWVudC1zcGktMi4yNS4yNi5qYXIscmVnaW9ucy0yLjI1LjI2Lmphcixhbm5vdGF0aW9ucy0yLjI1LjI2Lmphcix1dGlscy0yLjI1LjI2Lmphcixhd3MtY29yZS0yLjI1LjI2LmphcixtZXRyaWNzLXNwaS0yLjI1LjI2Lmphcixqc29uLXV0aWxzLTIuMjUuMjYuamFyLHRoaXJkLXBhcnR5LWphY2tzb24tY29yZS0yLjI1LjI2LmphcixlbmRwb2ludHMtc3BpLTIuMjUuMjYuamFyLGFwYWNoZS1jbGllbnQtMi4yNS4yNi5qYXIsaHR0cGNsaWVudC00LjUuMTMuamFyLGh0dHBjb3JlLTQuNC4xNi5qYXIsY29tbW9ucy1jb2RlYy0xLjE3LjEuamFyLG5ldHR5LW5pby1jbGllbnQtMi4yNS4yNi5qYXIsbmV0dHktY29kZWMtaHR0cC00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy1odHRwMi00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1jb2RlYy00LjEuMTE1LkZpbmFsLmphcixuZXR0eS10cmFuc3BvcnQtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktY29tbW9uLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LWJ1ZmZlci00LjEuMTE1LkZpbmFsLmphcixuZXR0eS1oYW5kbGVyLTQuMS4xMTUuRmluYWwuamFyLG5ldHR5LXRyYW5zcG9ydC1uYXRpdmUtdW5peC1jb21tb24tNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktdHJhbnNwb3J0LWNsYXNzZXMtZXBvbGwtNC4xLjExNS5GaW5hbC5qYXIsbmV0dHktcmVzb2x2ZXItNC4xLjExNS5GaW5hbC5qYXIsb3Blbmh0bWx0b3BkZi1jb3JlLTEuMC4xMC5qYXIsb3Blbmh0bWx0b3BkZi1wZGZib3gtMS4wLjEwLmphcixwZGZib3gtMi4wLjI0Lmphcixmb250Ym94LTIuMC4yNC5qYXIseG1wYm94LTIuMC4yNC5qYXIsZ3JhcGhpY3MyZC0wLjMyLmphcixvcGVuaHRtbHRvcGRmLXNsZjRqLTEuMC4xMC5qYXIsb3Blbmh0bWx0b3BkZi1zdmctc3VwcG9ydC0xLjAuMTAuamFyLGJhdGlrLXRyYW5zY29kZXItMS4xNC5qYXIsYmF0aWstYW5pbS0xLjE0LmphcixiYXRpay1jc3MtMS4xNC5qYXIsYmF0aWstcGFyc2VyLTEuMTQuamFyLGJhdGlrLXN2Zy1kb20tMS4xNC5qYXIsYmF0aWstYXd0LXV0aWwtMS4xNC5qYXIsYmF0aWstYnJpZGdlLTEuMTQuamFyLGJhdGlrLXNjcmlwdC0xLjE0LmphcixiYXRpay1kb20tMS4xNC5qYXIseGFsYW4tMi43LjIuamFyLHNlcmlhbGl6ZXItMi43LjIuamFyLHhtbC1hcGlzLTEuNC4wMS5qYXIsYmF0aWstZ3Z0LTEuMTQuamFyLGJhdGlrLXNoYXJlZC1yZXNvdXJjZXMtMS4xNC5qYXIsYmF0aWstc3ZnZ2VuLTEuMTQuamFyLGJhdGlrLXV0aWwtMS4xNC5qYXIsYmF0aWstY29uc3RhbnRzLTEuMTQuamFyLGJhdGlrLWkxOG4tMS4xNC5qYXIsYmF0aWsteG1sLTEuMTQuamFyLHhtbC1hcGlzLWV4dC0xLjMuMDQuamFyLGJhdGlrLWNvZGVjLTEuMTQuamFyLGJhdGlrLWV4dC0xLjE0Lmphcix4bWxncmFwaGljcy1jb21tb25zLTIuNi5qYXIsY29tbW9ucy1pby0xLjMuMS5qYXIsamFrYXJ0YS5tYWlsLTIuMC4zLmphcixqYWthcnRhLmFjdGl2YXRpb24tYXBpLTIuMS4zLmphcixhbmd1cy1hY3RpdmF0aW9uLTIuMC4yLmphcix0aHltZWxlYWYtc3ByaW5nNi0zLjEuMi5SRUxFQVNFLmphcix0aHltZWxlYWYtMy4xLjIuUkVMRUFTRS5qYXIsYXR0b3BhcnNlci0yLjAuNy5SRUxFQVNFLmphcix1bmJlc2NhcGUtMS4xLjYuUkVMRUFTRS5qYXIsbG9tYm9rLTEuMTguMzYuamFyLHBvc3RncmVzcWwtNDIuNy40LmphcixjaGVja2VyLXF1YWwtMy40Mi4wLmphcixidWNrZXQ0ai1jb3JlLTcuNi4wLmphcixqYWthcnRhLnhtbC5iaW5kLWFwaS00LjAuMi5qYXIsc3ByaW5nLWNvcmUtNi4yLjAuamFyLHNwcmluZy1qY2wtNi4yLjAuamFyLHNwcmluZy1ib290LWphcm1vZGUtdG9vbHMtMy40LjAuamFy
+2025-10-18T18:35:15.125295829Z  Waiting for main process to exit. GLOBAL_PID_MAIN=85
+2025-10-18T18:35:15.126000020Z  Waiting for GLOBAL_PID_MAIN == 85
+2025-10-18T18:35:16.315010497Z  Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2025-10-18T18:35:18.582477057Z
+2025-10-18T18:35:18.582729918Z    .   ____          _            __ _ _
+2025-10-18T18:35:18.582830034Z   /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
+2025-10-18T18:35:18.582851955Z  ( ( )\___ | '_ | '_| | '_ \/ _` | \ \ \ \
+2025-10-18T18:35:18.582857095Z   \\/  ___)| |_)| | | | | || (_| |  ) ) ) )
+2025-10-18T18:35:18.582861663Z    '  |____| .__|_| |_|_| |_\__, | / / / /
+2025-10-18T18:35:18.582866242Z   =========|_|==============|___/=/_/_/_/
+2025-10-18T18:35:18.582870670Z
+2025-10-18T18:35:18.582985914Z   :: Spring Boot ::                (v3.4.0)
+2025-10-18T18:35:18.582993338Z
+2025-10-18T18:35:19.205673271Z  2025-10-18T18:35:19.203Z  INFO 85 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : Starting P4BackendApplication v0.0.1-SNAPSHOT using Java 21.0.7 with PID 85 (/home/site/wwwroot/app.jar started by root in /home/site/wwwroot)
+2025-10-18T18:35:19.208229953Z  2025-10-18T18:35:19.207Z  INFO 85 --- [p4-backend] [           main] com.p4.backend.P4BackendApplication      : The following 1 profile is active: "prod"
+2025-10-18T18:35:24.825391552Z  2025-10-18T18:35:24.824Z  INFO 85 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-10-18T18:35:25.075135311Z  2025-10-18T18:35:25.073Z  INFO 85 --- [p4-backend] [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 195 ms. Found 4 JPA repository interfaces.
+2025-10-18T18:35:30.058987919Z  2025-10-18T18:35:30.058Z  INFO 85 --- [p4-backend] [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 80 (http)
+2025-10-18T18:35:30.146429606Z  2025-10-18T18:35:30.145Z  INFO 85 --- [p4-backend] [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 10591 ms
+2025-10-18T18:35:30.164225851Z  Standard Commons Logging discovery in action with spring-jcl: please remove commons-logging.jar from classpath in order to avoid potential conflicts
+2025-10-18T18:35:31.157058400Z  2025-10-18T18:35:31.155Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Starting...
+2025-10-18T18:35:32.406591138Z  2025-10-18T18:35:32.405Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.pool.HikariPool        : P4HikariCP - Added connection org.postgresql.jdbc.PgConnection@2b464384
+2025-10-18T18:35:32.411993251Z  2025-10-18T18:35:32.411Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Start completed.
+2025-10-18T18:35:32.508876896Z  2025-10-18T18:35:32.507Z  INFO 85 --- [p4-backend] [           main] org.flywaydb.core.FlywayExecutor         : Database: jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?user=neondb_owner&password=********&sslmode=require&channelBinding=require (PostgreSQL 17.5)
+2025-10-18T18:35:32.887129989Z  2025-10-18T18:35:32.884Z  INFO 85 --- [p4-backend] [           main] o.f.core.internal.command.DbValidate     : Successfully validated 5 migrations (execution time 00:00.147s)
+2025-10-18T18:35:33.172216756Z  2025-10-18T18:35:33.168Z  INFO 85 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Current version of schema "public": 4
+2025-10-18T18:35:33.300016107Z  2025-10-18T18:35:33.299Z  INFO 85 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Migrating schema "public" to version "5 - Create users table"
+2025-10-18T18:35:33.571977471Z  2025-10-18T18:35:33.571Z ERROR 85 --- [p4-backend] [           main] o.f.core.internal.command.DbMigrate      : Migration of schema "public" to version "5 - Create users table" failed! Changes successfully rolled back.
+2025-10-18T18:35:33.758329334Z  2025-10-18T18:35:33.757Z  WARN 85 --- [p4-backend] [           main] ConfigServletWebServerApplicationContext : Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V5__Create_users_table.sql failed
+2025-10-18T18:35:33.758364469Z  ----------------------------------------
+2025-10-18T18:35:33.758370961Z  SQL State  : 42601
+2025-10-18T18:35:33.758375439Z  Error Code : 0
+2025-10-18T18:35:33.758379126Z  Message    : ERROR: syntax error at or near "$"
+2025-10-18T18:35:33.758382873Z    Position: 119
+2025-10-18T18:35:33.758386540Z  Location   : db/migration/V5__Create_users_table.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V5__Create_users_table.sql)
+2025-10-18T18:35:33.758390597Z  Line       : 33
+2025-10-18T18:35:33.758394144Z  Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-18T18:35:33.758429991Z
+2025-10-18T18:35:33.766661132Z  2025-10-18T18:35:33.762Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Shutdown initiated...
+2025-10-18T18:35:33.912695699Z  2025-10-18T18:35:33.912Z  INFO 85 --- [p4-backend] [           main] com.zaxxer.hikari.HikariDataSource       : P4HikariCP - Shutdown completed.
+2025-10-18T18:35:34.015895681Z  2025-10-18T18:35:34.011Z  INFO 85 --- [p4-backend] [           main] .s.b.a.l.ConditionEvaluationReportLogger :
+2025-10-18T18:35:34.015922201Z
+2025-10-18T18:35:34.015961053Z  Error starting ApplicationContext. To display the condition evaluation report re-run your application with 'debug' enabled.
+2025-10-18T18:35:34.116830302Z  2025-10-18T18:35:34.109Z ERROR 85 --- [p4-backend] [           main] o.s.boot.SpringApplication               : Application run failed
+2025-10-18T18:35:34.116965253Z
+2025-10-18T18:35:34.116971184Z  org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Failed to initialize dependency 'flywayInitializer' of LoadTimeWeaverAware bean 'entityManagerFactory': Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V5__Create_users_table.sql failed
+2025-10-18T18:35:34.116977015Z  ----------------------------------------
+2025-10-18T18:35:34.116981523Z  SQL State  : 42601
+2025-10-18T18:35:34.116985751Z  Error Code : 0
+2025-10-18T18:35:34.116989788Z  Message    : ERROR: syntax error at or near "$"
+2025-10-18T18:35:34.116994407Z    Position: 119
+2025-10-18T18:35:34.116998094Z  Location   : db/migration/V5__Create_users_table.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V5__Create_users_table.sql)
+2025-10-18T18:35:34.117002101Z  Line       : 33
+2025-10-18T18:35:34.117005488Z  Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-18T18:35:34.117009004Z
+2025-10-18T18:35:34.117012370Z  	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:325) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117016298Z  	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:204) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117020165Z  	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:970) ~[spring-context-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117039190Z  	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:627) ~[spring-context-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117043208Z  	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:146) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-18T18:35:34.117047716Z  	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:752) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-18T18:35:34.117054388Z  	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:439) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-18T18:35:34.117059137Z  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:318) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-18T18:35:34.117063926Z  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1361) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-18T18:35:34.117068435Z  	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1350) ~[spring-boot-3.4.0.jar!/:3.4.0]
+2025-10-18T18:35:34.117072993Z  	at com.p4.backend.P4BackendApplication.main(P4BackendApplication.java:15) ~[!/:0.0.1-SNAPSHOT]
+2025-10-18T18:35:34.117076730Z  	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
+2025-10-18T18:35:34.117080527Z  	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
+2025-10-18T18:35:34.117084014Z  	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:102) ~[app.jar:0.0.1-SNAPSHOT]
+2025-10-18T18:35:34.117087500Z  	at org.springframework.boot.loader.launch.Launcher.launch(Launcher.java:64) ~[app.jar:0.0.1-SNAPSHOT]
+2025-10-18T18:35:34.117091067Z  	at org.springframework.boot.loader.launch.JarLauncher.main(JarLauncher.java:40) ~[app.jar:0.0.1-SNAPSHOT]
+2025-10-18T18:35:34.117094864Z  Caused by: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'flywayInitializer' defined in class path resource [org/springframework/boot/autoconfigure/flyway/FlywayAutoConfiguration$FlywayConfiguration.class]: Script V5__Create_users_table.sql failed
+2025-10-18T18:35:34.117098921Z  ----------------------------------------
+2025-10-18T18:35:34.117102358Z  SQL State  : 42601
+2025-10-18T18:35:34.117105674Z  Error Code : 0
+2025-10-18T18:35:34.117109210Z  Message    : ERROR: syntax error at or near "$"
+2025-10-18T18:35:34.117112757Z    Position: 119
+2025-10-18T18:35:34.117116093Z  Location   : db/migration/V5__Create_users_table.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V5__Create_users_table.sql)
+2025-10-18T18:35:34.117119760Z  Line       : 33
+2025-10-18T18:35:34.117122986Z  Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-18T18:35:34.117126493Z
+2025-10-18T18:35:34.117129789Z  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1802) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117145168Z  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:601) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117148995Z  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:523) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117152782Z  	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:336) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117156569Z  	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:288) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117160236Z  	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:334) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117163952Z  	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:199) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117167569Z  	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:312) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117171216Z  	... 15 common frames omitted
+2025-10-18T18:35:34.117174592Z  Caused by: org.flywaydb.core.internal.exception.FlywayMigrateException: Script V5__Create_users_table.sql failed
+2025-10-18T18:35:34.117178179Z  ----------------------------------------
+2025-10-18T18:35:34.117181495Z  SQL State  : 42601
+2025-10-18T18:35:34.117184791Z  Error Code : 0
+2025-10-18T18:35:34.117188097Z  Message    : ERROR: syntax error at or near "$"
+2025-10-18T18:35:34.117191504Z    Position: 119
+2025-10-18T18:35:34.117194810Z  Location   : db/migration/V5__Create_users_table.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V5__Create_users_table.sql)
+2025-10-18T18:35:34.117198537Z  Line       : 33
+2025-10-18T18:35:34.117201943Z  Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-18T18:35:34.117205610Z
+2025-10-18T18:35:34.117208886Z  	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:399) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117212473Z  	at org.flywaydb.core.internal.command.DbMigrate.lambda$applyMigrations$1(DbMigrate.java:283) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117216089Z  	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:59) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117219636Z  	at org.flywaydb.core.internal.command.DbMigrate.applyMigrations(DbMigrate.java:282) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117224034Z  	at org.flywaydb.core.internal.command.DbMigrate.migrateGroup(DbMigrate.java:255) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117227701Z  	at org.flywaydb.core.internal.command.DbMigrate.lambda$migrateAll$0(DbMigrate.java:153) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117236097Z  	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:77) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117239994Z  	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.lambda$execute$0(PostgreSQLAdvisoryLockTemplate.java:60) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117243581Z  	at org.flywaydb.core.internal.jdbc.TransactionalExecutionTemplate.execute(TransactionalExecutionTemplate.java:59) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117247207Z  	at org.flywaydb.database.postgresql.PostgreSQLAdvisoryLockTemplate.execute(PostgreSQLAdvisoryLockTemplate.java:60) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117250874Z  	at org.flywaydb.database.postgresql.PostgreSQLConnection.lock(PostgreSQLConnection.java:105) ~[flyway-database-postgresql-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117254541Z  	at org.flywaydb.core.internal.schemahistory.JdbcTableSchemaHistory.lock(JdbcTableSchemaHistory.java:149) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117258268Z  	at org.flywaydb.core.internal.command.DbMigrate.migrateAll(DbMigrate.java:153) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117261774Z  	at org.flywaydb.core.internal.command.DbMigrate.migrate(DbMigrate.java:104) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117265231Z  	at org.flywaydb.core.Flyway.lambda$migrate$1(Flyway.java:231) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117268838Z  	at org.flywaydb.core.FlywayExecutor.execute(FlywayExecutor.java:213) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117272665Z  	at org.flywaydb.core.Flyway.migrate(Flyway.java:177) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117276241Z  	at org.springframework.boot.autoconfigure.flyway.FlywayMigrationInitializer.afterPropertiesSet(FlywayMigrationInitializer.java:66) ~[spring-boot-autoconfigure-3.4.0.jar!/:3.4.0]
+2025-10-18T18:35:34.117280139Z  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1849) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117284467Z  	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1798) ~[spring-beans-6.2.0.jar!/:6.2.0]
+2025-10-18T18:35:34.117288264Z  	... 22 common frames omitted
+2025-10-18T18:35:34.117291750Z  Caused by: org.flywaydb.core.internal.sqlscript.FlywaySqlScriptException: Script V5__Create_users_table.sql failed
+2025-10-18T18:35:34.117295307Z  ----------------------------------------
+2025-10-18T18:35:34.117298733Z  SQL State  : 42601
+2025-10-18T18:35:34.117305576Z  Error Code : 0
+2025-10-18T18:35:34.117308912Z  Message    : ERROR: syntax error at or near "$"
+2025-10-18T18:35:34.117312469Z    Position: 119
+2025-10-18T18:35:34.117315755Z  Location   : db/migration/V5__Create_users_table.sql (/home/site/wwwroot/nested:/home/site/wwwroot/app.jar/!BOOT-INF/classes/!/db/migration/V5__Create_users_table.sql)
+2025-10-18T18:35:34.117324712Z  Line       : 33
+2025-10-18T18:35:34.117328248Z  Statement  : Run Flyway with -X option to see the actual statement causing the problem
+2025-10-18T18:35:34.117331725Z
+2025-10-18T18:35:34.117335301Z  	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.handleException(DefaultSqlScriptExecutor.java:256) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117339058Z  	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:217) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117342665Z  	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.execute(DefaultSqlScriptExecutor.java:137) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117346262Z  	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.executeOnce(SqlMigrationExecutor.java:75) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117349989Z  	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.lambda$execute$0(SqlMigrationExecutor.java:66) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117353826Z  	at org.flywaydb.core.internal.database.DefaultExecutionStrategy.execute(DefaultExecutionStrategy.java:31) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117357623Z  	at org.flywaydb.core.internal.resolver.sql.SqlMigrationExecutor.execute(SqlMigrationExecutor.java:65) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117361270Z  	at org.flywaydb.core.internal.command.DbMigrate.doMigrateGroup(DbMigrate.java:391) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117364946Z  	... 41 common frames omitted
+2025-10-18T18:35:34.117368303Z  Caused by: org.postgresql.util.PSQLException: ERROR: syntax error at or near "$"
+2025-10-18T18:35:34.117371950Z    Position: 119
+2025-10-18T18:35:34.117375496Z  	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117380295Z  	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117384874Z  	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117389332Z  	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117393209Z  	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117397297Z  	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:356) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117401995Z  	at org.postgresql.jdbc.PgStatement.executeCachedSql(PgStatement.java:341) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117405813Z  	at org.postgresql.jdbc.PgStatement.executeWithFlags(PgStatement.java:317) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117409529Z  	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:312) ~[postgresql-42.7.4.jar!/:42.7.4]
+2025-10-18T18:35:34.117418486Z  	at com.zaxxer.hikari.pool.ProxyStatement.execute(ProxyStatement.java:94) ~[HikariCP-5.1.0.jar!/:na]
+2025-10-18T18:35:34.117422193Z  	at com.zaxxer.hikari.pool.HikariProxyStatement.execute(HikariProxyStatement.java) ~[HikariCP-5.1.0.jar!/:na]
+2025-10-18T18:35:34.117425900Z  	at org.flywaydb.core.internal.jdbc.JdbcTemplate.executeStatement(JdbcTemplate.java:210) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117429447Z  	at org.flywaydb.core.internal.sqlscript.ParsedSqlStatement.execute(ParsedSqlStatement.java:88) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117433133Z  	at org.flywaydb.core.internal.sqlscript.DefaultSqlScriptExecutor.executeStatement(DefaultSqlScriptExecutor.java:212) ~[flyway-core-10.21.0.jar!/:na]
+2025-10-18T18:35:34.117437051Z  	... 47 common frames omitted
+2025-10-18T18:35:34.117440618Z
+2025-10-18T18:35:34.176316866Z  Wait for pid == 85 either returned successfully or was interrupted due to a signal 85
+2025-10-18T18:35:34.177316649Z  Done waiting for main process. GLOBAL_PID_MAIN=85.
+2025-10-18T18:35:34.177326848Z  Exiting entry script!

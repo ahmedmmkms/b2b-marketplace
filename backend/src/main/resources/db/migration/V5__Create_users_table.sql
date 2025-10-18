@@ -31,12 +31,12 @@ CREATE INDEX idx_users_account_active ON users(account_id, is_active) WHERE is_a
 
 -- Update the updated_at field automatically
 CREATE OR REPLACE FUNCTION update_updated_at_column()
-RETURNS TRIGGER AS $
+RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$ language 'plpgsql';
+$$ language 'plpgsql';
 
 CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users
     FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
