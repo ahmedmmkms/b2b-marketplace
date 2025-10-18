@@ -18,6 +18,8 @@ public interface ProductRepository extends JpaRepository<Product, String> {
     Page<Product> findByIsActiveTrue(Pageable pageable);
 
     List<Product> findByVendorIdAndIsActiveTrue(String vendorId);
+    
+    Page<Product> findByVendorIdAndIsActiveTrue(String vendorId, Pageable pageable);
 
     @Query("SELECT p FROM Product p WHERE p.name LIKE %:keyword% OR p.description LIKE %:keyword% OR p.sku LIKE %:keyword%")
     Page<Product> searchByNameOrDescriptionOrSku(@Param("keyword") String keyword, Pageable pageable);

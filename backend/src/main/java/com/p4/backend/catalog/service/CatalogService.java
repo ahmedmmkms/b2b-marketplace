@@ -3,9 +3,6 @@ package com.p4.backend.catalog.service;
 import com.p4.backend.catalog.dto.*;
 import com.p4.backend.catalog.model.*;
 import com.p4.backend.catalog.repository.*;
-import com.p4.backend.identity.model.Vendor;
-import com.p4.backend.identity.repository.VendorRepository;
-import com.p4.backend.pagination.PaginationParams;
 import com.p4.backend.shared.response.ApiResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -77,17 +74,12 @@ public class CatalogService {
 
             Page<ProductResponseDto> productResponsePage = productPage.map(this::mapToProductResponseDto);
 
-            return ApiResponse.<Page<ProductResponseDto>>builder()
-                    .success(true)
-                    .data(productResponsePage)
-                    .message("Products retrieved successfully")
-                    .build();
+            return ApiResponse.success(productResponsePage);
         } catch (Exception e) {
             return ApiResponse.<Page<ProductResponseDto>>builder()
                     .success(false)
                     .data(null)
-                    .message("Error occurred while browsing products")
-                    .error(e.getMessage())
+                    .timestamp(java.time.Instant.now())
                     .build();
         }
     }
@@ -101,7 +93,7 @@ public class CatalogService {
                 return ApiResponse.<ProductResponseDto>builder()
                         .success(false)
                         .data(null)
-                        .message("Product not found")
+                        .timestamp(java.time.Instant.now())
                         .build();
             }
             
@@ -111,23 +103,18 @@ public class CatalogService {
                 return ApiResponse.<ProductResponseDto>builder()
                         .success(false)
                         .data(null)
-                        .message("Product is not active")
+                        .timestamp(java.time.Instant.now())
                         .build();
             }
             
             ProductResponseDto productDto = mapToProductResponseDto(product);
             
-            return ApiResponse.<ProductResponseDto>builder()
-                    .success(true)
-                    .data(productDto)
-                    .message("Product retrieved successfully")
-                    .build();
+            return ApiResponse.success(productDto);
         } catch (Exception e) {
             return ApiResponse.<ProductResponseDto>builder()
                     .success(false)
                     .data(null)
-                    .message("Error occurred while retrieving product")
-                    .error(e.getMessage())
+                    .timestamp(java.time.Instant.now())
                     .build();
         }
     }
@@ -138,11 +125,9 @@ public class CatalogService {
         if (product.getVendor() != null) {
             vendorName = product.getVendor().getBusinessName();
         } else {
-            // Fetch vendor if not loaded
-            Optional<Vendor> vendorOpt = vendorRepository.findById(product.getVendor().getId());
-            if (vendorOpt.isPresent()) {
-                vendorName = vendorOpt.get().getBusinessName();
-            }
+            // This is just a fallback, but in practice the vendor should be loaded with the product
+            // If we need to fetch it separately, we'd need the vendorId passed in separately
+            vendorName = product.getVendor() != null ? product.getVendor().getBusinessName() : "Unknown Vendor";
         }
 
         // Get product attributes
