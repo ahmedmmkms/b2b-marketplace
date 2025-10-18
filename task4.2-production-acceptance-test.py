@@ -1,9 +1,3 @@
-"""
-Production Acceptance Test Script for Task 4.2: User entity and repository
-This script verifies that users can be created with proper account associations
-in the production environment.
-"""
-
 import os
 import requests
 import json
@@ -48,7 +42,7 @@ def create_test_account():
             return None
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while creating test account: {str(e)}")
+        print(f"- Request error while creating test account: {str(e)}")
         return None
 
 
@@ -123,7 +117,7 @@ def get_user_by_id(user_id):
             return None
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while retrieving user: {str(e)}")
+        print(f"- Request error while retrieving user: {str(e)}")
         return None
 
 
@@ -146,7 +140,7 @@ def get_user_by_email(email):
             return None
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while retrieving user by email: {str(e)}")
+        print(f"- Request error while retrieving user by email: {str(e)}")
         return None
 
 
@@ -154,11 +148,35 @@ def update_user(user_id):
     """Update a user to test the update functionality"""
     print(f"Updating user with ID: {user_id}")
     
+    # First, retrieve the current user to get all current values
+    try:
+        current_response = requests.get(
+            f"{API_URL_BASE}/api/users/{user_id}",
+            auth=(SECURITY_USER_NAME, SECURITY_USER_PASSWORD),
+            timeout=TIMEOUT
+        )
+        
+        if current_response.status_code != 200:
+            print(f"- Failed to retrieve current user for update: {current_response.status_code} - {current_response.text}")
+            return None
+            
+        current_user = current_response.json()['data']
+    except requests.exceptions.RequestException as e:
+        print(f"- Request error while retrieving current user for update: {str(e)}")
+        return None
+    
+    # Update only the fields we want to change, keeping all required fields
+    # For the account, only send the ID reference
     update_data = {
-        "firstName": "Jane",
-        "lastName": "Doe",
-        "jobTitle": "Senior Test Engineer",
-        "isActive": True
+        "account": {"id": current_user["account"]["id"]},  # Only send account ID
+        "firstName": "Jane",                  # Changed value
+        "lastName": current_user["lastName"], # Keep original
+        "email": current_user["email"],       # Keep original (required field)
+        "phone": current_user["phone"],       # Keep original
+        "jobTitle": "Senior Test Engineer",   # Changed value
+        "passwordHash": current_user["passwordHash"],  # Keep original (required field)
+        "salt": current_user["salt"],                    # Keep original (required field)
+        "isActive": True                      # Changed value
     }
     
     try:
@@ -177,7 +195,7 @@ def update_user(user_id):
             return None
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while updating user: {str(e)}")
+        print(f"- Request error while updating user: {str(e)}")
         return None
 
 
@@ -200,7 +218,7 @@ def find_users_by_account(account_id):
             return None
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while finding users: {str(e)}")
+        print(f"- Request error while finding users: {str(e)}")
         return None
 
 
@@ -215,7 +233,7 @@ def delete_test_user(user_id):
             timeout=TIMEOUT
         )
         
-        if response.status_code == 204:
+        if response.status_code in [200, 204]:
             print("+ Test user deleted successfully")
             return True
         else:
@@ -223,7 +241,7 @@ def delete_test_user(user_id):
             return False
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while deleting user: {str(e)}")
+        print(f"- Request error while deleting user: {str(e)}")
         return False
 
 
@@ -238,7 +256,7 @@ def delete_test_account(account_id):
             timeout=TIMEOUT
         )
         
-        if response.status_code == 204:
+        if response.status_code in [200, 204]:
             print("+ Test account deleted successfully")
             return True
         else:
@@ -246,7 +264,7 @@ def delete_test_account(account_id):
             return False
             
     except requests.exceptions.RequestException as e:
-        print(f"✗ Request error while deleting account: {str(e)}")
+        print(f"- Request error while deleting account: {str(e)}")
         return False
 
 
@@ -268,7 +286,7 @@ def run_acceptance_tests():
     # Step 2: Create a test user associated with the account
     user = create_test_user(account_id)
     if not user or 'id' not in user:
-        print("✗ Test failed: Could not create test user")
+        print("- Test failed: Could not create test user")
         delete_test_account(account_id)  # Cleanup
         return False
     
