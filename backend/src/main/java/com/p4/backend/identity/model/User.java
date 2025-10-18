@@ -12,6 +12,8 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -68,6 +70,15 @@ public class User extends Base {
     @Column(name = "locked_until")
     private LocalDateTime lockedUntil;
 
+    // RBAC fields
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "role_id")
+    )
+    private Set<Role> roles = new HashSet<>();
+
     @PrePersist
     protected void onCreate() {
         if (this.isActive == null) {
@@ -75,6 +86,9 @@ public class User extends Base {
         }
         if (this.failedLoginAttempts == null) {
             this.failedLoginAttempts = 0;
+        }
+        if (this.roles == null) {
+            this.roles = new HashSet<>();
         }
         
         validateEntity();
@@ -125,6 +139,19 @@ public class User extends Base {
         // Validate that user cannot be active if locked
         if (isActive != null && !isActive && lockedUntil != null && lockedUntil.isAfter(LocalDateTime.now())) {
             throw new IllegalArgumentException("User cannot be inactive and have a future lock date");
+        }
+    }
+
+    public void addRole(Role role) {
+        if (roles == null) {
+            roles = new HashSet<>();
+        }
+        roles.add(role);
+    }
+
+    public void removeRole(Role role) {
+        if (roles != null) {
+            roles.remove(role);
         }
     }
 }

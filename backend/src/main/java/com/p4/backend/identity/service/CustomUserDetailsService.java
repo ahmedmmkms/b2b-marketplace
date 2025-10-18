@@ -1,6 +1,8 @@
 package com.p4.backend.identity.service;
 
 import com.p4.backend.identity.model.User;
+import com.p4.backend.identity.model.Role;
+import com.p4.backend.identity.model.Permission;
 import com.p4.backend.identity.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,9 +30,24 @@ public class CustomUserDetailsService implements UserDetailsService {
             throw new UsernameNotFoundException("User is not active: " + email);
         }
 
-        // For now, we'll assign a default role - in the future, this could be extended to handle roles properly
+        // Build authorities from user's roles and permissions
         Collection<GrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority("ROLE_USER"));
+        
+        // Add roles
+        if (user.getRoles() != null) {
+            for (Role role : user.getRoles()) {
+                if (role.getIsActive()) {
+                    authorities.add(new SimpleGrantedAuthority("ROLE_" + role.getRoleName().toUpperCase()));
+                    
+                    // Add permissions from active roles
+                    for (Permission permission : role.getPermissions()) {
+                        if (permission.getIsActive()) {
+                            authorities.add(new SimpleGrantedAuthority(permission.getPermissionName()));
+                        }
+                    }
+                }
+            }
+        }
 
         return new org.springframework.security.core.userdetails.User(
                 user.getEmail(),

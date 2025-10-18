@@ -46,6 +46,7 @@ public class SecurityConfig {
                 .requestMatchers("/api/auth/**").permitAll()  // Allow access to authentication endpoints
                 .requestMatchers("/actuator/**").permitAll()  // Allow access to actuator endpoints
                 .requestMatchers("/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html").permitAll()  // Allow access to API docs
+                .requestMatchers("/api/rbac/**").authenticated()  // Require authentication for RBAC endpoints, specific permissions enforced in controllers
                 .anyRequest().authenticated()  // Require authentication for all other requests
             )
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);  // Add JWT filter
