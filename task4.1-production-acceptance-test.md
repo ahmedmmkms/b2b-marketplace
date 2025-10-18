@@ -30,6 +30,15 @@ All test cases should pass, confirming that:
 - Proper validation is enforced (e.g., company name for company accounts)
 - Data integrity is maintained
 
+## Note on Production Deployment
+The Account entity has been implemented in the codebase but requires database migration
+to create the necessary table structure in the production environment. After running 
+the appropriate database migrations, the acceptance tests should pass completely.
+
+## Required Database Migration
+Flyway migration V4__Create_accounts_table.sql has been created and needs to be 
+executed in the production environment for the Account entity to function properly.
+
 ## Environment Configuration
 The test runs against the production API:
 - Base URL: `https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net`

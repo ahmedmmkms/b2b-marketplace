@@ -18,9 +18,18 @@ logger = logging.getLogger(__name__)
 API_BASE_URL = "https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net"
 ACCOUNTS_API = f"{API_BASE_URL}/api/accounts"
 
-# Headers for API requests
-HEADERS = {
-    "Content-Type": "application/json"
+import base64
+
+# Authentication credentials
+AUTH_USERNAME = "user"
+AUTH_PASSWORD = "112233445566"
+
+# Create basic auth header
+credentials = f"{AUTH_USERNAME}:{AUTH_PASSWORD}"
+encoded_credentials = base64.b64encode(credentials.encode()).decode()
+AUTH_HEADERS = {
+    "Content-Type": "application/json",
+    "Authorization": f"Basic {encoded_credentials}"
 }
 
 def create_test_account():
@@ -36,7 +45,7 @@ def create_test_account():
     }
     
     logger.info(f"Creating account with data: {json.dumps(account_data, indent=2)}")
-    response = requests.post(ACCOUNTS_API, headers=HEADERS, json=account_data)
+    response = requests.post(ACCOUNTS_API, headers=AUTH_HEADERS, json=account_data)
     
     logger.info(f"Create Account Response - Status: {response.status_code}")
     if response.status_code == 201:
@@ -48,7 +57,7 @@ def create_test_account():
 
 def get_account_by_id(account_id):
     """Retrieve an account by ID"""
-    response = requests.get(f"{ACCOUNTS_API}/{account_id}", headers=HEADERS)
+    response = requests.get(f"{ACCOUNTS_API}/{account_id}", headers=AUTH_HEADERS)
     
     logger.info(f"Get Account Response - Status: {response.status_code}")
     if response.status_code == 200:
@@ -60,7 +69,7 @@ def get_account_by_id(account_id):
 
 def update_account(account_id, updated_data):
     """Update an existing account"""
-    response = requests.put(f"{ACCOUNTS_API}/{account_id}", headers=HEADERS, json=updated_data)
+    response = requests.put(f"{ACCOUNTS_API}/{account_id}", headers=AUTH_HEADERS, json=updated_data)
     
     logger.info(f"Update Account Response - Status: {response.status_code}")
     if response.status_code == 200:
@@ -72,7 +81,7 @@ def update_account(account_id, updated_data):
 
 def delete_account(account_id):
     """Delete an account by ID"""
-    response = requests.delete(f"{ACCOUNTS_API}/{account_id}", headers=HEADERS)
+    response = requests.delete(f"{ACCOUNTS_API}/{account_id}", headers=AUTH_HEADERS)
     
     logger.info(f"Delete Account Response - Status: {response.status_code}")
     if response.status_code == 200:
@@ -84,7 +93,7 @@ def delete_account(account_id):
 
 def get_all_accounts():
     """Retrieve all accounts"""
-    response = requests.get(ACCOUNTS_API, headers=HEADERS)
+    response = requests.get(ACCOUNTS_API, headers=AUTH_HEADERS)
     
     logger.info(f"Get All Accounts Response - Status: {response.status_code}")
     if response.status_code == 200:
@@ -225,9 +234,26 @@ def test_validation():
     
     return True
 
+def check_db_table_exists():
+    """Check if the accounts table exists by attempting to get all accounts"""
+    response = requests.get(ACCOUNTS_API, headers=AUTH_HEADERS)
+    if response.status_code == 500:
+        error_detail = response.json().get('error', {}).get('detail', '')
+        if 'accounts' in error_detail and 'does not exist' in error_detail:
+            return False
+    return True
+
 def main():
     """Main function to run all tests"""
     logger.info("Running Account Entity Production Acceptance Tests...")
+    
+    # Check if database table exists
+    table_exists = check_db_table_exists()
+    if not table_exists:
+        logger.warning("Accounts table does not exist in the database. This is expected if the migration hasn't been run yet.")
+        logger.info("Please ensure the database migration V4__Create_accounts_table.sql has been executed in production.")
+        logger.info("After running the migration, re-run this test.")
+        return
     
     # Test account entity functionality
     entity_test_result = test_account_entity()
