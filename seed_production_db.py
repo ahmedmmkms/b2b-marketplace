@@ -153,6 +153,22 @@ def check_vendors_table_exists(conn):
         
         return None
 
+def detect_vendor_schema(conn, table_name):
+    """Detect whether the vendor table uses the modern schema (business_name/email) or legacy schema"""
+    with conn.cursor() as cur:
+        cur.execute("""
+            SELECT column_name 
+            FROM information_schema.columns 
+            WHERE table_schema = 'public' AND table_name = %s
+        """, (table_name,))
+        columns = {row[0] for row in cur.fetchall()}
+    
+    if {'business_name', 'email', 'vendor_status'} <= columns:
+        return 'modern'
+    if {'contact_email', 'status'} <= columns:
+        return 'legacy'
+    return 'unknown'
+
 def generate_vendor_data():
     """Generate sample vendor data matching the VendorSeeder logic"""
     # Sample business names for vendors
@@ -216,14 +232,12 @@ def seed_vendors_table(conn, table_name):
     """Insert vendor data into the database"""
     vendors = generate_vendor_data()
     
+    schema = detect_vendor_schema(conn, table_name)
+    
     with conn.cursor() as cur:
         # Check if vendors already exist to avoid duplicates
-        if table_name == 'vendor':
-            # For the 'vendor' table (singular), the column name is 'contact_email'
-            cur.execute(f"SELECT COUNT(*) FROM {table_name} WHERE contact_email LIKE %s;", ('%@vendor.com%',))
-        else:
-            # For the 'vendors' table (plural), the column name is 'email'
-            cur.execute(f"SELECT COUNT(*) FROM {table_name} WHERE email LIKE %s;", ('%@vendor.com%',))
+        email_column = 'email' if schema == 'modern' else 'contact_email'
+        cur.execute(f"SELECT COUNT(*) FROM {table_name} WHERE {email_column} LIKE %s;", ('%@vendor.com%',))
         existing_vendor_count = cur.fetchone()[0]
         
         if existing_vendor_count > 0:
@@ -232,69 +246,59 @@ def seed_vendors_table(conn, table_name):
         
         # Insert vendor data
         for vendor in vendors:
-            # For the 'vendor' table (singular), the column names are different
-            if table_name == 'vendor':
-                # The vendor table from migration has different columns
-                # Generate a ULID manually (26-character string)
-                ulid = generate_ulid()
-                
-                insert_sql = """
-                    INSERT INTO vendor (
-                        id, name, description, contact_email, 
-                        contact_phone, address, tax_number, status, 
-                        created_at, updated_at
-                    ) VALUES (
-                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
-                    );
-                """
-                
-                # Map the values to the 'vendor' table structure
-                import json
-                # For the 'vendor' table, use 'ACTIVE' instead of 'APPROVED' due to check constraint
-                vendor_status = 'ACTIVE' if vendor['vendor_status'] == 'APPROVED' else vendor['vendor_status']
-                
-                cur.execute(insert_sql, (
-                    ulid,  # id
-                    vendor['business_name'],  # name
-                    f"Description for {vendor['business_name']}",  # description
-                    vendor['email'],  # contact_email
-                    vendor['phone'],  # contact_phone
-                    json.dumps({"full_address": vendor['address']}),  # address as JSON string
-                    vendor['tax_id'],  # tax_number
-                    vendor_status,  # status - using value compatible with vendor table
-                    vendor['created_at'],  # created_at
-                    vendor['updated_at']   # updated_at
-                ))
-            else:
-                # For a 'vendors' table (plural), use the correct column names
-                ulid = generate_ulid()
-                
+            ulid = generate_ulid()
+            
+            if schema == 'modern':
                 insert_sql = f"""
                     INSERT INTO {table_name} (
-                        id, business_name, email, phone, address, 
-                        tax_id, business_license_no, registration_date, 
-                        vendor_status, kyc_verified, kyc_verified_at, 
+                        id, business_name, email, phone, address,
+                        tax_id, business_license_no, registration_date,
+                        vendor_status, kyc_verified, kyc_verified_at,
                         kyc_verified_by, created_at, updated_at
                     ) VALUES (
                         %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
                     );
                 """
-                
                 cur.execute(insert_sql, (
-                    ulid,  # id
-                    vendor['business_name'],  # business_name
-                    vendor['email'],  # email
-                    vendor['phone'],  # phone
-                    vendor['address'],  # address
-                    vendor['tax_id'],  # tax_id
-                    vendor['business_license_no'],  # business_license_no
-                    vendor['registration_date'],  # registration_date
-                    vendor['vendor_status'],  # vendor_status
-                    vendor['kyc_verified'],  # kyc_verified
-                    vendor['kyc_verified_at'],  # kyc_verified_at
-                    vendor['kyc_verified_by'],  # kyc_verified_by
-                    vendor['created_at'],  # created_at
-                    vendor['updated_at']   # updated_at
+                    ulid,
+                    vendor['business_name'],
+                    vendor['email'],
+                    vendor['phone'],
+                    vendor['address'],
+                    vendor['tax_id'],
+                    vendor['business_license_no'],
+                    vendor['registration_date'],
+                    vendor['vendor_status'],
+                    vendor['kyc_verified'],
+                    vendor['kyc_verified_at'],
+                    vendor['kyc_verified_by'],
+                    vendor['created_at'],
+                    vendor['updated_at']
+                ))
+            else:
+                # Legacy schema uses JSON address and legacy status naming
+                import json
+                insert_sql = f"""
+                    INSERT INTO {table_name} (
+                        id, name, description, contact_email,
+                        contact_phone, address, tax_number, status,
+                        created_at, updated_at
+                    ) VALUES (
+                        %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+                    );
+                """
+                legacy_status = 'ACTIVE' if vendor['vendor_status'] == 'APPROVED' else vendor['vendor_status']
+                cur.execute(insert_sql, (
+                    ulid,
+                    vendor['business_name'],
+                    f"Description for {vendor['business_name']}",
+                    vendor['email'],
+                    vendor['phone'],
+                    json.dumps({"full_address": vendor['address']}),
+                    vendor['tax_id'],
+                    legacy_status,
+                    vendor['created_at'],
+                    vendor['updated_at']
                 ))
     
     conn.commit()

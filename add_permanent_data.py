@@ -183,7 +183,7 @@ def add_product_attributes_data(conn):
     
     with conn.cursor() as cur:
         # Check if attributes already exist
-        cur.execute("SELECT COUNT(*) FROM product_attribute;")
+        cur.execute("SELECT COUNT(*) FROM product_attributes;")
         existing_count = cur.fetchone()[0]
         
         if existing_count > 0:
@@ -194,19 +194,21 @@ def add_product_attributes_data(conn):
         for i, attr_def in enumerate(attribute_definitions):
             attr_id = generate_ulid()
             cur.execute("""
-                INSERT INTO product_attribute (
-                    id, name, display_name, attribute_type, 
-                    is_required, is_filterable, is_searchable, 
+                INSERT INTO product_attributes (
+                    id, name, display_name, description, attribute_type, 
+                    is_required, is_filterable, is_searchable, sort_order,
                     created_at, updated_at
                 ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 attr_id,
                 attr_def["name"],
                 attr_def["display_name"],
+                attr_def["description"],
                 attr_def["type"],
                 attr_def["required"],
                 attr_def["filterable"],
                 True,  # is_searchable
+                i + 1,
                 datetime.now(),
                 datetime.now()
             ))
@@ -220,7 +222,7 @@ def add_media_assets_data(conn):
     
     with conn.cursor() as cur:
         # Check if media assets already exist
-        cur.execute("SELECT COUNT(*) FROM media_asset;")
+        cur.execute("SELECT COUNT(*) FROM media_assets;")
         existing_count = cur.fetchone()[0]
         
         if existing_count > 0:
@@ -228,7 +230,7 @@ def add_media_assets_data(conn):
             return
         
         # Check if we have products to link media to
-        cur.execute("SELECT id FROM product LIMIT 50;")  # Get up to 50 products
+        cur.execute("SELECT id FROM products LIMIT 50;")  # Get up to 50 products
         products = [row[0] for row in cur.fetchall()]
         
         if not products:
@@ -252,12 +254,18 @@ def add_media_assets_data(conn):
         
         # Insert media assets
         for asset in media_assets:
+            media_category = asset['content_type'].split('/')[0].upper()
+            media_type = 'IMAGE' if media_category == 'IMAGE' else (
+                'VIDEO' if media_category == 'VIDEO' else (
+                    'DOCUMENT' if media_category in ('APPLICATION', 'TEXT') else 'OTHER'
+                )
+            )
             cur.execute("""
-                INSERT INTO media_asset (
-                    id, name, filename, file_path, mime_type, 
+                INSERT INTO media_assets (
+                    id, name, original_filename, storage_path, content_type, 
                     file_size, alt_text, title, caption, media_type, 
-                    status, is_primary, created_at, updated_at
-                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    status, is_primary, upload_date, created_at, updated_at
+                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """, (
                 asset['id'],
                 asset['filename'],
@@ -268,9 +276,10 @@ def add_media_assets_data(conn):
                 asset['alt_text'],
                 asset['filename'],  # title
                 asset['caption'],
-                asset['content_type'].split('/')[0].upper() + 'S',  # media_type (IMAGES)
+                media_type,
                 'ACTIVE',  # status
                 False,  # is_primary
+                datetime.now(),
                 datetime.now(),
                 datetime.now()
             ))
@@ -285,14 +294,17 @@ def add_media_assets_data(conn):
                     media_id = generate_ulid()
                     cur.execute("""
                         INSERT INTO product_media (
-                            id, product_id, media_asset_id, sort_order, 
-                            created_at
-                        ) VALUES (%s, %s, %s, %s, %s)
+                            id, product_id, media_asset_id, display_order, 
+                            is_primary, alt_text_override, created_at, updated_at
+                        ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                     """, (
                         media_id,
                         product_id,
                         media_asset_id,
                         j + 1,
+                        j == 0,
+                        None,
+                        datetime.now(),
                         datetime.now()
                     ))
         
