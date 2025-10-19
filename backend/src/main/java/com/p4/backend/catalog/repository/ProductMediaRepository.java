@@ -13,4 +13,6 @@ public interface ProductMediaRepository extends JpaRepository<ProductMedia, Stri
     List<ProductMedia> findByProductIdAndIsPrimaryTrue(String productId);
     
     void deleteByProductId(String productId);
+    
+    boolean existsByProductIdAndMediaAssetId(String productId, String mediaAssetId);
 }

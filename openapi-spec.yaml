@@ -1,0 +1,2289 @@
+openapi: 3.0.3
+info:
+  title: P4 B2B Marketplace API
+  description: API for the P4 GCC/MENA B2B Marketplace
+  version: 1.0.0
+  contact:
+    name: P4 Development Team
+    email: dev@p4-marketplace.com
+
+servers:
+  - url: https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net
+    description: Production server
+
+tags:
+  - name: Authentication
+    description: User authentication endpoints
+  - name: Identity
+    description: Account and user management
+  - name: RBAC
+    description: Role-based access control
+  - name: Files
+    description: File upload functionality
+  - name: Audit
+    description: Audit logs
+  - name: Catalog
+    description: Product catalog and search
+  - name: Test
+    description: Test endpoints for development
+
+paths:
+  /api/auth/login:
+    post:
+      tags:
+        - Authentication
+      summary: User login
+      description: Authenticate user and return JWT tokens
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  example: "user"
+                email:
+                  type: string
+                  format: email
+                  example: "user@admin.net"
+                password:
+                  type: string
+                  format: password
+                  example: "112233445566"
+              required:
+                - email
+                - password
+      responses:
+        '200':
+          description: Successful login
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: object
+                    properties:
+                      accessToken:
+                        type: string
+                        example: "eyJhbGciOiJIUzUxMiJ9..."
+                      refreshToken:
+                        type: string
+                        example: "eyJhbGciOiJIUzUxMiJ9..."
+                      tokenType:
+                        type: string
+                        example: "Bearer"
+                      expiresIn:
+                        type: integer
+                        example: 900
+                  success:
+                    type: boolean
+                    example: true
+                  timestamp:
+                    type: string
+                    format: date-time
+                    example: "2025-10-19T06:30:09.284038836Z"
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/auth/refresh:
+    post:
+      tags:
+        - Authentication
+      summary: Refresh JWT token
+      description: Refresh the access token using a refresh token
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                refreshToken:
+                  type: string
+                  example: "eyJhbGciOiJIUzUxMiJ9..."
+              required:
+                - refreshToken
+      responses:
+        '200':
+          description: Token refreshed successfully
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/auth/logout:
+    post:
+      tags:
+        - Authentication
+      summary: User logout
+      description: Logout current user
+      responses:
+        '200':
+          description: Successfully logged out
+        '500':
+          description: Internal server error
+
+  /api/accounts:
+    post:
+      tags:
+        - Identity
+      summary: Create a new account
+      description: Create a new user account
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountName:
+                  type: string
+                  example: "Example Company"
+                accountType:
+                  type: string
+                  enum: [INDIVIDUAL, COMPANY]
+                  example: "COMPANY"
+                businessRegistrationNo:
+                  type: string
+                  example: "BR123456789"
+                taxId:
+                  type: string
+                  example: "TAX123456789"
+                status:
+                  type: string
+                  enum: [ACTIVE, INACTIVE, PENDING, SUSPENDED]
+                  example: "PENDING"
+      responses:
+        '200':
+          description: Account created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Identity
+      summary: Get all accounts
+      description: Retrieve a list of all accounts
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: List of accounts retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/accounts/{id}:
+    get:
+      tags:
+        - Identity
+      summary: Get account by ID
+      description: Retrieve a specific account by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Account retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Identity
+      summary: Update an account
+      description: Update an existing account
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                accountName:
+                  type: string
+                  example: "Updated Company Name"
+                status:
+                  type: string
+                  enum: [ACTIVE, INACTIVE, PENDING, SUSPENDED]
+                  example: "ACTIVE"
+      responses:
+        '200':
+          description: Account updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Identity
+      summary: Delete an account
+      description: Delete an existing account
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Account deleted successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+
+  /api/users:
+    post:
+      tags:
+        - Identity
+      summary: Create a new user
+      description: Create a new user within the system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: "John"
+                lastName:
+                  type: string
+                  example: "Doe"
+                email:
+                  type: string
+                  format: email
+                  example: "john.doe@example.com"
+                phone:
+                  type: string
+                  example: "+1234567890"
+                accountId:
+                  type: string
+                  example: "01F123456789ABCDEFGH"
+                isVerified:
+                  type: boolean
+                  example: false
+              required:
+                - firstName
+                - lastName
+                - email
+                - accountId
+      responses:
+        '200':
+          description: User created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Identity
+      summary: Get all users
+      description: Retrieve a list of all users
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: List of users retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/users/{id}:
+    get:
+      tags:
+        - Identity
+      summary: Get user by ID
+      description: Retrieve a specific user by their ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Identity
+      summary: Update a user
+      description: Update an existing user's information
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                firstName:
+                  type: string
+                  example: "Jane"
+                lastName:
+                  type: string
+                  example: "Smith"
+                phone:
+                  type: string
+                  example: "+1987654321"
+                isVerified:
+                  type: boolean
+                  example: true
+      responses:
+        '200':
+          description: User updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Identity
+      summary: Delete a user
+      description: Delete an existing user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: User deleted successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /api/users/email/{email}:
+    get:
+      tags:
+        - Identity
+      summary: Get user by email
+      description: Retrieve a specific user by their email address
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: email
+          in: path
+          required: true
+          schema:
+            type: string
+            format: email
+            example: "john.doe@example.com"
+      responses:
+        '200':
+          description: User retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /api/users/account/{accountId}:
+    get:
+      tags:
+        - Identity
+      summary: Get users by account ID
+      description: Retrieve all users associated with a specific account
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: accountId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Users retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Account not found
+        '500':
+          description: Internal server error
+
+  /api/rbac/permissions:
+    post:
+      tags:
+        - RBAC
+      summary: Create a permission
+      description: Create a new permission in the system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "catalog.read"
+                description:
+                  type: string
+                  example: "Permission to read catalog items"
+              required:
+                - name
+      responses:
+        '200':
+          description: Permission created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - RBAC
+      summary: Get all permissions
+      description: Retrieve a list of all permissions
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Permissions retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/rbac/roles:
+    post:
+      tags:
+        - RBAC
+      summary: Create a role
+      description: Create a new role in the system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Vendor"
+                description:
+                  type: string
+                  example: "Vendor role with catalog access"
+              required:
+                - name
+      responses:
+        '200':
+          description: Role created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - RBAC
+      summary: Get all roles
+      description: Retrieve a list of all roles
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Roles retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/rbac/roles/{id}:
+    get:
+      tags:
+        - RBAC
+      summary: Get role by ID
+      description: Retrieve a specific role by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Role retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Role not found
+        '500':
+          description: Internal server error
+
+  /api/rbac/roles/{id}/permissions:
+    put:
+      tags:
+        - RBAC
+      summary: Assign permissions to role
+      description: Assign a list of permissions to a specific role
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                permissionIds:
+                  type: array
+                  items:
+                    type: string
+                  example: ["01F123456789ABCDEFGH", "01F123456789IJKLMNOP"]
+              required:
+                - permissionIds
+      responses:
+        '200':
+          description: Permissions assigned successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Role not found
+        '500':
+          description: Internal server error
+
+  /api/rbac/users/{userId}/roles/{roleId}:
+    put:
+      tags:
+        - RBAC
+      summary: Assign role to user
+      description: Assign a specific role to a user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+        - name: roleId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789IJKLMNOP"
+      responses:
+        '200':
+          description: Role assigned to user successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: User or role not found
+        '500':
+          description: Internal server error
+
+  /api/rbac/users/{userId}/has-permission/{permissionName}:
+    get:
+      tags:
+        - RBAC
+      summary: Check if user has permission
+      description: Check if a user has a specific permission
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+        - name: permissionName
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "catalog.read"
+      responses:
+        '200':
+          description: Permission check result
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: boolean
+                    example: true
+                  success:
+                    type: boolean
+                    example: true
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /api/rbac/users/{userId}/permissions:
+    get:
+      tags:
+        - RBAC
+      summary: Get user permissions
+      description: Get all permissions assigned to a user
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: User permissions retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: User not found
+        '500':
+          description: Internal server error
+
+  /api/files/upload:
+    post:
+      tags:
+        - Files
+      summary: Upload a file
+      description: Upload a file to the system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: File uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/files/upload-public:
+    post:
+      tags:
+        - Files
+      summary: Upload a public file
+      description: Upload a public file to the system
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          multipart/form-data:
+            schema:
+              type: object
+              properties:
+                file:
+                  type: string
+                  format: binary
+      responses:
+        '200':
+          description: Public file uploaded successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/audit/log-custom-action:
+    post:
+      tags:
+        - Audit
+      summary: Log a custom action
+      description: Log a custom audit action
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                entityName:
+                  type: string
+                  example: "Product"
+                entityId:
+                  type: string
+                  example: "01F123456789ABCDEFGH"
+                action:
+                  type: string
+                  example: "UPDATE"
+                details:
+                  type: object
+                  example: {"field": "price", "oldValue": "10.00", "newValue": "12.00"}
+              required:
+                - entityName
+                - entityId
+                - action
+      responses:
+        '200':
+          description: Audit log created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/audit/logs/{entityType}/{entityId}:
+    get:
+      tags:
+        - Audit
+      summary: Get audit logs for entity
+      description: Retrieve audit logs for a specific entity
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "Product"
+        - name: entityId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Audit logs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Entity not found
+        '500':
+          description: Internal server error
+
+  /api/audit/recent-logs:
+    get:
+      tags:
+        - Audit
+      summary: Get recent audit logs
+      description: Retrieve recent audit logs across all entities
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: limit
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 50
+      responses:
+        '200':
+          description: Recent audit logs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/audit/logs/{entityType}/{entityId}/paginated:
+    get:
+      tags:
+        - Audit
+      summary: Get paginated audit logs
+      description: Retrieve paginated audit logs for a specific entity
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: entityType
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "Product"
+        - name: entityId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Paginated audit logs retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Entity not found
+        '500':
+          description: Internal server error
+
+  /api/catalog/products:
+    get:
+      tags:
+        - Catalog
+      summary: Browse products
+      description: Browse products with optional search, filtering, and pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: keyword
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "wireless headphones"
+        - name: vendorId
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+        - name: sortBy
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "name"
+        - name: sortOrder
+          in: query
+          required: false
+          schema:
+            type: string
+            enum: [ASC, DESC]
+            default: "ASC"
+      responses:
+        '200':
+          description: Products retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    post:
+      tags:
+        - Catalog
+      summary: Create a product
+      description: Create a new product
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '201':
+          description: Product created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/catalog/products/{id}:
+    get:
+      tags:
+        - Catalog
+      summary: Get product by ID
+      description: Retrieve a specific product by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Product retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Catalog
+      summary: Update a product
+      description: Update an existing product
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductRequest'
+      responses:
+        '200':
+          description: Product updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Catalog
+      summary: Delete a product
+      description: Delete an existing product
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Product deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product not found
+        '500':
+          description: Internal server error
+
+  /api/vendors:
+    post:
+      tags:
+        - Catalog
+      summary: Create a vendor
+      description: Create a new vendor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+      responses:
+        '201':
+          description: Vendor created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Catalog
+      summary: Get all vendors
+      description: Retrieve a list of all vendors with optional filtering and pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: status
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "APPROVED"
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Vendors retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/vendors/{id}:
+    get:
+      tags:
+        - Catalog
+      summary: Get vendor by ID
+      description: Retrieve a specific vendor by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Vendor retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Vendor not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Catalog
+      summary: Update a vendor
+      description: Update an existing vendor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Vendor'
+      responses:
+        '200':
+          description: Vendor updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Vendor not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Catalog
+      summary: Delete a vendor
+      description: Delete an existing vendor
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Vendor deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Vendor not found
+        '500':
+          description: Internal server error
+
+  /api/catalog/attributes:
+    post:
+      tags:
+        - Catalog
+      summary: Create a product attribute
+      description: Create a new product attribute
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductAttribute'
+      responses:
+        '201':
+          description: Product attribute created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Catalog
+      summary: Get all product attributes
+      description: Retrieve a list of all product attributes with pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Product attributes retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/catalog/attributes/{id}:
+    get:
+      tags:
+        - Catalog
+      summary: Get product attribute by ID
+      description: Retrieve a specific product attribute by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Product attribute retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product attribute not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Catalog
+      summary: Update a product attribute
+      description: Update an existing product attribute
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductAttribute'
+      responses:
+        '200':
+          description: Product attribute updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product attribute not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Catalog
+      summary: Delete a product attribute
+      description: Delete an existing product attribute
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Product attribute deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product attribute not found
+        '500':
+          description: Internal server error
+
+  /api/catalog/media-assets:
+    post:
+      tags:
+        - Catalog
+      summary: Create a media asset
+      description: Create a new media asset
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaAsset'
+      responses:
+        '201':
+          description: Media asset created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Catalog
+      summary: Get all media assets
+      description: Retrieve a list of all media assets with pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Media assets retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/catalog/media-assets/{id}:
+    get:
+      tags:
+        - Catalog
+      summary: Get media asset by ID
+      description: Retrieve a specific media asset by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Media asset retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Media asset not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Catalog
+      summary: Update a media asset
+      description: Update an existing media asset
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/MediaAsset'
+      responses:
+        '200':
+          description: Media asset updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Media asset not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Catalog
+      summary: Delete a media asset
+      description: Delete an existing media asset
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Media asset deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Media asset not found
+        '500':
+          description: Internal server error
+
+  /api/catalog/product-media:
+    post:
+      tags:
+        - Catalog
+      summary: Create a product-media association
+      description: Create a new product-media association
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductMedia'
+      responses:
+        '201':
+          description: Product-media association created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Catalog
+      summary: Get all product-media associations
+      description: Retrieve a list of all product-media associations with pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: page
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 0
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Product-media associations retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/catalog/product-media/{id}:
+    get:
+      tags:
+        - Catalog
+      summary: Get product-media association by ID
+      description: Retrieve a specific product-media association by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Product-media association retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product-media association not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Catalog
+      summary: Update a product-media association
+      description: Update an existing product-media association
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductMedia'
+      responses:
+        '200':
+          description: Product-media association updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product-media association not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Catalog
+      summary: Delete a product-media association
+      description: Delete an existing product-media association
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Product-media association deleted successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product-media association not found
+        '500':
+          description: Internal server error
+
+  /api/catalog/product-media/product/{productId}:
+    get:
+      tags:
+        - Catalog
+      summary: Get media assets for a product
+      description: Retrieve all media assets associated with a specific product
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: productId
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Media assets retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product not found
+        '500':
+          description: Internal server error
+
+  /api/catalog/products/{id}:
+    get:
+      tags:
+        - Catalog
+      summary: Get product by ID
+      description: Retrieve a specific product by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Product retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Product not found
+        '500':
+          description: Internal server error
+
+  /api/test-entities:
+    post:
+      tags:
+        - Test
+      summary: Create test entity
+      description: Create a new test entity
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Test Entity"
+                description:
+                  type: string
+                  example: "This is a test entity"
+      responses:
+        '200':
+          description: Test entity created successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+    get:
+      tags:
+        - Test
+      summary: Get all test entities
+      description: Retrieve all test entities
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Test entities retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+  /api/test-entities/{id}:
+    get:
+      tags:
+        - Test
+      summary: Get test entity by ID
+      description: Retrieve a specific test entity by its ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Test entity retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '404':
+          description: Test entity not found
+        '500':
+          description: Internal server error
+    put:
+      tags:
+        - Test
+      summary: Update test entity
+      description: Update an existing test entity
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: "Updated Test Entity"
+                description:
+                  type: string
+                  example: "This is an updated test entity"
+      responses:
+        '200':
+          description: Test entity updated successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '400':
+          description: Invalid request
+        '401':
+          description: Unauthorized
+        '404':
+          description: Test entity not found
+        '500':
+          description: Internal server error
+    delete:
+      tags:
+        - Test
+      summary: Delete test entity
+      description: Delete an existing test entity
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+      responses:
+        '200':
+          description: Test entity deleted successfully
+        '401':
+          description: Unauthorized
+        '404':
+          description: Test entity not found
+        '500':
+          description: Internal server error
+
+  /api/pagination-demo/paginated:
+    get:
+      tags:
+        - Test
+      summary: Get paginated demo data
+      description: Retrieve paginated demo data with ULID cursor pagination
+      security:
+        - bearerAuth: []
+      parameters:
+        - name: cursor
+          in: query
+          required: false
+          schema:
+            type: string
+            example: "01F123456789ABCDEFGH"
+        - name: size
+          in: query
+          required: false
+          schema:
+            type: integer
+            default: 10
+      responses:
+        '200':
+          description: Paginated demo data retrieved successfully
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponse'
+        '401':
+          description: Unauthorized
+        '500':
+          description: Internal server error
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    ApiResponse:
+      type: object
+      properties:
+        data:
+          type: object
+          description: Response data payload
+          example: {}
+        success:
+          type: boolean
+          description: Whether the request was successful
+          example: true
+        timestamp:
+          type: string
+          format: date-time
+          description: Timestamp of the response
+          example: "2025-10-19T06:30:09.284038836Z"
+        metadata:
+          type: object
+          description: Additional metadata
+          example: {"message": "Operation successful"}
+        error:
+          type: object
+          description: Error details if success is false
+          properties:
+            type:
+              type: string
+              example: "about:blank"
+            title:
+              type: string
+              example: "Not Found"
+            status:
+              type: integer
+              example: 404
+            detail:
+              type: string
+              example: "Resource not found"
+            instance:
+              type: string
+              example: "/api/resource/123"
+
+    Vendor:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "01F123456789ABCDEFGH"
+        businessName:
+          type: string
+          example: "Tech Vendor Inc."
+        email:
+          type: string
+          format: email
+          example: "contact@techvendor.com"
+        phone:
+          type: string
+          example: "+1234567890"
+        address:
+          type: string
+          example: "123 Tech Street, Tech City, TC 12345"
+        taxId:
+          type: string
+          example: "TV123456789"
+        businessLicenseNo:
+          type: string
+          example: "BL123456789"
+        registrationDate:
+          type: string
+          format: date
+          example: "2023-01-01"
+        vendorStatus:
+          type: string
+          enum: [PENDING, APPROVED, REJECTED, SUSPENDED, CLOSED]
+          example: "PENDING"
+        kycVerified:
+          type: boolean
+          example: false
+        kycVerifiedAt:
+          type: string
+          format: date
+          example: "2023-01-02"
+        kycVerifiedBy:
+          type: string
+          example: "Admin User"
+
+    ProductRequest:
+      type: object
+      properties:
+        name:
+          type: string
+          example: "Wireless Headphones"
+        description:
+          type: string
+          example: "High quality wireless headphones"
+        sku:
+          type: string
+          example: "WH-12345"
+        vendorId:
+          type: string
+          example: "01F123456789ABCDEFGH"
+        price:
+          $ref: '#/components/schemas/Money'
+        stockQuantity:
+          type: integer
+          example: 100
+        minOrderQuantity:
+          type: integer
+          example: 1
+        weight:
+          type: number
+          format: decimal
+          example: 0.5
+        dimensionsLength:
+          type: number
+          format: decimal
+          example: 20.0
+        dimensionsWidth:
+          type: number
+          format: decimal
+          example: 15.0
+        dimensionsHeight:
+          type: number
+          format: decimal
+          example: 8.0
+        productStatus:
+          type: string
+          enum: [DRAFT, ACTIVE, INACTIVE, DISCONTINUED]
+          example: "ACTIVE"
+        isActive:
+          type: boolean
+          example: true
+
+    ProductAttribute:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "01F123456789ABCDEFGH"
+        name:
+          type: string
+          example: "color"
+        displayName:
+          type: string
+          example: "Color"
+        description:
+          type: string
+          example: "The color of the product"
+        attributeType:
+          type: string
+          enum: [TEXT, NUMBER, BOOLEAN, DATE, SELECT]
+          example: "SELECT"
+        isRequired:
+          type: boolean
+          example: false
+        isFilterable:
+          type: boolean
+          example: true
+        sortOrder:
+          type: integer
+          example: 1
+
+    MediaAsset:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "01F123456789ABCDEFGH"
+        originalFilename:
+          type: string
+          example: "product-image.jpg"
+        storagePath:
+          type: string
+          example: "/images/products/12345.jpg"
+        contentType:
+          type: string
+          example: "image/jpeg"
+        fileSize:
+          type: integer
+          example: 102400
+        altText:
+          type: string
+          example: "Product image"
+        caption:
+          type: string
+          example: "High quality product image"
+        mediaType:
+          type: string
+          enum: [IMAGE, VIDEO, DOCUMENT, OTHER]
+          example: "IMAGE"
+
+    ProductMedia:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "01F123456789ABCDEFGH"
+        productId:
+          type: string
+          example: "01F987654321ZYXWVU"
+        mediaAssetId:
+          type: string
+          example: "01F555555555555555"
+        displayOrder:
+          type: integer
+          example: 1
+        isPrimary:
+          type: boolean
+          example: true
+        altTextOverride:
+          type: string
+          example: "Primary product image"
+
+    Money:
+      type: object
+      properties:
+        amount:
+          type: string
+          example: "29.99"
+        currency:
+          type: string
+          example: "USD"
+
+security:
+  - bearerAuth: []
