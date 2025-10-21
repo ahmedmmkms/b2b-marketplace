@@ -1,147 +1,230 @@
--- Align catalog-related tables with current JPA entity mappings
+-- Migration for Catalog Schema Alignment (Tasks 5.1-5.6)
+-- This migration aligns the catalog-related tables to match Java entity mappings
 
--- ========================
--- Vendor table adjustments
--- ========================
-ALTER TABLE vendor RENAME COLUMN name TO business_name;
-ALTER TABLE vendor RENAME COLUMN contact_email TO email;
-ALTER TABLE vendor RENAME COLUMN contact_phone TO phone;
-ALTER TABLE vendor ALTER COLUMN address TYPE text
-    USING COALESCE(address->>'full_address', address::text);
-ALTER TABLE vendor RENAME COLUMN tax_number TO tax_id;
-ALTER TABLE vendor RENAME COLUMN status TO vendor_status;
-ALTER TABLE vendor DROP CONSTRAINT IF EXISTS vendor_status_check;
-UPDATE vendor
-SET vendor_status = CASE
-        WHEN vendor_status = 'ACTIVE' THEN 'APPROVED'
-        WHEN vendor_status IN ('PENDING', 'APPROVED', 'REJECTED', 'SUSPENDED', 'CLOSED') THEN vendor_status
-        ELSE 'PENDING'
-    END;
-ALTER TABLE vendor ALTER COLUMN vendor_status SET DEFAULT 'PENDING';
-ALTER TABLE vendor ADD COLUMN IF NOT EXISTS business_license_no varchar(100);
-ALTER TABLE vendor ADD COLUMN IF NOT EXISTS registration_date date;
-ALTER TABLE vendor ADD COLUMN IF NOT EXISTS kyc_verified boolean DEFAULT false;
-ALTER TABLE vendor ADD COLUMN IF NOT EXISTS kyc_verified_at date;
-ALTER TABLE vendor ADD COLUMN IF NOT EXISTS kyc_verified_by varchar(255);
-UPDATE vendor SET kyc_verified = COALESCE(kyc_verified, false);
-ALTER TABLE vendor ALTER COLUMN kyc_verified SET DEFAULT false;
-ALTER TABLE vendor ALTER COLUMN kyc_verified SET NOT NULL;
-ALTER TABLE vendor ADD CONSTRAINT vendor_status_valid
-    CHECK (vendor_status IN ('PENDING', 'APPROVED', 'REJECTED', 'SUSPENDED', 'CLOSED'));
-ALTER TABLE vendor ADD CONSTRAINT vendor_email_unique UNIQUE (email);
-DROP INDEX IF EXISTS idx_vendor_status;
-CREATE INDEX idx_vendor_vendor_status ON vendor (vendor_status);
+DO $$
+BEGIN
+    -- Create vendors table if it doesn't exist (matching the Vendor entity)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'vendors' AND table_schema = 'public') THEN
+        CREATE TABLE vendors (
+            id VARCHAR(26) PRIMARY KEY,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            
+            business_name VARCHAR(255) NOT NULL,
+            description TEXT,
+            email VARCHAR(255),
+            phone VARCHAR(50),
+            address JSONB,
+            tax_id VARCHAR(100),
+            vendor_status VARCHAR(20) NOT NULL DEFAULT 'PENDING', -- PENDING, APPROVED, REJECTED, SUSPENDED, CLOSED
+            approval_date DATE,
+            business_license_no VARCHAR(100),
+            registration_date DATE,
+            kyc_verified BOOLEAN NOT NULL DEFAULT FALSE,
+            kyc_verified_at DATE,
+            kyc_verified_by VARCHAR(255)
+        );
 
--- =======================
--- Product table updates
--- =======================
-ALTER TABLE product RENAME TO products;
+        -- Create indexes for vendors table
+        CREATE INDEX idx_vendors_status ON vendors(vendor_status);
 
-ALTER TABLE products DROP CONSTRAINT IF EXISTS product_status_check;
-ALTER TABLE products RENAME COLUMN status TO product_status;
-UPDATE products
-SET product_status = CASE
-        WHEN product_status IN ('PUBLISHED', 'UNPUBLISHED', 'ACTIVE') THEN 'ACTIVE'
-        WHEN product_status = 'SUSPENDED' THEN 'INACTIVE'
-        WHEN product_status IN ('DRAFT', 'INACTIVE', 'DISCONTINUED') THEN product_status
-        ELSE 'ACTIVE'
-    END;
-ALTER TABLE products ADD CONSTRAINT products_product_status_check
-    CHECK (product_status IN ('DRAFT', 'ACTIVE', 'INACTIVE', 'DISCONTINUED'));
-ALTER TABLE products ALTER COLUMN product_status SET DEFAULT 'ACTIVE';
+        -- Create trigger for vendors table
+        CREATE TRIGGER update_vendors_updated_at 
+            BEFORE UPDATE ON vendors
+            FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
 
-ALTER TABLE products RENAME COLUMN base_price TO price_amount;
-ALTER TABLE products RENAME COLUMN currency TO price_currency;
-ALTER TABLE products RENAME COLUMN inventory_qty TO stock_quantity;
-ALTER TABLE products RENAME COLUMN min_order_qty TO min_order_quantity;
-ALTER TABLE products ALTER COLUMN price_currency SET DEFAULT 'USD';
-UPDATE products SET price_currency = 'USD' WHERE price_currency IS NULL;
-ALTER TABLE products ALTER COLUMN price_currency SET NOT NULL;
+    -- Create products table if it doesn't exist (matching the Product entity)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'products' AND table_schema = 'public') THEN
+        CREATE TABLE products (
+            id VARCHAR(26) PRIMARY KEY,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            
+            name VARCHAR(255) NOT NULL,
+            slug VARCHAR(255) UNIQUE,
+            description TEXT,
+            short_description VARCHAR(500),
+            sku VARCHAR(100) UNIQUE,
+            upc VARCHAR(50),
+            gtin VARCHAR(50),
+            mpn VARCHAR(100),
+            brand VARCHAR(100),
+            category_id VARCHAR(26),
+            vendor_id VARCHAR(26) NOT NULL,
+            
+            product_status VARCHAR(20) DEFAULT 'DRAFT', -- DRAFT, ACTIVE, INACTIVE, DISCONTINUED
+            price_amount DECIMAL(19,4),
+            price_currency VARCHAR(3) DEFAULT 'USD',
+            
+            tax_class VARCHAR(50),
+            meta_title VARCHAR(255),
+            meta_description VARCHAR(500),
+            meta_keywords TEXT,
+            
+            weight DECIMAL(10,3),
+            dimensions JSONB,
+            packaging_info JSONB,
+            
+            min_order_quantity INTEGER DEFAULT 1,
+            moq INTEGER,
+            
+            inventory_tracking BOOLEAN DEFAULT FALSE,
+            stock_quantity INTEGER DEFAULT 0,
+            inventory_status VARCHAR(20) DEFAULT 'IN_STOCK', -- IN_STOCK, OUT_OF_STOCK, BACKORDER, DISCONTINUED
+            
+            is_active BOOLEAN DEFAULT TRUE,
+            
+            -- Dimensions separated for better indexing and queries
+            dimensions_length DECIMAL(10,3),
+            dimensions_width DECIMAL(10,3),
+            dimensions_height DECIMAL(10,3),
+            
+            FOREIGN KEY (vendor_id) REFERENCES vendors(id)
+        );
 
-ALTER TABLE products ADD COLUMN IF NOT EXISTS is_active boolean DEFAULT true;
-UPDATE products SET is_active = true WHERE is_active IS NULL;
-ALTER TABLE products ALTER COLUMN is_active SET NOT NULL;
+        -- Create indexes for products table
+        CREATE INDEX idx_products_name ON products USING gin(to_tsvector('english'::regconfig, name));
+        CREATE INDEX idx_products_status ON products(product_status);
+        CREATE INDEX idx_products_vendor_id ON products(vendor_id);
+        CREATE INDEX idx_products_sku ON products(sku);
+        CREATE INDEX idx_products_slug ON products(slug);
+        CREATE INDEX idx_products_slug_gin ON products USING gin(to_tsvector('english'::regconfig, slug));
 
-ALTER TABLE products ADD COLUMN IF NOT EXISTS dimensions_length numeric(10,3);
-ALTER TABLE products ADD COLUMN IF NOT EXISTS dimensions_width numeric(10,3);
-ALTER TABLE products ADD COLUMN IF NOT EXISTS dimensions_height numeric(10,3);
+        -- Create trigger for products table
+        CREATE TRIGGER update_products_updated_at 
+            BEFORE UPDATE ON products
+            FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
 
-ALTER TABLE products ALTER COLUMN stock_quantity SET DEFAULT 0;
-UPDATE products SET stock_quantity = 0 WHERE stock_quantity IS NULL;
-ALTER TABLE products ALTER COLUMN min_order_quantity SET DEFAULT 1;
-UPDATE products SET min_order_quantity = 1 WHERE min_order_quantity IS NULL;
+    -- Create product attributes table if it doesn't exist (matching the ProductAttribute entity)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'product_attributes' AND table_schema = 'public') THEN
+        CREATE TABLE product_attributes (
+            id VARCHAR(26) PRIMARY KEY,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            
+            name VARCHAR(255) NOT NULL,
+            display_name VARCHAR(255) NOT NULL,
+            description TEXT,
+            attribute_type VARCHAR(50) NOT NULL, -- TEXT, NUMBER, BOOLEAN, DATE, SELECT, MULTI_SELECT
+            is_required BOOLEAN DEFAULT FALSE,
+            is_searchable BOOLEAN DEFAULT FALSE,
+            is_filterable BOOLEAN DEFAULT FALSE,
+            sort_order INTEGER DEFAULT 0,
+            validation_rules JSONB
+        );
 
--- =================================
--- Product attribute table revisions
--- =================================
-ALTER TABLE product_attribute RENAME TO product_attributes;
-ALTER TABLE product_attributes RENAME COLUMN validation_rules TO description;
-ALTER TABLE product_attributes ALTER COLUMN description TYPE text USING description::text;
-ALTER TABLE product_attributes ADD COLUMN IF NOT EXISTS sort_order integer DEFAULT 0;
-UPDATE product_attributes SET sort_order = COALESCE(sort_order, 0);
-ALTER TABLE product_attributes DROP CONSTRAINT IF EXISTS product_attribute_attribute_type_check;
-ALTER TABLE product_attributes ADD CONSTRAINT product_attributes_attribute_type_check
-    CHECK (attribute_type IN ('TEXT', 'NUMBER', 'BOOLEAN', 'DATE', 'SELECT', 'MULTI_SELECT'));
+        -- Create indexes for product attributes table
+        CREATE INDEX idx_product_attributes_name ON product_attributes(name);
+        CREATE INDEX idx_product_attributes_type ON product_attributes(attribute_type);
 
--- ========================================
--- Product attribute value table adaptations
--- ========================================
-ALTER TABLE product_attribute_value RENAME TO product_attribute_values;
-ALTER TABLE product_attribute_values DROP CONSTRAINT IF EXISTS product_attribute_value_product_id_attribute_id_key;
-ALTER TABLE product_attribute_values DROP CONSTRAINT IF EXISTS product_attribute_value_product_id_fkey;
-ALTER TABLE product_attribute_values DROP CONSTRAINT IF EXISTS product_attribute_value_attribute_id_fkey;
+        -- Create trigger for product attributes table
+        CREATE TRIGGER update_product_attributes_updated_at 
+            BEFORE UPDATE ON product_attributes
+            FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
 
-ALTER TABLE product_attribute_values RENAME COLUMN attribute_id TO product_attribute_id;
+    -- Create product attribute values table if it doesn't exist (matching the ProductAttributeValue entity)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'product_attribute_values' AND table_schema = 'public') THEN
+        CREATE TABLE product_attribute_values (
+            id VARCHAR(26) PRIMARY KEY,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            
+            product_attribute_id VARCHAR(26) NOT NULL,
+            value TEXT NOT NULL,
+            display_value TEXT,
+            is_default BOOLEAN DEFAULT FALSE,
+            sort_order INTEGER DEFAULT 0,
+            
+            FOREIGN KEY (product_attribute_id) REFERENCES product_attributes(id) ON DELETE CASCADE
+        );
 
-ALTER TABLE product_attribute_values ADD COLUMN IF NOT EXISTS value text;
-ALTER TABLE product_attribute_values ADD COLUMN IF NOT EXISTS display_value text;
-ALTER TABLE product_attribute_values ADD COLUMN IF NOT EXISTS is_default boolean DEFAULT false;
-ALTER TABLE product_attribute_values ADD COLUMN IF NOT EXISTS sort_order integer DEFAULT 0;
+        -- Create indexes for product attribute values table
+        CREATE INDEX idx_product_attr_values_attr_id ON product_attribute_values(product_attribute_id);
 
-UPDATE product_attribute_values
-SET value = COALESCE(value, value_text, value_number::text, value_boolean::text, to_char(value_date, 'YYYY-MM-DD')),
-    display_value = COALESCE(display_value, value_text, value_number::text, value_boolean::text, to_char(value_date, 'YYYY-MM-DD')),
-    is_default = COALESCE(is_default, false),
-    sort_order = COALESCE(sort_order, 0);
+        -- Create trigger for product attribute values table
+        CREATE TRIGGER update_product_attribute_values_updated_at 
+            BEFORE UPDATE ON product_attribute_values
+            FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
 
-ALTER TABLE product_attribute_values DROP COLUMN IF EXISTS value_text;
-ALTER TABLE product_attribute_values DROP COLUMN IF EXISTS value_number;
-ALTER TABLE product_attribute_values DROP COLUMN IF EXISTS value_boolean;
-ALTER TABLE product_attribute_values DROP COLUMN IF EXISTS value_date;
-ALTER TABLE product_attribute_values DROP COLUMN IF EXISTS product_id;
+    -- Create media assets table if it doesn't exist (matching the MediaAsset entity)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'media_assets' AND table_schema = 'public') THEN
+        CREATE TABLE media_assets (
+            id VARCHAR(26) PRIMARY KEY,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            
+            name VARCHAR(255) NOT NULL,
+            original_filename VARCHAR(255) NOT NULL,
+            storage_path VARCHAR(1000) NOT NULL,
+            content_type VARCHAR(100), -- MIME type
+            file_size BIGINT,
+            alt_text VARCHAR(255),
+            title VARCHAR(255),
+            caption TEXT,
+            media_type VARCHAR(20) NOT NULL, -- IMAGE, VIDEO, DOCUMENT, OTHER
+            status VARCHAR(20) DEFAULT 'ACTIVE', -- ACTIVE, INACTIVE, DELETED
+            is_primary BOOLEAN DEFAULT FALSE,
+            upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
 
-ALTER TABLE product_attribute_values ALTER COLUMN value SET NOT NULL;
+        -- Create indexes for media assets table
+        CREATE INDEX idx_media_assets_status ON media_assets(status);
+        CREATE INDEX idx_media_assets_type ON media_assets(media_type);
 
-ALTER TABLE product_attribute_values
-    ADD CONSTRAINT product_attribute_values_attribute_fk
-    FOREIGN KEY (product_attribute_id)
-    REFERENCES product_attributes(id)
-    ON DELETE CASCADE;
+        -- Create trigger for media assets table
+        CREATE TRIGGER update_media_assets_updated_at 
+            BEFORE UPDATE ON media_assets
+            FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
 
-CREATE UNIQUE INDEX IF NOT EXISTS ux_product_attribute_values_attribute_value
-    ON product_attribute_values (product_attribute_id, value);
+    -- Create product media junction table if it doesn't exist (matching the ProductMedia entity)
+    IF NOT EXISTS (SELECT 1 FROM information_schema.tables WHERE table_name = 'product_media' AND table_schema = 'public') THEN
+        CREATE TABLE product_media (
+            id VARCHAR(26) PRIMARY KEY,
+            created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+            
+            product_id VARCHAR(26) NOT NULL,
+            media_asset_id VARCHAR(26) NOT NULL,
+            display_order INTEGER DEFAULT 0,
+            is_primary BOOLEAN DEFAULT FALSE,
+            alt_text_override TEXT,
+            
+            FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE,
+            FOREIGN KEY (media_asset_id) REFERENCES media_assets(id) ON DELETE CASCADE,
+            UNIQUE(product_id, media_asset_id)
+        );
 
--- =============================
--- Media asset/table adjustments
--- =============================
-ALTER TABLE media_asset RENAME TO media_assets;
-ALTER TABLE media_assets RENAME COLUMN filename TO original_filename;
-ALTER TABLE media_assets RENAME COLUMN file_path TO storage_path;
-ALTER TABLE media_assets RENAME COLUMN mime_type TO content_type;
-ALTER TABLE media_assets DROP CONSTRAINT IF EXISTS media_asset_status_check;
-ALTER TABLE media_assets DROP CONSTRAINT IF EXISTS media_asset_media_type_check;
-ALTER TABLE media_assets ADD COLUMN IF NOT EXISTS upload_date timestamp without time zone;
-UPDATE media_assets SET media_type = COALESCE(media_type, 'IMAGE');
-ALTER TABLE media_assets ADD CONSTRAINT media_assets_media_type_check
-    CHECK (media_type IN ('IMAGE', 'VIDEO', 'DOCUMENT', 'OTHER'));
+        -- Create indexes for product media table
+        CREATE INDEX idx_product_media_product_id ON product_media(product_id);
+        CREATE INDEX idx_product_media_asset_id ON product_media(media_asset_id);
 
--- =============================
--- Product media table alignment
--- =============================
-ALTER TABLE product_media RENAME COLUMN sort_order TO display_order;
-ALTER TABLE product_media ADD COLUMN IF NOT EXISTS is_primary boolean DEFAULT false;
-ALTER TABLE product_media ADD COLUMN IF NOT EXISTS alt_text_override text;
-UPDATE product_media SET is_primary = COALESCE(is_primary, false);
-UPDATE product_media SET display_order = COALESCE(display_order, 0);
-ALTER TABLE product_media ADD COLUMN IF NOT EXISTS updated_at timestamp without time zone DEFAULT CURRENT_TIMESTAMP;
-UPDATE product_media SET updated_at = COALESCE(updated_at, created_at, CURRENT_TIMESTAMP);
+        -- Create trigger for product media table
+        CREATE TRIGGER update_product_media_updated_at 
+            BEFORE UPDATE ON product_media
+            FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+    END IF;
+
+    -- Verify the foreign key constraint exists between products and vendors
+    IF NOT EXISTS (
+        SELECT 1 
+        FROM information_schema.table_constraints tc
+        JOIN information_schema.key_column_usage kcu 
+          ON tc.constraint_name = kcu.constraint_name
+        JOIN information_schema.constraint_column_usage ccu 
+          ON ccu.constraint_name = tc.constraint_name
+        WHERE tc.table_name = 'products' 
+          AND tc.constraint_type = 'FOREIGN KEY'
+          AND kcu.column_name = 'vendor_id'
+          AND ccu.table_name = 'vendors'
+    ) THEN
+        ALTER TABLE products 
+        ADD CONSTRAINT fk_products_vendor_id 
+        FOREIGN KEY (vendor_id) REFERENCES vendors(id);
+    END IF;
+
+END $$;
