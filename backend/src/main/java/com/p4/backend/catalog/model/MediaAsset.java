@@ -9,7 +9,7 @@ import lombok.Setter;
 
 import java.time.LocalDateTime;
 
-@Entity
+@Entity(name = "CatalogMediaAsset")
 @Table(name = "media_assets")
 @Getter
 @Setter
