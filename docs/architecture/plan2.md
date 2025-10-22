@@ -394,6 +394,9 @@ API_URL_BASE=https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebs
 - **Acceptance Test Script:** test_data_seeding.py verifies seeding functionality in Azure deployment
 - **Dependencies:** All above tasks
 
+## Database Schema
+For complete documentation of the database schema that supports all tasks in this plan, see [Database Schema Documentation](../../docs/database_schema_complete.md).
+
 ## Quality Assurance & Testing
 
 ### Unit Tests
