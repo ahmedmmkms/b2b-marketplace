@@ -1,0 +1,46 @@
+*** Begin Patch
+*** Update File: docs/implementation-status/IMPLEMENTATION_STATUS.md
+@@
+-#### 4. Identity & Access Management
++#### 4. Identity & Access Management
++- [x] **Task 4.1: Implement Account entity and repository**
++  - Create Account entity with individual/company types and status
++  - Can create, read, update, delete accounts with proper validation
++
++- [x] **Task 4.2: Implement User entity and repository**
++  - Create User entity linked to Account with authentication fields
++  - Users can be created with proper account associations
++
++- [x] **Task 4.3: Implement JWT authentication**
++  - Create JWT-based authentication with refresh tokens
++  - Users can authenticate and receive valid JWT tokens
++
++- [x] **Task 4.4: Implement role-based access control (RBAC)**
++  - Create role and permission system for access control
++  - Users with different roles have appropriate access levels
++
++#### 5. Catalog & Search
++- [x] **Task 5.1: Implement Vendor entity and repository**
++  - Vendor entity includes KYC, approval workflow, and JSON address storage
++  - /api/vendors CRUD with pagination, filtering, and vendor product listing in line with API design
++
++- [x] **Task 5.2: Implement Product entity and repository**
++  - Product entity covers extended merchandising fields, inventory tracking, and ULID IDs
++  - /api/products supports full CRUD, filtering, price ranges, and metadata-rich responses
++
++- [x] **Task 5.3: Implement Product Attribute entities**
++  - Attribute and value definitions managed via /api/attributes
++  - Product-level assignments handled through /api/products/{id}/attributes with validation and dedicated migration
++
++- [x] **Task 5.4: Implement Media Asset entities**
++  - Media asset model captures storage metadata, status flags, and primary markers
++  - /api/media endpoints provide RFC7807-compliant CRUD with pagination metadata
++
++- [x] **Task 5.5: Implement catalog browsing API**
++  - Public catalog reachable at /api/catalog/products with sorting, paging, and filtering by vendor/category/price
++  - Responses reuse shared pagination metadata for consistent client consumption
++
++- [x] **Task 5.6: Implement full-text search**
++  - PostgreSQL full-text queries power keyword search and vendor-specific filtering
++  - /api/search implements request-body search with configurable filters and sort presets
+*** End Patch

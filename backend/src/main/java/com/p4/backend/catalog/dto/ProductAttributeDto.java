@@ -19,7 +19,9 @@ public class ProductAttributeDto {
     private String description;
     private String attributeType;
     private Boolean isRequired;
+    private Boolean isSearchable;
     private Boolean isFilterable;
     private Integer sortOrder;
+    private String validationRules;
     private List<ProductAttributeValueDto> attributeValues;
 }

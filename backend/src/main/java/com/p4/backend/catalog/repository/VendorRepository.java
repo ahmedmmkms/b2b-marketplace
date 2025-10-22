@@ -17,6 +17,13 @@ public interface VendorRepository extends JpaRepository<Vendor, String> {
 
     Page<Vendor> findByVendorStatus(Vendor.VendorStatus status, Pageable pageable);
 
+    Page<Vendor> findByVendorStatusAndBusinessNameContainingIgnoreCase(
+            Vendor.VendorStatus status,
+            String businessName,
+            Pageable pageable);
+
+    Page<Vendor> findByBusinessNameContainingIgnoreCase(String businessName, Pageable pageable);
+
     @Query("SELECT v FROM Vendor v WHERE v.kycVerified = true")
     List<Vendor> findByKycVerifiedTrue();
 

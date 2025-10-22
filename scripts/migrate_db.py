@@ -67,7 +67,7 @@ def execute_migration_scripts():
     connection_params = load_db_config()
 
     # Read the complete migration SQL script
-    migration_file_path = "D:/Projects/b2b-marketplace/backend/src/main/resources/db/migration/V1__Create_complete_schema.sql"
+    migration_file_path = "D:/Projects/b2b-marketplace/backend/src/main/resources/db/migration/V1__Baseline_schema.sql"
     with open(migration_file_path, 'r', encoding='utf-8') as f:
         migration_sql = f.read()
 

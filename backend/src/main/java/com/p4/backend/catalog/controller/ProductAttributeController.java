@@ -1,61 +1,73 @@
 package com.p4.backend.catalog.controller;
 
-import com.p4.backend.catalog.dto.ProductAttributeDto;
-import com.p4.backend.catalog.service.ProductAttributeService;
+import com.p4.backend.catalog.dto.ProductAttributeAssignmentDto;
+import com.p4.backend.catalog.dto.ProductAttributeAssignmentRequestDto;
+import com.p4.backend.catalog.service.ProductAttributeAssignmentService;
 import com.p4.backend.shared.response.ApiResponse;
+import com.p4.backend.shared.response.ProblemDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
-
 @RestController
-@RequestMapping("/api/catalog/attributes")
+@RequestMapping("/api/products/{productId}/attributes")
 @RequiredArgsConstructor
 public class ProductAttributeController {
 
-    private final ProductAttributeService productAttributeService;
-
-    @PostMapping
-    public ResponseEntity<ApiResponse<ProductAttributeDto>> createProductAttribute(@Valid @RequestBody ProductAttributeDto attributeDto) {
-        ApiResponse<ProductAttributeDto> response = productAttributeService.createProductAttribute(attributeDto);
-        return ResponseEntity.status(CREATED).body(response);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductAttributeDto>> getProductAttributeById(@PathVariable String id) {
-        ApiResponse<ProductAttributeDto> response = productAttributeService.getProductAttributeById(id);
-        return ResponseEntity.status(OK).body(response);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductAttributeDto>> updateProductAttribute(@PathVariable String id, @Valid @RequestBody ProductAttributeDto attributeDto) {
-        ApiResponse<ProductAttributeDto> response = productAttributeService.updateProductAttribute(id, attributeDto);
-        return ResponseEntity.status(OK).body(response);
-    }
+    private final ProductAttributeAssignmentService assignmentService;
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ProductAttributeDto>>> getAllProductAttributes(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        ApiResponse<List<ProductAttributeDto>> response = productAttributeService.getAllProductAttributes(page, size);
-        return ResponseEntity.status(OK).body(response);
+    public ResponseEntity<ApiResponse<List<ProductAttributeAssignmentDto>>> getProductAttributes(
+            @PathVariable String productId) {
+        ApiResponse<List<ProductAttributeAssignmentDto>> response = assignmentService.getProductAttributes(productId);
+        return buildResponse(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteProductAttribute(@PathVariable String id) {
-        ApiResponse<Void> response = productAttributeService.deleteProductAttribute(id);
-        return ResponseEntity.status(OK).body(response);
+    @PostMapping
+    public ResponseEntity<ApiResponse<ProductAttributeAssignmentDto>> addProductAttribute(
+            @PathVariable String productId,
+            @Valid @RequestBody ProductAttributeAssignmentRequestDto request) {
+        ApiResponse<ProductAttributeAssignmentDto> response = assignmentService.addAttributeToProduct(productId, request);
+        return buildResponse(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{id}/values")
-    public ResponseEntity<ApiResponse<List<Object>>> getProductAttributeValues(@PathVariable String id) {
-        // This is a placeholder - would need specific DTO and service method for attribute values
-        ApiResponse<List<Object>> response = ApiResponse.success(null);
-        return ResponseEntity.status(OK).body(response);
+    @PutMapping("/{attributeId}")
+    public ResponseEntity<ApiResponse<ProductAttributeAssignmentDto>> updateProductAttribute(
+            @PathVariable String productId,
+            @PathVariable String attributeId,
+            @Valid @RequestBody ProductAttributeAssignmentRequestDto request) {
+        ApiResponse<ProductAttributeAssignmentDto> response =
+                assignmentService.updateAttributeForProduct(productId, attributeId, request);
+        return buildResponse(response, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{attributeId}")
+    public ResponseEntity<ApiResponse<Void>> deleteProductAttribute(@PathVariable String productId,
+                                                                    @PathVariable String attributeId) {
+        ApiResponse<Void> response = assignmentService.removeAttributeFromProduct(productId, attributeId);
+        return buildResponse(response, HttpStatus.NO_CONTENT);
+    }
+
+    private <T> ResponseEntity<ApiResponse<T>> buildResponse(ApiResponse<T> response, HttpStatus successStatus) {
+        if (response.isSuccess()) {
+            return ResponseEntity.status(successStatus).body(response);
+        }
+
+        ProblemDetails error = response.getError();
+        HttpStatus status = error != null && error.getStatus() != null
+                ? HttpStatus.valueOf(error.getStatus())
+                : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
 }

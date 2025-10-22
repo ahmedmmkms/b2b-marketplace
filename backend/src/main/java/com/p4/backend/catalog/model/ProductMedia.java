@@ -3,13 +3,19 @@ package com.p4.backend.catalog.model;
 import com.p4.backend.shared.kernel.Base;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "product_media")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProductMedia extends Base {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -22,9 +28,11 @@ public class ProductMedia extends Base {
 
     @NotNull(message = "Display order is required")
     @Column(name = "display_order", nullable = false)
+    @Builder.Default
     private Integer displayOrder = 0;
 
     @Column(name = "is_primary")
+    @Builder.Default
     private Boolean isPrimary = false;
 
     @Column(name = "alt_text_override")

@@ -1,9 +1,11 @@
 package com.p4.backend.catalog.service;
 
 import com.p4.backend.catalog.dto.ProductAttributeDto;
+import com.p4.backend.catalog.mapper.CatalogMapper;
 import com.p4.backend.catalog.model.ProductAttribute;
 import com.p4.backend.catalog.repository.ProductAttributeRepository;
 import com.p4.backend.shared.response.ApiResponse;
+import com.p4.backend.shared.response.ProblemDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -12,7 +14,9 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 @Service
@@ -22,154 +26,82 @@ public class ProductAttributeService {
     private final ProductAttributeRepository attributeRepository;
 
     @Transactional
-    public ApiResponse<ProductAttributeDto> createProductAttribute(ProductAttributeDto attributeDto) {
-        try {
-            // Check if attribute with same name already exists
-            if (attributeRepository.existsByName(attributeDto.getName())) {
-                return ApiResponse.<ProductAttributeDto>builder()
-                        .success(false)
-                        .data(null)
-                        .timestamp(java.time.Instant.now())
-                        .build();
-            }
-            
-            ProductAttribute attribute = new ProductAttribute();
-            attribute.setName(attributeDto.getName());
-            attribute.setDisplayName(attributeDto.getDisplayName());
-            attribute.setDescription(attributeDto.getDescription());
-            attribute.setAttributeType(ProductAttribute.AttributeType.valueOf(attributeDto.getAttributeType()));
-            attribute.setIsRequired(attributeDto.getIsRequired());
-            attribute.setIsFilterable(attributeDto.getIsFilterable());
-            attribute.setSortOrder(attributeDto.getSortOrder());
-            
-            ProductAttribute savedAttribute = attributeRepository.save(attribute);
-            
-            ProductAttributeDto responseDto = mapToProductAttributeDto(savedAttribute);
-            return ApiResponse.success(responseDto);
-        } catch (Exception e) {
-            return ApiResponse.<ProductAttributeDto>builder()
-                    .success(false)
-                    .data(null)
-                    .timestamp(java.time.Instant.now())
-                    .build();
+    public ApiResponse<ProductAttributeDto> createAttribute(ProductAttributeDto dto) {
+        if (attributeRepository.existsByName(dto.getName())) {
+            return ApiResponse.error(ProblemDetails.validationError("Attribute with the same name already exists"));
         }
+
+        ProductAttribute attribute = new ProductAttribute();
+        applyAttributeUpdates(attribute, dto);
+
+        ProductAttribute saved = attributeRepository.save(attribute);
+        return ApiResponse.success(CatalogMapper.toProductAttributeDto(saved));
     }
 
     @Transactional(readOnly = true)
-    public ApiResponse<ProductAttributeDto> getProductAttributeById(String attributeId) {
-        try {
-            Optional<ProductAttribute> attributeOpt = attributeRepository.findById(attributeId);
-            
-            if (attributeOpt.isEmpty()) {
-                return ApiResponse.<ProductAttributeDto>builder()
-                        .success(false)
-                        .data(null)
-                        .timestamp(java.time.Instant.now())
-                        .build();
-            }
-            
-            ProductAttribute attribute = attributeOpt.get();
-            ProductAttributeDto responseDto = mapToProductAttributeDto(attribute);
-            return ApiResponse.success(responseDto);
-        } catch (Exception e) {
-            return ApiResponse.<ProductAttributeDto>builder()
-                    .success(false)
-                    .data(null)
-                    .timestamp(java.time.Instant.now())
-                    .build();
-        }
+    public ApiResponse<ProductAttributeDto> getAttribute(String attributeId) {
+        return attributeRepository.findById(attributeId)
+                .map(CatalogMapper::toProductAttributeDto)
+                .map(ApiResponse::success)
+                .orElseGet(() -> ApiResponse.error(ProblemDetails.notFound("Product Attribute")));
     }
 
     @Transactional
-    public ApiResponse<ProductAttributeDto> updateProductAttribute(String attributeId, ProductAttributeDto attributeDto) {
-        try {
-            Optional<ProductAttribute> attributeOpt = attributeRepository.findById(attributeId);
-            
-            if (attributeOpt.isEmpty()) {
-                return ApiResponse.<ProductAttributeDto>builder()
-                        .success(false)
-                        .data(null)
-                        .timestamp(java.time.Instant.now())
-                        .build();
-            }
-            
-            ProductAttribute existingAttribute = attributeOpt.get();
-            
-            // Update fields
-            existingAttribute.setName(attributeDto.getName());
-            existingAttribute.setDisplayName(attributeDto.getDisplayName());
-            existingAttribute.setDescription(attributeDto.getDescription());
-            existingAttribute.setAttributeType(ProductAttribute.AttributeType.valueOf(attributeDto.getAttributeType()));
-            existingAttribute.setIsRequired(attributeDto.getIsRequired());
-            existingAttribute.setIsFilterable(attributeDto.getIsFilterable());
-            existingAttribute.setSortOrder(attributeDto.getSortOrder());
-            
-            ProductAttribute updatedAttribute = attributeRepository.save(existingAttribute);
-            
-            ProductAttributeDto responseDto = mapToProductAttributeDto(updatedAttribute);
-            return ApiResponse.success(responseDto);
-        } catch (Exception e) {
-            return ApiResponse.<ProductAttributeDto>builder()
-                    .success(false)
-                    .data(null)
-                    .timestamp(java.time.Instant.now())
-                    .build();
+    public ApiResponse<ProductAttributeDto> updateAttribute(String attributeId, ProductAttributeDto dto) {
+        Optional<ProductAttribute> attributeOpt = attributeRepository.findById(attributeId);
+        if (attributeOpt.isEmpty()) {
+            return ApiResponse.error(ProblemDetails.notFound("Product Attribute"));
         }
+
+        ProductAttribute attribute = attributeOpt.get();
+        applyAttributeUpdates(attribute, dto);
+        ProductAttribute updated = attributeRepository.save(attribute);
+
+        return ApiResponse.success(CatalogMapper.toProductAttributeDto(updated));
     }
 
     @Transactional(readOnly = true)
-    public ApiResponse<List<ProductAttributeDto>> getAllProductAttributes(int page, int size) {
-        try {
-            Pageable pageable = PageRequest.of(page, size, Sort.by("createdAt").descending());
-            
-            Page<ProductAttribute> attributePage = attributeRepository.findAll(pageable);
-            
-            List<ProductAttributeDto> responseDtos = attributePage.getContent().stream()
-                    .map(this::mapToProductAttributeDto)
-                    .toList();
-            
-            return ApiResponse.success(responseDtos);
-        } catch (Exception e) {
-            return ApiResponse.<List<ProductAttributeDto>>builder()
-                    .success(false)
-                    .data(null)
-                    .timestamp(java.time.Instant.now())
-                    .build();
-        }
+    public ApiResponse<Page<ProductAttributeDto>> listAttributes(int page, int size) {
+        Pageable pageable = PageRequest.of(Math.max(page, 0), Math.max(size, 1), Sort.by("sortOrder").ascending());
+        Page<ProductAttribute> attributePage = attributeRepository.findAll(pageable);
+        Page<ProductAttributeDto> dtoPage = attributePage.map(CatalogMapper::toProductAttributeDto);
+        return ApiResponse.success(dtoPage, paginationMetadata(attributePage));
     }
 
     @Transactional
-    public ApiResponse<Void> deleteProductAttribute(String attributeId) {
-        try {
-            if (!attributeRepository.existsById(attributeId)) {
-                return ApiResponse.<Void>builder()
-                        .success(false)
-                        .data(null)
-                        .timestamp(java.time.Instant.now())
-                        .build();
-            }
-            
-            attributeRepository.deleteById(attributeId);
-            return ApiResponse.success(null);
-        } catch (Exception e) {
-            return ApiResponse.<Void>builder()
-                    .success(false)
-                    .data(null)
-                    .timestamp(java.time.Instant.now())
-                    .build();
+    public ApiResponse<Void> deleteAttribute(String attributeId) {
+        if (!attributeRepository.existsById(attributeId)) {
+            return ApiResponse.error(ProblemDetails.notFound("Product Attribute"));
         }
+
+        attributeRepository.deleteById(attributeId);
+        return ApiResponse.success(null);
     }
 
-    private ProductAttributeDto mapToProductAttributeDto(ProductAttribute attribute) {
-        return ProductAttributeDto.builder()
-                .id(attribute.getId())
-                .name(attribute.getName())
-                .displayName(attribute.getDisplayName())
-                .description(attribute.getDescription())
-                .attributeType(attribute.getAttributeType().name())
-                .isRequired(attribute.getIsRequired())
-                .isFilterable(attribute.getIsFilterable())
-                .sortOrder(attribute.getSortOrder())
-                .build();
+    private void applyAttributeUpdates(ProductAttribute attribute, ProductAttributeDto dto) {
+        attribute.setName(dto.getName());
+        attribute.setDisplayName(dto.getDisplayName());
+        attribute.setDescription(dto.getDescription());
+        attribute.setAttributeType(dto.getAttributeType() != null
+                ? ProductAttribute.AttributeType.valueOf(dto.getAttributeType())
+                : ProductAttribute.AttributeType.TEXT);
+        attribute.setIsRequired(dto.getIsRequired() != null ? dto.getIsRequired() : Boolean.FALSE);
+        attribute.setIsFilterable(dto.getIsFilterable() != null ? dto.getIsFilterable() : Boolean.FALSE);
+        attribute.setIsSearchable(dto.getIsSearchable() != null ? dto.getIsSearchable() : Boolean.FALSE);
+        attribute.setSortOrder(dto.getSortOrder() != null ? dto.getSortOrder() : 0);
+        attribute.setValidationRules(dto.getValidationRules());
+    }
+
+    private Map<String, Object> paginationMetadata(Page<?> page) {
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("page", page.getNumber());
+        metadata.put("size", page.getSize());
+        metadata.put("totalPages", page.getTotalPages());
+        metadata.put("totalElements", page.getTotalElements());
+        metadata.put("numberOfElements", page.getNumberOfElements());
+        metadata.put("first", page.isFirst());
+        metadata.put("last", page.isLast());
+        metadata.put("sorted", page.getSort().isSorted());
+        return metadata;
     }
 }

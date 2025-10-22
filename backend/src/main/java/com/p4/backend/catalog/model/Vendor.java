@@ -4,22 +4,30 @@ import com.p4.backend.shared.kernel.Base;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "vendor")
+@Table(name = "vendors")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class Vendor extends Base {
 
     @NotBlank(message = "Business name is required")
     @Column(name = "business_name", nullable = false)
     private String businessName;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    private String description;
 
     @Email(message = "Email should be valid")
     @NotBlank(message = "Email is required")
@@ -31,7 +39,7 @@ public class Vendor extends Base {
     private String phone;
 
     @NotBlank(message = "Address is required")
-    @Column(name = "address", nullable = false)
+    @Column(name = "address", nullable = false, columnDefinition = "jsonb")
     private String address;
 
     @Column(name = "tax_id")
@@ -43,11 +51,16 @@ public class Vendor extends Base {
     @Column(name = "registration_date")
     private LocalDate registrationDate;
 
+    @Column(name = "approval_date")
+    private LocalDate approvalDate;
+
+    @Builder.Default
     @Enumerated(EnumType.STRING)
     @Column(name = "vendor_status", nullable = false)
     private VendorStatus vendorStatus = VendorStatus.PENDING;
 
     @Column(name = "kyc_verified")
+    @Builder.Default
     private Boolean kycVerified = false;
 
     @Column(name = "kyc_verified_at")

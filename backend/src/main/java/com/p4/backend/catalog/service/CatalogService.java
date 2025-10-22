@@ -1,19 +1,32 @@
 package com.p4.backend.catalog.service;
 
-import com.p4.backend.catalog.dto.*;
-import com.p4.backend.catalog.model.*;
-import com.p4.backend.catalog.repository.*;
+import com.p4.backend.catalog.dto.MediaAssetDto;
+import com.p4.backend.catalog.dto.ProductResponseDto;
+import com.p4.backend.catalog.dto.ProductSearchRequestDto;
+import com.p4.backend.catalog.dto.SearchRequestDto;
+import com.p4.backend.catalog.mapper.CatalogMapper;
+import com.p4.backend.catalog.model.Product;
+import com.p4.backend.catalog.model.ProductMedia;
+import com.p4.backend.catalog.repository.ProductMediaRepository;
+import com.p4.backend.catalog.repository.ProductRepository;
+import com.p4.backend.catalog.specification.ProductSpecifications;
 import com.p4.backend.shared.response.ApiResponse;
+import com.p4.backend.shared.response.ProblemDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.HttpStatus;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Locale;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
@@ -22,152 +35,157 @@ import java.util.stream.Collectors;
 public class CatalogService {
 
     private final ProductRepository productRepository;
-    private final VendorRepository vendorRepository;
-    private final ProductAttributeRepository attributeRepository;
-    private final ProductAttributeValueRepository attributeValueRepository;
-    private final MediaAssetRepository mediaAssetRepository;
     private final ProductMediaRepository productMediaRepository;
 
     @Transactional(readOnly = true)
-    public ApiResponse<Page<ProductResponseDto>> browseProducts(ProductSearchRequestDto searchRequest) {
-        try {
-            // Set default pagination parameters if not provided
-            int page = searchRequest.getPage() != null ? Math.max(0, searchRequest.getPage()) : 0;
-            int size = searchRequest.getSize() != null ? Math.max(1, Math.min(100, searchRequest.getSize())) : 10;
+    public ApiResponse<Page<ProductResponseDto>> browseCatalog(ProductSearchRequestDto request) {
+        Pageable pageable = PageRequest.of(
+                Math.max(Optional.ofNullable(request.getPage()).orElse(0), 0),
+                Math.max(Optional.ofNullable(request.getSize()).orElse(20), 1),
+                resolveSort(request.getSortBy(), request.getSortOrder())
+        );
 
-            // Set default sort
-            String sortBy = searchRequest.getSortBy() != null ? searchRequest.getSortBy() : "createdAt";
-            String sortOrder = searchRequest.getSortOrder() != null ? searchRequest.getSortOrder() : "DESC";
-            
-            Sort sort = sortOrder.equalsIgnoreCase("ASC") 
-                ? Sort.by(sortBy).ascending() 
-                : Sort.by(sortBy).descending();
-            
-            Pageable pageable = PageRequest.of(page, size, sort);
+        Page<Product> productPage;
+        boolean hasKeyword = request.getKeyword() != null && !request.getKeyword().isBlank();
+        boolean hasVendor = request.getVendorId() != null && !request.getVendorId().isBlank();
 
-            Page<Product> productPage;
-
-            if (searchRequest.getVendorId() != null && !searchRequest.getVendorId().isEmpty()) {
-                // Search by vendor ID and keyword using full-text search
-                if (searchRequest.getKeyword() != null && !searchRequest.getKeyword().isEmpty()) {
-                    productPage = productRepository.searchByVendorIdAndFullText(
-                        searchRequest.getVendorId(), 
-                        searchRequest.getKeyword(), 
-                        pageable
-                    );
-                } else {
-                    // Just by vendor ID
-                    productPage = productRepository.findByVendorIdAndIsActiveTrue(searchRequest.getVendorId(), pageable);
-                }
-            } else {
-                // Search across all vendors using full-text search
-                if (searchRequest.getKeyword() != null && !searchRequest.getKeyword().isEmpty()) {
-                    productPage = productRepository.searchFullText(
-                        searchRequest.getKeyword(), 
-                        pageable
-                    );
-                } else {
-                    // All active products
-                    productPage = productRepository.findByIsActiveTrue(pageable);
-                }
-            }
-
-            Page<ProductResponseDto> productResponsePage = productPage.map(this::mapToProductResponseDto);
-
-            return ApiResponse.success(productResponsePage);
-        } catch (Exception e) {
-            return ApiResponse.<Page<ProductResponseDto>>builder()
-                    .success(false)
-                    .data(null)
-                    .timestamp(java.time.Instant.now())
-                    .build();
+        if (hasKeyword && hasVendor) {
+            productPage = productRepository.searchByVendorIdAndFullText(
+                    request.getVendorId(),
+                    request.getKeyword(),
+                    pageable
+            );
+        } else if (hasKeyword) {
+            productPage = productRepository.searchFullText(request.getKeyword(), pageable);
+        } else {
+            Specification<Product> specification = ProductSpecifications.build(
+                    request.getKeyword(),
+                    request.getVendorId(),
+                    request.getCategory(),
+                    Product.ProductStatus.ACTIVE,
+                    Boolean.TRUE,
+                    request.getMinPrice(),
+                    request.getMaxPrice()
+            );
+            productPage = productRepository.findAll(specification, pageable);
         }
+
+        List<Product> filteredContent = applyAdditionalFilters(
+                productPage.getContent(),
+                request.getCategory(),
+                request.getMinPrice(),
+                request.getMaxPrice()
+        );
+
+        List<ProductResponseDto> dtos = filteredContent.stream()
+                .map(this::mapToProductResponse)
+                .toList();
+
+        Page<ProductResponseDto> dtoPage = new PageImpl<>(
+                dtos,
+                pageable,
+                hasKeyword ? dtos.size() : productPage.getTotalElements()
+        );
+
+        return ApiResponse.success(dtoPage, paginationMetadata(productPage));
     }
 
     @Transactional(readOnly = true)
-    public ApiResponse<ProductResponseDto> getProductById(String productId) {
-        try {
-            Optional<Product> productOpt = productRepository.findById(productId);
-            
-            if (productOpt.isEmpty()) {
-                return ApiResponse.<ProductResponseDto>builder()
-                        .success(false)
-                        .data(null)
-                        .timestamp(java.time.Instant.now())
-                        .build();
-            }
-            
-            Product product = productOpt.get();
-            
-            if (!product.getIsActive()) {
-                return ApiResponse.<ProductResponseDto>builder()
-                        .success(false)
-                        .data(null)
-                        .timestamp(java.time.Instant.now())
-                        .build();
-            }
-            
-            ProductResponseDto productDto = mapToProductResponseDto(product);
-            
-            return ApiResponse.success(productDto);
-        } catch (Exception e) {
-            return ApiResponse.<ProductResponseDto>builder()
-                    .success(false)
-                    .data(null)
-                    .timestamp(java.time.Instant.now())
-                    .build();
-        }
+    public ApiResponse<Page<ProductResponseDto>> searchCatalog(SearchRequestDto request) {
+        SearchRequestDto.SearchFilters filters = request.getFilters();
+        SearchRequestDto.PriceRange priceRange = filters != null ? filters.getPriceRange() : null;
+
+        String[] sortPreset = resolveSortPreset(request.getSort());
+
+        ProductSearchRequestDto searchRequest = ProductSearchRequestDto.builder()
+                .keyword(request.getQuery())
+                .vendorId(filters != null ? filters.getVendorId() : null)
+                .category(filters != null ? filters.getCategory() : null)
+                .minPrice(priceRange != null ? priceRange.getMin() : null)
+                .maxPrice(priceRange != null ? priceRange.getMax() : null)
+                .sortBy(sortPreset[0])
+                .sortOrder(sortPreset[1])
+                .page(request.getPage())
+                .size(request.getSize())
+                .build();
+
+        return browseCatalog(searchRequest);
     }
 
-    private ProductResponseDto mapToProductResponseDto(Product product) {
-        // Get vendor information
-        String vendorName = null;
-        if (product.getVendor() != null) {
-            vendorName = product.getVendor().getBusinessName();
-        } else {
-            // This is just a fallback, but in practice the vendor should be loaded with the product
-            // If we need to fetch it separately, we'd need the vendorId passed in separately
-            vendorName = product.getVendor() != null ? product.getVendor().getBusinessName() : "Unknown Vendor";
+    @Transactional(readOnly = true)
+    public ApiResponse<ProductResponseDto> getPublicProduct(String productId) {
+        return productRepository.findById(productId)
+                .filter(product -> Boolean.TRUE.equals(product.getIsActive()))
+                .map(this::mapToProductResponse)
+                .map(ApiResponse::success)
+                .orElseGet(() -> ApiResponse.error(ProblemDetails.notFound("Product")));
+    }
+
+    private List<Product> applyAdditionalFilters(List<Product> products,
+                                                 String category,
+                                                 BigDecimal minPrice,
+                                                 BigDecimal maxPrice) {
+        return products.stream()
+                .filter(product -> category == null || category.isBlank()
+                        || category.equalsIgnoreCase(product.getCategoryId()))
+                .filter(product -> minPrice == null
+                        || (product.getPrice() != null && product.getPrice().getAmount().compareTo(minPrice) >= 0))
+                .filter(product -> maxPrice == null
+                        || (product.getPrice() != null && product.getPrice().getAmount().compareTo(maxPrice) <= 0))
+                .collect(Collectors.toList());
+    }
+
+    private ProductResponseDto mapToProductResponse(Product product) {
+        List<ProductMedia> productMedia = productMediaRepository
+                .findByProductIdOrderByDisplayOrderAsc(product.getId());
+
+        List<MediaAssetDto> mediaAssets = productMedia.stream()
+                .map(ProductMedia::getMediaAsset)
+                .map(CatalogMapper::toMediaAssetDto)
+                .toList();
+
+        return CatalogMapper.toProductResponse(product, List.of(), mediaAssets);
+    }
+
+    private Sort resolveSort(String sortBy, String sortOrder) {
+        String sortField = switch (Optional.ofNullable(sortBy).orElse("createdAt")) {
+            case "name" -> "name";
+            case "price" -> "price.amount";
+            case "sku" -> "sku";
+            default -> "createdAt";
+        };
+
+        Sort.Direction direction = "asc".equalsIgnoreCase(sortOrder)
+                ? Sort.Direction.ASC
+                : Sort.Direction.DESC;
+
+        return Sort.by(direction, sortField);
+    }
+
+    private String[] resolveSortPreset(String sort) {
+        if (sort == null || sort.isBlank()) {
+            return new String[]{"createdAt", "desc"};
         }
 
-        // Get product attributes
-        List<ProductAttributeDto> attributes = List.of(); // Implementation would fetch related attributes
-        // Note: In a real implementation, you would fetch actual product attributes associated with this product
+        return switch (sort.toLowerCase(Locale.US)) {
+            case "price_asc" -> new String[]{"price", "asc"};
+            case "price_desc" -> new String[]{"price", "desc"};
+            case "name_asc" -> new String[]{"name", "asc"};
+            case "name_desc" -> new String[]{"name", "desc"};
+            default -> new String[]{"createdAt", "desc"};
+        };
+    }
 
-        // Get product media assets
-        List<MediaAssetDto> mediaAssets = productMediaRepository.findByProductIdOrderByDisplayOrderAsc(product.getId())
-                .stream()
-                .map(pm -> MediaAssetDto.builder()
-                        .id(pm.getMediaAsset().getId())
-                        .originalFilename(pm.getMediaAsset().getOriginalFilename())
-                        .storagePath(pm.getMediaAsset().getStoragePath())
-                        .contentType(pm.getMediaAsset().getContentType())
-                        .fileSize(pm.getMediaAsset().getFileSize())
-                        .altText(pm.getMediaAsset().getAltText())
-                        .caption(pm.getMediaAsset().getCaption())
-                        .mediaType(pm.getMediaAsset().getMediaType().name())
-                        .uploadDate(pm.getMediaAsset().getUploadDate())
-                        .build())
-                .collect(Collectors.toList());
-
-        return ProductResponseDto.builder()
-                .id(product.getId())
-                .name(product.getName())
-                .description(product.getDescription())
-                .sku(product.getSku())
-                .vendorId(product.getVendor().getId())
-                .vendorName(vendorName)
-                .price(product.getPrice())
-                .stockQuantity(product.getStockQuantity())
-                .minOrderQuantity(product.getMinOrderQuantity())
-                .weight(product.getWeight())
-                .dimensionsLength(product.getDimensionsLength())
-                .dimensionsWidth(product.getDimensionsWidth())
-                .dimensionsHeight(product.getDimensionsHeight())
-                .productStatus(product.getProductStatus().name())
-                .isActive(product.getIsActive())
-                .attributes(attributes)
-                .mediaAssets(mediaAssets)
-                .build();
+    private Map<String, Object> paginationMetadata(Page<?> page) {
+        Map<String, Object> metadata = new HashMap<>();
+        metadata.put("page", page.getNumber());
+        metadata.put("size", page.getSize());
+        metadata.put("totalPages", page.getTotalPages());
+        metadata.put("totalElements", page.getTotalElements());
+        metadata.put("numberOfElements", page.getNumberOfElements());
+        metadata.put("first", page.isFirst());
+        metadata.put("last", page.isLast());
+        metadata.put("sorted", page.getSort().isSorted());
+        return metadata;
     }
 }

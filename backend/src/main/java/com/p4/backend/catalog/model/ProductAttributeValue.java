@@ -4,13 +4,19 @@ import com.p4.backend.shared.kernel.Base;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
 @Table(name = "product_attribute_values")
 @Getter
 @Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@Builder
 public class ProductAttributeValue extends Base {
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -26,9 +32,11 @@ public class ProductAttributeValue extends Base {
 
     @NotNull(message = "Is default value setting is required")
     @Column(name = "is_default", nullable = false)
+    @Builder.Default
     private Boolean isDefault = false;
 
     @Column(name = "sort_order")
+    @Builder.Default
     private Integer sortOrder = 0;
 
     @PrePersist

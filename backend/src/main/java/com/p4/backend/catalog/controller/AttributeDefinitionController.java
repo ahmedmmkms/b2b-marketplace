@@ -1,7 +1,7 @@
 package com.p4.backend.catalog.controller;
 
-import com.p4.backend.catalog.dto.MediaAssetDto;
-import com.p4.backend.catalog.service.MediaAssetService;
+import com.p4.backend.catalog.dto.ProductAttributeDto;
+import com.p4.backend.catalog.service.ProductAttributeService;
 import com.p4.backend.shared.response.ApiResponse;
 import com.p4.backend.shared.response.ProblemDetails;
 import jakarta.validation.Valid;
@@ -20,42 +20,43 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/media")
+@RequestMapping("/api/attributes")
 @RequiredArgsConstructor
-public class MediaAssetController {
+public class AttributeDefinitionController {
 
-    private final MediaAssetService mediaAssetService;
+    private final ProductAttributeService attributeService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<MediaAssetDto>> createMedia(@Valid @RequestBody MediaAssetDto request) {
-        ApiResponse<MediaAssetDto> response = mediaAssetService.createMedia(request);
+    public ResponseEntity<ApiResponse<ProductAttributeDto>> createAttribute(
+            @Valid @RequestBody ProductAttributeDto request) {
+        ApiResponse<ProductAttributeDto> response = attributeService.createAttribute(request);
         return buildResponse(response, HttpStatus.CREATED);
     }
 
-    @GetMapping("/{mediaId}")
-    public ResponseEntity<ApiResponse<MediaAssetDto>> getMedia(@PathVariable String mediaId) {
-        ApiResponse<MediaAssetDto> response = mediaAssetService.getMedia(mediaId);
+    @GetMapping("/{attributeId}")
+    public ResponseEntity<ApiResponse<ProductAttributeDto>> getAttribute(@PathVariable String attributeId) {
+        ApiResponse<ProductAttributeDto> response = attributeService.getAttribute(attributeId);
         return buildResponse(response, HttpStatus.OK);
     }
 
-    @PutMapping("/{mediaId}")
-    public ResponseEntity<ApiResponse<MediaAssetDto>> updateMedia(@PathVariable String mediaId,
-                                                                  @Valid @RequestBody MediaAssetDto request) {
-        ApiResponse<MediaAssetDto> response = mediaAssetService.updateMedia(mediaId, request);
+    @PutMapping("/{attributeId}")
+    public ResponseEntity<ApiResponse<ProductAttributeDto>> updateAttribute(@PathVariable String attributeId,
+                                                                            @Valid @RequestBody ProductAttributeDto request) {
+        ApiResponse<ProductAttributeDto> response = attributeService.updateAttribute(attributeId, request);
         return buildResponse(response, HttpStatus.OK);
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<Page<MediaAssetDto>>> listMedia(
+    public ResponseEntity<ApiResponse<Page<ProductAttributeDto>>> listAttributes(
             @RequestParam(defaultValue = "0") int page,
             @RequestParam(defaultValue = "20") int size) {
-        ApiResponse<Page<MediaAssetDto>> response = mediaAssetService.listMedia(page, size);
+        ApiResponse<Page<ProductAttributeDto>> response = attributeService.listAttributes(page, size);
         return buildResponse(response, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{mediaId}")
-    public ResponseEntity<ApiResponse<Void>> deleteMedia(@PathVariable String mediaId) {
-        ApiResponse<Void> response = mediaAssetService.deleteMedia(mediaId);
+    @DeleteMapping("/{attributeId}")
+    public ResponseEntity<ApiResponse<Void>> deleteAttribute(@PathVariable String attributeId) {
+        ApiResponse<Void> response = attributeService.deleteAttribute(attributeId);
         return buildResponse(response, HttpStatus.NO_CONTENT);
     }
 
@@ -63,6 +64,7 @@ public class MediaAssetController {
         if (response.isSuccess()) {
             return ResponseEntity.status(successStatus).body(response);
         }
+
         ProblemDetails error = response.getError();
         HttpStatus status = error != null && error.getStatus() != null
                 ? HttpStatus.valueOf(error.getStatus())

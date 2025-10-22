@@ -21,5 +21,9 @@ public class MediaAssetDto {
     private String altText;
     private String caption;
     private String mediaType;
+    private String status;
+    private String name;
+    private String title;
+    private Boolean isPrimary;
     private LocalDateTime uploadDate;
 }

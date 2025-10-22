@@ -17,8 +17,15 @@ public class ProductResponseDto {
 
     private String id;
     private String name;
+    private String slug;
     private String description;
+    private String shortDescription;
     private String sku;
+    private String upc;
+    private String gtin;
+    private String mpn;
+    private String brand;
+    private String categoryId;
     private String vendorId;
     private String vendorName;
     private Money price;
@@ -28,8 +35,17 @@ public class ProductResponseDto {
     private BigDecimal dimensionsLength;
     private BigDecimal dimensionsWidth;
     private BigDecimal dimensionsHeight;
+    private String dimensions;
+    private String packagingInfo;
     private String productStatus;
     private Boolean isActive;
+    private Boolean inventoryTracking;
+    private String inventoryStatus;
+    private Integer moq;
+    private String taxClass;
+    private String metaTitle;
+    private String metaDescription;
+    private String metaKeywords;
     private List<ProductAttributeDto> attributes;
     private List<MediaAssetDto> mediaAssets;
 }

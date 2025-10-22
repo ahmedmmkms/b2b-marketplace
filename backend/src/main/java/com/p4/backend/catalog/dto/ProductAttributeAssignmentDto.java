@@ -5,16 +5,23 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+/**
+ * Response payload describing a product's attribute assignment.
+ */
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductAttributeValueDto {
+public class ProductAttributeAssignmentDto {
 
-    private String id;
     private String attributeId;
+    private String attributeName;
+    private String attributeType;
+    private Boolean isRequired;
+    private Boolean isFilterable;
+    private Boolean isSearchable;
+    private String valueId;
     private String value;
     private String displayValue;
     private Boolean isDefault;
-    private Integer sortOrder;
 }

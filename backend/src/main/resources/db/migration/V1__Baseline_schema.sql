@@ -137,6 +137,20 @@ CREATE TABLE product_attribute_values (
     sort_order INTEGER DEFAULT 0
 );
 
+-- Product Attribute Assignments table
+CREATE TABLE product_attribute_assignments (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    product_id VARCHAR(26) NOT NULL REFERENCES products(id) ON DELETE CASCADE,
+    product_attribute_id VARCHAR(26) NOT NULL REFERENCES product_attributes(id) ON DELETE CASCADE,
+    product_attribute_value_id VARCHAR(26) REFERENCES product_attribute_values(id),
+    custom_value TEXT,
+    display_value TEXT,
+    is_default BOOLEAN DEFAULT FALSE,
+    CONSTRAINT uq_product_attribute_assignment UNIQUE (product_id, product_attribute_id)
+);
+
 -- Media Assets table
 CREATE TABLE media_assets (
     id VARCHAR(26) PRIMARY KEY,
@@ -583,6 +597,8 @@ CREATE INDEX idx_products_vendor_id ON products(vendor_id);
 CREATE INDEX idx_products_sku ON products(sku);
 CREATE INDEX idx_products_slug ON products(slug);
 CREATE INDEX idx_products_slug_gin ON products USING GIN(to_tsvector('english', slug));
+CREATE INDEX idx_product_attribute_assignments_product_id ON product_attribute_assignments(product_id);
+CREATE INDEX idx_product_attribute_assignments_attribute_id ON product_attribute_assignments(product_attribute_id);
 CREATE INDEX idx_vendors_status ON vendors(vendor_status);
 CREATE INDEX idx_rfqs_account_id ON rfqs(account_id);
 CREATE INDEX idx_rfqs_status ON rfqs(rfq_status);
@@ -615,6 +631,7 @@ CREATE TRIGGER update_vendors_updated_at BEFORE UPDATE ON vendors FOR EACH ROW E
 CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON products FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_product_attributes_updated_at BEFORE UPDATE ON product_attributes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_product_attribute_values_updated_at BEFORE UPDATE ON product_attribute_values FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_product_attribute_assignments_updated_at BEFORE UPDATE ON product_attribute_assignments FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_media_assets_updated_at BEFORE UPDATE ON media_assets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_rfqs_updated_at BEFORE UPDATE ON rfqs FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
 CREATE TRIGGER update_quotes_updated_at BEFORE UPDATE ON quotes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();

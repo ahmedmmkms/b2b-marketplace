@@ -17,4 +17,5 @@ public class ProductMediaDto {
     private Integer displayOrder;
     private Boolean isPrimary;
     private String altTextOverride;
+    private MediaAssetDto mediaAsset;
 }

@@ -175,6 +175,23 @@ The database schema supports all the functionality required by the P4 B2B Market
 | is_default | BOOLEAN | - | FALSE | Whether this is the default value |
 | sort_order | INTEGER | - | 0 | Order for sorting in UI |
 
+### Product Attribute Assignments (`product_attribute_assignments`)
+**Description:** Links products to attributes and captures selected or custom values
+
+| Column | Type | Constraints | Default | Description |
+|--------|------|-------------|---------|-------------|
+| id | VARCHAR(26) | PRIMARY KEY | - | ULID identifier |
+| created_at | TIMESTAMP | NOT NULL | CURRENT_TIMESTAMP | Creation timestamp |
+| updated_at | TIMESTAMP | NOT NULL | CURRENT_TIMESTAMP | Last update timestamp |
+| product_id | VARCHAR(26) | FOREIGN KEY, NOT NULL | - | Associated product ID |
+| product_attribute_id | VARCHAR(26) | FOREIGN KEY, NOT NULL | - | Associated attribute ID |
+| product_attribute_value_id | VARCHAR(26) | FOREIGN KEY | - | Linked attribute value ID when using predefined options |
+| custom_value | TEXT | - | - | Free-form value for custom or numeric attributes |
+| display_value | TEXT | - | - | Value formatted for display |
+| is_default | BOOLEAN | - | FALSE | Indicates the default assignment for the attribute |
+
+Unique constraint `uq_product_attribute_assignment` ensures a product can have only one assignment per attribute.
+
 ### Media Assets (`media_assets`)
 **Description:** Stores media assets associated with products
 
@@ -702,6 +719,8 @@ The schema includes the following important indexes for performance:
 - `idx_products_sku`: On `products(sku)` for product lookup
 - `idx_products_slug`: On `products(slug)` for product lookup
 - `idx_products_slug_gin`: Full-text index on `products(slug)` for search
+- `idx_product_attribute_assignments_product_id`: On `product_attribute_assignments(product_id)` for retrieving attributes per product
+- `idx_product_attribute_assignments_attribute_id`: On `product_attribute_assignments(product_attribute_id)` for attribute-centric lookups
 - `idx_vendors_status`: On `vendors(vendor_status)` for vendor status queries
 - `idx_rfqs_account_id`: On `rfqs(account_id)` for account-RFQ relationships
 - `idx_rfqs_status`: On `rfqs(rfq_status)` for RFQ status queries
@@ -729,6 +748,7 @@ The schema includes triggers to automatically update the `updated_at` field on a
 - `update_products_updated_at` for `products` table
 - `update_product_attributes_updated_at` for `product_attributes` table
 - `update_product_attribute_values_updated_at` for `product_attribute_values` table
+- `update_product_attribute_assignments_updated_at` for `product_attribute_assignments` table
 - `update_media_assets_updated_at` for `media_assets` table
 - `update_rfqs_updated_at` for `rfqs` table
 - `update_quotes_updated_at` for `quotes` table

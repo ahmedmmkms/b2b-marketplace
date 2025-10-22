@@ -19,10 +19,20 @@ public class ProductRequestDto {
     @NotBlank(message = "Product name is required")
     private String name;
 
+    private String slug;
+
     private String description;
+
+    private String shortDescription;
 
     @NotBlank(message = "SKU is required")
     private String sku;
+
+    private String upc;
+    private String gtin;
+    private String mpn;
+    private String brand;
+    private String categoryId;
 
     @NotNull(message = "Vendor ID is required")
     private String vendorId;
@@ -40,8 +50,17 @@ public class ProductRequestDto {
     private BigDecimal dimensionsLength;
     private BigDecimal dimensionsWidth;
     private BigDecimal dimensionsHeight;
+    private String dimensions;
+    private String packagingInfo;
 
     private String productStatus; // Will be converted to enum in service
 
     private Boolean isActive;
+    private Boolean inventoryTracking;
+    private String inventoryStatus;
+    private Integer moq;
+    private String taxClass;
+    private String metaTitle;
+    private String metaDescription;
+    private String metaKeywords;
 }

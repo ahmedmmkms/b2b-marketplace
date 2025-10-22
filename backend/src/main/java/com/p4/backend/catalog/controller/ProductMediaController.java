@@ -3,58 +3,58 @@ package com.p4.backend.catalog.controller;
 import com.p4.backend.catalog.dto.ProductMediaDto;
 import com.p4.backend.catalog.service.ProductMediaService;
 import com.p4.backend.shared.response.ApiResponse;
+import com.p4.backend.shared.response.ProblemDetails;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
-import static org.springframework.http.HttpStatus.CREATED;
-import static org.springframework.http.HttpStatus.OK;
-
 @RestController
-@RequestMapping("/api/catalog/product-media")
+@RequestMapping("/api/products/{productId}/media")
 @RequiredArgsConstructor
 public class ProductMediaController {
 
     private final ProductMediaService productMediaService;
 
     @PostMapping
-    public ResponseEntity<ApiResponse<ProductMediaDto>> createProductMedia(@Valid @RequestBody ProductMediaDto productMediaDto) {
-        ApiResponse<ProductMediaDto> response = productMediaService.createProductMedia(productMediaDto);
-        return ResponseEntity.status(CREATED).body(response);
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductMediaDto>> getProductMediaById(@PathVariable String id) {
-        ApiResponse<ProductMediaDto> response = productMediaService.getProductMediaById(id);
-        return ResponseEntity.status(OK).body(response);
-    }
-
-    @PutMapping("/{id}")
-    public ResponseEntity<ApiResponse<ProductMediaDto>> updateProductMedia(@PathVariable String id, @Valid @RequestBody ProductMediaDto productMediaDto) {
-        ApiResponse<ProductMediaDto> response = productMediaService.updateProductMedia(id, productMediaDto);
-        return ResponseEntity.status(OK).body(response);
+    public ResponseEntity<ApiResponse<ProductMediaDto>> addMedia(
+            @PathVariable String productId,
+            @Valid @RequestBody ProductMediaDto request) {
+        request.setProductId(productId);
+        ApiResponse<ProductMediaDto> response = productMediaService.addMediaToProduct(productId, request);
+        return buildResponse(response, HttpStatus.CREATED);
     }
 
     @GetMapping
-    public ResponseEntity<ApiResponse<List<ProductMediaDto>>> getAllProductMedia(
-            @RequestParam(defaultValue = "0") int page,
-            @RequestParam(defaultValue = "10") int size) {
-        ApiResponse<List<ProductMediaDto>> response = productMediaService.getAllProductMedia(page, size);
-        return ResponseEntity.status(OK).body(response);
+    public ResponseEntity<ApiResponse<List<ProductMediaDto>>> listMedia(@PathVariable String productId) {
+        ApiResponse<List<ProductMediaDto>> response = productMediaService.listProductMedia(productId);
+        return buildResponse(response, HttpStatus.OK);
     }
 
-    @GetMapping("/product/{productId}")
-    public ResponseEntity<ApiResponse<List<ProductMediaDto>>> getProductMediaByProduct(@PathVariable String productId) {
-        ApiResponse<List<ProductMediaDto>> response = productMediaService.getProductMediaByProduct(productId);
-        return ResponseEntity.status(OK).body(response);
+    @DeleteMapping("/{mediaAssetId}")
+    public ResponseEntity<ApiResponse<Void>> removeMedia(@PathVariable String productId,
+                                                         @PathVariable String mediaAssetId) {
+        ApiResponse<Void> response = productMediaService.removeMediaFromProduct(productId, mediaAssetId);
+        return buildResponse(response, HttpStatus.NO_CONTENT);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<ApiResponse<Void>> deleteProductMedia(@PathVariable String id) {
-        ApiResponse<Void> response = productMediaService.deleteProductMedia(id);
-        return ResponseEntity.status(OK).body(response);
+    private <T> ResponseEntity<ApiResponse<T>> buildResponse(ApiResponse<T> response, HttpStatus successStatus) {
+        if (response.isSuccess()) {
+            return ResponseEntity.status(successStatus).body(response);
+        }
+        ProblemDetails error = response.getError();
+        HttpStatus status = error != null && error.getStatus() != null
+                ? HttpStatus.valueOf(error.getStatus())
+                : HttpStatus.BAD_REQUEST;
+        return ResponseEntity.status(status).body(response);
     }
 }
