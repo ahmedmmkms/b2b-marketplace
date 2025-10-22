@@ -1,607 +1,630 @@
--- Baseline schema captured from Neon production (2025-10-15)
+-- Complete Database Schema for P4 B2B Marketplace
 
--- Functions
-CREATE OR REPLACE FUNCTION public.update_updated_at_column()
- RETURNS trigger
- LANGUAGE plpgsql
-AS $function$
+-- Feature Flags table
+CREATE TABLE feature_flags (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    flag_name VARCHAR(255) NOT NULL UNIQUE,
+    is_enabled BOOLEAN NOT NULL DEFAULT FALSE,
+    description TEXT,
+    created_by VARCHAR(255),
+    updated_by VARCHAR(255)
+);
+
+-- Accounts table
+CREATE TABLE accounts (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_type VARCHAR(26) NOT NULL CHECK (account_type IN ('INDIVIDUAL', 'COMPANY')),
+    status VARCHAR(20) NOT NULL DEFAULT 'PENDING' CHECK (status IN ('PENDING', 'ACTIVE', 'INACTIVE', 'SUSPENDED', 'CLOSED')),
+    company_name VARCHAR(255),
+    contact_person VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20),
+    tax_id VARCHAR(50),
+    registration_date DATE DEFAULT CURRENT_DATE,
+    kyc_verified BOOLEAN DEFAULT FALSE,
+    credit_limit DECIMAL(19,4) DEFAULT 0.0000,
+    available_credit DECIMAL(19,4) DEFAULT 0.0000
+);
+
+-- Users table
+CREATE TABLE users (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_id VARCHAR(26) REFERENCES accounts(id),
+    first_name VARCHAR(100) NOT NULL,
+    last_name VARCHAR(100) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    phone VARCHAR(20),
+    job_title VARCHAR(100),
+    is_active BOOLEAN NOT NULL DEFAULT TRUE,
+    last_login_at TIMESTAMP,
+    password_hash VARCHAR(255) NOT NULL,
+    salt VARCHAR(255) NOT NULL,
+    failed_login_attempts INTEGER DEFAULT 0,
+    locked_until TIMESTAMP
+);
+
+-- Permissions table
+CREATE TABLE permissions (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    permission_name VARCHAR(100) NOT NULL UNIQUE,
+    description VARCHAR(255),
+    is_active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- Roles table
+CREATE TABLE roles (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    role_name VARCHAR(100) NOT NULL UNIQUE,
+    description VARCHAR(255),
+    is_active BOOLEAN NOT NULL DEFAULT TRUE
+);
+
+-- User Roles junction table
+CREATE TABLE user_roles (
+    id VARCHAR(26) PRIMARY KEY DEFAULT gen_random_ulid(),
+    user_id VARCHAR(26) REFERENCES users(id),
+    role_id VARCHAR(26) REFERENCES roles(id),
+    assigned_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    assigned_by VARCHAR(26),
+    UNIQUE (user_id, role_id)
+);
+
+-- Role Permissions junction table
+CREATE TABLE role_permissions (
+    id VARCHAR(26) PRIMARY KEY DEFAULT gen_random_ulid(),
+    role_id VARCHAR(26) REFERENCES roles(id),
+    permission_id VARCHAR(26) REFERENCES permissions(id),
+    assigned_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    assigned_by VARCHAR(26),
+    UNIQUE (role_id, permission_id)
+);
+
+-- Vendors table
+CREATE TABLE vendors (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    business_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    email VARCHAR(255),
+    phone VARCHAR(50),
+    address JSONB,
+    tax_id VARCHAR(100),
+    vendor_status VARCHAR(20) NOT NULL DEFAULT 'PENDING' CHECK (vendor_status IN ('PENDING', 'APPROVED', 'REJECTED', 'SUSPENDED', 'CLOSED')),
+    approval_date DATE,
+    business_license_no VARCHAR(100),
+    registration_date DATE,
+    kyc_verified BOOLEAN NOT NULL DEFAULT FALSE,
+    kyc_verified_at DATE,
+    kyc_verified_by VARCHAR(255)
+);
+
+-- Product Attributes table
+CREATE TABLE product_attributes (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name VARCHAR(255) NOT NULL,
+    display_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    attribute_type VARCHAR(50) NOT NULL CHECK (attribute_type IN ('TEXT', 'NUMBER', 'BOOLEAN', 'DATE', 'SELECT', 'MULTI_SELECT')),
+    is_required BOOLEAN DEFAULT FALSE,
+    is_searchable BOOLEAN DEFAULT FALSE,
+    is_filterable BOOLEAN DEFAULT FALSE,
+    sort_order INTEGER DEFAULT 0,
+    validation_rules JSONB
+);
+
+-- Product Attribute Values table
+CREATE TABLE product_attribute_values (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    product_attribute_id VARCHAR(26) REFERENCES product_attributes(id),
+    value TEXT NOT NULL,
+    display_value TEXT,
+    is_default BOOLEAN DEFAULT FALSE,
+    sort_order INTEGER DEFAULT 0
+);
+
+-- Media Assets table
+CREATE TABLE media_assets (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name VARCHAR(255) NOT NULL,
+    original_filename VARCHAR(255) NOT NULL,
+    storage_path VARCHAR(1000) NOT NULL,
+    content_type VARCHAR(100),
+    file_size BIGINT,
+    alt_text VARCHAR(255),
+    title VARCHAR(255),
+    caption TEXT,
+    media_type VARCHAR(20) NOT NULL CHECK (media_type IN ('IMAGE', 'VIDEO', 'DOCUMENT', 'OTHER')),
+    status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (status IN ('ACTIVE', 'INACTIVE', 'DELETED')),
+    is_primary BOOLEAN DEFAULT FALSE,
+    upload_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Products table
+CREATE TABLE products (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name VARCHAR(255) NOT NULL,
+    slug VARCHAR(255),
+    description TEXT,
+    short_description VARCHAR(500),
+    sku VARCHAR(100),
+    upc VARCHAR(50),
+    gtin VARCHAR(50),
+    mpn VARCHAR(100),
+    brand VARCHAR(100),
+    category_id VARCHAR(26),
+    vendor_id VARCHAR(26) REFERENCES vendors(id),
+    product_status VARCHAR(20) DEFAULT 'DRAFT' CHECK (product_status IN ('DRAFT', 'ACTIVE', 'INACTIVE', 'DISCONTINUED')),
+    price_amount DECIMAL(19,4),
+    price_currency VARCHAR(3) DEFAULT 'USD',
+    tax_class VARCHAR(50),
+    meta_title VARCHAR(255),
+    meta_description VARCHAR(500),
+    meta_keywords TEXT,
+    weight DECIMAL(10,3),
+    dimensions JSONB,
+    packaging_info JSONB,
+    min_order_quantity INTEGER DEFAULT 1,
+    moq INTEGER,
+    inventory_tracking BOOLEAN DEFAULT FALSE,
+    stock_quantity INTEGER DEFAULT 0,
+    inventory_status VARCHAR(20) DEFAULT 'IN_STOCK' CHECK (inventory_status IN ('IN_STOCK', 'OUT_OF_STOCK', 'BACKORDER', 'DISCONTINUED')),
+    is_active BOOLEAN DEFAULT TRUE,
+    dimensions_length DECIMAL(10,3),
+    dimensions_width DECIMAL(10,3),
+    dimensions_height DECIMAL(10,3),
+    UNIQUE (slug)
+);
+
+-- Product Media junction table
+CREATE TABLE product_media (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    product_id VARCHAR(26) REFERENCES products(id),
+    media_asset_id VARCHAR(26) REFERENCES media_assets(id),
+    display_order INTEGER DEFAULT 0,
+    is_primary BOOLEAN DEFAULT FALSE,
+    alt_text_override TEXT,
+    UNIQUE (product_id, media_asset_id)
+);
+
+-- RFQs table
+CREATE TABLE rfqs (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_id VARCHAR(26) REFERENCES accounts(id),
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    rfq_status VARCHAR(20) DEFAULT 'DRAFT' CHECK (rfq_status IN ('DRAFT', 'OPEN', 'CLOSED', 'EXPIRED')),
+    expiry_date TIMESTAMP,
+    currency VARCHAR(3) DEFAULT 'USD',
+    is_public BOOLEAN DEFAULT FALSE,
+    contact_person VARCHAR(255) NOT NULL,
+    contact_email VARCHAR(255) NOT NULL,
+    tax_included BOOLEAN DEFAULT FALSE,
+    created_by VARCHAR(255) NOT NULL
+);
+
+-- RFQ Lines table
+CREATE TABLE rfq_lines (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    rfq_id VARCHAR(26) REFERENCES rfqs(id),
+    product_id VARCHAR(26) REFERENCES products(id),
+    product_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    quantity INTEGER NOT NULL,
+    unit_of_measure VARCHAR(20) DEFAULT 'EA',
+    required_by TIMESTAMP,
+    product_specifications TEXT,
+    brand_preference VARCHAR(255),
+    quality_requirements TEXT
+);
+
+-- Quotes table
+CREATE TABLE quotes (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    rfq_id VARCHAR(26) REFERENCES rfqs(id),
+    vendor_id VARCHAR(26) REFERENCES vendors(id),
+    title VARCHAR(255) NOT NULL,
+    description TEXT,
+    quote_status VARCHAR(20) DEFAULT 'DRAFT' CHECK (quote_status IN ('DRAFT', 'SUBMITTED', 'ACCEPTED', 'REJECTED', 'EXPIRED')),
+    total_amount DECIMAL(19,4),
+    currency VARCHAR(3) DEFAULT 'USD',
+    validity_days INTEGER DEFAULT 30,
+    expiry_date TIMESTAMP,
+    accepted_at TIMESTAMP,
+    quoted_by VARCHAR(255) NOT NULL,
+    quote_number VARCHAR(255) NOT NULL,
+    valid_until TIMESTAMP NOT NULL,
+    freight_included BOOLEAN DEFAULT FALSE,
+    tax_included BOOLEAN DEFAULT FALSE,
+    UNIQUE (quote_number)
+);
+
+-- Quote Lines table
+CREATE TABLE quote_lines (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    quote_id VARCHAR(26) REFERENCES quotes(id),
+    rfq_line_id VARCHAR(26) REFERENCES rfq_lines(id),
+    product_id VARCHAR(26) REFERENCES products(id),
+    product_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    unit_price DECIMAL(19,4) NOT NULL,
+    quantity INTEGER NOT NULL,
+    line_total DECIMAL(19,4) NOT NULL,
+    moq INTEGER DEFAULT 1
+);
+
+-- Orders table
+CREATE TABLE orders (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_id VARCHAR(26) REFERENCES accounts(id),
+    quote_id VARCHAR(26) REFERENCES quotes(id),
+    po_number VARCHAR(100),
+    order_status VARCHAR(30) DEFAULT 'PENDING' CHECK (order_status IN ('PENDING', 'CONFIRMED', 'PROCESSING', 'SHIPPED', 'DELIVERED', 'CANCELLED', 'RETURNED')),
+    currency VARCHAR(3) DEFAULT 'USD',
+    subtotal DECIMAL(19,4),
+    tax_amount DECIMAL(19,4),
+    shipping_amount DECIMAL(19,4),
+    discount_amount DECIMAL(19,4),
+    total_amount DECIMAL(19,4),
+    billing_address JSONB,
+    shipping_address JSONB,
+    notes TEXT
+);
+
+-- Order Lines table
+CREATE TABLE order_lines (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    order_id VARCHAR(26) REFERENCES orders(id),
+    product_id VARCHAR(26) REFERENCES products(id),
+    product_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    unit_price DECIMAL(19,4) NOT NULL,
+    quantity INTEGER NOT NULL,
+    total_price DECIMAL(19,4) GENERATED ALWAYS AS (unit_price * quantity) STORED
+);
+
+-- Payments table
+CREATE TABLE payments (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    order_id VARCHAR(26) REFERENCES orders(id),
+    payment_method VARCHAR(50) NOT NULL,
+    amount DECIMAL(19,4) NOT NULL,
+    currency VARCHAR(3) DEFAULT 'USD',
+    payment_status VARCHAR(20) DEFAULT 'PENDING' CHECK (payment_status IN ('PENDING', 'AUTHORIZED', 'CAPTURED', 'FAILED', 'REFUNDED', 'CANCELLED')),
+    transaction_id VARCHAR(255),
+    provider VARCHAR(50),
+    provider_response JSONB,
+    captured_at TIMESTAMP
+);
+
+-- Wallets table
+CREATE TABLE wallets (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_id VARCHAR(26) REFERENCES accounts(id),
+    name VARCHAR(255) NOT NULL,
+    balance DECIMAL(19,4) DEFAULT 0.0000,
+    currency VARCHAR(3) DEFAULT 'USD',
+    wallet_status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (wallet_status IN ('ACTIVE', 'SUSPENDED', 'CLOSED'))
+);
+
+-- Wallet Transactions table
+CREATE TABLE wallet_transactions (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    wallet_id VARCHAR(26) REFERENCES wallets(id),
+    transaction_type VARCHAR(20) NOT NULL CHECK (transaction_type IN ('CREDIT', 'DEBIT')),
+    amount DECIMAL(19,4) NOT NULL,
+    reference_type VARCHAR(50) NOT NULL,
+    reference_id VARCHAR(26),
+    description TEXT,
+    balance_after DECIMAL(19,4)
+);
+
+-- Credit Limits table
+CREATE TABLE credit_limits (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_id VARCHAR(26) REFERENCES accounts(id),
+    currency VARCHAR(3) DEFAULT 'USD',
+    limit_amount DECIMAL(19,4) NOT NULL,
+    available_amount DECIMAL(19,4) NOT NULL,
+    used_amount DECIMAL(19,4) DEFAULT 0.0000,
+    credit_status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (credit_status IN ('ACTIVE', 'SUSPENDED', 'EXCEEDED')),
+    approved_date DATE,
+    approved_by VARCHAR(26),
+    notes TEXT
+);
+
+-- Tax Registrations table
+CREATE TABLE tax_registrations (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    legal_name VARCHAR(255) NOT NULL,
+    tax_number VARCHAR(100) NOT NULL,
+    address JSONB NOT NULL,
+    is_active BOOLEAN DEFAULT TRUE
+);
+
+-- Sequence Registry table
+CREATE TABLE sequence_registry (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tax_reg_id VARCHAR(26) REFERENCES tax_registrations(id),
+    sequence_type VARCHAR(20) NOT NULL CHECK (sequence_type IN ('INVOICE', 'CREDIT_NOTE')),
+    prefix VARCHAR(20) NOT NULL,
+    current_value INTEGER NOT NULL DEFAULT 0,
+    next_value INTEGER NOT NULL DEFAULT 1,
+    year INTEGER NOT NULL,
+    UNIQUE (tax_reg_id, sequence_type, year)
+);
+
+-- Invoices table
+CREATE TABLE invoices (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tax_reg_id VARCHAR(26) REFERENCES tax_registrations(id),
+    sequence_number INTEGER NOT NULL,
+    full_number VARCHAR(100),
+    order_id VARCHAR(26) REFERENCES orders(id),
+    issued_date DATE DEFAULT CURRENT_DATE,
+    due_date DATE NOT NULL,
+    currency VARCHAR(3) DEFAULT 'USD',
+    subtotal DECIMAL(19,4),
+    discount_amount DECIMAL(19,4),
+    vat_amount DECIMAL(19,4),
+    total_amount DECIMAL(19,4),
+    invoice_status VARCHAR(20) DEFAULT 'DRAFT' CHECK (invoice_status IN ('DRAFT', 'ISSUED', 'PAID', 'OVERDUE', 'CANCELLED')),
+    customer_name VARCHAR(255) NOT NULL,
+    customer_tax_number VARCHAR(100),
+    customer_address JSONB,
+    notes TEXT,
+    UNIQUE (full_number)
+);
+
+-- Invoice Lines table
+CREATE TABLE invoice_lines (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    invoice_id VARCHAR(26) REFERENCES invoices(id),
+    order_line_id VARCHAR(26) REFERENCES order_lines(id),
+    product_name VARCHAR(255) NOT NULL,
+    description TEXT,
+    unit_price DECIMAL(19,4) NOT NULL,
+    quantity INTEGER NOT NULL,
+    vat_rate DECIMAL(5,2) NOT NULL,
+    vat_amount DECIMAL(19,4) GENERATED ALWAYS AS (((unit_price * quantity) * vat_rate) / 100) STORED,
+    total_amount DECIMAL(19,4) GENERATED ALWAYS AS ((unit_price * quantity) + vat_amount) STORED
+);
+
+-- Credit Notes table
+CREATE TABLE credit_notes (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    tax_reg_id VARCHAR(26) REFERENCES tax_registrations(id),
+    sequence_number INTEGER NOT NULL,
+    full_number VARCHAR(100),
+    invoice_id VARCHAR(26) REFERENCES invoices(id),
+    issued_date DATE DEFAULT CURRENT_DATE,
+    reason VARCHAR(50) NOT NULL CHECK (reason IN ('RETURN', 'CANCELLED_ORDER', 'DISCOUNT', 'ERROR', 'OTHER')),
+    reason_details TEXT,
+    currency VARCHAR(3) DEFAULT 'USD',
+    subtotal DECIMAL(19,4),
+    vat_amount DECIMAL(19,4),
+    total_amount DECIMAL(19,4),
+    credit_status VARCHAR(20) DEFAULT 'DRAFT' CHECK (credit_status IN ('DRAFT', 'ISSUED', 'APPLIED', 'CANCELLED')),
+    UNIQUE (full_number)
+);
+
+-- Credit Note Lines table
+CREATE TABLE credit_note_lines (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    credit_note_id VARCHAR(26) REFERENCES credit_notes(id),
+    invoice_line_id VARCHAR(26) REFERENCES invoice_lines(id),
+    quantity INTEGER NOT NULL,
+    unit_price DECIMAL(19,4) NOT NULL,
+    vat_rate DECIMAL(5,2) NOT NULL,
+    vat_amount DECIMAL(19,4) GENERATED ALWAYS AS (((unit_price * quantity) * vat_rate) / 100) STORED,
+    total_amount DECIMAL(19,4) GENERATED ALWAYS AS ((unit_price * quantity) + vat_amount) STORED
+);
+
+-- Loyalty Programs table
+CREATE TABLE loyalty_programs (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    start_date DATE NOT NULL,
+    end_date DATE,
+    program_status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (program_status IN ('DRAFT', 'ACTIVE', 'SUSPENDED', 'COMPLETED', 'CANCELLED')),
+    point_ratio DECIMAL(5,2) DEFAULT 1.00,
+    max_points_per_transaction DECIMAL(10,2)
+);
+
+-- Tiers table
+CREATE TABLE tiers (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    loyalty_program_id VARCHAR(26) REFERENCES loyalty_programs(id),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    min_points_required INTEGER DEFAULT 0,
+    discount_percentage DECIMAL(5,2) DEFAULT 0.00,
+    priority_support BOOLEAN DEFAULT FALSE
+);
+
+-- Account Tiers table
+CREATE TABLE account_tiers (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_id VARCHAR(26) REFERENCES accounts(id),
+    tier_id VARCHAR(26) REFERENCES tiers(id),
+    start_date DATE DEFAULT CURRENT_DATE,
+    end_date DATE,
+    membership_status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (membership_status IN ('ACTIVE', 'EXPIRED', 'REVOKED'))
+);
+
+-- Rewards table
+CREATE TABLE rewards (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    loyalty_program_id VARCHAR(26) REFERENCES loyalty_programs(id),
+    name VARCHAR(255) NOT NULL,
+    description TEXT,
+    points_required INTEGER NOT NULL,
+    redemption_limit INTEGER,
+    remaining_redemptions INTEGER,
+    reward_status VARCHAR(20) DEFAULT 'ACTIVE' CHECK (reward_status IN ('DRAFT', 'ACTIVE', 'SUSPENDED', 'EXPIRED'))
+);
+
+-- Loyalty Transactions table
+CREATE TABLE loyalty_transactions (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    account_id VARCHAR(26) REFERENCES accounts(id),
+    txn_type VARCHAR(20) NOT NULL CHECK (txn_type IN ('EARN', 'BURN', 'ADJUST')),
+    points DECIMAL(10,2) NOT NULL,
+    reference_type VARCHAR(50),
+    reference_id VARCHAR(26),
+    balance_after DECIMAL(10,2),
+    description TEXT
+);
+
+-- Audit Log table
+CREATE TABLE audit_log (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    user_id VARCHAR(26),
+    action VARCHAR(100) NOT NULL,
+    resource_type VARCHAR(50) NOT NULL,
+    resource_id VARCHAR(26),
+    old_values JSONB,
+    new_values JSONB,
+    metadata JSONB,
+    entity_id VARCHAR(255) NOT NULL,
+    entity_type VARCHAR(50) NOT NULL
+);
+
+-- Idempotency Keys table
+CREATE TABLE idempotency_keys (
+    id VARCHAR(26) PRIMARY KEY,
+    created_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    key_value VARCHAR(255) NOT NULL UNIQUE,
+    request_method VARCHAR(10) NOT NULL,
+    request_path TEXT NOT NULL,
+    request_body TEXT,
+    response_status INTEGER,
+    response_body TEXT,
+    expires_at TIMESTAMP NOT NULL
+);
+
+-- Indexes
+CREATE INDEX idx_users_email ON users(email);
+CREATE INDEX idx_users_account_id ON users(account_id);
+CREATE INDEX idx_users_account_active ON users(account_id, is_active);
+CREATE INDEX idx_accounts_email ON accounts(email);
+CREATE INDEX idx_accounts_status ON accounts(status);
+CREATE INDEX idx_accounts_account_type ON accounts(account_type);
+CREATE INDEX idx_permissions_name ON permissions(permission_name);
+CREATE INDEX idx_permissions_active ON permissions(is_active);
+CREATE INDEX idx_roles_name ON roles(role_name);
+CREATE INDEX idx_roles_active ON roles(is_active);
+CREATE INDEX idx_products_name ON products USING GIN(to_tsvector('english', name));
+CREATE INDEX idx_products_status ON products(product_status);
+CREATE INDEX idx_products_vendor_id ON products(vendor_id);
+CREATE INDEX idx_products_sku ON products(sku);
+CREATE INDEX idx_products_slug ON products(slug);
+CREATE INDEX idx_products_slug_gin ON products USING GIN(to_tsvector('english', slug));
+CREATE INDEX idx_vendors_status ON vendors(vendor_status);
+CREATE INDEX idx_rfqs_account_id ON rfqs(account_id);
+CREATE INDEX idx_rfqs_status ON rfqs(rfq_status);
+CREATE INDEX idx_quotes_rfq_id ON quotes(rfq_id);
+CREATE INDEX idx_quotes_vendor_id ON quotes(vendor_id);
+CREATE INDEX idx_orders_account_id ON orders(account_id);
+CREATE INDEX idx_orders_status ON orders(order_status);
+CREATE INDEX idx_invoices_order_id ON invoices(order_id);
+CREATE INDEX idx_invoices_status ON invoices(invoice_status);
+CREATE INDEX idx_payments_order_id ON payments(order_id);
+CREATE INDEX idx_payments_status ON payments(payment_status);
+CREATE INDEX idx_media_assets_status ON media_assets(status);
+CREATE INDEX idx_media_assets_type ON media_assets(media_type);
+CREATE INDEX idx_feature_flags_name ON feature_flags(flag_name);
+
+-- Triggers to automatically update updated_at field
+CREATE OR REPLACE FUNCTION update_updated_at_column()
+RETURNS TRIGGER AS $$
 BEGIN
     NEW.updated_at = CURRENT_TIMESTAMP;
     RETURN NEW;
 END;
-$function$;
+$$ language 'plpgsql';
 
--- Tables
-CREATE TABLE public."account" (
-    "id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "type" character varying(50) DEFAULT 'INDIVIDUAL'::character varying NOT NULL,
-    "legal_name" character varying(255),
-    "tax_number" character varying(100),
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "company_email" character varying(255) NOT NULL,
-    "company_phone" character varying(50),
-    "company_address" text,
-    "tax_id" character varying(100),
-    "activated_at" timestamp without time zone,
-    "credit_limit" numeric(19,4),
-    "available_credit" numeric(19,4),
-    CONSTRAINT "account_pkey" PRIMARY KEY (id),
-    CONSTRAINT "uk_account_company_email" UNIQUE (company_email),
-    CONSTRAINT "account_status_check" CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'ACTIVE'::character varying, 'SUSPENDED'::character varying, 'REJECTED'::character varying]::text[])),
-    CONSTRAINT "account_type_check" CHECK (type::text = ANY (ARRAY['INDIVIDUAL'::character varying, 'COMPANY'::character varying]::text[]))
-);
-
-CREATE TABLE public."account_tier" (
-    "id" character varying(26) NOT NULL,
-    "account_id" character varying(26) NOT NULL,
-    "tier_id" character varying(26) NOT NULL,
-    "start_date" date DEFAULT CURRENT_DATE NOT NULL,
-    "end_date" date,
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "account_tier_pkey" PRIMARY KEY (id),
-    CONSTRAINT "account_tier_status_check" CHECK (status::text = ANY (ARRAY['ACTIVE'::character varying, 'EXPIRED'::character varying, 'REVOKED'::character varying]::text[]))
-);
-
-CREATE TABLE public."app_user" (
-    "id" character varying(26) NOT NULL,
-    "account_id" character varying(26) NOT NULL,
-    "first_name" character varying(100) NOT NULL,
-    "last_name" character varying(100) NOT NULL,
-    "email" character varying(255) NOT NULL,
-    "phone" character varying(50),
-    "role" character varying(50) DEFAULT 'USER'::character varying,
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "email_verified" boolean DEFAULT false,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "app_user_pkey" PRIMARY KEY (id),
-    CONSTRAINT "app_user_email_key" UNIQUE (email),
-    CONSTRAINT "app_user_status_check" CHECK (status::text = ANY (ARRAY['ACTIVE'::character varying, 'SUSPENDED'::character varying]::text[]))
-);
-
-CREATE TABLE public."audit_log" (
-    "id" character varying(26) NOT NULL,
-    "user_id" character varying(26),
-    "action" character varying(100) NOT NULL,
-    "resource_type" character varying(50) NOT NULL,
-    "resource_id" character varying(26),
-    "old_values" jsonb,
-    "new_values" jsonb,
-    "metadata" jsonb,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "entity_id" character varying(255) NOT NULL,
-    "entity_type" character varying(50) NOT NULL,
-    CONSTRAINT "audit_log_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."credit_limit" (
-    "id" character varying(26) NOT NULL,
-    "account_id" character varying(26) NOT NULL,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "limit_amount" numeric(19,4) NOT NULL,
-    "available_amount" numeric(19,4) NOT NULL,
-    "used_amount" numeric(19,4) DEFAULT 0.00,
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "approved_date" date,
-    "approved_by" character varying(26),
-    "notes" text,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "credit_limit_pkey" PRIMARY KEY (id),
-    CONSTRAINT "credit_limit_status_check" CHECK (status::text = ANY (ARRAY['ACTIVE'::character varying, 'SUSPENDED'::character varying, 'EXCEEDED'::character varying]::text[]))
-);
-
-CREATE TABLE public."credit_note" (
-    "id" character varying(26) NOT NULL,
-    "tax_reg_id" character varying(26) NOT NULL,
-    "sequence_number" integer NOT NULL,
-    "full_number" character varying(100),
-    "invoice_id" character varying(26) NOT NULL,
-    "issued_date" date DEFAULT CURRENT_DATE NOT NULL,
-    "reason" character varying(50) NOT NULL,
-    "reason_details" text,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "subtotal" numeric(19,4),
-    "vat_amount" numeric(19,4),
-    "total_amount" numeric(19,4),
-    "status" character varying(20) DEFAULT 'DRAFT'::character varying,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "credit_note_pkey" PRIMARY KEY (id),
-    CONSTRAINT "credit_note_full_number_key" UNIQUE (full_number),
-    CONSTRAINT "credit_note_reason_check" CHECK (reason::text = ANY (ARRAY['RETURN'::character varying, 'CANCELLED_ORDER'::character varying, 'DISCOUNT'::character varying, 'ERROR'::character varying, 'OTHER'::character varying]::text[])),
-    CONSTRAINT "credit_note_status_check" CHECK (status::text = ANY (ARRAY['DRAFT'::character varying, 'ISSUED'::character varying, 'APPLIED'::character varying, 'CANCELLED'::character varying]::text[]))
-);
-
-CREATE TABLE public."credit_note_line" (
-    "id" character varying(26) NOT NULL,
-    "credit_note_id" character varying(26) NOT NULL,
-    "invoice_line_id" character varying(26) NOT NULL,
-    "quantity" integer NOT NULL,
-    "unit_price" numeric(19,4) NOT NULL,
-    "vat_rate" numeric(5,2) NOT NULL,
-    "vat_amount" numeric(19,4) DEFAULT (((unit_price * (quantity)::numeric) * vat_rate) / (100)::numeric),
-    "total_amount" numeric(19,4) DEFAULT ((unit_price * (quantity)::numeric) + (((unit_price * (quantity)::numeric) * vat_rate) / (100)::numeric)),
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "credit_note_line_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."invoice" (
-    "id" character varying(26) NOT NULL,
-    "tax_reg_id" character varying(26) NOT NULL,
-    "sequence_number" integer NOT NULL,
-    "full_number" character varying(100),
-    "order_id" character varying(26) NOT NULL,
-    "issued_date" date DEFAULT CURRENT_DATE NOT NULL,
-    "due_date" date NOT NULL,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "subtotal" numeric(19,4),
-    "discount_amount" numeric(19,4),
-    "vat_amount" numeric(19,4),
-    "total_amount" numeric(19,4),
-    "status" character varying(20) DEFAULT 'DRAFT'::character varying,
-    "customer_name" character varying(255) NOT NULL,
-    "customer_tax_number" character varying(100),
-    "customer_address" jsonb,
-    "notes" text,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "invoice_pkey" PRIMARY KEY (id),
-    CONSTRAINT "invoice_full_number_key" UNIQUE (full_number),
-    CONSTRAINT "invoice_status_check" CHECK (status::text = ANY (ARRAY['DRAFT'::character varying, 'ISSUED'::character varying, 'PAID'::character varying, 'OVERDUE'::character varying, 'CANCELLED'::character varying]::text[]))
-);
-
-CREATE TABLE public."invoice_line" (
-    "id" character varying(26) NOT NULL,
-    "invoice_id" character varying(26) NOT NULL,
-    "order_line_id" character varying(26) NOT NULL,
-    "product_name" character varying(255) NOT NULL,
-    "description" text,
-    "unit_price" numeric(19,4) NOT NULL,
-    "quantity" integer NOT NULL,
-    "vat_rate" numeric(5,2) NOT NULL,
-    "vat_amount" numeric(19,4) DEFAULT (((unit_price * (quantity)::numeric) * vat_rate) / (100)::numeric),
-    "total_amount" numeric(19,4) DEFAULT ((unit_price * (quantity)::numeric) + (((unit_price * (quantity)::numeric) * vat_rate) / (100)::numeric)),
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "invoice_line_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."loyalty_program" (
-    "id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "description" text,
-    "start_date" date NOT NULL,
-    "end_date" date,
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "point_ratio" numeric(5,2) DEFAULT 1.00,
-    "max_points_per_transaction" numeric(10,2),
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "loyalty_program_pkey" PRIMARY KEY (id),
-    CONSTRAINT "loyalty_program_status_check" CHECK (status::text = ANY (ARRAY['DRAFT'::character varying, 'ACTIVE'::character varying, 'SUSPENDED'::character varying, 'COMPLETED'::character varying, 'CANCELLED'::character varying]::text[]))
-);
-
-CREATE TABLE public."loyalty_txn" (
-    "id" character varying(26) NOT NULL,
-    "account_id" character varying(26) NOT NULL,
-    "txn_type" character varying(20) NOT NULL,
-    "points" numeric(10,2) NOT NULL,
-    "reference_type" character varying(50),
-    "reference_id" character varying(26),
-    "balance_after" numeric(10,2),
-    "description" text,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "loyalty_txn_pkey" PRIMARY KEY (id),
-    CONSTRAINT "loyalty_txn_txn_type_check" CHECK (txn_type::text = ANY (ARRAY['EARN'::character varying, 'BURN'::character varying, 'ADJUST'::character varying]::text[]))
-);
-
-CREATE TABLE public."media_asset" (
-    "id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "filename" character varying(255) NOT NULL,
-    "file_path" character varying(1000) NOT NULL,
-    "mime_type" character varying(100),
-    "file_size" bigint,
-    "alt_text" character varying(255),
-    "title" character varying(255),
-    "caption" text,
-    "tags" text,
-    "media_type" character varying(20) NOT NULL,
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "is_primary" boolean DEFAULT false,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "media_asset_pkey" PRIMARY KEY (id),
-    CONSTRAINT "media_asset_media_type_check" CHECK (media_type::text = ANY (ARRAY['IMAGE'::character varying, 'VIDEO'::character varying, 'DOCUMENT'::character varying, 'OTHER'::character varying]::text[])),
-    CONSTRAINT "media_asset_status_check" CHECK (status::text = ANY (ARRAY['ACTIVE'::character varying, 'INACTIVE'::character varying, 'DELETED'::character varying]::text[]))
-);
-
-CREATE TABLE public."order_line" (
-    "id" character varying(26) NOT NULL,
-    "order_id" character varying(26) NOT NULL,
-    "product_id" character varying(26),
-    "product_name" character varying(255) NOT NULL,
-    "description" text,
-    "unit_price" numeric(19,4) NOT NULL,
-    "quantity" integer NOT NULL,
-    "total_price" numeric(19,4) DEFAULT (unit_price * (quantity)::numeric),
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "order_line_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."order_table" (
-    "id" character varying(26) NOT NULL,
-    "account_id" character varying(26) NOT NULL,
-    "quote_id" character varying(26),
-    "po_number" character varying(100),
-    "status" character varying(30) DEFAULT 'PENDING'::character varying,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "subtotal" numeric(19,4),
-    "tax_amount" numeric(19,4),
-    "shipping_amount" numeric(19,4),
-    "discount_amount" numeric(19,4),
-    "total_amount" numeric(19,4),
-    "billing_address" jsonb,
-    "shipping_address" jsonb,
-    "notes" text,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "order_table_pkey" PRIMARY KEY (id),
-    CONSTRAINT "order_table_status_check" CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'CONFIRMED'::character varying, 'PROCESSING'::character varying, 'SHIPPED'::character varying, 'DELIVERED'::character varying, 'CANCELLED'::character varying, 'RETURNED'::character varying]::text[]))
-);
-
-CREATE TABLE public."payment" (
-    "id" character varying(26) NOT NULL,
-    "order_id" character varying(26) NOT NULL,
-    "payment_method" character varying(50) NOT NULL,
-    "amount" numeric(19,4) NOT NULL,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "status" character varying(20) DEFAULT 'PENDING'::character varying,
-    "transaction_id" character varying(255),
-    "provider" character varying(50),
-    "provider_response" jsonb,
-    "captured_at" timestamp without time zone,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "payment_pkey" PRIMARY KEY (id),
-    CONSTRAINT "payment_status_check" CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'AUTHORIZED'::character varying, 'CAPTURED'::character varying, 'FAILED'::character varying, 'REFUNDED'::character varying, 'CANCELLED'::character varying]::text[]))
-);
-
-CREATE TABLE public."product" (
-    "id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "slug" character varying(255),
-    "description" text,
-    "short_description" character varying(500),
-    "sku" character varying(100),
-    "upc" character varying(50),
-    "gtin" character varying(50),
-    "mpn" character varying(100),
-    "brand" character varying(100),
-    "category_id" character varying(26),
-    "vendor_id" character varying(26) NOT NULL,
-    "status" character varying(20) DEFAULT 'DRAFT'::character varying,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "base_price" numeric(19,4),
-    "tax_class" character varying(50),
-    "meta_title" character varying(255),
-    "meta_description" character varying(500),
-    "meta_keywords" text,
-    "weight" numeric(10,3),
-    "dimensions" jsonb,
-    "packaging_info" jsonb,
-    "min_order_qty" integer DEFAULT 1,
-    "moq" integer,
-    "inventory_tracking" boolean DEFAULT false,
-    "inventory_qty" integer DEFAULT 0,
-    "inventory_status" character varying(20) DEFAULT 'IN_STOCK'::character varying,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "product_pkey" PRIMARY KEY (id),
-    CONSTRAINT "product_sku_key" UNIQUE (sku),
-    CONSTRAINT "product_slug_key" UNIQUE (slug),
-    CONSTRAINT "product_inventory_status_check" CHECK (inventory_status::text = ANY (ARRAY['IN_STOCK'::character varying, 'OUT_OF_STOCK'::character varying, 'BACKORDER'::character varying, 'DISCONTINUED'::character varying]::text[])),
-    CONSTRAINT "product_status_check" CHECK (status::text = ANY (ARRAY['DRAFT'::character varying, 'PUBLISHED'::character varying, 'UNPUBLISHED'::character varying, 'SUSPENDED'::character varying]::text[]))
-);
-
-CREATE TABLE public."product_attribute" (
-    "id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "display_name" character varying(255) NOT NULL,
-    "attribute_type" character varying(50) NOT NULL,
-    "is_required" boolean DEFAULT false,
-    "is_searchable" boolean DEFAULT false,
-    "is_filterable" boolean DEFAULT false,
-    "validation_rules" jsonb,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "product_attribute_pkey" PRIMARY KEY (id),
-    CONSTRAINT "product_attribute_attribute_type_check" CHECK (attribute_type::text = ANY (ARRAY['TEXT'::character varying, 'NUMBER'::character varying, 'BOOLEAN'::character varying, 'DATE'::character varying, 'SELECT'::character varying]::text[]))
-);
-
-CREATE TABLE public."product_attribute_value" (
-    "id" character varying(26) NOT NULL,
-    "product_id" character varying(26) NOT NULL,
-    "attribute_id" character varying(26) NOT NULL,
-    "value_text" text,
-    "value_number" numeric(19,4),
-    "value_boolean" boolean,
-    "value_date" timestamp without time zone,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "product_attribute_value_pkey" PRIMARY KEY (id),
-    CONSTRAINT "product_attribute_value_product_id_attribute_id_key" UNIQUE (product_id, attribute_id)
-);
-
-CREATE TABLE public."product_media" (
-    "id" character varying(26) NOT NULL,
-    "product_id" character varying(26) NOT NULL,
-    "media_asset_id" character varying(26) NOT NULL,
-    "sort_order" integer DEFAULT 0,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "product_media_pkey" PRIMARY KEY (id),
-    CONSTRAINT "product_media_product_id_media_asset_id_key" UNIQUE (product_id, media_asset_id)
-);
-
-CREATE TABLE public."quote" (
-    "id" character varying(26) NOT NULL,
-    "rfq_id" character varying(26) NOT NULL,
-    "vendor_id" character varying(26) NOT NULL,
-    "title" character varying(255) NOT NULL,
-    "description" text,
-    "status" character varying(20) DEFAULT 'DRAFT'::character varying,
-    "total_amount" numeric(19,4),
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "validity_days" integer DEFAULT 30,
-    "expiry_date" timestamp without time zone,
-    "accepted_at" timestamp without time zone,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "quoted_by" character varying(255) NOT NULL,
-    "quote_number" character varying(255) NOT NULL,
-    "valid_until" timestamp without time zone NOT NULL,
-    "freight_included" boolean DEFAULT false NOT NULL,
-    "tax_included" boolean DEFAULT false NOT NULL,
-    CONSTRAINT "quote_pkey" PRIMARY KEY (id),
-    CONSTRAINT "uk_quote_number" UNIQUE (quote_number),
-    CONSTRAINT "quote_status_check" CHECK (status::text = ANY (ARRAY['DRAFT'::character varying, 'SUBMITTED'::character varying, 'ACCEPTED'::character varying, 'REJECTED'::character varying, 'EXPIRED'::character varying]::text[]))
-);
-
-CREATE TABLE public."quote_line" (
-    "id" character varying(26) NOT NULL,
-    "quote_id" character varying(26) NOT NULL,
-    "rfq_line_id" character varying(26) NOT NULL,
-    "product_id" character varying(26),
-    "product_name" character varying(255) NOT NULL,
-    "description" text,
-    "unit_price" numeric(19,4) NOT NULL,
-    "quantity" integer NOT NULL,
-    "total_price" numeric(19,4) DEFAULT (unit_price * (quantity)::numeric),
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "line_total" numeric(19,4) NOT NULL,
-    "moq" integer DEFAULT 1 NOT NULL,
-    CONSTRAINT "quote_line_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."reward" (
-    "id" character varying(26) NOT NULL,
-    "loyalty_program_id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "description" text,
-    "points_required" integer NOT NULL,
-    "redemption_limit" integer,
-    "remaining_redemptions" integer,
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "reward_pkey" PRIMARY KEY (id),
-    CONSTRAINT "reward_status_check" CHECK (status::text = ANY (ARRAY['DRAFT'::character varying, 'ACTIVE'::character varying, 'SUSPENDED'::character varying, 'EXPIRED'::character varying]::text[]))
-);
-
-CREATE TABLE public."rfq" (
-    "id" character varying(26) NOT NULL,
-    "account_id" character varying(26) NOT NULL,
-    "title" character varying(255) NOT NULL,
-    "description" text,
-    "status" character varying(20) DEFAULT 'DRAFT'::character varying,
-    "expiry_date" timestamp without time zone,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "is_public" boolean DEFAULT false,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "contact_person" character varying(255) NOT NULL,
-    "contact_email" character varying(255) NOT NULL,
-    "tax_included" boolean DEFAULT false NOT NULL,
-    "created_by" character varying(255) NOT NULL,
-    CONSTRAINT "rfq_pkey" PRIMARY KEY (id),
-    CONSTRAINT "rfq_status_check" CHECK (status::text = ANY (ARRAY['DRAFT'::character varying, 'OPEN'::character varying, 'CLOSED'::character varying, 'EXPIRED'::character varying]::text[]))
-);
-
-CREATE TABLE public."rfq_line" (
-    "id" character varying(26) NOT NULL,
-    "rfq_id" character varying(26) NOT NULL,
-    "product_id" character varying(26),
-    "product_name" character varying(255) NOT NULL,
-    "description" text,
-    "quantity" integer NOT NULL,
-    "unit_of_measure" character varying(20) DEFAULT 'EA'::character varying,
-    "required_by" timestamp without time zone,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "product_specifications" text,
-    "brand_preference" character varying(255),
-    "quality_requirements" text,
-    CONSTRAINT "rfq_line_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."sequence_registry" (
-    "id" character varying(26) NOT NULL,
-    "tax_reg_id" character varying(26) NOT NULL,
-    "sequence_type" character varying(20) NOT NULL,
-    "prefix" character varying(20) NOT NULL,
-    "current_value" integer DEFAULT 0 NOT NULL,
-    "next_value" integer DEFAULT 1 NOT NULL,
-    "year" integer NOT NULL,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "sequence_registry_pkey" PRIMARY KEY (id),
-    CONSTRAINT "sequence_registry_tax_reg_id_sequence_type_year_key" UNIQUE (tax_reg_id, sequence_type, year),
-    CONSTRAINT "sequence_registry_sequence_type_check" CHECK (sequence_type::text = ANY (ARRAY['INVOICE'::character varying, 'CREDIT_NOTE'::character varying]::text[]))
-);
-
-CREATE TABLE public."tax_reg" (
-    "id" character varying(26) NOT NULL,
-    "legal_name" character varying(255) NOT NULL,
-    "tax_number" character varying(100) NOT NULL,
-    "address" jsonb NOT NULL,
-    "is_active" boolean DEFAULT true,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "tax_reg_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."tier" (
-    "id" character varying(26) NOT NULL,
-    "loyalty_program_id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "description" text,
-    "min_points_required" integer DEFAULT 0,
-    "discount_percentage" numeric(5,2) DEFAULT 0.00,
-    "priority_support" boolean DEFAULT false,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "tier_pkey" PRIMARY KEY (id)
-);
-
-CREATE TABLE public."vendor" (
-    "id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "description" text,
-    "contact_person" character varying(255),
-    "contact_email" character varying(255),
-    "contact_phone" character varying(50),
-    "address" jsonb,
-    "tax_number" character varying(100),
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "approval_date" timestamp without time zone,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "vendor_pkey" PRIMARY KEY (id),
-    CONSTRAINT "vendor_status_check" CHECK (status::text = ANY (ARRAY['PENDING'::character varying, 'ACTIVE'::character varying, 'SUSPENDED'::character varying, 'REJECTED'::character varying]::text[]))
-);
-
-CREATE TABLE public."wallet" (
-    "id" character varying(26) NOT NULL,
-    "account_id" character varying(26) NOT NULL,
-    "name" character varying(255) NOT NULL,
-    "balance" numeric(19,4) DEFAULT 0.00,
-    "currency" character varying(3) DEFAULT 'USD'::character varying,
-    "status" character varying(20) DEFAULT 'ACTIVE'::character varying,
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    "updated_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "wallet_pkey" PRIMARY KEY (id),
-    CONSTRAINT "wallet_status_check" CHECK (status::text = ANY (ARRAY['ACTIVE'::character varying, 'SUSPENDED'::character varying, 'CLOSED'::character varying]::text[]))
-);
-
-CREATE TABLE public."wallet_txn" (
-    "id" character varying(26) NOT NULL,
-    "wallet_id" character varying(26) NOT NULL,
-    "transaction_type" character varying(20) NOT NULL,
-    "amount" numeric(19,4) NOT NULL,
-    "reference_type" character varying(50) NOT NULL,
-    "reference_id" character varying(26),
-    "description" text,
-    "balance_after" numeric(19,4),
-    "created_at" timestamp without time zone DEFAULT CURRENT_TIMESTAMP,
-    CONSTRAINT "wallet_txn_pkey" PRIMARY KEY (id),
-    CONSTRAINT "wallet_txn_transaction_type_check" CHECK (transaction_type::text = ANY (ARRAY['CREDIT'::character varying, 'DEBIT'::character varying]::text[]))
-);
-
--- Foreign Keys
-ALTER TABLE public."account_tier" ADD CONSTRAINT "account_tier_account_id_fkey" FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE public."account_tier" ADD CONSTRAINT "account_tier_tier_id_fkey" FOREIGN KEY (tier_id) REFERENCES tier(id);
-ALTER TABLE public."app_user" ADD CONSTRAINT "app_user_account_id_fkey" FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE public."credit_limit" ADD CONSTRAINT "credit_limit_account_id_fkey" FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE public."credit_note" ADD CONSTRAINT "credit_note_invoice_id_fkey" FOREIGN KEY (invoice_id) REFERENCES invoice(id);
-ALTER TABLE public."credit_note" ADD CONSTRAINT "credit_note_tax_reg_id_fkey" FOREIGN KEY (tax_reg_id) REFERENCES tax_reg(id);
-ALTER TABLE public."credit_note_line" ADD CONSTRAINT "credit_note_line_credit_note_id_fkey" FOREIGN KEY (credit_note_id) REFERENCES credit_note(id) ON DELETE CASCADE;
-ALTER TABLE public."credit_note_line" ADD CONSTRAINT "credit_note_line_invoice_line_id_fkey" FOREIGN KEY (invoice_line_id) REFERENCES invoice_line(id);
-ALTER TABLE public."invoice" ADD CONSTRAINT "invoice_order_id_fkey" FOREIGN KEY (order_id) REFERENCES order_table(id);
-ALTER TABLE public."invoice" ADD CONSTRAINT "invoice_tax_reg_id_fkey" FOREIGN KEY (tax_reg_id) REFERENCES tax_reg(id);
-ALTER TABLE public."invoice_line" ADD CONSTRAINT "invoice_line_invoice_id_fkey" FOREIGN KEY (invoice_id) REFERENCES invoice(id) ON DELETE CASCADE;
-ALTER TABLE public."invoice_line" ADD CONSTRAINT "invoice_line_order_line_id_fkey" FOREIGN KEY (order_line_id) REFERENCES order_line(id);
-ALTER TABLE public."loyalty_txn" ADD CONSTRAINT "loyalty_txn_account_id_fkey" FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE public."order_line" ADD CONSTRAINT "order_line_order_id_fkey" FOREIGN KEY (order_id) REFERENCES order_table(id) ON DELETE CASCADE;
-ALTER TABLE public."order_line" ADD CONSTRAINT "order_line_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id);
-ALTER TABLE public."order_table" ADD CONSTRAINT "order_table_account_id_fkey" FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE public."order_table" ADD CONSTRAINT "order_table_quote_id_fkey" FOREIGN KEY (quote_id) REFERENCES quote(id);
-ALTER TABLE public."payment" ADD CONSTRAINT "payment_order_id_fkey" FOREIGN KEY (order_id) REFERENCES order_table(id);
-ALTER TABLE public."product" ADD CONSTRAINT "product_vendor_id_fkey" FOREIGN KEY (vendor_id) REFERENCES vendor(id);
-ALTER TABLE public."product_attribute_value" ADD CONSTRAINT "product_attribute_value_attribute_id_fkey" FOREIGN KEY (attribute_id) REFERENCES product_attribute(id);
-ALTER TABLE public."product_attribute_value" ADD CONSTRAINT "product_attribute_value_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE;
-ALTER TABLE public."product_media" ADD CONSTRAINT "product_media_media_asset_id_fkey" FOREIGN KEY (media_asset_id) REFERENCES media_asset(id) ON DELETE CASCADE;
-ALTER TABLE public."product_media" ADD CONSTRAINT "product_media_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id) ON DELETE CASCADE;
-ALTER TABLE public."quote" ADD CONSTRAINT "quote_rfq_id_fkey" FOREIGN KEY (rfq_id) REFERENCES rfq(id);
-ALTER TABLE public."quote" ADD CONSTRAINT "quote_vendor_id_fkey" FOREIGN KEY (vendor_id) REFERENCES vendor(id);
-ALTER TABLE public."quote_line" ADD CONSTRAINT "quote_line_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id);
-ALTER TABLE public."quote_line" ADD CONSTRAINT "quote_line_quote_id_fkey" FOREIGN KEY (quote_id) REFERENCES quote(id) ON DELETE CASCADE;
-ALTER TABLE public."quote_line" ADD CONSTRAINT "quote_line_rfq_line_id_fkey" FOREIGN KEY (rfq_line_id) REFERENCES rfq_line(id);
-ALTER TABLE public."reward" ADD CONSTRAINT "reward_loyalty_program_id_fkey" FOREIGN KEY (loyalty_program_id) REFERENCES loyalty_program(id);
-ALTER TABLE public."rfq" ADD CONSTRAINT "rfq_account_id_fkey" FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE public."rfq_line" ADD CONSTRAINT "rfq_line_product_id_fkey" FOREIGN KEY (product_id) REFERENCES product(id);
-ALTER TABLE public."rfq_line" ADD CONSTRAINT "rfq_line_rfq_id_fkey" FOREIGN KEY (rfq_id) REFERENCES rfq(id) ON DELETE CASCADE;
-ALTER TABLE public."sequence_registry" ADD CONSTRAINT "sequence_registry_tax_reg_id_fkey" FOREIGN KEY (tax_reg_id) REFERENCES tax_reg(id);
-ALTER TABLE public."tier" ADD CONSTRAINT "tier_loyalty_program_id_fkey" FOREIGN KEY (loyalty_program_id) REFERENCES loyalty_program(id);
-ALTER TABLE public."wallet" ADD CONSTRAINT "wallet_account_id_fkey" FOREIGN KEY (account_id) REFERENCES account(id);
-ALTER TABLE public."wallet_txn" ADD CONSTRAINT "wallet_txn_wallet_id_fkey" FOREIGN KEY (wallet_id) REFERENCES wallet(id);
-
--- Indexes
-CREATE INDEX idx_invoice_order_id ON public.invoice USING btree (order_id);
-CREATE INDEX idx_invoice_status ON public.invoice USING btree (status);
-CREATE INDEX idx_media_asset_status ON public.media_asset USING btree (status);
-CREATE INDEX idx_media_asset_type ON public.media_asset USING btree (media_type);
-CREATE INDEX idx_order_account_id ON public.order_table USING btree (account_id);
-CREATE INDEX idx_order_status ON public.order_table USING btree (status);
-CREATE INDEX idx_payment_order_id ON public.payment USING btree (order_id);
-CREATE INDEX idx_payment_status ON public.payment USING btree (status);
-CREATE INDEX idx_product_category ON public.product USING btree (category_id);
-CREATE INDEX idx_product_description_gin ON public.product USING gin (to_tsvector('english'::regconfig, description));
-CREATE INDEX idx_product_name_gin ON public.product USING gin (to_tsvector('english'::regconfig, (name)::text));
-CREATE INDEX idx_product_sku ON public.product USING btree (sku);
-CREATE INDEX idx_product_slug ON public.product USING btree (slug);
-CREATE INDEX idx_product_slug_gin ON public.product USING gin (to_tsvector('english'::regconfig, (slug)::text));
-CREATE INDEX idx_product_status ON public.product USING btree (status);
-CREATE INDEX idx_product_vendor_id ON public.product USING btree (vendor_id);
-CREATE INDEX idx_product_attribute_name ON public.product_attribute USING btree (name);
-CREATE INDEX idx_product_attribute_type ON public.product_attribute USING btree (attribute_type);
-CREATE INDEX idx_quote_rfq_id ON public.quote USING btree (rfq_id);
-CREATE INDEX idx_quote_vendor_id ON public.quote USING btree (vendor_id);
-CREATE INDEX idx_rfq_account_id ON public.rfq USING btree (account_id);
-CREATE INDEX idx_rfq_status ON public.rfq USING btree (status);
-CREATE INDEX idx_vendor_status ON public.vendor USING btree (status);
-
--- Triggers
-CREATE TRIGGER update_account_updated_at BEFORE UPDATE ON account FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_app_user_updated_at BEFORE UPDATE ON app_user FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_credit_limit_updated_at BEFORE UPDATE ON credit_limit FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_invoice_updated_at BEFORE UPDATE ON invoice FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_loyalty_program_updated_at BEFORE UPDATE ON loyalty_program FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_media_asset_updated_at BEFORE UPDATE ON media_asset FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_order_updated_at BEFORE UPDATE ON order_table FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_product_updated_at BEFORE UPDATE ON product FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_product_attribute_updated_at BEFORE UPDATE ON product_attribute FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_product_attribute_value_updated_at BEFORE UPDATE ON product_attribute_value FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_quote_updated_at BEFORE UPDATE ON quote FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_rfq_updated_at BEFORE UPDATE ON rfq FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_tier_updated_at BEFORE UPDATE ON tier FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_vendor_updated_at BEFORE UPDATE ON vendor FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
-CREATE TRIGGER update_wallet_updated_at BEFORE UPDATE ON wallet FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_accounts_updated_at BEFORE UPDATE ON accounts FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_users_updated_at BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_permissions_updated_at BEFORE UPDATE ON permissions FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_roles_updated_at BEFORE UPDATE ON roles FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_vendors_updated_at BEFORE UPDATE ON vendors FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_products_updated_at BEFORE UPDATE ON products FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_product_attributes_updated_at BEFORE UPDATE ON product_attributes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_product_attribute_values_updated_at BEFORE UPDATE ON product_attribute_values FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_media_assets_updated_at BEFORE UPDATE ON media_assets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_rfqs_updated_at BEFORE UPDATE ON rfqs FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_quotes_updated_at BEFORE UPDATE ON quotes FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_orders_updated_at BEFORE UPDATE ON orders FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_invoices_updated_at BEFORE UPDATE ON invoices FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_credit_limits_updated_at BEFORE UPDATE ON credit_limits FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_wallets_updated_at BEFORE UPDATE ON wallets FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_loyalty_programs_updated_at BEFORE UPDATE ON loyalty_programs FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_tiers_updated_at BEFORE UPDATE ON tiers FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_rewards_updated_at BEFORE UPDATE ON rewards FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_sequence_registry_updated_at BEFORE UPDATE ON sequence_registry FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_tax_registrations_updated_at BEFORE UPDATE ON tax_registrations FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
+CREATE TRIGGER update_feature_flags_updated_at BEFORE UPDATE ON feature_flags FOR EACH ROW EXECUTE FUNCTION update_updated_at_column();
