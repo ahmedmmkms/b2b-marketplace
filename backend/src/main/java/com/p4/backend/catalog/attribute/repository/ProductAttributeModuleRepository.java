@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductAttributeRepository extends JpaRepository<ProductAttribute, String> {
+public interface ProductAttributeModuleRepository extends JpaRepository<ProductAttribute, String> {
     List<ProductAttribute> findByIsSearchable(Boolean isSearchable);
     List<ProductAttribute> findByIsFilterable(Boolean isFilterable);
     List<ProductAttribute> findByAttributeType(ProductAttribute.AttributeType attributeType);

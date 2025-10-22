@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface VendorRepository extends JpaRepository<Vendor, String> {
+public interface VendorModuleRepository extends JpaRepository<Vendor, String> {
     List<Vendor> findByVendorStatus(Vendor.VendorStatus vendorStatus);
     Optional<Vendor> findByBusinessName(String businessName);
     List<Vendor> findByKycVerified(Boolean kycVerified);

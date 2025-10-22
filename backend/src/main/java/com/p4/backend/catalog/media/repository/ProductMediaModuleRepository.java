@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductMediaRepository extends JpaRepository<ProductMedia, String> {
+public interface ProductMediaModuleRepository extends JpaRepository<ProductMedia, String> {
     List<ProductMedia> findByProductId(String productId);
     List<ProductMedia> findByMediaAssetId(String mediaAssetId);
     List<ProductMedia> findByIsPrimary(Boolean isPrimary);

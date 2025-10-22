@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface MediaAssetRepository extends JpaRepository<MediaAsset, String> {
+public interface MediaAssetModuleRepository extends JpaRepository<MediaAsset, String> {
     List<MediaAsset> findByStatus(MediaAsset.Status status);
     List<MediaAsset> findByMediaType(MediaAsset.MediaType mediaType);
     List<MediaAsset> findByIsPrimary(Boolean isPrimary);

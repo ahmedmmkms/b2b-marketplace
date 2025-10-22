@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductModuleRepository extends JpaRepository<Product, String> {
     List<Product> findByIsActive(Boolean isActive);
     Optional<Product> findBySku(String sku);
     Optional<Product> findBySlug(String slug);

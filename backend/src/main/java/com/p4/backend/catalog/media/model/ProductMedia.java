@@ -8,7 +8,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "MediaProductMedia")
 @Table(name = "product_media", uniqueConstraints = {
     @UniqueConstraint(columnNames = {"product_id", "media_asset_id"})
 })

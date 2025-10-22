@@ -7,7 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-@Entity
+@Entity(name = "AttributeProductAttribute")
 @Table(name = "product_attributes")
 @Data
 @Builder

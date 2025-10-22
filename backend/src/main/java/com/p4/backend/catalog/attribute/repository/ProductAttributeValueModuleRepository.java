@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ProductAttributeValueRepository extends JpaRepository<ProductAttributeValue, String> {
+public interface ProductAttributeValueModuleRepository extends JpaRepository<ProductAttributeValue, String> {
     List<ProductAttributeValue> findByProductAttributeId(String productAttributeId);
     List<ProductAttributeValue> findByIsDefault(Boolean isDefault);
 }
