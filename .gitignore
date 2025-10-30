@@ -45,3 +45,6 @@ env_setup.bat
 *.log
 **/*.log
 b2b-marketplace.*.log
+
+### Next.js ###
+frontend/.next/
