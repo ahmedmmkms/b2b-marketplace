@@ -27,14 +27,15 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler(ResponseStatusException.class)
     public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex) {
+        HttpStatus statusCode = (HttpStatus) ex.getStatusCode();
         Map<String, Object> body = new HashMap<>();
         body.put("type", "about:blank");
-        body.put("title", getStatusText(ex.getStatusCode()));
-        body.put("status", ex.getStatusCode().value());
+        body.put("title", getStatusText(statusCode));
+        body.put("status", statusCode.value());
         body.put("detail", ex.getReason());
         body.put("timestamp", Instant.now().toString());
 
-        return new ResponseEntity<>(body, ex.getStatusCode());
+        return new ResponseEntity<>(body, statusCode);
     }
 
     private String getStatusText(HttpStatus status) {
