@@ -1,14 +1,1 @@
-{
-  "/_not-found/page": "app/_not-found/page.js",
-  "/page": "app/page.js",
-  "/[lng]/catalog/page": "app/[lng]/catalog/page.js",
-  "/[lng]/admin/page": "app/[lng]/admin/page.js",
-  "/[lng]/invoices/page": "app/[lng]/invoices/page.js",
-  "/[lng]/loyalty/page": "app/[lng]/loyalty/page.js",
-  "/[lng]/quotes/page": "app/[lng]/quotes/page.js",
-  "/[lng]/page": "app/[lng]/page.js",
-  "/[lng]/orders/page": "app/[lng]/orders/page.js",
-  "/[lng]/rfq/page": "app/[lng]/rfq/page.js",
-  "/[lng]/wallet/page": "app/[lng]/wallet/page.js",
-  "/[lng]/product/[id]/page": "app/[lng]/product/[id]/page.js"
-}
+{}
