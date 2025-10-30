@@ -11,6 +11,7 @@
 - All endpoints must match `openapi.yaml` exactly.  
 - Use ULIDs as strings; no DB-generated IDs.  
 - Return RFC7807 error bodies for 4xx/5xx.
+- Mention if any env variables or secrets are required to be added at deployment 
 
 ---
 
