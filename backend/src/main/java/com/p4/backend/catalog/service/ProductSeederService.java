@@ -34,11 +34,12 @@ public class ProductSeederService {
         
         try {
             // Check if vendor organization already exists
-            Optional<Organization> existingVendorOpt = organizationRepository.findByRole(Organization.Role.vendor);
+            List<Organization> vendorOrgs = organizationRepository.findByRole(Organization.Role.vendor);
             
             Organization vendor;
-            if (existingVendorOpt.isPresent()) {
-                vendor = existingVendorOpt.get();
+            if (!vendorOrgs.isEmpty()) {
+                // Use the first vendor organization we find
+                vendor = vendorOrgs.get(0);
                 logger.info("Using existing vendor organization: {} with ID: {}", vendor.getName(), vendor.getId());
             } else {
                 // Create a new vendor organization
