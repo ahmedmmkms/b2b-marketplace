@@ -1,6 +1,6 @@
 -- ========== RFQ / Quotes Tables ==========
 
-CREATE TABLE rfqs (
+CREATE TABLE IF NOT EXISTS rfqs (
   id            ulid PRIMARY KEY,
   buyer_id      ulid NOT NULL REFERENCES organizations(id) ON DELETE RESTRICT,
   buyer_user_id ulid NOT NULL REFERENCES users(id) ON DELETE RESTRICT,
@@ -12,11 +12,16 @@ CREATE TABLE rfqs (
   created_at    timestamptz NOT NULL DEFAULT now(),
   updated_at    timestamptz NOT NULL DEFAULT now()
 );
-CREATE INDEX rfqs_buyer_idx ON rfqs(buyer_id);
-CREATE TRIGGER rfqs_set_updated_at
-BEFORE UPDATE ON rfqs FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE INDEX IF NOT EXISTS rfqs_buyer_idx ON rfqs(buyer_id);
+DO $$ 
+BEGIN 
+   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'rfqs_set_updated_at') THEN 
+      CREATE TRIGGER rfqs_set_updated_at
+      BEFORE UPDATE ON rfqs FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+   END IF; 
+END $$;
 
-CREATE TABLE rfq_lines (
+CREATE TABLE IF NOT EXISTS rfq_lines (
   id            ulid PRIMARY KEY,
   rfq_id        ulid NOT NULL REFERENCES rfqs(id) ON DELETE CASCADE,
   product_id    ulid, -- optional: template product; vendors can substitute
@@ -27,11 +32,16 @@ CREATE TABLE rfq_lines (
   created_at    timestamptz NOT NULL DEFAULT now(),
   updated_at    timestamptz NOT NULL DEFAULT now()
 );
-CREATE INDEX rfq_lines_rfq_idx ON rfq_lines(rfq_id);
-CREATE TRIGGER rfq_lines_set_updated_at
-BEFORE UPDATE ON rfq_lines FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE INDEX IF NOT EXISTS rfq_lines_rfq_idx ON rfq_lines(rfq_id);
+DO $$ 
+BEGIN 
+   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'rfq_lines_set_updated_at') THEN 
+      CREATE TRIGGER rfq_lines_set_updated_at
+      BEFORE UPDATE ON rfq_lines FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+   END IF; 
+END $$;
 
-CREATE TABLE quotes (
+CREATE TABLE IF NOT EXISTS quotes (
   id            ulid PRIMARY KEY,
   rfq_id        ulid NOT NULL REFERENCES rfqs(id) ON DELETE CASCADE,
   vendor_id     ulid NOT NULL REFERENCES organizations(id) ON DELETE RESTRICT,
@@ -47,11 +57,16 @@ CREATE TABLE quotes (
   updated_at    timestamptz NOT NULL DEFAULT now(),
   UNIQUE(rfq_id, vendor_id) -- one quote per vendor per RFQ in MVP
 );
-CREATE INDEX quotes_rfq_idx ON quotes(rfq_id);
-CREATE TRIGGER quotes_set_updated_at
-BEFORE UPDATE ON quotes FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE INDEX IF NOT EXISTS quotes_rfq_idx ON quotes(rfq_id);
+DO $$ 
+BEGIN 
+   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'quotes_set_updated_at') THEN 
+      CREATE TRIGGER quotes_set_updated_at
+      BEFORE UPDATE ON quotes FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+   END IF; 
+END $$;
 
-CREATE TABLE quote_lines (
+CREATE TABLE IF NOT EXISTS quote_lines (
   id            ulid PRIMARY KEY,
   quote_id      ulid NOT NULL REFERENCES quotes(id) ON DELETE CASCADE,
   rfq_line_id   ulid NOT NULL REFERENCES rfq_lines(id) ON DELETE RESTRICT,
@@ -66,13 +81,19 @@ CREATE TABLE quote_lines (
   created_at    timestamptz NOT NULL DEFAULT now(),
   updated_at    timestamptz NOT NULL DEFAULT now()
 );
-CREATE INDEX quote_lines_quote_idx ON quote_lines(quote_id);
-CREATE TRIGGER quote_lines_set_updated_at
-BEFORE UPDATE ON quote_lines FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE INDEX IF NOT EXISTS quote_lines_quote_idx ON quote_lines(quote_id);
+DO $$ 
+BEGIN 
+   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'quote_lines_set_updated_at') THEN 
+      CREATE TRIGGER quote_lines_set_updated_at
+      BEFORE UPDATE ON quote_lines FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+   END IF; 
+END $$;
 
 -- ========== Helpful Views ==========
 
-CREATE VIEW rfq_quote_summary AS
+-- For views, we use CREATE OR REPLACE to make them idempotent
+CREATE OR REPLACE VIEW rfq_quote_summary AS
 SELECT
   r.id AS rfq_id,
   count(q.id) AS quote_count,

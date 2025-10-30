@@ -17,7 +17,7 @@ END$$;
 
 -- ========== Core Tables ==========
 
-CREATE TABLE organizations (
+CREATE TABLE IF NOT EXISTS organizations (
   id            ulid PRIMARY KEY,
   name          text NOT NULL,
   role          text NOT NULL CHECK (role IN ('buyer','vendor','ops')),
@@ -25,10 +25,15 @@ CREATE TABLE organizations (
   created_at    timestamptz NOT NULL DEFAULT now(),
   updated_at    timestamptz NOT NULL DEFAULT now()
 );
-CREATE TRIGGER organizations_set_updated_at
-BEFORE UPDATE ON organizations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+DO $$ 
+BEGIN 
+   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'organizations_set_updated_at') THEN 
+      CREATE TRIGGER organizations_set_updated_at
+      BEFORE UPDATE ON organizations FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+   END IF; 
+END $$;
 
-CREATE TABLE users (
+CREATE TABLE IF NOT EXISTS users (
   id            ulid PRIMARY KEY,
   org_id        ulid NOT NULL REFERENCES organizations(id) ON DELETE RESTRICT,
   email         citext UNIQUE NOT NULL,
@@ -39,6 +44,11 @@ CREATE TABLE users (
   created_at    timestamptz NOT NULL DEFAULT now(),
   updated_at    timestamptz NOT NULL DEFAULT now()
 );
-CREATE INDEX users_org_idx ON users(org_id);
-CREATE TRIGGER users_set_updated_at
-BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+CREATE INDEX IF NOT EXISTS users_org_idx ON users(org_id);
+DO $$ 
+BEGIN 
+   IF NOT EXISTS (SELECT 1 FROM pg_trigger WHERE tgname = 'users_set_updated_at') THEN 
+      CREATE TRIGGER users_set_updated_at
+      BEFORE UPDATE ON users FOR EACH ROW EXECUTE FUNCTION set_updated_at();
+   END IF; 
+END $$;
