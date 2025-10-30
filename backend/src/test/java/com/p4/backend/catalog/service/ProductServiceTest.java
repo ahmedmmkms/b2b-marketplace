@@ -16,6 +16,7 @@ import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -38,7 +39,7 @@ class ProductServiceTest {
     @BeforeEach
     void setUp() {
         productService = new ProductService();
-        productService.productRepository = productRepository;
+        ReflectionTestUtils.setField(productService, "productRepository", productRepository);
     }
 
     @Test
