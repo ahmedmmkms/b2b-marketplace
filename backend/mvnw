@@ -1,0 +1,136 @@
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+# ----------------------------------------------------------------------------
+
+# OS specific support (must be 'true' or 'false').
+cygwin=false;
+case "$(uname)" in
+    CYGWIN* )
+        cygwin=true
+        ;;
+esac
+
+# For Cygwin, ensure paths are in unix format before anything is touched
+if $cygwin ; then
+    [ -n "$M2_HOME" ] &&
+        M2_HOME=$(cygpath --unix "$M2_HOME")
+    [ -n "$JAVA_HOME" ] &&
+        JAVA_HOME=$(cygpath --unix "$JAVA_HOME")
+    [ -n "$PROJECT_HOME" ] &&
+        PROJECT_HOME=$(cygpath --unix "$PROJECT_HOME")
+fi
+
+# Attempt to set JAVA_HOME if it's not already set
+if [ -z "$JAVA_HOME" ] ; then
+    if [ -r "/etc/gentoo-release" ] ; then
+        JAVA_HOME=$(java-config --jre-home)
+    fi
+fi
+
+# Set up default values
+if [ -z "$MVN_CMD" ] ; then
+    MVN_CMD="mvn"
+fi
+
+# If JAVA_HOME is not set, try to find it
+if [ -z "$JAVA_HOME" ] ; then
+    # Try to find java in various common locations
+    java_exec=$(which java)
+    if [ -x "$java_exec" ] ; then
+        # Follow symlinks to find actual java location
+        while [ -h "$java_exec" ]; do
+            ls=$(ls -ld "$java_exec")
+            link=$(expr "$ls" : '.*-> \(.*\)$')
+            case $link in
+                /*)
+                    java_exec=$link
+                    ;;
+                *)
+                    java_exec=$(dirname "$java_exec")/$link
+                    ;;
+            esac
+        done
+
+        # Get the directory that contains java
+        java_dir=$(dirname "$java_exec")
+        # For many systems, java is in $JAVA_HOME/bin/java
+        java_home_dir=$(dirname "$java_dir")
+        # Check if this looks like a JDK installation
+        if [ -d "$java_home_dir/lib" ] || [ -d "$java_home_dir/jre/lib" ]; then
+            JAVA_HOME=$java_home_dir
+        fi
+    fi
+fi
+
+# If we still don't have JAVA_HOME, error out
+if [ -z "$JAVA_HOME" ] ; then
+    echo "The JAVA_HOME environment variable is not defined correctly"
+    echo "This environment variable is needed to run this program"
+    echo "NB: JAVA_HOME should point to a JDK not a JRE"
+    exit 1
+fi
+
+# Find the project base dir, i.e. the directory that contains the folder ".mvn".
+# Fallback to current working directory if not found.
+
+if [ -z "$MAVEN_PROJECTBASEDIR" ] ; then
+    # From the current directory, check if .mvn exists
+    if [ -d ".mvn" ]; then
+        # Use current directory as project base
+        MAVEN_PROJECTBASEDIR=$(pwd)
+    else
+        # Go up directories until we find .mvn
+        ORIGINAL_DIR=$(pwd)
+        while [ ! -d ".mvn" ] ; do
+            cd ..
+            if [ "$(pwd)" = "/" ]; then
+                # Reached root, no .mvn found
+                cd "$ORIGINAL_DIR"
+                break
+            fi
+        done
+        MAVEN_PROJECTBASEDIR=$(pwd)
+        cd "$ORIGINAL_DIR"
+    fi
+fi
+
+# Set up wrapper JAR and launcher
+WRAPPER_JAR="$MAVEN_PROJECTBASEDIR/.mvn/wrapper/maven-wrapper.jar"
+WRAPPER_LAUNCHER="org.apache.maven.wrapper.MavenWrapperMain"
+
+# If wrapper jar doesn't exist, try to download it
+if [ ! -f "$WRAPPER_JAR" ] ; then
+    echo "Could not find maven wrapper jar: $WRAPPER_JAR"
+    echo "This is needed to run Maven from this script"
+    exit 1
+fi
+
+# Define the command line arguments to pass to Maven
+MAVEN_CMD_LINE_ARGS="$MAVEN_CONFIG"
+for arg in "$@" ; do
+    MAVEN_CMD_LINE_ARGS="$MAVEN_CMD_LINE_ARGS \"$arg\""
+done
+
+# Execute Maven
+exec "$JAVA_HOME/bin/java" \
+    -Dmaven.home="${M2_HOME:-/usr/share/maven}" \
+    -Dmaven.multiModuleProjectDirectory="$MAVEN_PROJECTBASEDIR" \
+    -Dmaven.env="wrapper" \
+    -cp "$WRAPPER_JAR" \
+    $WRAPPER_LAUNCHER $MAVEN_CMD_LINE_ARGS
