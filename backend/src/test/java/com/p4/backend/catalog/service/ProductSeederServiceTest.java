@@ -12,9 +12,7 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
-import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
@@ -43,7 +41,7 @@ class ProductSeederServiceTest {
     void shouldCreateVendorIfNotExists() {
         // Given
         String csvPath = "test.csv";
-        when(organizationRepository.findByRole(Organization.Role.vendor)).thenReturn(Optional.empty());
+        when(organizationRepository.findByRole(Organization.Role.vendor)).thenReturn(List.of()); // Return empty list
         when(organizationRepository.save(any(Organization.class))).thenAnswer(invocation -> invocation.getArgument(0));
         when(productRepository.findByVendorId(any(String.class))).thenReturn(List.of());
 
@@ -60,7 +58,7 @@ class ProductSeederServiceTest {
         // Given
         String csvPath = "test.csv";
         Organization existingVendor = new Organization("test-id", "Existing Vendor", Organization.Role.vendor);
-        when(organizationRepository.findByRole(Organization.Role.vendor)).thenReturn(Optional.of(existingVendor));
+        when(organizationRepository.findByRole(Organization.Role.vendor)).thenReturn(List.of(existingVendor));
 
         // When
         productSeederService.seedData(csvPath);
@@ -74,7 +72,7 @@ class ProductSeederServiceTest {
     void shouldSaveNewProducts() {
         // Given
         Organization vendor = new Organization("vendor-id", "Test Vendor", Organization.Role.vendor);
-        when(organizationRepository.findByRole(Organization.Role.vendor)).thenReturn(Optional.of(vendor));
+        when(organizationRepository.findByRole(Organization.Role.vendor)).thenReturn(List.of(vendor));
         when(productRepository.findByVendorId("vendor-id")).thenReturn(List.of()); // No existing products
         
         // When
