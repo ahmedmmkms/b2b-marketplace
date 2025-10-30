@@ -16,11 +16,11 @@ import java.util.Objects;
 public class Product {
     
     @Id
-    @Column(name = "id", nullable = false, length = 26)
+    @Column(name = "id", nullable = false, columnDefinition = "char(26)")
     private String id;
     
     @NotNull
-    @Column(name = "vendor_id", nullable = false, length = 26)
+    @Column(name = "vendor_id", nullable = false, columnDefinition = "char(26)")
     private String vendorId;
     
     @NotNull

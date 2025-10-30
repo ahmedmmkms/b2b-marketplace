@@ -13,7 +13,7 @@ import java.util.Objects;
 public class Organization {
     
     @Id
-    @Column(name = "id", nullable = false, length = 26)
+    @Column(name = "id", nullable = false, columnDefinition = "char(26)")
     private String id;
     
     @NotNull
