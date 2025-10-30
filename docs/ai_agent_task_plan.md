@@ -61,7 +61,7 @@
 **Steps:** Validate `vendorId`, `sku`, `name`; upsert on same `(vendorId, sku)` is rejected with 409.  
 **DoD:** 201 with product JSON; 409 on duplicate.
 
-### T9. Angular public catalog page
+### T9. React public catalog page
 **Inputs:** T5/T6.  
 **Steps:** Build `CatalogListComponent` (grid, search input); `CatalogDetailComponent`.  
 **DoD:** List renders cards; detail route shows fields from API.

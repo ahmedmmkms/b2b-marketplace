@@ -1,7 +1,7 @@
 # Mini‑MVP Sprint Plan (3 Sprints, ≤3 Stories Each)
 
 **Scope:** Catalog → RFQ → Quote → Order → Wallet Pay (feature‑flagged exposure)  
-**Stack:** Spring Boot 3 (Java 21), Postgres, Redis, R2/B2 object storage, Angular 18, JWT, ULIDs, Micrometer.  
+**Stack:** Spring Boot 3 (Java 21), Postgres, Redis, R2/B2 object storage, React, JWT, ULIDs, Micrometer.  
 **Principles:** ruthless scope control, one happy path per flow, observable from day 1, flags everywhere.
 
 ---

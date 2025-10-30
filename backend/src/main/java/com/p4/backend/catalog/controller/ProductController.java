@@ -1,9 +1,12 @@
 package com.p4.backend.catalog.controller;
 
 import com.p4.backend.catalog.model.Product;
+import com.p4.backend.catalog.model.ProductCreate;
 import com.p4.backend.catalog.service.ProductService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,5 +49,14 @@ public class ProductController {
     public ResponseEntity<Product> getProduct(@PathVariable String id) {
         Product product = productService.getProductById(id);
         return ResponseEntity.ok(product);
+    }
+    
+    /**
+     * Create a new product
+     */
+    @PostMapping
+    public ResponseEntity<Product> createProduct(@Valid @RequestBody ProductCreate productCreate) {
+        Product product = productService.createProduct(productCreate);
+        return ResponseEntity.status(HttpStatus.CREATED).body(product);
     }
 }

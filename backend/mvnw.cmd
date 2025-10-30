@@ -107,7 +107,7 @@ set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
 
 %JAVA_HOME%\bin\java %JVM_CONFIG_MAVEN_PROPS% ^
   -classpath %WRAPPER_JAR% ^
-  "-Dmaven.home=${M2_HOME}" ^
+  "-Dmaven.home=%M2_HOME%" ^
   "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" ^
   "-Dmaven.env=wrapper" ^
   %WRAPPER_LAUNCHER% %MAVEN_CONFIG% %*

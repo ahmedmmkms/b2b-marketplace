@@ -1,8 +1,10 @@
 package com.p4.backend.catalog.service;
 
 import com.p4.backend.catalog.model.Product;
+import com.p4.backend.catalog.model.ProductCreate;
 import com.p4.backend.catalog.repository.ProductRepository;
 import com.p4.backend.common.ProblemDetailException;
+import com.p4.backend.common.ULIDGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -10,8 +12,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
@@ -65,5 +69,42 @@ public class ProductService {
                 "Product with id '" + id + "' does not exist or is not active"
             );
         }
+    }
+    
+    /**
+     * Create a new product
+     * @param productCreate Request body containing product details
+     * @return Created product
+     */
+    @Transactional
+    public Product createProduct(ProductCreate productCreate) {
+        // Check if a product with the same vendorId and sku already exists
+        Optional<Product> existingProduct = productRepository.findByVendorIdAndSku(
+            productCreate.getVendorId(), productCreate.getSku());
+        
+        if (existingProduct.isPresent()) {
+            throw new ProblemDetailException(
+                HttpStatus.CONFLICT, 
+                "https://api.example.com/errors/product-conflict", 
+                "Product already exists", 
+                "A product with vendorId '" + productCreate.getVendorId() + 
+                "' and sku '" + productCreate.getSku() + "' already exists"
+            );
+        }
+        
+        // Create new product
+        Product product = new Product();
+        product.setId(ULIDGenerator.generateULID());
+        product.setVendorId(productCreate.getVendorId());
+        product.setSku(productCreate.getSku());
+        product.setName(productCreate.getName());
+        product.setDescription(productCreate.getDescription());
+        product.setCategory(productCreate.getCategory());
+        product.setReferencePrice(productCreate.getReferencePrice() != null ? 
+            BigDecimal.valueOf(productCreate.getReferencePrice()) : null);
+        product.setMediaUrls(productCreate.getMediaUrls());
+        product.setAttributes(productCreate.getAttributes());
+        
+        return productRepository.save(product);
     }
 }
