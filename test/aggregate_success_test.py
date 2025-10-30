@@ -2,7 +2,7 @@
 """
 Test script to verify the success of T1 (DB migrations), T2 (Boot app skeleton + health),
 T3 (FeatureFlag repository + controller), T5 (Catalog browse endpoint), T6 (Catalog detail endpoint), 
-and T7 (Admin create vendor) as specified in docs/ai_agent_task_plan.md.
+T7 (Admin create vendor), and T8 (Admin create product) as specified in docs/ai_agent_task_plan.md.
 
 Task T1: Create DB migrations (Catalog + Orgs + Flags)
 - Migrations apply cleanly on empty DB
@@ -26,6 +26,10 @@ Task T7: Admin create vendor
 - POST /vendors with payload {name}
 - Creates organization with role vendor
 - Returns 201 with created vendor JSON
+
+Task T8: Admin create product
+- POST /products with validation for vendorId, sku, name
+- Returns 201 with product JSON; rejects upsert with 409
 """
 
 import os
@@ -349,6 +353,111 @@ def test_admin_create_vendor():
         return False
 
 
+def test_admin_create_product():
+    """Test T8: Verify Admin create product endpoint works correctly."""
+    print("Testing T8: Admin create product")
+    
+    api_base = get_api_base_url()
+    products_url = f"{api_base}/products"
+    
+    # First, we need to create a vendor to use for the product test
+    vendors_url = f"{api_base}/vendors"
+    vendor_data = {
+        "name": "Test Vendor for Product Creation"
+    }
+    
+    print(f"Creating vendor first: POST {vendors_url}")
+    try:
+        vendor_response = requests.post(vendors_url, json=vendor_data, timeout=30)
+        if vendor_response.status_code != 201:
+            print(f"[FAIL] T8 FAILED: Could not create vendor for product test - status {vendor_response.status_code}")
+            return False
+        
+        vendor_data_response = vendor_response.json()
+        vendor_id = vendor_data_response.get('id')
+        
+        if not vendor_id:
+            print("[FAIL] T8 FAILED: Could not extract vendor ID from response")
+            return False
+            
+        print(f"Created vendor with ID: {vendor_id}")
+        
+        # Now create a product with the vendor ID
+        import random
+        product_sku = f"TEST_SKU_{random.randint(1000, 9999)}"
+        product_data = {
+            "vendorId": vendor_id,
+            "sku": product_sku,
+            "name": "Test Product for API Test",
+            "description": "Test product description",
+            "price": 100.00,
+            "category": "test"
+        }
+        
+        print(f"Creating product: POST {products_url}")
+        print(f"Payload: {product_data}")
+        
+        product_response = requests.post(products_url, json=product_data, timeout=30)
+        print(f"Status Code: {product_response.status_code}")
+        print(f"Response: {product_response.text}")
+        
+        # According to task plan, POST /products should return 201 with product JSON
+        if product_response.status_code == 201:
+            try:
+                json_response = product_response.json()
+                
+                # Check if response has required product fields as per schema
+                required_fields = ['id', 'vendorId', 'sku', 'name']
+                has_required_fields = all(field in json_response for field in required_fields)
+                
+                if (has_required_fields and 
+                    json_response['vendorId'] == vendor_id and 
+                    json_response['sku'] == product_sku and 
+                    json_response['name'] == product_data['name']):
+                    print("[PASS] T8.1 PASSED: Admin create product returns 201 with product JSON")
+                    create_success = True
+                else:
+                    print("[FAIL] T8.1 FAILED: Product response missing required fields or wrong values")
+                    create_success = False
+            except ValueError:
+                print("[FAIL] T8.1 FAILED: Product response is not valid JSON")
+                create_success = False
+        else:
+            print(f"[FAIL] T8.1 FAILED: Expected status code 201, got {product_response.status_code}")
+            create_success = False
+        
+        # Test the duplicate creation scenario - should return 409
+        if create_success:
+            print(f"\\nTesting duplicate product creation (should return 409): POST {products_url}")
+            print(f"Payload: {product_data}")
+            
+            duplicate_response = requests.post(products_url, json=product_data, timeout=30)
+            print(f"Status Code: {duplicate_response.status_code}")
+            print(f"Response: {duplicate_response.text}")
+            
+            if duplicate_response.status_code == 409:
+                print("[PASS] T8.2 PASSED: Duplicate product creation returns 409 as expected")
+                duplicate_success = True
+            else:
+                print(f"[FAIL] T8.2 FAILED: Expected status code 409 for duplicate, got {duplicate_response.status_code}")
+                duplicate_success = False
+        else:
+            duplicate_success = True  # Don't fail this test if the first creation failed
+        
+        # Overall T8 result
+        t8_success = create_success and duplicate_success
+        if t8_success:
+            print("\\n[PASS] T8 PASSED: Admin create product working correctly")
+        else:
+            print("\\n[FAIL] T8 FAILED: Some product creation tests failed")
+        
+        return t8_success
+            
+    except requests.exceptions.RequestException as e:
+        print(f"[FAIL] T8 FAILED: Request error - {e}")
+        return False
+
+
 def test_db_migrations_indirectly():
     """
     Test T1: Verify DB migrations were applied by checking if expected API endpoints work.
@@ -457,8 +566,8 @@ def test_db_migrations_indirectly():
 
 
 def run_tests():
-    """Run all tests for T1, T2, T3, T5, T6, and T7."""
-    print("Running tests for T1 (DB migrations), T2 (App health), T3 (Feature flags), T5 (Catalog browse), T6 (Catalog detail), and T7 (Admin create vendor)")
+    """Run all tests for T1, T2, T3, T5, T6, T7, and T8."""
+    print("Running tests for T1 (DB migrations), T2 (App health), T3 (Feature flags), T5 (Catalog browse), T6 (Catalog detail), T7 (Admin create vendor), and T8 (Admin create product)")
     print("=" * 70)
     
     # Test T2: App health
@@ -476,6 +585,9 @@ def run_tests():
     # Test T7: Admin create vendor
     t7_success = test_admin_create_vendor()
     
+    # Test T8: Admin create product
+    t8_success = test_admin_create_product()
+    
     # Test T1: DB migrations (indirectly via API endpoints)
     t1_success = test_db_migrations_indirectly()
     
@@ -487,8 +599,9 @@ def run_tests():
     print(f"T5 (Catalog browse): {'[PASS]' if t5_success else '[FAIL]'}")
     print(f"T6 (Catalog detail): {'[PASS]' if t6_success else '[FAIL]'}")
     print(f"T7 (Admin create vendor): {'[PASS]' if t7_success else '[FAIL]'}")
+    print(f"T8 (Admin create product): {'[PASS]' if t8_success else '[FAIL]'}")
     
-    overall_success = t1_success and t2_success and t3_success and t5_success and t6_success and t7_success
+    overall_success = t1_success and t2_success and t3_success and t5_success and t6_success and t7_success and t8_success
     print(f"Overall: {'[PASS]' if overall_success else '[FAIL]'}")
     
     return overall_success
