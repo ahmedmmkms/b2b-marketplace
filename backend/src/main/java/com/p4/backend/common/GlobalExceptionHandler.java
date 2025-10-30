@@ -29,12 +29,12 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleResponseStatusException(ResponseStatusException ex) {
         Map<String, Object> body = new HashMap<>();
         body.put("type", "about:blank");
-        body.put("title", getStatusText(ex.getStatus()));
-        body.put("status", ex.getStatus().value());
+        body.put("title", getStatusText(ex.getStatusCode()));
+        body.put("status", ex.getStatusCode().value());
         body.put("detail", ex.getReason());
         body.put("timestamp", Instant.now().toString());
 
-        return new ResponseEntity<>(body, ex.getStatus());
+        return new ResponseEntity<>(body, ex.getStatusCode());
     }
 
     private String getStatusText(HttpStatus status) {
