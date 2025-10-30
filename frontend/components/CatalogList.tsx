@@ -7,6 +7,7 @@ import ProductCard from './ProductCard';
 import { Input } from '@/libs/ui/input';
 import { Button } from '@/libs/ui/button';
 import { useRouter } from 'next/navigation';
+import FeatureFlaggedComponent from './FeatureFlaggedComponent';
 
 const CatalogList = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -53,18 +54,20 @@ const CatalogList = () => {
       <div className="mb-8">
         <h1 className="text-3xl font-bold mb-6">Product Catalog</h1>
         
-        <form onSubmit={handleSearch} className="mb-6 max-w-2xl">
-          <div className="flex gap-2">
-            <Input
-              type="text"
-              placeholder="Search products..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="flex-grow"
-            />
-            <Button type="submit">Search</Button>
-          </div>
-        </form>
+        <FeatureFlaggedComponent flag="search.enabled">
+          <form onSubmit={handleSearch} className="mb-6 max-w-2xl">
+            <div className="flex gap-2">
+              <Input
+                type="text"
+                placeholder="Search products..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="flex-grow"
+              />
+              <Button type="submit">Search</Button>
+            </div>
+          </form>
+        </FeatureFlaggedComponent>
       </div>
       
       {isLoading ? (

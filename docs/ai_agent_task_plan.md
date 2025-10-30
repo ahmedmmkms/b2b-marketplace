@@ -110,12 +110,12 @@
 **Steps:** Mark quote `accepted`; others `rejected`; RFQ → `awarded`.  
 **DoD:** 200; idempotent (re‑call keeps state).
 
-### T18. Angular RFQ create
+### T18. React RFQ create
 **Inputs:** T12/T13/T14.  
 **Steps:** Form: title, notes; add line(s); issue.  
 **DoD:** RFQ issued shows success; validation errors surfaced.
 
-### T19. Angular Quotes view & accept
+### T19. React Quotes view & accept
 **Inputs:** T15/T16/T17.  
 **Steps:** Table compares price, MOQ, lead time; action to accept.  
 **DoD:** Accept updates UI to “Awarded: Vendor X”.
@@ -159,7 +159,7 @@
 **Steps:** If key exists for same order, return previous response. Otherwise: check balance≥amount; create `payments` row, debit wallet, set order `confirmed`.  
 **DoD:** 200 succeeded or 409 insufficient funds; second call with same key returns same result.
 
-### T27. Angular – checkout page
+### T27. React – checkout page
 **Inputs:** T22–T26.  
 **Steps:** Show order summary; wallet balance; pay button; error states.  
 **DoD:** End‑to‑end demo: accept quote → create order → top‑up → pay → success screen.
