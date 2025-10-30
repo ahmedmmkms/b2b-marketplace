@@ -2,17 +2,20 @@ package com.p4.backend.catalog.service;
 
 import com.p4.backend.catalog.model.Product;
 import com.p4.backend.catalog.repository.ProductRepository;
+import com.p4.backend.common.ProblemDetailException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ProductService {
@@ -42,5 +45,25 @@ public class ProductService {
             StringUtils.hasText(category) ? category : null,
             pageable
         );
+    }
+    
+    /**
+     * Get product by ID
+     * @param id Product ID (ULID)
+     * @return Product if found and active
+     */
+    public Product getProductById(String id) {
+        Optional<Product> productOpt = productRepository.findById(id);
+        
+        if (productOpt.isPresent() && productOpt.get().getIsActive()) {
+            return productOpt.get();
+        } else {
+            throw new ProblemDetailException(
+                HttpStatus.NOT_FOUND, 
+                "https://api.example.com/errors/product-not-found", 
+                "Product not found", 
+                "Product with id '" + id + "' does not exist or is not active"
+            );
+        }
     }
 }

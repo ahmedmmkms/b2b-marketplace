@@ -38,4 +38,13 @@ public class ProductController {
         
         return ResponseEntity.ok(response);
     }
+    
+    /**
+     * Get a single product by ID
+     */
+    @GetMapping("/{id}")
+    public ResponseEntity<Product> getProduct(@PathVariable String id) {
+        Product product = productService.getProductById(id);
+        return ResponseEntity.ok(product);
+    }
 }
