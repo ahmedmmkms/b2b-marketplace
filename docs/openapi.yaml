@@ -1,0 +1,516 @@
+openapi: 3.0.3
+info:
+  title: Mini-MVP API
+  version: 0.1.0
+  description: >
+    Minimal endpoints for **Catalog → RFQ → Quote → Order → Wallet Pay**.
+    Security is JWT bearer for authenticated flows. Public catalog endpoints are open but may be feature-flagged.
+servers:
+  - url: https://api.example.com
+security:
+  - bearerAuth: []
+paths:
+  /actuator/health:
+    get:
+      summary: Liveness/Readiness
+      tags: [ops]
+      security: []
+      responses:
+        "200":
+          description: OK
+  /flags:
+    get:
+      summary: List feature flags
+      tags: [ops]
+      responses:
+        "200":
+          description: Flags
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/FeatureFlag'
+
+  # -------- Public Catalog --------
+  /products:
+    get:
+      summary: Browse products
+      tags: [catalog]
+      security: []
+      parameters:
+        - in: query
+          name: q
+          schema: { type: string }
+        - in: query
+          name: category
+          schema: { type: string }
+        - in: query
+          name: page
+          schema: { type: integer, minimum: 1, default: 1 }
+        - in: query
+          name: pageSize
+          schema: { type: integer, minimum: 1, maximum: 100, default: 20 }
+      responses:
+        "200":
+          description: Product list
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PaginatedProducts'
+  /products/{id}:
+    get:
+      summary: Get a product
+      tags: [catalog]
+      security: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Product
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+
+  # -------- Admin/Ops minimal (seed) --------
+  /vendors:
+    post:
+      summary: Create vendor (Ops)
+      tags: [ops]
+      requestBody:
+        required: true
+        content:
+          application/json: { schema: { $ref: '#/components/schemas/VendorCreate' } }
+      responses:
+        "201": { description: Created, content: { application/json: { schema: { $ref: '#/components/schemas/Vendor' } } } }
+  /products: 
+    post:
+      summary: Create product (Ops or Vendor)
+      tags: [catalog]
+      requestBody:
+        required: true
+        content:
+          application/json: { schema: { $ref: '#/components/schemas/ProductCreate' } }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Product' }
+
+  # -------- RFQ --------
+  /rfqs:
+    post:
+      summary: Create RFQ (Buyer)
+      tags: [rfq]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RFQCreate' }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RFQ' }
+  /rfqs/{rfqId}:
+    get:
+      summary: Get RFQ
+      tags: [rfq]
+      parameters:
+        - in: path
+          name: rfqId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: RFQ
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RFQ' }
+  /rfqs/{rfqId}/lines:
+    post:
+      summary: Add RFQ line
+      tags: [rfq]
+      parameters:
+        - in: path
+          name: rfqId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/RFQLineCreate' }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/RFQLine' }
+  /rfqs/{rfqId}/issue:
+    post:
+      summary: Issue RFQ (moves from draft→issued)
+      tags: [rfq]
+      parameters:
+        - in: path
+          name: rfqId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Issued }
+
+  # -------- Quotes --------
+  /rfqs/{rfqId}/quotes:
+    get:
+      summary: List quotes for RFQ (Buyer view)
+      tags: [quotes]
+      parameters:
+        - in: path
+          name: rfqId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Quotes
+          content:
+            application/json:
+              schema:
+                type: array
+                items: { $ref: '#/components/schemas/Quote' }
+    post:
+      summary: Submit quote (Vendor)
+      tags: [quotes]
+      parameters:
+        - in: path
+          name: rfqId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/QuoteCreate' }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Quote' }
+  /rfqs/{rfqId}/quotes/{quoteId}/accept:
+    post:
+      summary: Buyer accepts a quote (awards RFQ)
+      tags: [quotes]
+      parameters:
+        - in: path
+          name: rfqId
+          required: true
+          schema: { type: string }
+        - in: path
+          name: quoteId
+          required: true
+          schema: { type: string }
+      responses:
+        "200": { description: Accepted }
+
+  # -------- Orders --------
+  /orders:
+    post:
+      summary: Create order from accepted quote
+      tags: [orders]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [quoteId]
+              properties:
+                quoteId: { type: string }
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Order' }
+  /orders/{orderId}:
+    get:
+      summary: Get order
+      tags: [orders]
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Order
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Order' }
+  /orders/{orderId}/pay/wallet:
+    post:
+      summary: Pay order using wallet
+      tags: [payments]
+      parameters:
+        - in: path
+          name: orderId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                idempotencyKey: { type: string }
+      responses:
+        "200":
+          description: Payment result
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Payment' }
+
+  # -------- Wallet Ops --------
+  /wallets/{orgId}:
+    get:
+      summary: Get wallet balance
+      tags: [wallets]
+      parameters:
+        - in: path
+          name: orgId
+          required: true
+          schema: { type: string }
+      responses:
+        "200":
+          description: Wallet
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/Wallet' }
+  /wallets/{orgId}/topups:
+    post:
+      summary: Top-up wallet (Ops/Finance)
+      tags: [wallets]
+      parameters:
+        - in: path
+          name: orgId
+          required: true
+          schema: { type: string }
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required: [amount, currency]
+              properties:
+                amount: { type: number, format: double, minimum: 0 }
+                currency: { type: string, default: USD }
+      responses:
+        "201":
+          description: Topup transaction
+          content:
+            application/json:
+              schema: { $ref: '#/components/schemas/WalletTransaction' }
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    FeatureFlag:
+      type: object
+      properties:
+        key: { type: string }
+        value:
+          type: object
+    VendorCreate:
+      type: object
+      required: [name]
+      properties:
+        name: { type: string }
+    Vendor:
+      type: object
+      properties:
+        id: { type: string }
+        name: { type: string }
+        role: { type: string, example: vendor }
+    ProductCreate:
+      type: object
+      required: [vendorId, sku, name]
+      properties:
+        vendorId: { type: string }
+        sku: { type: string }
+        name: { type: string }
+        description: { type: string }
+        category: { type: string }
+        referencePrice: { type: number, format: double }
+        mediaUrls:
+          type: array
+          items: { type: string }
+        attributes:
+          type: object
+    Product:
+      type: object
+      properties:
+        id: { type: string }
+        vendorId: { type: string }
+        sku: { type: string }
+        name: { type: string }
+        description: { type: string }
+        category: { type: string }
+        referencePrice: { type: number, format: double }
+        mediaUrls:
+          type: array
+          items: { type: string }
+        attributes:
+          type: object
+    PaginatedProducts:
+      type: object
+      properties:
+        items:
+          type: array
+          items: { $ref: '#/components/schemas/Product' }
+        page: { type: integer }
+        pageSize: { type: integer }
+        total: { type: integer }
+
+    RFQCreate:
+      type: object
+      required: [title]
+      properties:
+        title: { type: string }
+        notes: { type: string }
+        lines:
+          type: array
+          items: { $ref: '#/components/schemas/RFQLineCreate' }
+    RFQ:
+      type: object
+      properties:
+        id: { type: string }
+        buyerId: { type: string }
+        title: { type: string }
+        notes: { type: string }
+        status: { type: string, enum: [draft, issued, closed, awarded, cancelled] }
+        attachments:
+          type: array
+          items: { $ref: '#/components/schemas/Attachment' }
+        lines:
+          type: array
+          items: { $ref: '#/components/schemas/RFQLine' }
+    RFQLineCreate:
+      type: object
+      required: [description, quantity, uom]
+      properties:
+        productId: { type: string, nullable: true }
+        description: { type: string }
+        quantity: { type: number, format: double }
+        uom: { type: string }
+        targetPrice: { type: number, format: double, nullable: true }
+    RFQLine:
+      allOf:
+        - $ref: '#/components/schemas/RFQLineCreate'
+        - type: object
+          properties:
+            id: { type: string }
+
+    QuoteCreate:
+      type: object
+      required: [vendorId, currency, lines]
+      properties:
+        vendorId: { type: string }
+        currency: { type: string, default: USD }
+        validUntil: { type: string, format: date-time }
+        notes: { type: string }
+        lines:
+          type: array
+          items: { $ref: '#/components/schemas/QuoteLineCreate' }
+    Quote:
+      type: object
+      properties:
+        id: { type: string }
+        rfqId: { type: string }
+        vendorId: { type: string }
+        currency: { type: string }
+        validUntil: { type: string, format: date-time }
+        status: { type: string, enum: [draft, submitted, accepted, rejected, expired] }
+        subtotal: { type: number, format: double }
+        taxTotal: { type: number, format: double }
+        grandTotal: { type: number, format: double }
+        lines:
+          type: array
+          items: { $ref: '#/components/schemas/QuoteLine' }
+    QuoteLineCreate:
+      type: object
+      required: [rfqLineId, description, quantity, uom, unitPrice]
+      properties:
+        rfqLineId: { type: string }
+        productId: { type: string, nullable: true }
+        description: { type: string }
+        quantity: { type: number, format: double }
+        uom: { type: string }
+        unitPrice: { type: number, format: double }
+        moq: { type: number, format: double, nullable: true }
+        leadTimeDays: { type: integer, nullable: true }
+    QuoteLine:
+      allOf:
+        - $ref: '#/components/schemas/QuoteLineCreate'
+        - type: object
+          properties:
+            id: { type: string }
+            lineTotal: { type: number, format: double }
+
+    Order:
+      type: object
+      properties:
+        id: { type: string }
+        buyerId: { type: string }
+        quoteId: { type: string }
+        status: { type: string, enum: [placed, confirmed, cancelled, fulfilled] }
+        currency: { type: string }
+        subtotal: { type: number, format: double }
+        taxTotal: { type: number, format: double }
+        grandTotal: { type: number, format: double }
+
+    Wallet:
+      type: object
+      properties:
+        id: { type: string }
+        orgId: { type: string }
+        currency: { type: string }
+        balance: { type: number, format: double }
+    WalletTransaction:
+      type: object
+      properties:
+        id: { type: string }
+        walletId: { type: string }
+        type: { type: string, enum: [topup, debit, refund] }
+        amount: { type: number, format: double }
+        reference: { type: string }
+        createdAt: { type: string, format: date-time }
+
+    Payment:
+      type: object
+      properties:
+        id: { type: string }
+        orderId: { type: string }
+        method: { type: string, enum: [wallet, gateway1] }
+        status: { type: string, enum: [initiated, succeeded, failed] }
+        amount: { type: number, format: double }
+        currency: { type: string }
+        idempotencyKey: { type: string }
+
+    Attachment:
+      type: object
+      properties:
+        key: { type: string }
+        url: { type: string }
+        filename: { type: string }

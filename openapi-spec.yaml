@@ -2121,8 +2121,13 @@ components:
           type: string
           example: "+1234567890"
         address:
-          type: string
-          example: "123 Tech Street, Tech City, TC 12345"
+          type: object
+          example:
+            street: "123 Tech Street"
+            city: "Tech City"
+            state: "TC"
+            postalCode: "12345"
+            country: "US"
         taxId:
           type: string
           example: "TV123456789"

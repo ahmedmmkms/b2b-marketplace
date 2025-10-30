@@ -1,10 +1,13 @@
 import psycopg2
+from dotenv import load_dotenv
+import os
+load_dotenv()
 
 def verify_table():
     connection_params = {
         'host': 'ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech',
         'database': 'neondb',
-        'user': 'neondb_owner',
+        'user': os.getenv('DB_USERNAME', 'neondb_owner'),
         'password': os.getenv('DB_PASSWORD', ''),
         'sslmode': 'require',
         'channel_binding': 'require'
