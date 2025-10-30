@@ -1,386 +1,151 @@
-Connected!
-2025-10-22T17:51:21.8986985Z [2m2025-10-22T17:51:21.524Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-9] [0;39m[36mc.p.b.i.filter.JwtAuthenticationFilter  [0;39m [2m:[0;39m JWT Token does not begin with Bearer String
-2025-10-22T17:51:26.098468Z [2m2025-10-22T17:51:26.088Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-9] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@180ab3a0 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T17:51:26.2058729Z [2m2025-10-22T17:51:26.204Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-9] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@17dd5928 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T17:51:26.2175298Z [2m2025-10-22T17:51:26.215Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-9] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@5dc0e85 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T17:51:26.2242213Z [2m2025-10-22T17:51:26.223Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-9] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@48063a2d (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T17:51:26.229718Z [2m2025-10-22T17:51:26.229Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-9] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@7372d3bc (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T17:51:31.3035816Z [2m2025-10-22T17:51:30.875Z[0;39m [31mERROR[0;39m [35m69[0;39m [2m--- [p4-backend] [-nio-80-exec-10] [0;39m[36mc.p.b.exception.GlobalExceptionHandler  [0;39m [2m:[0;39m Unexpected error occurred:
-2025-10-22T17:51:31.303631Z
-2025-10-22T17:51:31.3036345Z org.springframework.transaction.TransactionSystemException: Could not commit JPA transaction
-2025-10-22T17:51:31.3036371Z 	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:571) ~[spring-orm-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3036398Z 	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:795) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3036426Z 	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:758) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.303646Z 	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:698) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3036493Z 	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:416) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037485Z 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037556Z 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037591Z 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037621Z 	at com.p4.backend.catalog.service.VendorService$$SpringCGLIB$$0.createVendor(<generated>) ~[!/:0.0.1-SNAPSHOT]
-2025-10-22T17:51:31.3037651Z 	at com.p4.backend.catalog.controller.VendorController.createVendor(VendorController.java:33) ~[!/:0.0.1-SNAPSHOT]
-2025-10-22T17:51:31.3037678Z 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
-2025-10-22T17:51:31.3037704Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
-2025-10-22T17:51:31.3037734Z 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037758Z 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037785Z 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037834Z 	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037867Z 	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037899Z 	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037922Z 	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037946Z 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037969Z 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3037991Z 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3038013Z 	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038036Z 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3038068Z 	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038091Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038112Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038384Z 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038412Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.303844Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038471Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.30385Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038533Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3038581Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3038615Z 	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038646Z 	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038677Z 	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038704Z 	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038731Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038759Z 	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038787Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038824Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.303885Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038875Z 	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038902Z 	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.303893Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038957Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3038982Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039007Z 	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039044Z 	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039069Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039095Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039196Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039225Z 	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039254Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039281Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039308Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039351Z 	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.303938Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039408Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039436Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039464Z 	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039495Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039526Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039555Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039583Z 	at com.p4.backend.identity.filter.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:71) ~[!/:0.0.1-SNAPSHOT]
-2025-10-22T17:51:31.3039621Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3039651Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039679Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039709Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039737Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039766Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039795Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039825Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039864Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039892Z 	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3039993Z 	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040021Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040052Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040079Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040105Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.304013Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040167Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040193Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040219Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040246Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040277Z 	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040305Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040333Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040362Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040405Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040436Z 	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040466Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040499Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040533Z 	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040563Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040593Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040623Z 	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040653Z 	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040695Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040726Z 	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040832Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040862Z 	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040895Z 	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238) ~[spring-security-config-6.4.1.jar!/:6.4.1]
-2025-10-22T17:51:31.3040922Z 	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040949Z 	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3040978Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041016Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041045Z 	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3041076Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3041104Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041131Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.304116Z 	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3041187Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3041214Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041243Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041281Z 	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.304131Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3041339Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041368Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041396Z 	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3041568Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3041602Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041629Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041656Z 	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041698Z 	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041725Z 	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041752Z 	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.304178Z 	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041807Z 	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041834Z 	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:731) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041933Z 	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3041964Z 	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.304199Z 	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3042029Z 	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3042059Z 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3042086Z 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3042115Z 	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3042144Z 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3042172Z 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:51:31.3042197Z 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
-2025-10-22T17:51:31.3042224Z Caused by: jakarta.persistence.RollbackException: Error while committing the transaction
-2025-10-22T17:51:31.3042255Z 	at org.hibernate.internal.ExceptionConverterImpl.convertCommitException(ExceptionConverterImpl.java:67) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042292Z 	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:104) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042322Z 	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:562) ~[spring-orm-6.2.0.jar!/:6.2.0]
-2025-10-22T17:51:31.3042344Z 	... 140 common frames omitted
-2025-10-22T17:51:31.3042374Z Caused by: jakarta.validation.ConstraintViolationException: Validation failed for classes [com.p4.backend.catalog.model.Vendor] during persist time for groups [jakarta.validation.groups.Default, ]
-2025-10-22T17:51:31.3042396Z List of constraint violations:[
-2025-10-22T17:51:31.3042427Z 	ConstraintViolationImpl{interpolatedMessage='Phone number is invalid', propertyPath=phone, rootBeanClass=class com.p4.backend.catalog.model.Vendor, messageTemplate='Phone number is invalid'}
-2025-10-22T17:51:31.3042451Z ]
-2025-10-22T17:51:31.3042481Z 	at org.hibernate.boot.beanvalidation.BeanValidationEventListener.validate(BeanValidationEventListener.java:161) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042511Z 	at org.hibernate.boot.beanvalidation.BeanValidationEventListener.onPreInsert(BeanValidationEventListener.java:84) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042548Z 	at org.hibernate.action.internal.EntityInsertAction.preInsert(EntityInsertAction.java:251) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042577Z 	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:106) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042605Z 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:644) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042631Z 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:511) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.304266Z 	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:414) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.304269Z 	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042718Z 	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042744Z 	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1429) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042774Z 	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:491) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042812Z 	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2354) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042841Z 	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1978) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042873Z 	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042954Z 	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3042986Z 	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.3043016Z 	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:51:31.304304Z 	... 141 common frames omitted
-2025-10-22T17:51:31.304306Z
-2025-10-22T17:53:49.5936831Z [2m2025-10-22T17:53:49.592Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-1] [0;39m[36mc.p.b.i.filter.JwtAuthenticationFilter  [0;39m [2m:[0;39m JWT Token does not begin with Bearer String
-2025-10-22T17:53:50.9421059Z [2m2025-10-22T17:53:50.941Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-3] [0;39m[36mo.h.engine.jdbc.spi.SqlExceptionHelper  [0;39m [2m:[0;39m SQL Error: 0, SQLState: 42804
-2025-10-22T17:53:50.9458749Z [2m2025-10-22T17:53:50.944Z[0;39m [31mERROR[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-3] [0;39m[36mo.h.engine.jdbc.spi.SqlExceptionHelper  [0;39m [2m:[0;39m ERROR: column "address" is of type jsonb but expression is of type character varying
-2025-10-22T17:53:50.9459005Z   Hint: You will need to rewrite or cast the expression.
-2025-10-22T17:53:50.9459039Z   Position: 220
-2025-10-22T17:53:51.1948552Z [2m2025-10-22T17:53:50.993Z[0;39m [31mERROR[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-3] [0;39m[36mc.p.b.exception.GlobalExceptionHandler  [0;39m [2m:[0;39m Unexpected error occurred:
-2025-10-22T17:53:51.1948936Z
-2025-10-22T17:53:51.194897Z org.springframework.dao.InvalidDataAccessResourceUsageException: could not execute statement [ERROR: column "address" is of type jsonb but expression is of type character varying
-2025-10-22T17:53:51.1949058Z   Hint: You will need to rewrite or cast the expression.
-2025-10-22T17:53:51.1949105Z   Position: 220] [insert into vendors (address,approval_date,business_license_no,business_name,created_at,description,email,kyc_verified,kyc_verified_at,kyc_verified_by,phone,registration_date,tax_id,updated_at,vendor_status,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)]; SQL [insert into vendors (address,approval_date,business_license_no,business_name,created_at,description,email,kyc_verified,kyc_verified_at,kyc_verified_by,phone,registration_date,tax_id,updated_at,vendor_status,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)]
-2025-10-22T17:53:51.1949129Z 	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.convertHibernateAccessException(HibernateJpaDialect.java:277) ~[spring-orm-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949153Z 	at org.springframework.orm.jpa.vendor.HibernateJpaDialect.translateExceptionIfPossible(HibernateJpaDialect.java:241) ~[spring-orm-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949176Z 	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:566) ~[spring-orm-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949313Z 	at org.springframework.transaction.support.AbstractPlatformTransactionManager.processCommit(AbstractPlatformTransactionManager.java:795) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949345Z 	at org.springframework.transaction.support.AbstractPlatformTransactionManager.commit(AbstractPlatformTransactionManager.java:758) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949369Z 	at org.springframework.transaction.interceptor.TransactionAspectSupport.commitTransactionAfterReturning(TransactionAspectSupport.java:698) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949408Z 	at org.springframework.transaction.interceptor.TransactionAspectSupport.invokeWithinTransaction(TransactionAspectSupport.java:416) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949433Z 	at org.springframework.transaction.interceptor.TransactionInterceptor.invoke(TransactionInterceptor.java:119) ~[spring-tx-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949458Z 	at org.springframework.aop.framework.ReflectiveMethodInvocation.proceed(ReflectiveMethodInvocation.java:184) ~[spring-aop-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949481Z 	at org.springframework.aop.framework.CglibAopProxy$DynamicAdvisedInterceptor.intercept(CglibAopProxy.java:727) ~[spring-aop-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949503Z 	at com.p4.backend.catalog.service.VendorService$$SpringCGLIB$$0.createVendor(<generated>) ~[!/:0.0.1-SNAPSHOT]
-2025-10-22T17:53:51.1949527Z 	at com.p4.backend.catalog.controller.VendorController.createVendor(VendorController.java:33) ~[!/:0.0.1-SNAPSHOT]
-2025-10-22T17:53:51.194955Z 	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103) ~[na:na]
-2025-10-22T17:53:51.1949572Z 	at java.base/java.lang.reflect.Method.invoke(Method.java:580) ~[na:na]
-2025-10-22T17:53:51.1949599Z 	at org.springframework.web.method.support.InvocableHandlerMethod.doInvoke(InvocableHandlerMethod.java:255) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949636Z 	at org.springframework.web.method.support.InvocableHandlerMethod.invokeForRequest(InvocableHandlerMethod.java:188) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949664Z 	at org.springframework.web.servlet.mvc.method.annotation.ServletInvocableHandlerMethod.invokeAndHandle(ServletInvocableHandlerMethod.java:118) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949692Z 	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.invokeHandlerMethod(RequestMappingHandlerAdapter.java:986) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949719Z 	at org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter.handleInternal(RequestMappingHandlerAdapter.java:891) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949746Z 	at org.springframework.web.servlet.mvc.method.AbstractHandlerMethodAdapter.handle(AbstractHandlerMethodAdapter.java:87) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1949769Z 	at org.springframework.web.servlet.DispatcherServlet.doDispatch(DispatcherServlet.java:1088) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1950054Z 	at org.springframework.web.servlet.DispatcherServlet.doService(DispatcherServlet.java:978) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1950082Z 	at org.springframework.web.servlet.FrameworkServlet.processRequest(FrameworkServlet.java:1014) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1950119Z 	at org.springframework.web.servlet.FrameworkServlet.doPost(FrameworkServlet.java:914) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1950147Z 	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:590) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950172Z 	at org.springframework.web.servlet.FrameworkServlet.service(FrameworkServlet.java:885) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1950193Z 	at jakarta.servlet.http.HttpServlet.service(HttpServlet.java:658) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950218Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:195) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.195024Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950263Z 	at org.apache.tomcat.websocket.server.WsFilter.doFilter(WsFilter.java:51) ~[tomcat-embed-websocket-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950287Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950311Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950334Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:110) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1950368Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950392Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1950418Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:108) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1950442Z 	at org.springframework.security.web.FilterChainProxy.lambda$doFilterInternal$3(FilterChainProxy.java:231) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195047Z 	at org.springframework.security.web.ObservationFilterChainDecorator$FilterObservation$SimpleFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:479) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950498Z 	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$1(ObservationFilterChainDecorator.java:340) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950524Z 	at org.springframework.security.web.ObservationFilterChainDecorator.lambda$wrapSecured$0(ObservationFilterChainDecorator.java:82) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950551Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:128) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950582Z 	at org.springframework.security.web.access.intercept.AuthorizationFilter.doFilter(AuthorizationFilter.java:101) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950608Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950635Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950662Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950689Z 	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:126) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950715Z 	at org.springframework.security.web.access.ExceptionTranslationFilter.doFilter(ExceptionTranslationFilter.java:120) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950743Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950832Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950873Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.19509Z 	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:131) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950928Z 	at org.springframework.security.web.session.SessionManagementFilter.doFilter(SessionManagementFilter.java:85) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950956Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1950983Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951009Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951035Z 	at org.springframework.security.web.authentication.AnonymousAuthenticationFilter.doFilter(AnonymousAuthenticationFilter.java:100) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951063Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.19511Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951125Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951151Z 	at org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter.doFilter(SecurityContextHolderAwareRequestFilter.java:179) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951177Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951205Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195123Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951254Z 	at org.springframework.security.web.savedrequest.RequestCacheAwareFilter.doFilter(RequestCacheAwareFilter.java:63) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951281Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951306Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195134Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951366Z 	at com.p4.backend.identity.filter.JwtAuthenticationFilter.doFilterInternal(JwtAuthenticationFilter.java:71) ~[!/:0.0.1-SNAPSHOT]
-2025-10-22T17:53:51.1951392Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1951418Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951446Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951473Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195155Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:107) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951577Z 	at org.springframework.security.web.authentication.logout.LogoutFilter.doFilter(LogoutFilter.java:93) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951612Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951638Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951666Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951691Z 	at org.springframework.security.web.header.HeaderWriterFilter.doHeadersAfter(HeaderWriterFilter.java:90) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951716Z 	at org.springframework.security.web.header.HeaderWriterFilter.doFilterInternal(HeaderWriterFilter.java:75) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195174Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1951768Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951796Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951834Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951864Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:82) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195189Z 	at org.springframework.security.web.context.SecurityContextHolderFilter.doFilter(SecurityContextHolderFilter.java:69) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951916Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951946Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1951975Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952Z 	at org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter.doFilterInternal(WebAsyncManagerIntegrationFilter.java:62) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952024Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952052Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952093Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:227) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195212Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952144Z 	at org.springframework.security.web.session.DisableEncodeUrlFilter.doFilterInternal(DisableEncodeUrlFilter.java:42) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952171Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.19522Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.wrapFilter(ObservationFilterChainDecorator.java:240) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952281Z 	at org.springframework.security.web.ObservationFilterChainDecorator$AroundFilterObservation$SimpleAroundFilterObservation.lambda$wrap$0(ObservationFilterChainDecorator.java:323) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952311Z 	at org.springframework.security.web.ObservationFilterChainDecorator$ObservationFilter.doFilter(ObservationFilterChainDecorator.java:224) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952339Z 	at org.springframework.security.web.ObservationFilterChainDecorator$VirtualFilterChain.doFilter(ObservationFilterChainDecorator.java:137) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952381Z 	at org.springframework.security.web.FilterChainProxy.doFilterInternal(FilterChainProxy.java:233) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952406Z 	at org.springframework.security.web.FilterChainProxy.doFilter(FilterChainProxy.java:191) ~[spring-security-web-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.1952432Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952456Z 	at org.springframework.web.servlet.handler.HandlerMappingIntrospector.lambda$createCacheFilter$3(HandlerMappingIntrospector.java:243) ~[spring-webmvc-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.195248Z 	at org.springframework.web.filter.CompositeFilter$VirtualFilterChain.doFilter(CompositeFilter.java:113) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952506Z 	at org.springframework.web.filter.CompositeFilter.doFilter(CompositeFilter.java:74) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952536Z 	at org.springframework.security.config.annotation.web.configuration.WebMvcSecurityConfiguration$CompositeFilterChainProxy.doFilter(WebMvcSecurityConfiguration.java:238) ~[spring-security-config-6.4.1.jar!/:6.4.1]
-2025-10-22T17:53:51.195256Z 	at org.springframework.web.filter.DelegatingFilterProxy.invokeDelegate(DelegatingFilterProxy.java:362) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952585Z 	at org.springframework.web.filter.DelegatingFilterProxy.doFilter(DelegatingFilterProxy.java:278) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952624Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1952651Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1952677Z 	at org.springframework.web.filter.RequestContextFilter.doFilterInternal(RequestContextFilter.java:100) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952702Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952727Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1952753Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.195278Z 	at org.springframework.web.filter.FormContentFilter.doFilterInternal(FormContentFilter.java:93) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952806Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952829Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1952864Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1952891Z 	at org.springframework.web.filter.ServerHttpObservationFilter.doFilterInternal(ServerHttpObservationFilter.java:114) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952916Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1952941Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1952967Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1952993Z 	at org.springframework.web.filter.CharacterEncodingFilter.doFilterInternal(CharacterEncodingFilter.java:201) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1953021Z 	at org.springframework.web.filter.OncePerRequestFilter.doFilter(OncePerRequestFilter.java:116) ~[spring-web-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1953045Z 	at org.apache.catalina.core.ApplicationFilterChain.internalDoFilter(ApplicationFilterChain.java:164) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953152Z 	at org.apache.catalina.core.ApplicationFilterChain.doFilter(ApplicationFilterChain.java:140) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953181Z 	at org.apache.catalina.core.StandardWrapperValve.invoke(StandardWrapperValve.java:167) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953205Z 	at org.apache.catalina.core.StandardContextValve.invoke(StandardContextValve.java:90) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953228Z 	at org.apache.catalina.authenticator.AuthenticatorBase.invoke(AuthenticatorBase.java:483) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.195325Z 	at org.apache.catalina.core.StandardHostValve.invoke(StandardHostValve.java:115) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953272Z 	at org.apache.catalina.valves.ErrorReportValve.invoke(ErrorReportValve.java:93) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953295Z 	at org.apache.catalina.core.StandardEngineValve.invoke(StandardEngineValve.java:74) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953316Z 	at org.apache.catalina.valves.RemoteIpValve.invoke(RemoteIpValve.java:731) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953338Z 	at org.apache.catalina.connector.CoyoteAdapter.service(CoyoteAdapter.java:344) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953359Z 	at org.apache.coyote.http11.Http11Processor.service(Http11Processor.java:397) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953392Z 	at org.apache.coyote.AbstractProcessorLight.process(AbstractProcessorLight.java:63) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953415Z 	at org.apache.coyote.AbstractProtocol$ConnectionHandler.process(AbstractProtocol.java:905) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953437Z 	at org.apache.tomcat.util.net.NioEndpoint$SocketProcessor.doRun(NioEndpoint.java:1741) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953459Z 	at org.apache.tomcat.util.net.SocketProcessorBase.run(SocketProcessorBase.java:52) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953482Z 	at org.apache.tomcat.util.threads.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1190) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953504Z 	at org.apache.tomcat.util.threads.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:659) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953526Z 	at org.apache.tomcat.util.threads.TaskThread$WrappingRunnable.run(TaskThread.java:63) ~[tomcat-embed-core-10.1.33.jar!/:na]
-2025-10-22T17:53:51.1953547Z 	at java.base/java.lang.Thread.run(Thread.java:1583) ~[na:na]
-2025-10-22T17:53:51.1953571Z Caused by: org.hibernate.exception.SQLGrammarException: could not execute statement [ERROR: column "address" is of type jsonb but expression is of type character varying
-2025-10-22T17:53:51.1953602Z   Hint: You will need to rewrite or cast the expression.
-2025-10-22T17:53:51.195363Z   Position: 220] [insert into vendors (address,approval_date,business_license_no,business_name,created_at,description,email,kyc_verified,kyc_verified_at,kyc_verified_by,phone,registration_date,tax_id,updated_at,vendor_status,id) values (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)]
-2025-10-22T17:53:51.1953655Z 	at org.hibernate.exception.internal.SQLStateConversionDelegate.convert(SQLStateConversionDelegate.java:91) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953679Z 	at org.hibernate.exception.internal.StandardSQLExceptionConverter.convert(StandardSQLExceptionConverter.java:58) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953703Z 	at org.hibernate.engine.jdbc.spi.SqlExceptionHelper.convert(SqlExceptionHelper.java:108) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953727Z 	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:197) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953751Z 	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.performNonBatchedMutation(AbstractMutationExecutor.java:134) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953778Z 	at org.hibernate.engine.jdbc.mutation.internal.MutationExecutorSingleNonBatched.performNonBatchedOperations(MutationExecutorSingleNonBatched.java:55) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953811Z 	at org.hibernate.engine.jdbc.mutation.internal.AbstractMutationExecutor.execute(AbstractMutationExecutor.java:55) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953837Z 	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.doStaticInserts(InsertCoordinatorStandard.java:194) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953864Z 	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.coordinateInsert(InsertCoordinatorStandard.java:132) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953951Z 	at org.hibernate.persister.entity.mutation.InsertCoordinatorStandard.insert(InsertCoordinatorStandard.java:104) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1953978Z 	at org.hibernate.action.internal.EntityInsertAction.execute(EntityInsertAction.java:110) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954004Z 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:644) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954029Z 	at org.hibernate.engine.spi.ActionQueue.executeActions(ActionQueue.java:511) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954055Z 	at org.hibernate.event.internal.AbstractFlushingEventListener.performExecutions(AbstractFlushingEventListener.java:414) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954083Z 	at org.hibernate.event.internal.DefaultFlushEventListener.onFlush(DefaultFlushEventListener.java:41) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954123Z 	at org.hibernate.event.service.internal.EventListenerGroupImpl.fireEventOnEachListener(EventListenerGroupImpl.java:127) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954151Z 	at org.hibernate.internal.SessionImpl.doFlush(SessionImpl.java:1429) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954177Z 	at org.hibernate.internal.SessionImpl.managedFlush(SessionImpl.java:491) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954204Z 	at org.hibernate.internal.SessionImpl.flushBeforeTransactionCompletion(SessionImpl.java:2354) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954231Z 	at org.hibernate.internal.SessionImpl.beforeTransactionCompletion(SessionImpl.java:1978) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.195426Z 	at org.hibernate.engine.jdbc.internal.JdbcCoordinatorImpl.beforeTransactionCompletion(JdbcCoordinatorImpl.java:439) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954292Z 	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl.beforeCompletionCallback(JdbcResourceLocalTransactionCoordinatorImpl.java:169) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954324Z 	at org.hibernate.resource.transaction.backend.jdbc.internal.JdbcResourceLocalTransactionCoordinatorImpl$TransactionDriverControlImpl.commit(JdbcResourceLocalTransactionCoordinatorImpl.java:267) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954366Z 	at org.hibernate.engine.transaction.internal.TransactionImpl.commit(TransactionImpl.java:101) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954394Z 	at org.springframework.orm.jpa.JpaTransactionManager.doCommit(JpaTransactionManager.java:562) ~[spring-orm-6.2.0.jar!/:6.2.0]
-2025-10-22T17:53:51.1954419Z 	... 140 common frames omitted
-2025-10-22T17:53:51.1954446Z Caused by: org.postgresql.util.PSQLException: ERROR: column "address" is of type jsonb but expression is of type character varying
-2025-10-22T17:53:51.1954471Z   Hint: You will need to rewrite or cast the expression.
-2025-10-22T17:53:51.1954493Z   Position: 220
-2025-10-22T17:53:51.195452Z 	at org.postgresql.core.v3.QueryExecutorImpl.receiveErrorResponse(QueryExecutorImpl.java:2733) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-22T17:53:51.1954548Z 	at org.postgresql.core.v3.QueryExecutorImpl.processResults(QueryExecutorImpl.java:2420) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-22T17:53:51.1954573Z 	at org.postgresql.core.v3.QueryExecutorImpl.execute(QueryExecutorImpl.java:372) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-22T17:53:51.1954601Z 	at org.postgresql.jdbc.PgStatement.executeInternal(PgStatement.java:517) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-22T17:53:51.1954644Z 	at org.postgresql.jdbc.PgStatement.execute(PgStatement.java:434) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-22T17:53:51.195467Z 	at org.postgresql.jdbc.PgPreparedStatement.executeWithFlags(PgPreparedStatement.java:194) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-22T17:53:51.1954696Z 	at org.postgresql.jdbc.PgPreparedStatement.executeUpdate(PgPreparedStatement.java:155) ~[postgresql-42.7.4.jar!/:42.7.4]
-2025-10-22T17:53:51.1954723Z 	at com.zaxxer.hikari.pool.ProxyPreparedStatement.executeUpdate(ProxyPreparedStatement.java:61) ~[HikariCP-5.1.0.jar!/:na]
-2025-10-22T17:53:51.195475Z 	at com.zaxxer.hikari.pool.HikariProxyPreparedStatement.executeUpdate(HikariProxyPreparedStatement.java) ~[HikariCP-5.1.0.jar!/:na]
-2025-10-22T17:53:51.1954777Z 	at org.hibernate.engine.jdbc.internal.ResultSetReturnImpl.executeUpdate(ResultSetReturnImpl.java:194) ~[hibernate-core-6.6.2.Final.jar!/:6.6.2.Final]
-2025-10-22T17:53:51.1954801Z 	... 161 common frames omitted
-2025-10-22T17:53:51.1954821Z
-2025-10-22T17:54:25.0506346Z [2m2025-10-22T17:54:25.048Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-2] [0;39m[36mc.p.b.i.filter.JwtAuthenticationFilter  [0;39m [2m:[0;39m JWT Token does not begin with Bearer String
-2025-10-22T17:55:23.883521Z [2m2025-10-22T17:55:23.878Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-6] [0;39m[36mc.p.b.i.filter.JwtAuthenticationFilter  [0;39m [2m:[0;39m JWT Token does not begin with Bearer String
-2025-10-22T18:10:35.040085Z [2m2025-10-22T18:10:35.034Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-7] [0;39m[36mc.p.b.i.filter.JwtAuthenticationFilter  [0;39m [2m:[0;39m JWT Token does not begin with Bearer String
-2025-10-22T18:10:35.1427528Z [2m2025-10-22T18:10:35.141Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-7] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@e1bc0e3 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T18:10:35.1877952Z [2m2025-10-22T18:10:35.185Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-7] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@24cf8164 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T18:10:35.1959044Z [2m2025-10-22T18:10:35.194Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-7] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@189a3727 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T18:10:35.2017785Z [2m2025-10-22T18:10:35.200Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-7] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@561cc079 (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T18:10:35.2073103Z [2m2025-10-22T18:10:35.206Z[0;39m [33m WARN[0;39m [35m69[0;39m [2m--- [p4-backend] [p-nio-80-exec-7] [0;39m[36mcom.zaxxer.hikari.pool.PoolBase         [0;39m [2m:[0;39m P4HikariCP - Failed to validate connection org.postgresql.jdbc.PgConnection@7ebab80c (This connection has been closed.). Possibly consider using a shorter maxLifetime value.
-2025-10-22T18:11:59.895Z No new trace in the past 1 min(s).
-2025-10-22T18:12:59.895Z No new trace in the past 2 min(s).
+2025-10-30T07:29:47.1368906Z Current runner version: '2.328.0'
+2025-10-30T07:29:47.1393605Z ##[group]Runner Image Provisioner
+2025-10-30T07:29:47.1394659Z Hosted Compute Agent
+2025-10-30T07:29:47.1395302Z Version: 20250912.392
+2025-10-30T07:29:47.1395933Z Commit: d921fda672a98b64f4f82364647e2f10b2267d0b
+2025-10-30T07:29:47.1396599Z Build Date: 2025-09-12T15:23:14Z
+2025-10-30T07:29:47.1397241Z ##[endgroup]
+2025-10-30T07:29:47.1397789Z ##[group]Operating System
+2025-10-30T07:29:47.1398349Z Ubuntu
+2025-10-30T07:29:47.1398781Z 24.04.3
+2025-10-30T07:29:47.1399315Z LTS
+2025-10-30T07:29:47.1399737Z ##[endgroup]
+2025-10-30T07:29:47.1400216Z ##[group]Runner Image
+2025-10-30T07:29:47.1401173Z Image: ubuntu-24.04
+2025-10-30T07:29:47.1401698Z Version: 20250929.60.1
+2025-10-30T07:29:47.1402696Z Included Software: https://github.com/actions/runner-images/blob/ubuntu24/20250929.60/images/ubuntu/Ubuntu2404-Readme.md
+2025-10-30T07:29:47.1404291Z Image Release: https://github.com/actions/runner-images/releases/tag/ubuntu24%2F20250929.60
+2025-10-30T07:29:47.1405235Z ##[endgroup]
+2025-10-30T07:29:47.1406322Z ##[group]GITHUB_TOKEN Permissions
+2025-10-30T07:29:47.1408113Z Contents: read
+2025-10-30T07:29:47.1408777Z Metadata: read
+2025-10-30T07:29:47.1409255Z ##[endgroup]
+2025-10-30T07:29:47.1411866Z Secret source: Actions
+2025-10-30T07:29:47.1412612Z Prepare workflow directory
+2025-10-30T07:29:47.1734726Z Prepare all required actions
+2025-10-30T07:29:47.1774724Z Getting action download info
+2025-10-30T07:29:47.6695463Z Download action repository 'actions/checkout@v4' (SHA:08eba0b27e820071cde6df949e0beb9ba4906955)
+2025-10-30T07:29:47.8437539Z Download action repository 'actions/setup-java@v4' (SHA:c5195efecf7bdfc987ee8bae7a71cb8b11521c00)
+2025-10-30T07:29:48.4384203Z Download action repository 'actions/upload-artifact@v4' (SHA:ea165f8d65b6e75b540449e92b4886f43607fa02)
+2025-10-30T07:29:48.6415408Z Complete job name: build
+2025-10-30T07:29:48.7094330Z ##[group]Run actions/checkout@v4
+2025-10-30T07:29:48.7095226Z with:
+2025-10-30T07:29:48.7095688Z   repository: ahmedmmkms/b2b-marketplace
+2025-10-30T07:29:48.7096468Z   token: ***
+2025-10-30T07:29:48.7096890Z   ssh-strict: true
+2025-10-30T07:29:48.7097333Z   ssh-user: git
+2025-10-30T07:29:48.7097768Z   persist-credentials: true
+2025-10-30T07:29:48.7098258Z   clean: true
+2025-10-30T07:29:48.7098703Z   sparse-checkout-cone-mode: true
+2025-10-30T07:29:48.7099226Z   fetch-depth: 1
+2025-10-30T07:29:48.7099644Z   fetch-tags: false
+2025-10-30T07:29:48.7100086Z   show-progress: true
+2025-10-30T07:29:48.7100528Z   lfs: false
+2025-10-30T07:29:48.7101174Z   submodules: false
+2025-10-30T07:29:48.7101616Z   set-safe-directory: true
+2025-10-30T07:29:48.7102341Z ##[endgroup]
+2025-10-30T07:29:48.8182721Z Syncing repository: ahmedmmkms/b2b-marketplace
+2025-10-30T07:29:48.8184680Z ##[group]Getting Git version info
+2025-10-30T07:29:48.8185668Z Working directory is '/home/runner/work/b2b-marketplace/b2b-marketplace'
+2025-10-30T07:29:48.8186834Z [command]/usr/bin/git version
+2025-10-30T07:29:48.8260602Z git version 2.51.0
+2025-10-30T07:29:48.8286950Z ##[endgroup]
+2025-10-30T07:29:48.8301063Z Temporarily overriding HOME='/home/runner/work/_temp/9c977302-f06b-44a3-b660-1b43c2886370' before making global git config changes
+2025-10-30T07:29:48.8303192Z Adding repository directory to the temporary git global config as a safe directory
+2025-10-30T07:29:48.8313734Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/b2b-marketplace/b2b-marketplace
+2025-10-30T07:29:48.8348835Z Deleting the contents of '/home/runner/work/b2b-marketplace/b2b-marketplace'
+2025-10-30T07:29:48.8352454Z ##[group]Initializing the repository
+2025-10-30T07:29:48.8356802Z [command]/usr/bin/git init /home/runner/work/b2b-marketplace/b2b-marketplace
+2025-10-30T07:29:48.8457488Z hint: Using 'master' as the name for the initial branch. This default branch name
+2025-10-30T07:29:48.8459153Z hint: is subject to change. To configure the initial branch name to use in all
+2025-10-30T07:29:48.8460490Z hint: of your new repositories, which will suppress this warning, call:
+2025-10-30T07:29:48.8461870Z hint:
+2025-10-30T07:29:48.8462512Z hint: 	git config --global init.defaultBranch <name>
+2025-10-30T07:29:48.8463222Z hint:
+2025-10-30T07:29:48.8463935Z hint: Names commonly chosen instead of 'master' are 'main', 'trunk' and
+2025-10-30T07:29:48.8465541Z hint: 'development'. The just-created branch can be renamed via this command:
+2025-10-30T07:29:48.8466790Z hint:
+2025-10-30T07:29:48.8467486Z hint: 	git branch -m <name>
+2025-10-30T07:29:48.8468163Z hint:
+2025-10-30T07:29:48.8468869Z hint: Disable this message with "git config set advice.defaultBranchName false"
+2025-10-30T07:29:48.8470377Z Initialized empty Git repository in /home/runner/work/b2b-marketplace/b2b-marketplace/.git/
+2025-10-30T07:29:48.8476605Z [command]/usr/bin/git remote add origin https://github.com/ahmedmmkms/b2b-marketplace
+2025-10-30T07:29:48.8512436Z ##[endgroup]
+2025-10-30T07:29:48.8513279Z ##[group]Disabling automatic garbage collection
+2025-10-30T07:29:48.8516317Z [command]/usr/bin/git config --local gc.auto 0
+2025-10-30T07:29:48.8544221Z ##[endgroup]
+2025-10-30T07:29:48.8544984Z ##[group]Setting up auth
+2025-10-30T07:29:48.8551179Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-10-30T07:29:48.8581054Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-10-30T07:29:48.8945244Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-10-30T07:29:48.8975710Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-10-30T07:29:48.9196893Z [command]/usr/bin/git config --local http.https://github.com/.extraheader AUTHORIZATION: basic ***
+2025-10-30T07:29:48.9229871Z ##[endgroup]
+2025-10-30T07:29:48.9231004Z ##[group]Fetching the repository
+2025-10-30T07:29:48.9248277Z [command]/usr/bin/git -c protocol.version=2 fetch --no-tags --prune --no-recurse-submodules --depth=1 origin +b8be78e721542443586627c2366f475004f59e95:refs/remotes/origin/master
+2025-10-30T07:29:52.9162534Z From https://github.com/ahmedmmkms/b2b-marketplace
+2025-10-30T07:29:52.9165068Z  * [new ref]         b8be78e721542443586627c2366f475004f59e95 -> origin/master
+2025-10-30T07:29:52.9194381Z ##[endgroup]
+2025-10-30T07:29:52.9195888Z ##[group]Determining the checkout info
+2025-10-30T07:29:52.9197601Z ##[endgroup]
+2025-10-30T07:29:52.9200572Z [command]/usr/bin/git sparse-checkout disable
+2025-10-30T07:29:52.9238707Z [command]/usr/bin/git config --local --unset-all extensions.worktreeConfig
+2025-10-30T07:29:52.9266485Z ##[group]Checking out the ref
+2025-10-30T07:29:52.9270334Z [command]/usr/bin/git checkout --progress --force -B master refs/remotes/origin/master
+2025-10-30T07:29:53.1820133Z Reset branch 'master'
+2025-10-30T07:29:53.1821022Z branch 'master' set up to track 'origin/master'.
+2025-10-30T07:29:53.1844783Z ##[endgroup]
+2025-10-30T07:29:53.1889971Z [command]/usr/bin/git log -1 --format=%H
+2025-10-30T07:29:53.1913898Z b8be78e721542443586627c2366f475004f59e95
+2025-10-30T07:29:53.2168285Z ##[group]Run actions/setup-java@v4
+2025-10-30T07:29:53.2168575Z with:
+2025-10-30T07:29:53.2168752Z   java-version: 21
+2025-10-30T07:29:53.2168941Z   distribution: temurin
+2025-10-30T07:29:53.2169142Z   java-package: jdk
+2025-10-30T07:29:53.2169332Z   check-latest: false
+2025-10-30T07:29:53.2169523Z   server-id: github
+2025-10-30T07:29:53.2169712Z   server-username: GITHUB_ACTOR
+2025-10-30T07:29:53.2169937Z   server-password: GITHUB_TOKEN
+2025-10-30T07:29:53.2170164Z   overwrite-settings: true
+2025-10-30T07:29:53.2170365Z   job-status: success
+2025-10-30T07:29:53.2170837Z   token: ***
+2025-10-30T07:29:53.2171027Z ##[endgroup]
+2025-10-30T07:29:53.4095398Z ##[group]Installed distributions
+2025-10-30T07:29:53.4159142Z Resolved Java 21.0.8+9 from tool-cache
+2025-10-30T07:29:53.4160358Z Setting Java 21.0.8+9 as the default
+2025-10-30T07:29:53.4173425Z Creating toolchains.xml for JDK version 21 from temurin
+2025-10-30T07:29:53.4250506Z Writing to /home/runner/.m2/toolchains.xml
+2025-10-30T07:29:53.4251846Z 
+2025-10-30T07:29:53.4252215Z Java configuration:
+2025-10-30T07:29:53.4253564Z   Distribution: temurin
+2025-10-30T07:29:53.4253973Z   Version: 21.0.8+9
+2025-10-30T07:29:53.4254668Z   Path: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.8-9/x64
+2025-10-30T07:29:53.4255545Z 
+2025-10-30T07:29:53.4256292Z ##[endgroup]
+2025-10-30T07:29:53.4276721Z Creating settings.xml with server-id: github
+2025-10-30T07:29:53.4280486Z Writing to /home/runner/.m2/settings.xml
+2025-10-30T07:29:53.4387810Z ##[group]Run cd backend
+2025-10-30T07:29:53.4388095Z [36;1mcd backend[0m
+2025-10-30T07:29:53.4388307Z [36;1mchmod +x ./mvnw[0m
+2025-10-30T07:29:53.4388560Z [36;1m./mvnw clean install -DskipTests[0m
+2025-10-30T07:29:53.4428256Z shell: /usr/bin/bash -e {0}
+2025-10-30T07:29:53.4428503Z env:
+2025-10-30T07:29:53.4428812Z   JAVA_HOME: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.8-9/x64
+2025-10-30T07:29:53.4429286Z   JAVA_HOME_21_X64: /opt/hostedtoolcache/Java_Temurin-Hotspot_jdk/21.0.8-9/x64
+2025-10-30T07:29:53.4429636Z ##[endgroup]
+2025-10-30T07:29:53.4514764Z chmod: cannot access './mvnw': No such file or directory
+2025-10-30T07:29:53.4528914Z ##[error]Process completed with exit code 1.
+2025-10-30T07:29:53.4682444Z Post job cleanup.
+2025-10-30T07:29:53.6435211Z Post job cleanup.
+2025-10-30T07:29:53.7367210Z [command]/usr/bin/git version
+2025-10-30T07:29:53.7403934Z git version 2.51.0
+2025-10-30T07:29:53.7448281Z Temporarily overriding HOME='/home/runner/work/_temp/8c7eaf98-ab39-4147-b73d-804c4d54a136' before making global git config changes
+2025-10-30T07:29:53.7449610Z Adding repository directory to the temporary git global config as a safe directory
+2025-10-30T07:29:53.7454967Z [command]/usr/bin/git config --global --add safe.directory /home/runner/work/b2b-marketplace/b2b-marketplace
+2025-10-30T07:29:53.7490454Z [command]/usr/bin/git config --local --name-only --get-regexp core\.sshCommand
+2025-10-30T07:29:53.7523259Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'core\.sshCommand' && git config --local --unset-all 'core.sshCommand' || :"
+2025-10-30T07:29:53.7748281Z [command]/usr/bin/git config --local --name-only --get-regexp http\.https\:\/\/github\.com\/\.extraheader
+2025-10-30T07:29:53.7772330Z http.https://github.com/.extraheader
+2025-10-30T07:29:53.7784600Z [command]/usr/bin/git config --local --unset-all http.https://github.com/.extraheader
+2025-10-30T07:29:53.7814961Z [command]/usr/bin/git submodule foreach --recursive sh -c "git config --local --name-only --get-regexp 'http\.https\:\/\/github\.com\/\.extraheader' && git config --local --unset-all 'http.https://github.com/.extraheader' || :"
+2025-10-30T07:29:53.8135133Z Cleaning up orphan processes
