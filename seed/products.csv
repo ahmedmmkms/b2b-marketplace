@@ -1,0 +1,51 @@
+sku,name,description,price,category,media_url
+PROD001,Industrial Drill Press,Metalworking drill press for heavy-duty applications,1299.99,Tools & Equipment,https://images.unsplash.com/photo-1591826112609-97a325b09e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD002,Commercial Refrigerator,Stainless steel commercial refrigerator with dual zones,2499.99,Equipment,https://images.unsplash.com/photo-1580477667091-7d04c2c59b65?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD003,Office Chair Executive,High-back executive office chair with adjustable features,299.99,Furniture,https://images.unsplash.com/photo-1505705695099-8747ec3cdc18?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD004,LED Panel Light 50W,Energy-efficient LED panel light,59.99,Lighting,https://images.unsplash.com/photo-1593649770856-8e5a4f9af2e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD005,Wireless Barcode Scanner,Industrial-grade wireless barcode scanner,149.99,Electronics,https://images.unsplash.com/photo-1585123334904-845d60e97b29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD006,Steel Storage Cabinet,Four-drawer steel storage cabinet for tools,399.99,Storage,https://images.unsplash.com/photo-1512551980223-ee0a38d91d54?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD007,Commercial Oven,Convection commercial oven for restaurants,3299.99,Equipment,https://images.unsplash.com/photo-1556911220-e15b29be8c8f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD008,Ergonomic Keyboard,Ergonomic split keyboard for office use,89.99,Electronics,https://images.unsplash.com/photo-1544174083-02f32cbb6e17?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD009,Industrial Vacuum,Heavy-duty industrial vacuum cleaner,499.99,Cleaning Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD010,Conference Room Table,Large rectangular conference room table,799.99,Furniture,https://images.unsplash.com/photo-1503602642458-232111445657?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD011,Security Camera Outdoor,Weatherproof outdoor security camera,129.99,Security,https://images.unsplash.com/photo-1594819047-466d84a740b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD012,3D Printer Desktop,Desktop 3D printer for prototyping,1499.99,Manufacturing,https://images.unsplash.com/photo-1542838132-926582b15c60?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD013,Portable Generator 3000W,Portable inverter generator with clean power,599.99,Power Equipment,https://images.unsplash.com/photo-1581093458799-ef0a6bdee81b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD014,Standing Desk Electric,Height-adjustable electric standing desk,599.99,Furniture,https://images.unsplash.com/photo-1594908485284-1e3540d2fc47?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD015,Commercial Dishwasher,Undercounter commercial dishwasher,2199.99,Equipment,https://images.unsplash.com/photo-1513506905905-eb73e3d1ab4c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD016,Wireless Access Point,Enterprise-grade wireless access point,199.99,Networking,https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD017,Laser Cutter CO2,CO2 laser cutter for materials up to 40W,899.99,Manufacturing,https://images.unsplash.com/photo-1581092529537-95c319719e2f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD018,Workbench Heavy-Duty,Heavy-duty workbench with vise and storage,699.99,Tools & Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD019,UPS 2000VA,Uninterruptible power supply 2000VA,349.99,Power Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD020,Document Scanner,High-speed document scanner for office,399.99,Office Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD021,Security Door Lock,Smart security door lock with keypad,249.99,Security,https://images.unsplash.com/photo-1594819047-466d84a740b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD022,Bluetooth Printer,Mobile Bluetooth receipt printer,119.99,Electronics,https://images.unsplash.com/photo-1585123334904-845d60e97b29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD023,Industrial Fan,High-volume industrial floor fan,129.99,Ventilation,https://images.unsplash.com/photo-1581091226033-d5c48150db4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD024,Barcode Label Maker,Industrial label maker for inventory,249.99,Office Equipment,https://images.unsplash.com/photo-1585123334904-845d60e97b29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD025,Electric Pallet Jack,Electric pallet jack for warehouse use,1299.99,Material Handling,https://images.unsplash.com/photo-1581091226033-d5c48150db4e?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD026,Water Filtration System,Commercial water filtration system,899.99,Equipment,https://images.unsplash.com/photo-1594819047-466d84a740b9?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD027,Commercial Coffee Machine,Commercial espresso machine for offices,1799.99,Equipment,https://images.unsplash.com/photo-1522992319-0365e7f9e0c1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD028,Network Switch 24 Port,Managed 24-port Gigabit network switch,299.99,Networking,https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD029,Desktop Computer Workstation,High-performance desktop workstation,1499.99,Electronics,https://images.unsplash.com/photo-1499933374294-4584851497cc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD030,Fire Extinguisher ABC,ABC dry chemical fire extinguisher 5 lbs,79.99,Safety Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD031,Packaging Tape Dispenser,Heavy-duty packaging tape dispenser,89.99,Packaging,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD032,Wireless Microphone System,Wireless microphone system for presentations,349.99,Audio Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD033,Laminating Machine A3,A3 laminating machine for documents,199.99,Office Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD034,Rack Mount Kit,Universal rack mount kit for 19-inch racks,79.99,Networking,https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD035,Label Printer Thermal,Thermal label printer for inventory,299.99,Office Equipment,https://images.unsplash.com/photo-1585123334904-845d60e97b29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD036,Industrial Scale,30kg capacity industrial scale,229.99,Measurement,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD037,Projector Short Throw,Short-throw HD projector for small rooms,799.99,Audio Visual,https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD038,Power Strip Surge,12-outlet surge protection power strip,59.99,Power Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD039,Staple Gun Heavy-Duty,Heavy-duty staple gun for upholstery,49.99,Tools & Equipment,https://images.unsplash.com/photo-1591826112609-97a325b09e9c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD040,Desk Organizer,Modular desk organizer for office supplies,39.99,Office Supplies,https://images.unsplash.com/photo-1595526114035-0d45edc8818b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD041,Document Shredder,Strip-cut document shredder P-2 level,129.99,Office Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD042,Conference Phone,Speakerphone for conference rooms,249.99,Audio Equipment,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD043,Cable Management Box,Cable management box for desktop organization,29.99,Office Supplies,https://images.unsplash.com/photo-1595526114035-0d45edc8818b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD044,Adjustable Monitor Stand,Adjustable height monitor stand,89.99,Furniture,https://images.unsplash.com/photo-1594908485284-1e3540d2fc47?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD045,Overhead Projector,Traditional overhead projector,499.99,Audio Visual,https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD046,Receipt Printer Thermal,Thermal receipt printer for POS systems,129.99,Electronics,https://images.unsplash.com/photo-1585123334904-845d60e97b29?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD047,Whiteboard Wall Mount,Wall-mounted whiteboard with accessories,149.99,Office Supplies,https://images.unsplash.com/photo-1595526114035-0d45edc8818b?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD048,Computer Monitor 27",27" WQHD computer monitor,299.99,Electronics,https://images.unsplash.com/photo-1542744095-291d1f6e95e6?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD049,Server Rack 42U,42U network server rack with locking doors,1299.99,Networking,https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80
+PROD050,Digital Caliper,Digital caliper with metric/imperial conversion,39.99,Measurement,https://images.unsplash.com/photo-1581092580497-e0d23cbdf1dc?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&h=600&q=80

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
-Test script to verify the success of T1 (DB migrations) and T2 (Boot app skeleton + health)
-as specified in docs/ai_agent_task_plan.md.
+Test script to verify the success of T1 (DB migrations), T2 (Boot app skeleton + health),
+and T3 (FeatureFlag repository + controller) as specified in docs/ai_agent_task_plan.md.
 
 Task T1: Create DB migrations (Catalog + Orgs + Flags)
 - Migrations apply cleanly on empty DB
@@ -9,6 +9,9 @@ Task T1: Create DB migrations (Catalog + Orgs + Flags)
 
 Task T2: Boot app skeleton + health
 - GET /actuator/health returns {"status":"UP"}
+
+Task T3: FeatureFlag repository + controller (read-only)
+- GET /flags returns an array; empty OK
 """
 
 import os
@@ -57,6 +60,41 @@ def test_health_endpoint():
             
     except requests.exceptions.RequestException as e:
         print(f"[FAIL] T2 FAILED: Request error - {e}")
+        return False
+
+
+def test_feature_flags_endpoint():
+    """Test T3: Verify FeatureFlag repository + controller works correctly."""
+    print("Testing T3: FeatureFlag repository + controller (read-only)")
+    
+    api_base = get_api_base_url()
+    flags_url = f"{api_base}/flags"
+    
+    try:
+        response = requests.get(flags_url, timeout=30)
+        print(f"GET {flags_url}")
+        print(f"Status Code: {response.status_code}")
+        print(f"Response: {response.text}")
+        
+        # According to task plan, GET /flags should return an array (empty is OK)
+        if response.status_code == 200:
+            try:
+                json_response = response.json()
+                if isinstance(json_response, list):
+                    print("[PASS] T3 PASSED: GET /flags returns an array as expected")
+                    return True
+                else:
+                    print(f"[FAIL] T3 FAILED: Expected array response, got {type(json_response)}")
+                    return False
+            except ValueError:
+                print(f"[FAIL] T3 FAILED: Response is not valid JSON")
+                return False
+        else:
+            print(f"[FAIL] T3 FAILED: Expected status code 200, got {response.status_code}")
+            return False
+            
+    except requests.exceptions.RequestException as e:
+        print(f"[FAIL] T3 FAILED: Request error - {e}")
         return False
 
 
@@ -166,22 +204,26 @@ def test_db_migrations_indirectly():
 
 
 def run_tests():
-    """Run all tests for T1 and T2."""
-    print("Running tests for T1 (DB migrations) and T2 (App health)")
+    """Run all tests for T1, T2, and T3."""
+    print("Running tests for T1 (DB migrations), T2 (App health), and T3 (Feature flags)")
     print("=" * 60)
     
-    # Test T2 first
+    # Test T2: App health
     t2_success = test_health_endpoint()
     
-    # Test T1 (indirectly)
+    # Test T3: FeatureFlag repository + controller
+    t3_success = test_feature_flags_endpoint()
+    
+    # Test T1: DB migrations (indirectly via API endpoints)
     t1_success = test_db_migrations_indirectly()
     
     print("\\n" + "=" * 60)
     print("SUMMARY:")
     print(f"T1 (DB migrations): {'[PASS]' if t1_success else '[FAIL]'}")
     print(f"T2 (App health): {'[PASS]' if t2_success else '[FAIL]'}")
+    print(f"T3 (Feature flags): {'[PASS]' if t3_success else '[FAIL]'}")
     
-    overall_success = t1_success and t2_success
+    overall_success = t1_success and t2_success and t3_success
     print(f"Overall: {'[PASS]' if overall_success else '[FAIL]'}")
     
     return overall_success
