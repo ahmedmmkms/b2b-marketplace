@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -30,6 +31,17 @@ public class RFQController {
         // For now, using the placeholder method that will be updated when security is implemented
         RFQResponse rfqResponse = rfqService.createRFQ(rfqCreate);
         return ResponseEntity.status(HttpStatus.CREATED).body(rfqResponse);
+    }
+    
+    /**
+     * List all RFQs (with optional filtering)
+     */
+    @GetMapping
+    public ResponseEntity<List<RFQResponse>> listRFQs(
+            @RequestParam(required = false) String buyerId,
+            @RequestParam(required = false) String status) {
+        List<RFQResponse> rfqs = rfqService.listRFQs(buyerId, status);
+        return ResponseEntity.ok(rfqs);
     }
     
     /**

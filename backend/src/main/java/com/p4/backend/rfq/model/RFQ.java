@@ -29,6 +29,9 @@ public class RFQ {
     @NotNull
     @Column(name = "title", nullable = false)
     private String title;
+
+    @Column(name = "description")
+    private String description;
     
     @Column(name = "notes")
     private String notes;
@@ -108,6 +111,14 @@ public class RFQ {
 
     public String getNotes() {
         return notes;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setNotes(String notes) {

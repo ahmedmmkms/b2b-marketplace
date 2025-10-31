@@ -45,6 +45,7 @@ class RFQServiceTest {
         // Arrange
         RFQCreate rfqCreate = new RFQCreate();
         rfqCreate.setTitle("Test RFQ");
+        rfqCreate.setDescription("Test Description");
         rfqCreate.setNotes("Test Notes");
 
         RFQ savedRFQ = new RFQ();
@@ -52,6 +53,7 @@ class RFQServiceTest {
         savedRFQ.setBuyerId("PLACEHOLDER_BUYER_ID");
         savedRFQ.setBuyerUserId("PLACEHOLDER_BUYER_USER_ID");
         savedRFQ.setTitle("Test RFQ");
+        savedRFQ.setDescription("Test Description");
         savedRFQ.setNotes("Test Notes");
         savedRFQ.setStatus(RFQ.Status.draft);
 
@@ -64,6 +66,7 @@ class RFQServiceTest {
         assertNotNull(result.getId());
         assertEquals("PLACEHOLDER_BUYER_ID", result.getBuyerId());
         assertEquals("Test RFQ", result.getTitle());
+        assertEquals("Test Description", result.getDescription());
         assertEquals("Test Notes", result.getNotes());
         assertEquals("draft", result.getStatus());
         verify(rfqRepository).save(any(RFQ.class));
@@ -74,6 +77,7 @@ class RFQServiceTest {
         // Arrange
         RFQCreate rfqCreate = new RFQCreate();
         rfqCreate.setTitle("Test RFQ");
+        rfqCreate.setDescription("Test Description");
         
         RFQLineCreate lineCreate = new RFQLineCreate();
         lineCreate.setDescription("Test Line");
@@ -86,6 +90,7 @@ class RFQServiceTest {
         savedRFQ.setBuyerId("PLACEHOLDER_BUYER_ID");
         savedRFQ.setBuyerUserId("PLACEHOLDER_BUYER_USER_ID");
         savedRFQ.setTitle("Test RFQ");
+        savedRFQ.setDescription("Test Description");
         savedRFQ.setStatus(RFQ.Status.draft);
 
         RFQLine savedLine = new RFQLine();
@@ -105,6 +110,7 @@ class RFQServiceTest {
         // Assert
         assertNotNull(result.getId());
         assertEquals("Test RFQ", result.getTitle());
+        assertEquals("Test Description", result.getDescription());
         assertNotNull(result.getLines());
         assertEquals(1, result.getLines().size());
         verify(rfqRepository).save(any(RFQ.class));
@@ -119,6 +125,7 @@ class RFQServiceTest {
         rfq.setId(rfqId);
         rfq.setBuyerId("BUYER_ID");
         rfq.setTitle("Test RFQ");
+        rfq.setDescription("Test Description");
         rfq.setNotes("Test Notes");
         rfq.setStatus(RFQ.Status.draft);
 
@@ -132,6 +139,7 @@ class RFQServiceTest {
         assertEquals(rfqId, result.getId());
         assertEquals("BUYER_ID", result.getBuyerId());
         assertEquals("Test RFQ", result.getTitle());
+        assertEquals("Test Description", result.getDescription());
         assertEquals("Test Notes", result.getNotes());
         assertEquals("draft", result.getStatus());
         verify(rfqRepository).findById(rfqId);

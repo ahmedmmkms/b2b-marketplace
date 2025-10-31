@@ -1,12 +1,12 @@
 package com.p4.backend.rfq.model;
 
-import java.time.OffsetDateTime;
 import java.util.List;
 
 public class RFQResponse {
     private String id;
     private String buyerId;
     private String title;
+    private String description;
     private String notes;
     private String status;
     private List<Attachment> attachments;
@@ -49,7 +49,15 @@ public class RFQResponse {
     public String getNotes() {
         return notes;
     }
-    
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public void setNotes(String notes) {
         this.notes = notes;
     }

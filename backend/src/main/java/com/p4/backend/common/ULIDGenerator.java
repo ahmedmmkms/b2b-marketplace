@@ -3,26 +3,33 @@ package com.p4.backend.common;
 import java.security.SecureRandom;
 
 public class ULIDGenerator {
-    private static final String ALLOWED_CHARS = "0123456789ABCDEFGHJKMNP T VWXYZ".replace(" ", "");
+    private static final String ALLOWED_CHARS = "0123456789ABCDEFGHJKMNPRTVWXYZ"; // No I, L, O, Q, S to match DB constraint
     private static final int ULID_LENGTH = 26;
+    private static final int TIME_PART_LENGTH = 10;
+    private static final int RAND_PART_LENGTH = 16;
+    private static final long MAX_TIME = 281474976710655L; // Maximum time value that fits in 48 bits
     private static final SecureRandom random = new SecureRandom();
 
     public static String generateULID() {
         char[] ulid = new char[ULID_LENGTH];
         
         // Generate timestamp part (first 10 characters)
-        // Use time in milliseconds since Unix epoch
         long timestamp = System.currentTimeMillis();
         
-        // Encode the timestamp in base (length of allowed characters)
-        int base = ALLOWED_CHARS.length();
-        for (int i = 9; i >= 0; i--) {
+        // Check for overflow
+        if (timestamp > MAX_TIME) {
+            throw new RuntimeException("ULID timestamp overflow");
+        }
+        
+        // Encode the timestamp in base 32 (base of allowed characters)
+        int base = ALLOWED_CHARS.length(); // 32
+        for (int i = TIME_PART_LENGTH - 1; i >= 0; i--) {
             ulid[i] = ALLOWED_CHARS.charAt((int) (timestamp % base));
             timestamp /= base;
         }
         
         // Generate random part (remaining 16 characters)
-        for (int i = 10; i < ULID_LENGTH; i++) {
+        for (int i = TIME_PART_LENGTH; i < ULID_LENGTH; i++) {
             ulid[i] = ALLOWED_CHARS.charAt(random.nextInt(ALLOWED_CHARS.length()));
         }
         

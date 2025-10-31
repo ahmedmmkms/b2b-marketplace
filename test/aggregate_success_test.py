@@ -52,7 +52,8 @@ from urllib.parse import urlparse
 
 def get_api_base_url():
     """Get the API base URL from environment variable or use default."""
-    api_url = os.environ.get('API_URL_BASE', 'https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net')
+    api_url = os.environ.get('API_URL_BASE', 'http://localhost:8080')
+    #api_url = os.environ.get('API_URL_BASE', 'https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net')
     return api_url
 
 
