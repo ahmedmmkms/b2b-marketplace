@@ -3,6 +3,8 @@ package com.p4.backend.catalog.controller;
 import com.p4.backend.catalog.model.Product;
 import com.p4.backend.catalog.model.ProductCreate;
 import com.p4.backend.catalog.service.ProductService;
+import com.p4.backend.common.ProblemDetailException;
+import com.p4.backend.common.ULIDGenerator;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -47,6 +49,16 @@ public class ProductController {
      */
     @GetMapping("/{id}")
     public ResponseEntity<Product> getProduct(@PathVariable String id) {
+        // Validate ULID format before proceeding
+        if (!ULIDGenerator.isValidULID(id)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST, 
+                "https://api.example.com/errors/invalid-id", 
+                "Invalid ID format", 
+                "Product ID must be a valid ULID format"
+            );
+        }
+        
         Product product = productService.getProductById(id);
         return ResponseEntity.ok(product);
     }

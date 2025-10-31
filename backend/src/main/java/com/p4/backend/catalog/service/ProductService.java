@@ -57,6 +57,16 @@ public class ProductService {
      * @return Product if found and active
      */
     public Product getProductById(String id) {
+        // Validate ULID format before querying database
+        if (!ULIDGenerator.isValidULID(id)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST, 
+                "https://api.example.com/errors/invalid-id", 
+                "Invalid ID format", 
+                "Product ID must be a valid ULID format"
+            );
+        }
+        
         Optional<Product> productOpt = productRepository.findById(id);
         
         if (productOpt.isPresent() && productOpt.get().getIsActive()) {

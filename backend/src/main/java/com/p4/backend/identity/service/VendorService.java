@@ -34,6 +34,10 @@ public class VendorService {
     }
     
     public Optional<Organization> findVendorById(String id) {
+        // Validate ULID format before querying database
+        if (!ULIDGenerator.isValidULID(id)) {
+            return Optional.empty();
+        }
         return organizationRepository.findById(id);
     }
 }

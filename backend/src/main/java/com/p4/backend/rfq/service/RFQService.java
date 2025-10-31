@@ -123,6 +123,16 @@ public class RFQService {
      * @return RFQ if found
      */
     public RFQResponse getRFQById(String rfqId) {
+        // Validate ULID format before querying database
+        if (!ULIDGenerator.isValidULID(rfqId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST, 
+                "https://api.example.com/errors/invalid-id", 
+                "Invalid ID format", 
+                "RFQ ID must be a valid ULID format"
+            );
+        }
+        
         Optional<RFQ> rfqOpt = rfqRepository.findById(rfqId);
         
         if (rfqOpt.isPresent()) {

@@ -27,4 +27,24 @@ public class ULIDGenerator {
         
         return new String(ulid);
     }
+    
+    /**
+     * Validates if a given string is a properly formatted ULID
+     * @param value The string to validate
+     * @return true if the string is a valid ULID, false otherwise
+     */
+    public static boolean isValidULID(String value) {
+        if (value == null || value.length() != ULID_LENGTH) {
+            return false;
+        }
+        
+        for (int i = 0; i < ULID_LENGTH; i++) {
+            char c = value.charAt(i);
+            if (ALLOWED_CHARS.indexOf(c) == -1) {
+                return false;
+            }
+        }
+        
+        return true;
+    }
 }
