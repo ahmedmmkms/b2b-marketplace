@@ -3,7 +3,7 @@ package com.p4.backend.common;
 import java.security.SecureRandom;
 
 public class ULIDGenerator {
-    private static final String ALLOWED_CHARS = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"; // C, U, X, Z removed to avoid confusion
+    private static final String ALLOWED_CHARS = "0123456789ABCDEFGHJKMNP T VWXYZ".replace(" ", "");
     private static final int ULID_LENGTH = 26;
     private static final SecureRandom random = new SecureRandom();
 
@@ -14,10 +14,11 @@ public class ULIDGenerator {
         // Use time in milliseconds since Unix epoch
         long timestamp = System.currentTimeMillis();
         
-        // Encode the timestamp in base 32 (right to left order)
+        // Encode the timestamp in base (length of allowed characters)
+        int base = ALLOWED_CHARS.length();
         for (int i = 9; i >= 0; i--) {
-            ulid[i] = ALLOWED_CHARS.charAt((int) (timestamp % 32));
-            timestamp /= 32;
+            ulid[i] = ALLOWED_CHARS.charAt((int) (timestamp % base));
+            timestamp /= base;
         }
         
         // Generate random part (remaining 16 characters)
