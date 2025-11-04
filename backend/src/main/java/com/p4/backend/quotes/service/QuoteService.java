@@ -340,6 +340,31 @@ public class QuoteService {
             );
         }
         
+        RFQ rfq = rfqOpt.get();
+        
+        // Verify that the current authenticated user is from the buyer organization
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserAccount userAccount) {
+            // Check if the authenticated user belongs to the buyer organization
+            if (!rfq.getBuyerId().equals(userAccount.getOrgId())) {
+                throw new ProblemDetailException(
+                    HttpStatus.FORBIDDEN,
+                    "https://api.example.com/errors/forbidden",
+                    "Forbidden",
+                    "You are not authorized to view quotes for this RFQ"
+                );
+            }
+        } else {
+            // If not authenticated, check if authentication is required
+            // For this endpoint, authentication should be required as per business logic
+            throw new ProblemDetailException(
+                HttpStatus.UNAUTHORIZED,
+                "https://api.example.com/errors/unauthorized",
+                "Unauthorized",
+                "Authentication is required to view quotes for an RFQ"
+            );
+        }
+        
         // Get quotes for the RFQ ordered by grand total ascending
         List<Quote> quotes = quoteRepository.findByRfqIdOrderByGrandTotalAsc(rfqId);
         

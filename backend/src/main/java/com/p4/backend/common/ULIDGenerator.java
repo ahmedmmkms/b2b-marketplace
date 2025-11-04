@@ -3,7 +3,7 @@ package com.p4.backend.common;
 import java.security.SecureRandom;
 
 public class ULIDGenerator {
-    private static final String ALLOWED_CHARS = "0123456789ABCDEFGHJKMNPRTVWXYZ"; // No I, L, O, Q, S to match DB constraint
+    private static final String ALLOWED_CHARS = "0123456789ABCDEFGHJKMNPQRSTVWXYZ"; // Crockford Base32 alphabet (excludes I, L, O, U)
     private static final int ULID_LENGTH = 26;
     private static final int TIME_PART_LENGTH = 10;
     private static final int RAND_PART_LENGTH = 16;

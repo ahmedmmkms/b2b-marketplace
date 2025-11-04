@@ -2,6 +2,7 @@ package com.p4.backend.rfq.controller;
 
 import com.p4.backend.common.ProblemDetailException;
 import com.p4.backend.common.ULIDGenerator;
+import com.p4.backend.identity.model.UserAccount;
 import com.p4.backend.rfq.model.RFQCreate;
 import com.p4.backend.rfq.model.RFQLineCreate;
 import com.p4.backend.rfq.model.RFQLineDto;
@@ -11,9 +12,12 @@ import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -29,10 +33,23 @@ public class RFQController {
      */
     @PostMapping
     public ResponseEntity<RFQResponse> createRFQ(@Valid @RequestBody RFQCreate rfqCreate, Principal principal) {
-        // TODO: Extract buyerId and buyerUserId from JWT claims in real implementation
-        // For now, using the placeholder method that will be updated when security is implemented
-        RFQResponse rfqResponse = rfqService.createRFQ(rfqCreate);
-        return ResponseEntity.status(HttpStatus.CREATED).body(rfqResponse);
+        // Extract user details from security context
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserAccount userAccount) {
+            Map<String, Object> jwtClaims = new HashMap<>();
+            jwtClaims.put("orgId", userAccount.getOrgId());
+            jwtClaims.put("userId", userAccount.getId());
+            RFQResponse rfqResponse = rfqService.createRFQ(rfqCreate, jwtClaims);
+            return ResponseEntity.status(HttpStatus.CREATED).body(rfqResponse);
+        } else {
+            // If not authenticated, check if authentication is required
+            throw new ProblemDetailException(
+                HttpStatus.UNAUTHORIZED,
+                "https://api.example.com/errors/unauthorized",
+                "Unauthorized",
+                "Authentication is required to create an RFQ"
+            );
+        }
     }
     
     /**

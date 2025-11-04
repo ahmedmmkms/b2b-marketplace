@@ -51,9 +51,22 @@ public class QuoteController {
             );
         }
         
-        // Call the service method which will extract authentication from security context
-        QuoteResponse quoteResponse = quoteService.submitQuote(rfqId, quoteCreate);
-        return ResponseEntity.status(HttpStatus.CREATED).body(quoteResponse);
+        // Extract user details from security context
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserAccount userAccount) {
+            Map<String, Object> jwtClaims = new HashMap<>();
+            jwtClaims.put("orgId", userAccount.getOrgId());
+            jwtClaims.put("userId", userAccount.getId());
+            QuoteResponse quoteResponse = quoteService.submitQuote(rfqId, quoteCreate, jwtClaims);
+            return ResponseEntity.status(HttpStatus.CREATED).body(quoteResponse);
+        } else {
+            throw new ProblemDetailException(
+                HttpStatus.UNAUTHORIZED,
+                "https://api.example.com/errors/unauthorized",
+                "Unauthorized",
+                "Authentication is required to submit a quote"
+            );
+        }
     }
     
     /**
