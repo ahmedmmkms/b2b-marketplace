@@ -342,28 +342,7 @@ public class QuoteService {
         
         RFQ rfq = rfqOpt.get();
         
-        // Verify that the current authenticated user is from the buyer organization
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserAccount userAccount) {
-            // Check if the authenticated user belongs to the buyer organization
-            if (!rfq.getBuyerId().equals(userAccount.getOrgId())) {
-                throw new ProblemDetailException(
-                    HttpStatus.FORBIDDEN,
-                    "https://api.example.com/errors/forbidden",
-                    "Forbidden",
-                    "You are not authorized to view quotes for this RFQ"
-                );
-            }
-        } else {
-            // If not authenticated, check if authentication is required
-            // For this endpoint, authentication should be required as per business logic
-            throw new ProblemDetailException(
-                HttpStatus.UNAUTHORIZED,
-                "https://api.example.com/errors/unauthorized",
-                "Unauthorized",
-                "Authentication is required to view quotes for an RFQ"
-            );
-        }
+        ensureBuyerAccess(rfq);
         
         // Get quotes for the RFQ ordered by grand total ascending
         List<Quote> quotes = quoteRepository.findByRfqIdOrderByGrandTotalAsc(rfqId);
@@ -375,6 +354,53 @@ public class QuoteService {
         }
         
         return responses;
+    }
+
+    /**
+     * Get a specific quote for an RFQ
+     * @param rfqId The ID of the RFQ
+     * @param quoteId The ID of the quote to retrieve
+     * @return Quote response with line details
+     */
+    public QuoteResponse getQuoteForRFQ(String rfqId, String quoteId) {
+        // Validate ULID formats before querying database
+        if (!ULIDGenerator.isValidULID(rfqId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "RFQ ID must be a valid ULID format"
+            );
+        }
+
+        if (!ULIDGenerator.isValidULID(quoteId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "Quote ID must be a valid ULID format"
+            );
+        }
+
+        // Ensure the RFQ exists
+        RFQ rfq = rfqRepository.findById(rfqId).orElseThrow(() -> new ProblemDetailException(
+            HttpStatus.NOT_FOUND,
+            "https://api.example.com/errors/rfq-not-found",
+            "RFQ not found",
+            "RFQ with id '" + rfqId + "' does not exist"
+        ));
+
+        ensureBuyerAccess(rfq);
+
+        // Locate the quote for this RFQ
+        Quote quote = quoteRepository.findByIdAndRfqId(quoteId, rfqId).orElseThrow(() -> new ProblemDetailException(
+            HttpStatus.NOT_FOUND,
+            "https://api.example.com/errors/quote-not-found",
+            "Quote not found",
+            "Quote with id '" + quoteId + "' does not exist for this RFQ"
+        ));
+
+        return buildQuoteResponse(quote);
     }
     
     private QuoteResponse buildQuoteResponse(Quote quote) {
@@ -412,6 +438,146 @@ public class QuoteService {
         response.setLines(quoteLineResponses);
         
         return response;
+    }
+    
+    /**
+     * Accept a quote for an RFQ
+     * @param rfqId The ID of the RFQ
+     * @param quoteId The ID of the quote to accept
+     */
+    @Transactional
+    public void acceptQuote(String rfqId, String quoteId) {
+        // Validate ULID formats before querying database
+        if (!ULIDGenerator.isValidULID(rfqId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "RFQ ID must be a valid ULID format"
+            );
+        }
+        
+        if (!ULIDGenerator.isValidULID(quoteId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "Quote ID must be a valid ULID format"
+            );
+        }
+        
+        // Check if the RFQ exists
+        Optional<RFQ> rfqOpt = rfqRepository.findById(rfqId);
+        if (rfqOpt.isEmpty()) {
+            throw new ProblemDetailException(
+                HttpStatus.NOT_FOUND,
+                "https://api.example.com/errors/rfq-not-found",
+                "RFQ not found",
+                "RFQ with id '" + rfqId + "' does not exist"
+            );
+        }
+        
+        RFQ rfq = rfqOpt.get();
+        
+        // Check if the quote exists and belongs to the RFQ
+        Optional<Quote> quoteOpt = quoteRepository.findByIdAndRfqId(quoteId, rfqId);
+        if (quoteOpt.isEmpty()) {
+            throw new ProblemDetailException(
+                HttpStatus.NOT_FOUND,
+                "https://api.example.com/errors/quote-not-found",
+                "Quote not found",
+                "Quote with id '" + quoteId + "' does not exist for this RFQ"
+            );
+        }
+        
+        Quote quoteToAccept = quoteOpt.get();
+        
+        // Verify that the current authenticated user is from the buyer organization
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserAccount userAccount) {
+            // Check if the authenticated user belongs to the buyer organization
+            if (!rfq.getBuyerId().equals(userAccount.getOrgId())) {
+                throw new ProblemDetailException(
+                    HttpStatus.FORBIDDEN,
+                    "https://api.example.com/errors/forbidden",
+                    "Forbidden",
+                    "You are not authorized to accept a quote for this RFQ"
+                );
+            }
+        } else {
+            throw new ProblemDetailException(
+                HttpStatus.UNAUTHORIZED,
+                "https://api.example.com/errors/unauthorized",
+                "Unauthorized",
+                "Authentication is required to accept a quote"
+            );
+        }
+        
+        // Check if the RFQ is in a valid state for quote acceptance (should be 'issued' or 'awarded' but not already 'awarded')
+        if (rfq.getStatus() == RFQ.Status.awarded) {
+            // Idempotent behavior: if already awarded with same accepted quote, return successfully
+            if (quoteToAccept.getStatus() == Quote.Status.accepted) {
+                return; // Already accepted, operation is idempotent
+            } else {
+                throw new ProblemDetailException(
+                    HttpStatus.CONFLICT,
+                    "https://api.example.com/errors/rfq-already-awarded",
+                    "RFQ already awarded",
+                    "This RFQ has already been awarded to another quote"
+                );
+            }
+        } else if (rfq.getStatus() != RFQ.Status.issued) {
+            throw new ProblemDetailException(
+                HttpStatus.CONFLICT,
+                "https://api.example.com/errors/rfq-invalid-state",
+                "RFQ is not in valid state for acceptance",
+                "RFQ must be in 'issued' status to accept a quote"
+            );
+        }
+        
+        // Check if the quote is already accepted (idempotent behavior)
+        if (quoteToAccept.getStatus() == Quote.Status.accepted) {
+            // If the quote is already accepted and RFQ is awarded, this is idempotent
+            if (rfq.getStatus() == RFQ.Status.awarded) {
+                return; // Already in correct state, operation is idempotent
+            }
+        }
+        
+        // Update all quotes for this RFQ: accepted quote becomes 'accepted', others become 'rejected'
+        List<Quote> allQuotesForRfq = quoteRepository.findByRfqId(rfqId);
+        for (Quote quote : allQuotesForRfq) {
+            if (quote.getId().equals(quoteId)) {
+                quote.setStatus(Quote.Status.accepted);
+            } else {
+                quote.setStatus(Quote.Status.rejected);
+            }
+            quoteRepository.save(quote);
+        }
+        
+        // Update RFQ status to 'awarded'
+        rfq.setStatus(RFQ.Status.awarded);
+        rfqRepository.save(rfq);
+    }
+
+    private void ensureBuyerAccess(RFQ rfq) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated() && authentication.getPrincipal() instanceof UserAccount userAccount) {
+            if (!rfq.getBuyerId().equals(userAccount.getOrgId())) {
+                throw new ProblemDetailException(
+                    HttpStatus.FORBIDDEN,
+                    "https://api.example.com/errors/forbidden",
+                    "Forbidden",
+                    "You are not authorized to view quotes for this RFQ"
+                );
+            }
+        } else {
+            throw new ProblemDetailException(
+                HttpStatus.UNAUTHORIZED,
+                "https://api.example.com/errors/unauthorized",
+                "Unauthorized",
+                "Authentication is required to view quotes for an RFQ"
+            );
+        }
     }
     
     private VendorContext resolveVendorContext(Map<String, Object> jwtClaims) {

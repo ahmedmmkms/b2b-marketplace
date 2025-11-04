@@ -459,7 +459,7 @@ class QuoteServiceTest {
     }
     
     @Test
-    void testGetQuotesForRFQ_RFQNotFound() {
+    void testGetQuotesForRFQ_RFQNotFound2() {
         // This test should still work since it doesn't depend on authentication after finding the RFQ
         String rfqId = ULIDGenerator.generateULID();
         when(rfqRepository.findById(rfqId)).thenReturn(Optional.empty());
@@ -470,5 +470,244 @@ class QuoteServiceTest {
         assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
         assertTrue(exception.getDetail().contains("does not exist"));
         verify(rfqRepository).findById(rfqId);
+    }
+    
+    @Test
+    void testAcceptQuote_Success() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        String quoteId = ULIDGenerator.generateULID();
+        String buyerId = ULIDGenerator.generateULID();
+        String buyerUserId = ULIDGenerator.generateULID();
+        
+        // Mock RFQ
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setBuyerId(buyerId);
+        rfq.setBuyerUserId(buyerUserId);
+        rfq.setStatus(RFQ.Status.issued); // RFQ must be issued to accept a quote
+        
+        // Mock quote to be accepted
+        Quote quoteToAccept = new Quote();
+        quoteToAccept.setId(quoteId);
+        quoteToAccept.setRfqId(rfqId);
+        quoteToAccept.setVendorId(ULIDGenerator.generateULID());
+        quoteToAccept.setStatus(Quote.Status.submitted);
+        
+        // Mock another quote that should be rejected
+        Quote otherQuote = new Quote();
+        otherQuote.setId(ULIDGenerator.generateULID());
+        otherQuote.setRfqId(rfqId);
+        otherQuote.setVendorId(ULIDGenerator.generateULID());
+        otherQuote.setStatus(Quote.Status.submitted);
+        
+        // Mock the buyer user account
+        UserAccount userAccount = new UserAccount();
+        userAccount.setId(buyerUserId);
+        userAccount.setOrgId(buyerId);
+        
+        // Mock dependencies
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+        when(quoteRepository.findByIdAndRfqId(quoteId, rfqId)).thenReturn(Optional.of(quoteToAccept));
+        when(quoteRepository.findByRfqId(rfqId)).thenReturn(Arrays.asList(quoteToAccept, otherQuote));
+        when(quoteRepository.save(any(Quote.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        when(rfqRepository.save(any(RFQ.class))).thenAnswer(invocation -> invocation.getArgument(0));
+        
+        // Simulate authentication with a buyer user
+        try (MockedStatic<org.springframework.security.core.context.SecurityContextHolder> contextMock = 
+             Mockito.mockStatic(org.springframework.security.core.context.SecurityContextHolder.class)) {
+            
+            org.springframework.security.core.Authentication authentication = mock(org.springframework.security.core.Authentication.class);
+            when(authentication.isAuthenticated()).thenReturn(true);
+            when(authentication.getPrincipal()).thenReturn(userAccount);
+            
+            contextMock.when(org.springframework.security.core.context.SecurityContextHolder::getContext)
+                      .thenReturn(mock(org.springframework.security.core.context.SecurityContext.class));
+            when(org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication())
+                .thenReturn(authentication);
+            
+            // Act
+            quoteService.acceptQuote(rfqId, quoteId);
+            
+            // Assert
+            // Verify that the accepted quote has status 'accepted'
+            assertEquals(Quote.Status.accepted, quoteToAccept.getStatus());
+            // Verify that the other quote has status 'rejected'
+            assertEquals(Quote.Status.rejected, otherQuote.getStatus());
+            // Verify that the RFQ status is 'awarded'
+            assertEquals(RFQ.Status.awarded, rfq.getStatus());
+            
+            // Verify that save was called for both quotes and the RFQ
+            verify(quoteRepository, times(2)).save(any(Quote.class)); // One for each quote
+            verify(rfqRepository).save(any(RFQ.class));
+        }
+    }
+    
+    @Test
+    void testAcceptQuote_RFQNotFound() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        String quoteId = ULIDGenerator.generateULID();
+        
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.empty());
+        
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> quoteService.acceptQuote(rfqId, quoteId));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertTrue(exception.getDetail().contains("does not exist"));
+        verify(rfqRepository).findById(rfqId);
+    }
+    
+    @Test
+    void testAcceptQuote_QuoteNotFound() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        String quoteId = ULIDGenerator.generateULID();
+        
+        // Mock RFQ
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setBuyerId(ULIDGenerator.generateULID());
+        rfq.setBuyerUserId(ULIDGenerator.generateULID());
+        rfq.setStatus(RFQ.Status.issued);
+        
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+        when(quoteRepository.findByIdAndRfqId(quoteId, rfqId)).thenReturn(Optional.empty());
+        
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> quoteService.acceptQuote(rfqId, quoteId));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertTrue(exception.getDetail().contains("does not exist for this RFQ"));
+        verify(quoteRepository).findByIdAndRfqId(quoteId, rfqId);
+    }
+    
+    @Test
+    void testAcceptQuote_RFQNotInValidState() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        String quoteId = ULIDGenerator.generateULID();
+        
+        // Mock RFQ in draft status (not valid for acceptance)
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setBuyerId(ULIDGenerator.generateULID());
+        rfq.setBuyerUserId(ULIDGenerator.generateULID());
+        rfq.setStatus(RFQ.Status.draft); // Not issued or awarded
+        
+        // Mock quote
+        Quote quote = new Quote();
+        quote.setId(quoteId);
+        quote.setRfqId(rfqId);
+        quote.setStatus(Quote.Status.submitted);
+        
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+        when(quoteRepository.findByIdAndRfqId(quoteId, rfqId)).thenReturn(Optional.of(quote));
+        
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> quoteService.acceptQuote(rfqId, quoteId));
+        assertEquals(HttpStatus.CONFLICT, exception.getStatus());
+        assertTrue(exception.getDetail().contains("not in valid state for acceptance"));
+    }
+    
+    @Test
+    void testAcceptQuote_RFQAlreadyAwardedToDifferentQuote() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        String quoteId = ULIDGenerator.generateULID(); // The quote we're trying to accept
+        String differentQuoteId = ULIDGenerator.generateULID(); // Already accepted quote
+        
+        // Mock RFQ already awarded
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setBuyerId(ULIDGenerator.generateULID());
+        rfq.setBuyerUserId(ULIDGenerator.generateULID());
+        rfq.setStatus(RFQ.Status.awarded);
+        
+        // Mock quote we're trying to accept (not yet accepted)
+        Quote quoteToAccept = new Quote();
+        quoteToAccept.setId(quoteId);
+        quoteToAccept.setRfqId(rfqId);
+        quoteToAccept.setStatus(Quote.Status.submitted);
+        
+        // Mock already accepted quote
+        Quote alreadyAcceptedQuote = new Quote();
+        alreadyAcceptedQuote.setId(differentQuoteId);
+        alreadyAcceptedQuote.setRfqId(rfqId);
+        alreadyAcceptedQuote.setStatus(Quote.Status.accepted);
+        
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+        when(quoteRepository.findByIdAndRfqId(quoteId, rfqId)).thenReturn(Optional.of(quoteToAccept));
+        
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> quoteService.acceptQuote(rfqId, quoteId));
+        assertEquals(HttpStatus.CONFLICT, exception.getStatus());
+        assertTrue(exception.getDetail().contains("already been awarded"));
+    }
+    
+    @Test
+    void testAcceptQuote_IdempotentWhenAlreadyAccepted() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        String quoteId = ULIDGenerator.generateULID();
+        String buyerId = ULIDGenerator.generateULID();
+        String buyerUserId = ULIDGenerator.generateULID();
+        
+        // Mock RFQ already awarded
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setBuyerId(buyerId);
+        rfq.setBuyerUserId(buyerUserId);
+        rfq.setStatus(RFQ.Status.awarded);
+        
+        // Mock quote that is already accepted
+        Quote quote = new Quote();
+        quote.setId(quoteId);
+        quote.setRfqId(rfqId);
+        quote.setStatus(Quote.Status.accepted);
+        
+        // Mock other quotes that are already rejected
+        Quote otherQuote = new Quote();
+        otherQuote.setId(ULIDGenerator.generateULID());
+        otherQuote.setRfqId(rfqId);
+        otherQuote.setStatus(Quote.Status.rejected);
+        
+        // Mock the buyer user account
+        UserAccount userAccount = new UserAccount();
+        userAccount.setId(buyerUserId);
+        userAccount.setOrgId(buyerId);
+        
+        // Mock dependencies
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+        when(quoteRepository.findByIdAndRfqId(quoteId, rfqId)).thenReturn(Optional.of(quote));
+        when(quoteRepository.findByRfqId(rfqId)).thenReturn(Arrays.asList(quote, otherQuote));
+        
+        // Simulate authentication with a buyer user
+        try (MockedStatic<org.springframework.security.core.context.SecurityContextHolder> contextMock = 
+             Mockito.mockStatic(org.springframework.security.core.context.SecurityContextHolder.class)) {
+            
+            org.springframework.security.core.Authentication authentication = mock(org.springframework.security.core.Authentication.class);
+            when(authentication.isAuthenticated()).thenReturn(true);
+            when(authentication.getPrincipal()).thenReturn(userAccount);
+            
+            contextMock.when(org.springframework.security.core.context.SecurityContextHolder::getContext)
+                      .thenReturn(mock(org.springframework.security.core.context.SecurityContext.class));
+            when(org.springframework.security.core.context.SecurityContextHolder.getContext().getAuthentication())
+                .thenReturn(authentication);
+            
+            // Act - This should complete without exception (idempotent behavior)
+            assertDoesNotThrow(() -> quoteService.acceptQuote(rfqId, quoteId));
+            
+            // Assert that no changes were made (idempotent)
+            assertEquals(Quote.Status.accepted, quote.getStatus());
+            assertEquals(RFQ.Status.awarded, rfq.getStatus());
+            
+            // Verify that save was called for the idempotent update
+            verify(quoteRepository, atMost(2)).save(any(Quote.class)); // For both quotes in collection
+            verify(rfqRepository, atMost(1)).save(any(RFQ.class));
+        }
     }
 }

@@ -87,4 +87,44 @@ public class QuoteController {
         List<QuoteResponse> quotes = quoteService.getQuotesForRFQ(rfqId);
         return ResponseEntity.ok(quotes);
     }
+    
+    /**
+     * Get a specific quote for an RFQ (Buyer view)
+     */
+    @GetMapping("/{quoteId}")
+    public ResponseEntity<QuoteResponse> getQuote(
+        @PathVariable String rfqId,
+        @PathVariable String quoteId
+    ) {
+        QuoteResponse quote = quoteService.getQuoteForRFQ(rfqId, quoteId);
+        return ResponseEntity.ok(quote);
+    }
+    
+    /**
+     * Accept a quote for an RFQ (Buyer)
+     */
+    @PostMapping("/{quoteId}/accept")
+    public ResponseEntity<Void> acceptQuote(@PathVariable String rfqId, @PathVariable String quoteId) {
+        // Validate ULID formats before proceeding
+        if (!ULIDGenerator.isValidULID(rfqId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "RFQ ID must be a valid ULID format"
+            );
+        }
+        
+        if (!ULIDGenerator.isValidULID(quoteId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "Quote ID must be a valid ULID format"
+            );
+        }
+        
+        quoteService.acceptQuote(rfqId, quoteId);
+        return ResponseEntity.ok().build();
+    }
 }

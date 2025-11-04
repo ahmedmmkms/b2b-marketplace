@@ -20,4 +20,6 @@ public interface QuoteRepository extends JpaRepository<Quote, String> {
     
     @Query("SELECT q FROM Quote q WHERE q.rfqId = :rfqId ORDER BY q.grandTotal ASC")
     List<Quote> findByRfqIdOrderByGrandTotalAsc(@Param("rfqId") String rfqId);
+    
+    Optional<Quote> findByIdAndRfqId(@Param("id") String id, @Param("rfqId") String rfqId);
 }
