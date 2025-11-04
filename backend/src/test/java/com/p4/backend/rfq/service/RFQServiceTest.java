@@ -159,4 +159,173 @@ class RFQServiceTest {
         assertTrue(exception.getDetail().contains("does not exist"));
         verify(rfqRepository).findById(rfqId);
     }
+
+    @Test
+    void testAddRFQLine_Success() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        RFQLineCreate lineCreate = new RFQLineCreate();
+        lineCreate.setDescription("Test Line");
+        lineCreate.setQuantity(BigDecimal.valueOf(5));
+        lineCreate.setUom("EA");
+        lineCreate.setTargetPrice(BigDecimal.valueOf(100.00));
+
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setStatus(RFQ.Status.draft);
+
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+
+        RFQLine savedLine = new RFQLine();
+        savedLine.setId(ULIDGenerator.generateULID());
+        savedLine.setRfqId(rfqId);
+        savedLine.setDescription("Test Line");
+        savedLine.setQuantity(BigDecimal.valueOf(5));
+        savedLine.setUom("EA");
+        savedLine.setTargetPrice(BigDecimal.valueOf(100.00));
+
+        when(rfqLineRepository.save(any(RFQLine.class))).thenReturn(savedLine);
+
+        // Act
+        RFQLineDto result = rfqService.addRFQLine(rfqId, lineCreate);
+
+        // Assert
+        assertNotNull(result.getId());
+        assertEquals("Test Line", result.getDescription());
+        assertEquals(BigDecimal.valueOf(5), result.getQuantity());
+        assertEquals("EA", result.getUom());
+        assertEquals(BigDecimal.valueOf(100.00), result.getTargetPrice());
+        verify(rfqRepository).findById(rfqId);
+        verify(rfqLineRepository).save(any(RFQLine.class));
+    }
+
+    @Test
+    void testAddRFQLine_RFQNotFound() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        RFQLineCreate lineCreate = new RFQLineCreate();
+        lineCreate.setDescription("Test Line");
+        lineCreate.setQuantity(BigDecimal.valueOf(5));
+        lineCreate.setUom("EA");
+
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.empty());
+
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> rfqService.addRFQLine(rfqId, lineCreate));
+        assertEquals(HttpStatus.NOT_FOUND, exception.getStatus());
+        assertTrue(exception.getDetail().contains("does not exist"));
+        verify(rfqRepository).findById(rfqId);
+    }
+
+    @Test
+    void testAddRFQLine_RFQNotInDraftStatus() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        RFQLineCreate lineCreate = new RFQLineCreate();
+        lineCreate.setDescription("Test Line");
+        lineCreate.setQuantity(BigDecimal.valueOf(5));
+        lineCreate.setUom("EA");
+
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setStatus(RFQ.Status.issued);  // Not draft
+
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> rfqService.addRFQLine(rfqId, lineCreate));
+        assertEquals(HttpStatus.CONFLICT, exception.getStatus());
+        assertTrue(exception.getDetail().contains("not in draft status"));
+        verify(rfqRepository).findById(rfqId);
+    }
+
+    @Test
+    void testAddRFQLine_InvalidQuantity_Zero() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        RFQLineCreate lineCreate = new RFQLineCreate();
+        lineCreate.setDescription("Test Line");
+        lineCreate.setQuantity(BigDecimal.ZERO);  // Zero quantity
+        lineCreate.setUom("EA");
+
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setStatus(RFQ.Status.draft);
+
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> rfqService.addRFQLine(rfqId, lineCreate));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertTrue(exception.getDetail().contains("Quantity must be greater than 0"));
+    }
+
+    @Test
+    void testAddRFQLine_InvalidQuantity_Negative() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        RFQLineCreate lineCreate = new RFQLineCreate();
+        lineCreate.setDescription("Test Line");
+        lineCreate.setQuantity(BigDecimal.valueOf(-5));  // Negative quantity
+        lineCreate.setUom("EA");
+
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setStatus(RFQ.Status.draft);
+
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> rfqService.addRFQLine(rfqId, lineCreate));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertTrue(exception.getDetail().contains("Quantity must be greater than 0"));
+    }
+
+    @Test
+    void testAddRFQLine_InvalidUom_Empty() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        RFQLineCreate lineCreate = new RFQLineCreate();
+        lineCreate.setDescription("Test Line");
+        lineCreate.setQuantity(BigDecimal.valueOf(5));
+        lineCreate.setUom("");  // Empty UOM
+
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setStatus(RFQ.Status.draft);
+
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> rfqService.addRFQLine(rfqId, lineCreate));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertTrue(exception.getDetail().contains("cannot be empty"));
+    }
+
+    @Test
+    void testAddRFQLine_InvalidUom_Null() {
+        // Arrange
+        String rfqId = ULIDGenerator.generateULID();
+        RFQLineCreate lineCreate = new RFQLineCreate();
+        lineCreate.setDescription("Test Line");
+        lineCreate.setQuantity(BigDecimal.valueOf(5));
+        lineCreate.setUom(null);  // Null UOM
+
+        RFQ rfq = new RFQ();
+        rfq.setId(rfqId);
+        rfq.setStatus(RFQ.Status.draft);
+
+        when(rfqRepository.findById(rfqId)).thenReturn(Optional.of(rfq));
+
+        // Act & Assert
+        ProblemDetailException exception = assertThrows(ProblemDetailException.class,
+            () -> rfqService.addRFQLine(rfqId, lineCreate));
+        assertEquals(HttpStatus.BAD_REQUEST, exception.getStatus());
+        assertTrue(exception.getDetail().contains("cannot be empty"));
+    }
 }

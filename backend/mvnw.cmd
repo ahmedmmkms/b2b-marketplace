@@ -105,8 +105,8 @@ SET MAVEN_JAVA_EXTRAS=%JVM_CONFIG_MAVEN_PROPS%
 set WRAPPER_JAR="%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.jar"
 set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
 
-%JAVA_HOME%\bin\java %JVM_CONFIG_MAVEN_PROPS% ^
-  -classpath %WRAPPER_JAR% ^
+"%JAVA_HOME%\bin\java" %JVM_CONFIG_MAVEN_PROPS% ^
+  -classpath "%WRAPPER_JAR%" ^
   "-Dmaven.home=%M2_HOME%" ^
   "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" ^
   "-Dmaven.env=wrapper" ^

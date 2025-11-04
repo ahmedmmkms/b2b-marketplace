@@ -18,6 +18,61 @@ paths:
       responses:
         "200":
           description: OK
+
+  # -------- Authentication --------
+  /auth/login:
+    post:
+      summary: User login
+      tags: [identity]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        "200":
+          description: Login successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponse'
+        "401":
+          description: Invalid credentials
+  /auth/register:
+    post:
+      summary: User registration
+      tags: [identity]
+      security: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegisterRequest'
+      responses:
+        "200":
+          description: Registration successful
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JwtResponse'
+        "409":
+          description: Email already exists
+  /users/me:
+    get:
+      summary: Get current user
+      tags: [identity]
+      responses:
+        "200":
+          description: Current user details
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+        "401":
+          description: Unauthorized
   /flags:
     get:
       summary: List feature flags
@@ -326,6 +381,90 @@ components:
       scheme: bearer
       bearerFormat: JWT
   schemas:
+    LoginRequest:
+      type: object
+      required: [email, password]
+      properties:
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        password:
+          type: string
+          format: password
+          minLength: 6
+          example: "password123"
+    RegisterRequest:
+      type: object
+      required: [fullName, email, password, orgId]
+      properties:
+        fullName:
+          type: string
+          example: "John Doe"
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        password:
+          type: string
+          format: password
+          minLength: 6
+          example: "password123"
+        orgId:
+          type: string
+          example: "01G1JQZ9852D3E4F5G6H7J8K9L0"
+    JwtResponse:
+      type: object
+      properties:
+        token:
+          type: string
+          example: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."
+        type:
+          type: string
+          example: "Bearer"
+        id:
+          type: string
+          example: "01G1JQZ9852D3E4F5G6H7J8K9L0"
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        fullName:
+          type: string
+          example: "John Doe"
+        role:
+          type: string
+          enum: [buyer, vendor, ops, admin]
+          example: "buyer"
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "01G1JQZ9852D3E4F5G6H7J8K9L0"
+        orgId:
+          type: string
+          example: "01G1JQZ9852D3E4F5G6H7J8K9M1"
+        email:
+          type: string
+          format: email
+          example: "user@example.com"
+        fullName:
+          type: string
+          example: "John Doe"
+        role:
+          type: string
+          enum: [buyer, vendor, ops, admin]
+          example: "buyer"
+        isActive:
+          type: boolean
+          example: true
+        createdAt:
+          type: string
+          format: date-time
+        updatedAt:
+          type: string
+          format: date-time
     FeatureFlag:
       type: object
       properties:

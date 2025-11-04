@@ -14,6 +14,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -216,6 +217,148 @@ public class RFQService {
         }
         
         return responses;
+    }
+
+    /**
+     * Add a line to an existing RFQ
+     * @param rfqId The ID of the RFQ to add the line to
+     * @param lineCreate The line data to add
+     * @return The created RFQ line
+     */
+    @Transactional
+    public RFQLineDto addRFQLine(String rfqId, RFQLineCreate lineCreate) {
+        // Validate ULID format before querying database
+        if (!ULIDGenerator.isValidULID(rfqId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "RFQ ID must be a valid ULID format"
+            );
+        }
+        
+        // Check if the RFQ exists
+        Optional<RFQ> rfqOpt = rfqRepository.findById(rfqId);
+        if (rfqOpt.isEmpty()) {
+            throw new ProblemDetailException(
+                HttpStatus.NOT_FOUND,
+                "https://api.example.com/errors/rfq-not-found",
+                "RFQ not found",
+                "RFQ with id '" + rfqId + "' does not exist"
+            );
+        }
+        
+        // Validate that the RFQ is in 'draft' status to allow adding lines
+        RFQ rfq = rfqOpt.get();
+        if (rfq.getStatus() != RFQ.Status.draft) {
+            throw new ProblemDetailException(
+                HttpStatus.CONFLICT,
+                "https://api.example.com/errors/rfq-invalid-state",
+                "RFQ is not in draft status",
+                "Cannot add lines to an RFQ that is not in draft status"
+            );
+        }
+        
+        // Validate the line creation data
+        if (lineCreate.getQuantity() == null || lineCreate.getQuantity().compareTo(BigDecimal.ZERO) <= 0) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-quantity",
+                "Invalid quantity",
+                "Quantity must be greater than 0"
+            );
+        }
+        
+        if (lineCreate.getUom() == null || lineCreate.getUom().trim().isEmpty()) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-uom",
+                "Invalid unit of measure",
+                "Unit of measure cannot be empty"
+            );
+        }
+        
+        // Create the new RFQ line
+        RFQLine line = new RFQLine();
+        line.setId(ULIDGenerator.generateULID());
+        line.setRfqId(rfqId);
+        line.setProductId(lineCreate.getProductId());
+        line.setDescription(lineCreate.getDescription());
+        line.setQuantity(lineCreate.getQuantity());
+        line.setUom(lineCreate.getUom());
+        line.setTargetPrice(lineCreate.getTargetPrice());
+        
+        RFQLine savedLine = rfqLineRepository.save(line);
+        
+        // Convert to DTO and return
+        RFQLineDto dto = new RFQLineDto();
+        dto.setId(savedLine.getId());
+        dto.setProductId(savedLine.getProductId());
+        dto.setDescription(savedLine.getDescription());
+        dto.setQuantity(savedLine.getQuantity());
+        dto.setUom(savedLine.getUom());
+        dto.setTargetPrice(savedLine.getTargetPrice());
+        
+        return dto;
+    }
+
+    /**
+     * Issue an RFQ (transition from draft to issued)
+     * @param rfqId The ID of the RFQ to issue
+     * @return The updated RFQ response
+     */
+    @Transactional
+    public RFQResponse issueRFQ(String rfqId) {
+        // Validate ULID format before querying database
+        if (!ULIDGenerator.isValidULID(rfqId)) {
+            throw new ProblemDetailException(
+                HttpStatus.BAD_REQUEST,
+                "https://api.example.com/errors/invalid-id",
+                "Invalid ID format",
+                "RFQ ID must be a valid ULID format"
+            );
+        }
+
+        // Check if the RFQ exists
+        Optional<RFQ> rfqOpt = rfqRepository.findById(rfqId);
+        if (rfqOpt.isEmpty()) {
+            throw new ProblemDetailException(
+                HttpStatus.NOT_FOUND,
+                "https://api.example.com/errors/rfq-not-found",
+                "RFQ not found",
+                "RFQ with id '" + rfqId + "' does not exist"
+            );
+        }
+
+        RFQ rfq = rfqOpt.get();
+
+        // Check if RFQ is in draft status (only draft RFQs can be issued)
+        if (rfq.getStatus() != RFQ.Status.draft) {
+            throw new ProblemDetailException(
+                HttpStatus.CONFLICT,
+                "https://api.example.com/errors/rfq-invalid-state",
+                "RFQ is not in draft status",
+                "RFQ is not in draft status"
+            );
+        }
+
+        // Check if the RFQ has at least one line
+        List<RFQLine> rfqLines = rfqLineRepository.findByRfqId(rfqId);
+        if (rfqLines.isEmpty()) {
+            throw new ProblemDetailException(
+                HttpStatus.CONFLICT,
+                "https://api.example.com/errors/rfq-no-lines",
+                "RFQ has no lines",
+                "RFQ has no lines"
+            );
+        }
+
+        // Update the status to issued
+        rfq.setStatus(RFQ.Status.issued);
+        RFQ updatedRFQ = rfqRepository.save(rfq);
+
+        // Return the updated RFQ with its lines
+        return getRFQById(rfqId); // Using existing method to build the response properly
     }
 
     private BuyerContext resolveBuyerContext(Map<String, Object> jwtClaims) {

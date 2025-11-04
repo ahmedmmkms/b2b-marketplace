@@ -95,6 +95,11 @@
 **Steps:** Transition `draft→issued`; forbid if no lines.  
 **DoD:** 200 on success; 409 RFC7807 if invalid state.
 
+### T14-2. Document authentication endpoints
+**Inputs:** `/auth/login`, `/auth/register`, `/users/me` endpoints implemented.  
+**Steps:** Add authentication endpoints to `openapi.yaml` with proper schemas; update `ai_agent_task_plan.md` with documentation task.  
+**DoD:** Authentication endpoints documented in OpenAPI spec; proper request/response schemas defined; task added to task plan.
+
 ### T15. Submit quote
 **Inputs:** `/rfqs/{rfqId}/quotes` POST.  
 **Steps:** Validate vendor auth; create quote with lines; compute `line_total`, `subtotal`, `grand_total`.  

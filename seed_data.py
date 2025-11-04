@@ -254,11 +254,16 @@ def seed_data():
         
         # Feature Flags
         feature_flags_data = [
-            ("catalog_search", '{"enabled": true, "scope": "public"}'),
-            ("rfq_workflow", '{"enabled": true, "scope": "public"}'),
-            ("quote_management", '{"enabled": true, "scope": "public"}'),
-            ("order_processing", '{"enabled": true, "scope": "public"}'),
-            ("wallet_payments", '{"enabled": true, "scope": "public"}'),
+            ("catalog.publicBrowse", "true"),
+            ("search.enabled", "true"),
+            ("rfq.enabled", "true"),
+            ("quote.vendorConsole", "true"),
+            ("orders.checkout", "true"),
+            ("payments.gateway1", "true"),
+            ("wallet.basic", "true"),
+            ("invoice.vat", "true"),
+            ("loyalty.core", "true"),
+            ("credit.controls", "true"),
         ]
         
         cursor.executemany(

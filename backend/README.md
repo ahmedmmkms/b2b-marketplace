@@ -8,6 +8,7 @@ This is the Spring Boot 3 backend application for the P4 B2B Marketplace, target
 - PostgreSQL 16
 - Redis
 - Maven
+- Spring Security with JWT Authentication
 
 ## Getting Started
 
@@ -25,6 +26,11 @@ The application provides health check endpoints:
 - `/actuator/health` - Overall health status
 - `/actuator/health/liveness` - Liveness probe
 - `/actuator/health/readiness` - Readiness probe
+
+### Authentication Endpoints
+- `POST /auth/login` - User login
+- `POST /auth/register` - User registration
+- `GET /users/me` - Get current user info (requires authentication)
 
 ## Modules
 - `catalog` - Product catalog management
