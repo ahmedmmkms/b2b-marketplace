@@ -48,3 +48,13 @@ b2b-marketplace.*.log
 
 ### Next.js ###
 frontend/.next/
+
+### Python ###
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+venv_b2b/
