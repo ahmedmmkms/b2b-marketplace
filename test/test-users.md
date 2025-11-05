@@ -5,7 +5,7 @@ This document lists reusable credentials for exercising the API under different 
 | Role | Email | Password | Description |
 | ---- | ----- | -------- | ----------- |
 | admin | admin@admin.com | 112233445566 | Platform administrator with full access |
-| buyer | buyer@test.example | 112233445566 | Buyer profile used for RFQ workflows |
+| buyer | buyer@test.example | 112233445566 | Buyer profile for RFQ flows (auto-fallback seeds disposable account if login blocked) |
 | vendor | vendor@test.example | 112233445566 | Vendor profile used for catalog authoring |
 | support | support@test.example | 112233445566 | Support operations account for read-only checks |
 
@@ -19,7 +19,7 @@ This document lists reusable credentials for exercising the API under different 
   "buyer": {
     "email": "buyer@test.example",
     "password": "112233445566",
-    "description": "Buyer profile used for RFQ workflows"
+    "description": "Buyer profile for RFQ flows (tests auto-provision a fallback account if login fails)"
   },
   "vendor": {
     "email": "vendor@test.example",
