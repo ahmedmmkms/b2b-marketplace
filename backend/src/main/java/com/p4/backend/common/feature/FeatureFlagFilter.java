@@ -77,6 +77,47 @@ public class FeatureFlagFilter implements Filter {
             }
         }
         
+        // Check if this is an RFQ-related request that needs feature flag checks
+        if (requestURI.startsWith("/rfqs")) {
+            // First, check if RFQ functionality is enabled at all
+            if (!featureFlagService.isRfqEnabled()) {
+                // If rfq.enabled is false, block all RFQ endpoints
+                httpResponse.setStatus(HttpStatus.FORBIDDEN.value());
+                httpResponse.setContentType("application/json");
+                
+                Map<String, Object> errorResponse = new HashMap<>();
+                errorResponse.put("type", "https://tools.ietf.org/html/rfc7231#section-6.5.3");
+                errorResponse.put("title", "Feature Disabled");
+                errorResponse.put("status", 403);
+                errorResponse.put("detail", "RFQ functionality is currently disabled");
+                
+                httpResponse.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+                return;
+            }
+            
+            // If RFQ is enabled, check if this is a vendor-specific action that requires vendorConsole flag
+            if (requestURI.contains("/quotes") && 
+                "POST".equals(httpRequest.getMethod()) && 
+                !requestURI.contains("/accept")) {  // POST to /rfqs/{id}/quotes (submit quote) - vendor action
+                
+                // This is quote submission - check for vendor console flag in addition to RFQ being enabled
+                if (!featureFlagService.isQuoteVendorConsoleEnabled()) {
+                    // Quote vendor console is disabled, return 403 with a friendly message
+                    httpResponse.setStatus(HttpStatus.FORBIDDEN.value());
+                    httpResponse.setContentType("application/json");
+                    
+                    Map<String, Object> errorResponse = new HashMap<>();
+                    errorResponse.put("type", "https://tools.ietf.org/html/rfc7231#section-6.5.3");
+                    errorResponse.put("title", "Feature Disabled");
+                    errorResponse.put("status", 403);
+                    errorResponse.put("detail", "Quote vendor console is currently disabled");
+                    
+                    httpResponse.getWriter().write(objectMapper.writeValueAsString(errorResponse));
+                    return;
+                }
+            }
+        }
+        
         // Continue with the filter chain if all checks pass
         chain.doFilter(request, response);
     }

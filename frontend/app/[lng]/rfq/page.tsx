@@ -1,9 +1,24 @@
 // app/[lng]/rfq/page.tsx
 import { getTranslations } from 'next-intl/server';
 import { Button } from '../../../libs/ui/button';
+import { getFeatureFlag } from '../../../libs/config/featureFlags';
 
 export default async function RFQPage({ params: { lng } }: { params: { lng: string } }) {
   const t = await getTranslations({ locale: lng, namespace: 'RFQ' });
+  
+  // Check if RFQ feature is enabled
+  const rfqEnabled = getFeatureFlag('rfq.enabled');
+  
+  if (!rfqEnabled) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center">
+          <h1 className="text-2xl font-bold text-gray-900 mb-2">{t('rfq_disabled_title', { defaultValue: 'RFQ Feature Disabled' })}</h1>
+          <p className="text-gray-600">{t('rfq_disabled_message', { defaultValue: 'The RFQ functionality is currently disabled.' })}</p>
+        </div>
+      </div>
+    );
+  }
   
   // Mock RFQ data
   const mockRfqs = [

@@ -3,6 +3,7 @@
 
 import Link from 'next/link';
 import { Button } from '../libs/ui/button';
+import { useFeatureFlag } from '../libs/config/featureFlags';
 
 type NavigationHeaderProps = {
   locale: 'en' | 'ar';
@@ -10,6 +11,7 @@ type NavigationHeaderProps = {
 
 export default function NavigationHeader({ locale }: NavigationHeaderProps) {
   const localeLabel = locale === 'en' ? 'English' : 'العربية';
+  const rfqEnabled = useFeatureFlag('rfq.enabled');
 
   return (
     <header className="bg-white shadow-sm">
@@ -26,12 +28,14 @@ export default function NavigationHeader({ locale }: NavigationHeaderProps) {
               >
                 {locale === 'en' ? 'Catalog' : 'الكتالوج'}
               </Link>
-              <Link 
-                href={`/${locale}/rfq`} 
-                className="text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium"
-              >
-                {locale === 'en' ? 'RFQ' : 'طلب عرض سعر'}
-              </Link>
+              {rfqEnabled && (
+                <Link 
+                  href={`/${locale}/rfq`} 
+                  className="text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium"
+                >
+                  {locale === 'en' ? 'RFQ' : 'طلب عرض سعر'}
+                </Link>
+              )}
               <Link 
                 href={`/${locale}/orders`} 
                 className="text-gray-700 hover:bg-gray-100 px-3 py-2 rounded-md text-sm font-medium"

@@ -31,4 +31,12 @@ public class FeatureFlagService {
     public boolean isSearchEnabled() {
         return isFeatureEnabled("search.enabled", true);
     }
+    
+    public boolean isRfqEnabled() {
+        return isFeatureEnabled("rfq.enabled", false);
+    }
+    
+    public boolean isQuoteVendorConsoleEnabled() {
+        return isFeatureEnabled("quote.vendorConsole", false);
+    }
 }
