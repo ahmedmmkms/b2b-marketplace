@@ -21,6 +21,7 @@ from test_t15_submit_quote import run as run_t15
 from test_t16_list_quotes import run as run_t16
 from test_t17_accept_quote import run as run_t17
 from test_t22_create_order_from_quote import run as run_t22
+from test_t23_get_order import run as run_t23
 
 TestRunner = Tuple[str, Callable[[], bool]]
 
@@ -41,6 +42,7 @@ TEST_SEQUENCE: List[TestRunner] = [
     ("T16 (List quotes for RFQ)", run_t16),
     ("T17 (Accept quote)", run_t17),
     ("T22 (Create order from accepted quote)", run_t22),
+    ("T23 (Get order)", run_t23),
 ]
 
 
@@ -52,7 +54,7 @@ def run_tests() -> bool:
         "T8 (Admin create product), T10 (Toggle exposure via flags), "
         "T12 (RFQ create + get), T13 (RFQ add line), T14 (RFQ issue), "
         "T15 (Submit quote), T16 (List quotes for RFQ), T17 (Accept quote), "
-        "and T22 (Create order from accepted quote)"
+        "T22 (Create order from accepted quote), and T23 (Get order)"
     )
     print("=" * 70)
 
