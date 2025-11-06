@@ -1,12 +1,6 @@
 // app/(public)/catalog/page.tsx
-import CatalogList from '@/components/CatalogList';
+import { redirect } from 'next/navigation';
 
-const CatalogPage = () => {
-  return (
-    <div className="min-h-screen bg-gray-50">
-      <CatalogList />
-    </div>
-  );
-};
-
-export default CatalogPage;
+export default function CatalogPage() {
+  redirect('/en/catalog');
+}

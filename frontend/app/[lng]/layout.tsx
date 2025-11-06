@@ -19,9 +19,7 @@ type LayoutProps = {
   };
 };
 
-export async function generateStaticParams() {
-  return locales.map((lng) => ({ lng }));
-}
+export const dynamic = 'force-dynamic';
 
 async function loadUser() {
   const token = cookies().get('auth-token')?.value;

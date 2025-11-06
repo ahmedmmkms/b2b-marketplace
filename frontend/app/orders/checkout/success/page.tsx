@@ -1,12 +1,12 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { Suspense, useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
-const CheckoutSuccessPage = () => {
+const CheckoutSuccessPageContent = () => {
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId');
   const [timeLeft, setTimeLeft] = useState(5);
@@ -73,5 +73,11 @@ const CheckoutSuccessPage = () => {
     </div>
   );
 };
+
+const CheckoutSuccessPage = () => (
+  <Suspense fallback={<div className="max-w-2xl mx-auto p-6 text-center">Loading confirmation...</div>}>
+    <CheckoutSuccessPageContent />
+  </Suspense>
+);
 
 export default CheckoutSuccessPage;

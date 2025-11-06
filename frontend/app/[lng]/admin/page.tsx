@@ -1,10 +1,7 @@
 ﻿// app/[lng]/admin/page.tsx
-import { getTranslations } from 'next-intl/server';
 import { Button } from '../../../libs/ui/button';
 
-export default async function AdminPage({ params: { lng } }: { params: { lng: string } }) {
-  const t = await getTranslations({ locale: lng, namespace: 'Common' });
-  
+export default function AdminPage({ params: { lng } }: { params: { lng: string } }) {
   // Mock feature flags data
   const mockFeatureFlags = [
     { id: 'catalog.publicBrowse', name: lng === 'en' ? 'Public Catalog Browse' : '��� ��袟��� ����', enabled: true },

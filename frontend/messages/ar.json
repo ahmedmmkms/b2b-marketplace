@@ -163,5 +163,19 @@
   },
   "toast": {
     "httpError": "حدث خطأ ما. حاول مرة أخرى."
+  },
+  "loyalty": {
+    "title": "Loyalty Program",
+    "points": "Reward points",
+    "current_tier": "Current tier",
+    "rewards": "Available rewards"
+  },
+  "invoices": {
+    "title": "Invoices",
+    "order_id": "Order ID",
+    "amount": "Amount",
+    "vat": "VAT",
+    "date": "Issue date",
+    "download_pdf": "Download PDF"
   }
 }

@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { Button } from '../../../libs/ui/button';
 
 export default async function InvoicesPage({ params: { lng } }: { params: { lng: string } }) {
-  const t = await getTranslations({ locale: lng, namespace: 'Invoices' });
+  const t = await getTranslations({ locale: lng, namespace: 'invoices' });
   
   // Mock invoice data
   const mockInvoices = [

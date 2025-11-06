@@ -120,6 +120,12 @@ importers:
       prettier:
         specifier: ^3.1.1
         version: 3.6.2
+      tailwindcss-animate:
+        specifier: ^1.0.7
+        version: 1.0.7(tailwindcss@3.4.18(yaml@2.8.1))
+      tailwindcss-rtl:
+        specifier: ^0.9.0
+        version: 0.9.0
       typescript:
         specifier: ^5.3.3
         version: 5.9.3
@@ -3433,6 +3439,14 @@ packages:
 
   tailwind-merge@1.14.0:
     resolution: {integrity: sha512-3mFKyCo/MBcgyOTlrY8T7odzZFx+w+qKSMAmdFzRvqBfLlSigU6TZnlFHK0lkMwj9Bj8OYU+9yW9lmGuS0QEnQ==}
+
+  tailwindcss-animate@1.0.7:
+    resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
+    peerDependencies:
+      tailwindcss: '>=3.0.0 || insiders'
+
+  tailwindcss-rtl@0.9.0:
+    resolution: {integrity: sha512-y7yC8QXjluDBEFMSX33tV6xMYrf0B3sa+tOB5JSQb6/G6laBU313a+Z+qxu55M1Qyn8tDMttjomsA8IsJD+k+w==}
 
   tailwindcss@3.4.18:
     resolution: {integrity: sha512-6A2rnmW5xZMdw11LYjhcI5846rt9pbLSabY5XPxo+XWdxwZaFEn47Go4NzFiHu9sNNmr/kXivP1vStfvMaK1GQ==}
@@ -7419,6 +7433,12 @@ snapshots:
   symbol-tree@3.2.4: {}
 
   tailwind-merge@1.14.0: {}
+
+  tailwindcss-animate@1.0.7(tailwindcss@3.4.18(yaml@2.8.1)):
+    dependencies:
+      tailwindcss: 3.4.18(yaml@2.8.1)
+
+  tailwindcss-rtl@0.9.0: {}
 
   tailwindcss@3.4.18(yaml@2.8.1):
     dependencies:

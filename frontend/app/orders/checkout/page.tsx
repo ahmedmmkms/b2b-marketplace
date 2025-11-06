@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { Suspense, useState, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
 import { formatCurrency } from '@/lib/utils';
@@ -32,7 +32,7 @@ interface WalletBalance {
   balance: number;
 }
 
-const CheckoutPage = () => {
+const CheckoutPageContent = () => {
   const router = useRouter();
   const searchParams = useSearchParams();
   const orderId = searchParams.get('orderId');
@@ -321,5 +321,11 @@ const CheckoutPage = () => {
     </div>
   );
 };
+
+const CheckoutPage = () => (
+  <Suspense fallback={<div className="max-w-4xl mx-auto p-6">Loading checkout...</div>}>
+    <CheckoutPageContent />
+  </Suspense>
+);
 
 export default CheckoutPage;

@@ -3,7 +3,7 @@ import { getTranslations } from 'next-intl/server';
 import { Button } from '../../../libs/ui/button';
 
 export default async function LoyaltyPage({ params: { lng } }: { params: { lng: string } }) {
-  const t = await getTranslations({ locale: lng, namespace: 'Loyalty' });
+  const t = await getTranslations({ locale: lng, namespace: 'loyalty' });
   
   // Mock loyalty data
   const mockLoyalty = {
