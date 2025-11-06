@@ -3,7 +3,7 @@
 
 import { NextIntlClientProvider } from 'next-intl';
 import { ReactNode, useEffect, useState } from 'react';
-import QueryProvider from './query-provider';
+import { QueryProvider } from './query-provider';
 import { FeatureFlagProvider } from '../libs/providers/FeatureFlagProvider';
 import { A11yProvider } from '../libs/providers/A11yProvider';
 

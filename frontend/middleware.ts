@@ -1,17 +1,13 @@
-import createMiddleware from 'next-intl/middleware';
-import { locales, defaultLocale } from './src/i18n/routing';
+import createIntlMiddleware from 'next-intl/middleware';
+import { NextRequest } from 'next/server';
+import { routing } from './libs/i18n/routing';
 
-export default createMiddleware({
-  locales,
-  defaultLocale,
-  localePrefix: 'as-needed' // Remove prefix for default locale
-});
+const intlMiddleware = createIntlMiddleware(routing);
+
+export function middleware(request: NextRequest) {
+  return intlMiddleware(request);
+}
 
 export const config = {
-  // Match only internationalized pathnames
-  matcher: [
-    '/',
-    '/(ar|en)/:path*',
-    '/((?!_next|_vercel|.*\\..*).*)'
-  ]
+  matcher: ['/((?!_next|static|.*\..*).*)']
 };

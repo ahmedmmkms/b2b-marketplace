@@ -43,8 +43,8 @@ const OrdersPage = () => {
           <p>To test the checkout flow:</p>
           <ol className="list-decimal pl-5 mt-2 space-y-1">
             <li>Accept a quote from the quotes section</li>
-            <li>After accepting, you'll be able to create an order</li>
-            <li>Then proceed to checkout using the "Checkout" button</li>
+            <li>After accepting, you&apos;ll be able to create an order</li>
+            <li>Then proceed to checkout using the &quot;Checkout&quot; button</li>
             <li>Complete payment using your wallet</li>
           </ol>
         </div>

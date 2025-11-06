@@ -1,4 +1,5 @@
 // components/ProductCard.tsx
+import React from 'react';
 import { Product } from '@/libs/api/catalog/service';
 import Link from 'next/link';
 import { Button } from '@/libs/ui/button';

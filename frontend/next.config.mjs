@@ -1,17 +1,20 @@
-import createNextIntlPlugin from 'next-intl/plugin';
+import { nextIntlPlugin } from 'next-intl/plugin';
 
-const withNextIntl = createNextIntlPlugin();
+const withNextIntl = nextIntlPlugin('./libs/i18n/request.ts');
 
-/** @type {import('next').NextConfig} */
 const nextConfig = {
-  output: 'export', // For static export compatible with Cloudflare Pages
-  trailingSlash: true, // Required for Cloudflare Pages
-  images: {
-    unoptimized: true // Required for static exports
-  },
   experimental: {
-    serverComponentsExternalPackages: ['@libsql/client']
-  }
+    serverActions: true
+  },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: '**'
+      }
+    ]
+  },
+  reactStrictMode: true
 };
 
 export default withNextIntl(nextConfig);

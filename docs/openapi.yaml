@@ -113,6 +113,22 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/PaginatedProducts'
+    post:
+      summary: Create product (Ops or Vendor)
+      tags: [catalog]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProductCreate'
+      responses:
+        "201":
+          description: Created
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
   /products/{id}:
     get:
       summary: Get a product
@@ -142,21 +158,6 @@ paths:
           application/json: { schema: { $ref: '#/components/schemas/VendorCreate' } }
       responses:
         "201": { description: Created, content: { application/json: { schema: { $ref: '#/components/schemas/Vendor' } } } }
-  /products: 
-    post:
-      summary: Create product (Ops or Vendor)
-      tags: [catalog]
-      requestBody:
-        required: true
-        content:
-          application/json: { schema: { $ref: '#/components/schemas/ProductCreate' } }
-      responses:
-        "201":
-          description: Created
-          content:
-            application/json:
-              schema: { $ref: '#/components/schemas/Product' }
-
   # -------- RFQ --------
   /rfqs:
     post:

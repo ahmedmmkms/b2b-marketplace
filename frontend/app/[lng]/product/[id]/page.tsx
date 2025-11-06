@@ -1,112 +1,35 @@
-﻿// app/[lng]/product/[id]/page.tsx
-import { getTranslations } from 'next-intl/server';
 import { notFound } from 'next/navigation';
-import { Product } from '../../../../libs/api/catalog/service';
-import { Button } from '../../../../libs/ui/button';
+import { getTranslations } from 'next-intl/server';
+import { PageHeader } from '@/components/common/PageHeader';
+import { getProduct } from '@/libs/api/generated';
+import type { Locale } from '@/libs/i18n/locales';
 
-// Define the static parameters for pre-building
-export async function generateStaticParams() {
-  // In a real application, you would fetch actual product IDs from your database
-  // For the demo, we'll return a few sample product IDs
-  return [
-    { id: 'prod-1' },
-    { id: 'prod-2' },
-    { id: 'prod-3' }
-  ];
-}
+export default async function ProductPage({ params }: { params: { lng: Locale; id: string } }) {
+  const t = await getTranslations({ locale: params.lng, namespace: 'product' });
+  const product = await getProduct(params.id).catch(() => null);
 
-export default async function ProductDetailPage({ 
-  params: { lng, id } 
-}: { 
-  params: { lng: string; id: string } 
-}) {
-  const t = await getTranslations({ locale: lng, namespace: 'Catalog' });
-  
-  // In a real implementation, we would fetch product data from the backend
-  // For now, use mock data
-  const mockProducts: Product[] = [
-    {
-      id: 'prod-1',
-      name: lng === 'en' ? 'Industrial Drill' : '�矠 ����',
-      description: lng === 'en' ? 'High-powered industrial drill for heavy-duty applications' : '�矠 ���� ��� ���� �韫����꟢ �鬟�',
-      price: 249.99,
-      category: lng === 'en' ? 'Tools' : '��ퟢ',
-      inStock: true,
-      quantity: 15
-    },
-    {
-      id: 'prod-2',
-      name: lng === 'en' ? 'Safety Helmet' : '���� ����',
-      description: lng === 'en' ? 'Protective safety helmet for construction sites' : '���� ��� ����� ��럘',
-      price: 29.99,
-      category: lng === 'en' ? 'Safety' : '���',
-      inStock: true,
-      quantity: 50
-    },
-    {
-      id: 'prod-3',
-      name: lng === 'en' ? 'Steel Pipe' : '���� ��韨�',
-      description: lng === 'en' ? 'Durable steel pipe for construction projects' : '���� ��韨� ��� �꬟��� ��럘',
-      price: 19.99,
-      category: lng === 'en' ? 'Construction' : '�럘',
-      inStock: false,
-      quantity: 0
-    }
-  ];
-  
-  const product = mockProducts.find(p => p.id === id);
-  
   if (!product) {
     notFound();
   }
 
-  // Add to cart interactions are disabled in the static preview.
-
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="bg-white shadow overflow-hidden sm:rounded-lg">
-            <div className="px-4 py-5 sm:px-6">
-              <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
-              <p className="mt-1 text-sm text-gray-500">{product.category}</p>
-            </div>
-            <div className="border-t border-gray-200">
-              <div className="px-4 py-5 sm:px-6">
-                <div className="flex flex-col md:flex-row">
-                  <div className="md:w-1/2">
-                    <div className="bg-gray-200 border-2 border-dashed rounded-xl w-full h-96" />
-                  </div>
-                  <div className="md:w-1/2 md:pl-8">
-                    <p className="text-lg text-gray-700">
-                      {product.description}
-                    </p>
-                    <div className="mt-6">
-                      <p className="text-2xl font-bold text-gray-900">
-                        {product.price.toFixed(2)} {lng === 'en' ? 'SAR' : '���'}
-                      </p>
-                      <div className="mt-4">
-                        <span className={`px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                          ${product.inStock ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
-                          {product.inStock 
-                            ? (lng === 'en' ? 'In Stock' : '���') 
-                            : (lng === 'en' ? 'Out of Stock' : '�� ���')}
-                        </span>
-                      </div>
-                    </div>
-                    <div className="mt-8">
-                      <Button
-                        className="w-full"
-                        disabled={!product.inStock}
-                      >
-                        {lng === 'en' ? 'Add to Cart' : '��� ��� ���'}
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
+    <div className="mx-auto flex max-w-4xl flex-col gap-8 px-6 py-10">
+      <PageHeader title={product.name ?? t('title')} description={t('details')} />
+      <div className="grid gap-4 rounded-2xl border border-slate-200 p-6">
+        {product.description && <p className="text-sm text-slate-600">{product.description}</p>}
+        <div>
+          <h3 className="text-lg font-semibold">{t('specs')}</h3>
+          <ul className="mt-3 grid gap-2 text-sm">
+            {Object.entries(product.attributes ?? {}).map(([key, value]) => (
+              <li
+                key={key}
+                className="flex items-center justify-between rounded-lg bg-slate-50 px-4 py-2"
+              >
+                <span className="font-medium text-slate-600">{key}</span>
+                <span>{String(value)}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </div>
     </div>

@@ -1,33 +1,56 @@
 // tests/catalog-components.test.tsx
-import React from 'react';
+import React, { type ReactNode } from 'react';
 import { render, screen, waitFor } from '@testing-library/react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
+import { describe, it, expect, beforeEach, vi, type Mock } from 'vitest';
 import CatalogList from '@/components/CatalogList';
 import ProductDetail from '@/components/ProductDetail';
 import { useProducts, useProduct } from '@/libs/api/catalog/service';
+import { useRouter, useParams } from 'next/navigation';
+import { FeatureFlagProvider } from '@/libs/providers/FeatureFlagProvider';
 
 // Mock the API hooks
-jest.mock('@/libs/api/catalog/service', () => ({
-  useProducts: jest.fn(),
-  useProduct: jest.fn(),
+vi.mock('@/libs/api/catalog/service', () => ({
+  useProducts: vi.fn(),
+  useProduct: vi.fn(),
+}));
+
+vi.mock('next/navigation', () => ({
+  useRouter: vi.fn(),
+  useParams: vi.fn()
 }));
 
 const queryClient = new QueryClient();
 
-const wrapper = ({ children }: { children: React.ReactNode }) => (
-  <QueryClientProvider client={queryClient}>
-    {children}
-  </QueryClientProvider>
+const wrapper = ({ children }: { children: ReactNode }) => (
+  <FeatureFlagProvider>
+    <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
+  </FeatureFlagProvider>
 );
+
+const mockedUseRouter = vi.mocked(useRouter);
+const mockedUseParams = vi.mocked(useParams);
+
+const createMockRouter = (): ReturnType<typeof useRouter> =>
+  ({
+    back: vi.fn(),
+    forward: vi.fn(),
+    prefetch: vi.fn(),
+    push: vi.fn(),
+    refresh: vi.fn(),
+    replace: vi.fn(),
+  }) as unknown as ReturnType<typeof useRouter>;
 
 describe('Catalog Components', () => {
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
+    mockedUseRouter.mockReturnValue(createMockRouter());
+    mockedUseParams.mockReturnValue({ id: '1' });
   });
 
   describe('CatalogList', () => {
     it('should render loading state initially', () => {
-      (useProducts as jest.Mock).mockReturnValue({
+      (useProducts as Mock).mockReturnValue({
         data: undefined,
         isLoading: true,
         isError: false,
@@ -69,7 +92,7 @@ describe('Catalog Components', () => {
         total: 2,
       };
 
-      (useProducts as jest.Mock).mockReturnValue({
+      (useProducts as Mock).mockReturnValue({
         data: mockProducts,
         isLoading: false,
         isError: false,
@@ -85,7 +108,7 @@ describe('Catalog Components', () => {
     });
 
     it('should render error state when API fails', async () => {
-      (useProducts as jest.Mock).mockReturnValue({
+      (useProducts as Mock).mockReturnValue({
         data: undefined,
         isLoading: false,
         isError: true,
@@ -101,7 +124,7 @@ describe('Catalog Components', () => {
 
   describe('ProductDetail', () => {
     it('should render loading state initially', () => {
-      (useProduct as jest.Mock).mockReturnValue({
+      (useProduct as Mock).mockReturnValue({
         data: undefined,
         isLoading: true,
         isError: false,
@@ -125,7 +148,7 @@ describe('Catalog Components', () => {
         attributes: { color: 'red' },
       };
 
-      (useProduct as jest.Mock).mockReturnValue({
+      (useProduct as Mock).mockReturnValue({
         data: mockProduct,
         isLoading: false,
         isError: false,
@@ -142,7 +165,7 @@ describe('Catalog Components', () => {
     });
 
     it('should render error state when product is not found', async () => {
-      (useProduct as jest.Mock).mockReturnValue({
+      (useProduct as Mock).mockReturnValue({
         data: undefined,
         isLoading: false,
         isError: true,

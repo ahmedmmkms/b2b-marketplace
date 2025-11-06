@@ -1,6 +1,7 @@
 ﻿// components/NavigationHeader.tsx
 'use client';
 
+import React from 'react';
 import Link from 'next/link';
 import { Button } from '../libs/ui/button';
 import { useFeatureFlag } from '../libs/config/featureFlags';

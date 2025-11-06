@@ -1,66 +1,167 @@
 {
-  "HomePage": {
-    "title": "P4 B2B Marketplace",
-    "description": "VAT-ready procurement workflows for GCC and MENA enterprises."
+  "meta": {
+    "title": "Marketplace Platform",
+    "description": "B2B sourcing for buyers and suppliers across MENA."
   },
-  "Navigation": {
+  "common": {
+    "brand": "Marketplace",
+    "loader": "Loading...",
+    "actions": {
+      "save": "Save",
+      "cancel": "Cancel",
+      "edit": "Edit",
+      "delete": "Delete",
+      "create": "Create",
+      "issue": "Issue",
+      "accept": "Accept",
+      "signin": "Sign In",
+      "signout": "Sign Out",
+      "register": "Register",
+      "submit": "Submit",
+      "retry": "Retry"
+    },
+    "statuses": {
+      "draft": "Draft",
+      "issued": "Issued",
+      "submitted": "Submitted",
+      "accepted": "Accepted",
+      "rejected": "Rejected",
+      "awarded": "Awarded"
+    },
+    "roles": {
+      "buyer": "Buyer",
+      "supplier": "Supplier",
+      "admin": "Admin"
+    },
+    "language": {
+      "en": "English",
+      "ar": "العربية"
+    }
+  },
+  "nav": {
+    "home": "Home",
     "catalog": "Catalog",
-    "rfq": "RFQ",
+    "product": "Product",
+    "rfq": "RFQs",
+    "rfqNew": "New RFQ",
     "quotes": "Quotes",
+    "supplierQuotes": "Supplier Inbox",
     "orders": "Orders",
-    "invoices": "Invoices",
     "wallet": "Wallet",
-    "loyalty": "Loyalty",
-    "admin": "Admin Panel",
-    "account": "My Account",
-    "dashboard": "Dashboard"
+    "admin": "Admin",
+    "adminDashboard": "Dashboard",
+    "adminUsers": "Users",
+    "adminFlags": "Feature Flags",
+    "signin": "Sign In",
+    "register": "Register"
   },
-  "Catalog": {
-    "title": "Product Catalog",
-    "in_stock": "In Stock",
-    "out_of_stock": "Out of Stock",
-    "view_details": "View Details",
-    "add_to_cart": "Add to Cart"
+  "home": {
+    "hero": {
+      "title": "Source smarter with a trusted marketplace",
+      "subtitle": "Discover vetted suppliers, issue RFQs in minutes, and pay securely in local currencies.",
+      "ctaPrimary": "Browse Catalog",
+      "ctaSecondary": "Request a Demo"
+    },
+    "value": {
+      "rfq": "Structured RFQs with supplier collaboration",
+      "quotes": "Compare supplier quotes side by side",
+      "wallet": "Wallet pay with transparent balances",
+      "insights": "Analytics to manage sourcing pipelines"
+    }
   },
-  "RFQ": {
-    "title": "Request for Quotation",
-    "create_rfq": "Create RFQ",
-    "quantity": "Quantity",
-    "status": "Status",
-    "pending": "Pending",
-    "quoted": "Quoted",
-    "accepted": "Accepted",
-    "rejected": "Rejected"
+  "catalog": {
+    "title": "Catalog",
+    "search": "Search products",
+    "category": "Category",
+    "publicDisabled": "Public browsing is disabled. Sign in to view products.",
+    "empty": "No products match your filters yet."
   },
-  "Orders": {
+  "product": {
+    "details": "Product details",
+    "specs": "Specifications",
+    "rfqCta": "Add to RFQ"
+  },
+  "auth": {
+    "signinTitle": "Welcome back",
+    "registerTitle": "Create your account",
+    "email": "Email",
+    "password": "Password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "company": "Company",
+    "confirmPassword": "Confirm password",
+    "ctaSignin": "Sign in",
+    "ctaRegister": "Register",
+    "noAccount": "No account? Register instead.",
+    "hasAccount": "Already have an account? Sign in.",
+    "invalidCredentials": "Invalid username or password.",
+    "duplicateAccount": "An account with this email already exists."
+  },
+  "rfq": {
+    "title": "Requests for Quotation",
+    "subtitle": "Track sourcing initiatives from draft to awarded.",
+    "createTitle": "Create RFQ",
+    "notes": "Notes",
+    "lines": "Line items",
+    "addLine": "Add line",
+    "lineProduct": "Product ID",
+    "lineDescription": "Description",
+    "lineQuantity": "Quantity",
+    "lineUom": "Unit of measure",
+    "lineTarget": "Target price",
+    "issue": "Issue",
+    "issueSuccess": "RFQ issued successfully.",
+    "issueFailure": "Unable to issue RFQ."
+  },
+  "quotes": {
+    "title": "Quotes",
+    "compare": "Compare quotes",
+    "empty": "No quotes yet. Suppliers will respond soon.",
+    "inboxTitle": "Supplier Quotes Inbox",
+    "submitSuccess": "Quote submitted successfully."
+  },
+  "orders": {
     "title": "Orders",
-    "order_id": "Order ID",
-    "rfq": "RFQ",
-    "quote": "Quote",
-    "total": "Total",
-    "placed_on": "Placed on"
+    "createSuccess": "Order created.",
+    "payWithWallet": "Pay with wallet",
+    "walletPaid": "Wallet payment succeeded."
   },
-  "Invoices": {
-    "title": "Invoices",
-    "order_id": "Order",
-    "amount": "Amount",
-    "vat": "VAT",
-    "date": "Issue Date",
-    "download_pdf": "Download PDF"
+  "wallet": {
+    "title": "Wallet",
+    "balance": "Current balance",
+    "topup": "Top up",
+    "topupPlaceholder": "Amount",
+    "topupSuccess": "Wallet top up submitted.",
+    "flagDisabled": "Wallet functionality is disabled for your organisation."
   },
-  "Wallet": {
-    "title": "Corporate Wallet",
-    "balance": "Balance",
-    "credit_limit": "Credit Limit",
-    "available_credit": "Available Credit"
+  "admin": {
+    "flags": {
+      "title": "Feature Flags",
+      "description": "Toggle experiences and rollout safely."
+    },
+    "users": {
+      "title": "Users",
+      "description": "Manage buyer, supplier, and admin accounts."
+    },
+    "dashboard": {
+      "title": "Admin Overview",
+      "stats": {
+        "buyers": "Active buyers",
+        "suppliers": "Active suppliers",
+        "rfqs": "Open RFQs",
+        "orders": "Open orders"
+      }
+    }
   },
-  "Loyalty": {
-    "title": "Loyalty Program",
-    "points": "Points Balance",
-    "current_tier": "Current Tier",
-    "rewards": "Rewards"
+  "forms": {
+    "validation": {
+      "required": "This field is required",
+      "email": "Provide a valid email",
+      "minLength": "Too short",
+      "passwordMismatch": "Passwords do not match"
+    }
   },
-  "Common": {
-    "actions": "Actions"
+  "toast": {
+    "httpError": "Something went wrong. Please try again."
   }
 }

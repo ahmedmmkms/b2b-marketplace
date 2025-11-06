@@ -203,6 +203,10 @@ const CheckoutPage = () => {
     );
   }
 
+  if (!order) {
+    return null;
+  }
+
   return (
     <div className="max-w-4xl mx-auto p-6">
       <h1 className="text-2xl font-bold mb-6">Checkout</h1>
@@ -308,7 +312,7 @@ const CheckoutPage = () => {
               )}
               
               <div className="text-sm text-gray-500">
-                By clicking "Pay", you agree to our terms and conditions.
+                By clicking &quot;Pay&quot;, you agree to our terms and conditions.
               </div>
             </CardContent>
           </Card>

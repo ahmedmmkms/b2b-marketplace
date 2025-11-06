@@ -1,66 +1,167 @@
 {
-  "HomePage": {
-    "title": "منصة P4 لسوق الأعمال",
-    "description": "حل متكامل لسلاسل التوريد في دول مجلس التعاون والشرق الأوسط."
+  "meta": {
+    "title": "منصة السوق",
+    "description": "توريد بين الشركات للمشترين والموردين في الشرق الأوسط وشمال أفريقيا."
   },
-  "Navigation": {
+  "common": {
+    "brand": "السوق",
+    "loader": "جارٍ التحميل...",
+    "actions": {
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "create": "إنشاء",
+      "issue": "إصدار",
+      "accept": "قبول",
+      "signin": "تسجيل الدخول",
+      "signout": "تسجيل الخروج",
+      "register": "تسجيل",
+      "submit": "إرسال",
+      "retry": "إعادة المحاولة"
+    },
+    "statuses": {
+      "draft": "مسودة",
+      "issued": "صادر",
+      "submitted": "مُرسل",
+      "accepted": "مقبول",
+      "rejected": "مرفوض",
+      "awarded": "مُسند"
+    },
+    "roles": {
+      "buyer": "مشترٍ",
+      "supplier": "مورد",
+      "admin": "مسؤول"
+    },
+    "language": {
+      "en": "English",
+      "ar": "العربية"
+    }
+  },
+  "nav": {
+    "home": "الرئيسية",
     "catalog": "الكتالوج",
-    "rfq": "طلب عرض سعر",
+    "product": "المنتج",
+    "rfq": "طلبات عروض الأسعار",
+    "rfqNew": "طلب جديد",
     "quotes": "عروض الأسعار",
+    "supplierQuotes": "صندوق المورد",
     "orders": "الطلبات",
-    "invoices": "الفواتير",
     "wallet": "المحفظة",
-    "loyalty": "الولاء",
-    "admin": "لوحة الإدارة",
-    "account": "حسابي",
-    "dashboard": "لوحة التحكم"
+    "admin": "الإدارة",
+    "adminDashboard": "لوحة القيادة",
+    "adminUsers": "المستخدمون",
+    "adminFlags": "أعلام الميزات",
+    "signin": "تسجيل الدخول",
+    "register": "التسجيل"
   },
-  "Catalog": {
-    "title": "كتالوج المنتجات",
-    "in_stock": "متوفر",
-    "out_of_stock": "غير متوفر",
-    "view_details": "عرض التفاصيل",
-    "add_to_cart": "أضف إلى السلة"
+  "home": {
+    "hero": {
+      "title": "وفّر وقتك مع سوق موثوق",
+      "subtitle": "اكتشف موردين معتمدين، وأصدر طلبات عروض الأسعار خلال دقائق، وادفع بأمان بالعملات المحلية.",
+      "ctaPrimary": "تصفح الكتالوج",
+      "ctaSecondary": "اطلب عرض توضيحي"
+    },
+    "value": {
+      "rfq": "طلبات عروض أسعار منظمة مع تعاون الموردين",
+      "quotes": "قارن عروض الموردين جنباً إلى جنب",
+      "wallet": "الدفع بالمحفظة مع شفافية الرصيد",
+      "insights": "تحليلات لإدارة خطوط التوريد"
+    }
   },
-  "RFQ": {
-    "title": "طلب عرض سعر",
-    "create_rfq": "إنشاء طلب عرض سعر",
-    "quantity": "الكمية",
-    "status": "الحالة",
-    "pending": "قيد المعالجة",
-    "quoted": "تم التسعير",
-    "accepted": "مقبول",
-    "rejected": "مرفوض"
+  "catalog": {
+    "title": "الكتالوج",
+    "search": "ابحث عن المنتجات",
+    "category": "الفئة",
+    "publicDisabled": "تصفح الكتالوج العام غير متاح. يرجى تسجيل الدخول.",
+    "empty": "لا توجد منتجات تطابق معاييرك."
   },
-  "Orders": {
+  "product": {
+    "details": "تفاصيل المنتج",
+    "specs": "المواصفات",
+    "rfqCta": "أضف إلى طلب عرض السعر"
+  },
+  "auth": {
+    "signinTitle": "أهلاً بعودتك",
+    "registerTitle": "أنشئ حسابك",
+    "email": "البريد الإلكتروني",
+    "password": "كلمة المرور",
+    "firstName": "الاسم الأول",
+    "lastName": "اسم العائلة",
+    "company": "الشركة",
+    "confirmPassword": "تأكيد كلمة المرور",
+    "ctaSignin": "تسجيل الدخول",
+    "ctaRegister": "التسجيل",
+    "noAccount": "ليس لديك حساب؟ سجل الآن.",
+    "hasAccount": "لديك حساب؟ سجل دخولك.",
+    "invalidCredentials": "بيانات الدخول غير صحيحة.",
+    "duplicateAccount": "يوجد حساب بهذا البريد الإلكتروني."
+  },
+  "rfq": {
+    "title": "طلبات عروض الأسعار",
+    "subtitle": "تابع مبادرات الشراء من المسودة حتى الإسناد.",
+    "createTitle": "إنشاء طلب عرض سعر",
+    "notes": "ملاحظات",
+    "lines": "بنود الطلب",
+    "addLine": "إضافة بند",
+    "lineProduct": "معرف المنتج",
+    "lineDescription": "الوصف",
+    "lineQuantity": "الكمية",
+    "lineUom": "وحدة القياس",
+    "lineTarget": "سعر مستهدف",
+    "issue": "إصدار",
+    "issueSuccess": "تم إصدار الطلب بنجاح.",
+    "issueFailure": "تعذر إصدار الطلب."
+  },
+  "quotes": {
+    "title": "عروض الأسعار",
+    "compare": "قارن العروض",
+    "empty": "لا توجد عروض حتى الآن.",
+    "inboxTitle": "صندوق عروض المورد",
+    "submitSuccess": "تم إرسال العرض."
+  },
+  "orders": {
     "title": "الطلبات",
-    "order_id": "رقم الطلب",
-    "rfq": "طلب عرض السعر",
-    "quote": "عرض السعر",
-    "total": "الإجمالي",
-    "placed_on": "تاريخ الإنشاء"
+    "createSuccess": "تم إنشاء الطلب.",
+    "payWithWallet": "الدفع بالمحفظة",
+    "walletPaid": "تم الدفع من المحفظة بنجاح."
   },
-  "Invoices": {
-    "title": "الفواتير",
-    "order_id": "الطلب",
-    "amount": "المبلغ",
-    "vat": "ضريبة القيمة المضافة",
-    "date": "تاريخ الإصدار",
-    "download_pdf": "تحميل PDF"
+  "wallet": {
+    "title": "المحفظة",
+    "balance": "الرصيد الحالي",
+    "topup": "شحن الرصيد",
+    "topupPlaceholder": "المبلغ",
+    "topupSuccess": "تم إرسال طلب الشحن.",
+    "flagDisabled": "ميزة المحفظة غير مفعّلة لمنظمتك."
   },
-  "Wallet": {
-    "title": "محفظة الشركة",
-    "balance": "الرصيد",
-    "credit_limit": "الحد الائتماني",
-    "available_credit": "الائتمان المتاح"
+  "admin": {
+    "flags": {
+      "title": "أعلام الميزات",
+      "description": "فعّل الميزات تدريجياً وبأمان."
+    },
+    "users": {
+      "title": "المستخدمون",
+      "description": "إدارة المشترين والموردين والمسؤولين."
+    },
+    "dashboard": {
+      "title": "نظرة عامة إدارية",
+      "stats": {
+        "buyers": "المشترون النشطون",
+        "suppliers": "الموردون النشطون",
+        "rfqs": "طلبات عروض مفتوحة",
+        "orders": "طلبات مفتوحة"
+      }
+    }
   },
-  "Loyalty": {
-    "title": "برنامج الولاء",
-    "points": "رصيد النقاط",
-    "current_tier": "المستوى الحالي",
-    "rewards": "المكافآت"
+  "forms": {
+    "validation": {
+      "required": "هذه الخانة مطلوبة",
+      "email": "يرجى إدخال بريد صحيح",
+      "minLength": "قصير جداً",
+      "passwordMismatch": "كلمات المرور غير متطابقة"
+    }
   },
-  "Common": {
-    "actions": "إجراءات"
+  "toast": {
+    "httpError": "حدث خطأ ما. حاول مرة أخرى."
   }
 }

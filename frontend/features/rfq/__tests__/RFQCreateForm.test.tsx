@@ -1,13 +1,14 @@
 import React from 'react';
 import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import { describe, it, expect, beforeEach, vi } from 'vitest';
 import RFQCreateForm from '../RFQCreateForm';
 
 describe('RFQCreateForm', () => {
-  const mockOnSubmit = jest.fn();
-  const mockOnCancel = jest.fn();
+  const mockOnSubmit = vi.fn();
+  const mockOnCancel = vi.fn();
 
   beforeEach(() => {
-    jest.clearAllMocks();
+    vi.clearAllMocks();
     render(
       <RFQCreateForm 
         onSubmit={mockOnSubmit} 
@@ -118,13 +119,6 @@ describe('RFQCreateForm', () => {
   });
 
   it('should call onCancel when cancel button is clicked', () => {
-    render(
-      <RFQCreateForm 
-        onSubmit={mockOnSubmit} 
-        onCancel={mockOnCancel} 
-      />
-    );
-    
     fireEvent.click(screen.getByText('Cancel'));
     expect(mockOnCancel).toHaveBeenCalled();
   });

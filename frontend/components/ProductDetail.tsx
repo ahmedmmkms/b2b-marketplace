@@ -1,6 +1,7 @@
 // components\ProductDetail.tsx
 'use client';
 
+import React from 'react';
 import { useParams } from 'next/navigation';
 import { useProduct } from '@/libs/api/catalog/service';
 import { Button } from '@/libs/ui/button';
@@ -15,7 +16,11 @@ const ProductDetail = () => {
   if (isLoading) {
     return (
       <div className="container mx-auto px-4 py-8 flex justify-center items-center">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"></div>
+        <div
+          role="status"
+          aria-label="Loading product"
+          className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-blue-500"
+        ></div>
       </div>
     );
   }

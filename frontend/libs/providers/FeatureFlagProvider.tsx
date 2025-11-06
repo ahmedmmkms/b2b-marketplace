@@ -1,7 +1,7 @@
 // libs/providers/FeatureFlagProvider.tsx
 'use client';
 
-import { createContext, useContext, ReactNode, useState, useEffect } from 'react';
+import React, { createContext, useContext, ReactNode, useState, useEffect } from 'react';
 import { getAllFeatureFlags, FeatureFlags } from '../config/featureFlags';
 
 interface FeatureFlagContextType {
