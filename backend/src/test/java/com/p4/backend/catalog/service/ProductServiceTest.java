@@ -5,6 +5,7 @@ import com.p4.backend.catalog.model.ProductCreate;
 import com.p4.backend.catalog.repository.ProductRepository;
 import com.p4.backend.common.ProblemDetailException;
 import com.p4.backend.common.ULIDGenerator;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -13,14 +14,12 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -33,12 +32,15 @@ class ProductServiceTest {
 
     @Mock
     private ProductRepository productRepository;
+    
+    @Mock
+    private MeterRegistry meterRegistry;
 
     private ProductService productService;
 
     @BeforeEach
     void setUp() {
-        productService = new ProductService();
+        productService = new ProductService(meterRegistry);
         ReflectionTestUtils.setField(productService, "productRepository", productRepository);
     }
 

@@ -1,6 +1,5 @@
 package com.p4.backend.wallet.service;
 
-import com.p4.backend.catalog.model.Organization;
 import com.p4.backend.catalog.repository.OrganizationRepository;
 import com.p4.backend.common.ULIDGenerator;
 import com.p4.backend.common.exception.RFC7807Exception;
@@ -11,11 +10,13 @@ import com.p4.backend.wallet.model.Wallet;
 import com.p4.backend.wallet.model.WalletTransaction;
 import com.p4.backend.wallet.repository.WalletRepository;
 import com.p4.backend.wallet.repository.WalletTransactionRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.ArgumentCaptor;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
@@ -36,25 +37,32 @@ class WalletServiceTest {
 
     @Mock
     private OrganizationRepository organizationRepository;
+    
+    @Mock
+    private MeterRegistry meterRegistry;
 
     private WalletService walletService;
 
     @BeforeEach
-    void setUp() throws Exception {
-        walletService = new WalletService();
+    void setUp() {
+        walletService = new WalletService(meterRegistry);
         
-        // Use reflection to set the mocked repositories
-        java.lang.reflect.Field walletRepoField = WalletService.class.getDeclaredField("walletRepository");
-        walletRepoField.setAccessible(true);
-        walletRepoField.set(walletService, walletRepository);
-        
-        java.lang.reflect.Field walletTransactionRepoField = WalletService.class.getDeclaredField("walletTransactionRepository");
-        walletTransactionRepoField.setAccessible(true);
-        walletTransactionRepoField.set(walletService, walletTransactionRepository);
-        
-        java.lang.reflect.Field orgRepoField = WalletService.class.getDeclaredField("organizationRepository");
-        orgRepoField.setAccessible(true);
-        orgRepoField.set(walletService, organizationRepository);
+        // Use reflection to set the mocked repositories since they're still autowired
+        try {
+            java.lang.reflect.Field walletRepoField = WalletService.class.getDeclaredField("walletRepository");
+            walletRepoField.setAccessible(true);
+            walletRepoField.set(walletService, walletRepository);
+            
+            java.lang.reflect.Field walletTransactionRepoField = WalletService.class.getDeclaredField("walletTransactionRepository");
+            walletTransactionRepoField.setAccessible(true);
+            walletTransactionRepoField.set(walletService, walletTransactionRepository);
+            
+            java.lang.reflect.Field orgRepoField = WalletService.class.getDeclaredField("organizationRepository");
+            orgRepoField.setAccessible(true);
+            orgRepoField.set(walletService, organizationRepository);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @Test

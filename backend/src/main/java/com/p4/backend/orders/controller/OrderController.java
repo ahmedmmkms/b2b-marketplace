@@ -5,6 +5,7 @@ import com.p4.backend.orders.dto.OrderCreate;
 import com.p4.backend.orders.dto.OrderResponse;
 import com.p4.backend.orders.model.Order;
 import com.p4.backend.orders.service.OrderService;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -23,6 +24,7 @@ public class OrderController {
      * Create an order from an accepted quote
      */
     @PostMapping
+    @Timed("http.server.requests")
     public ResponseEntity<OrderResponse> createOrder(@RequestBody OrderCreate orderCreate) {
         // Create order from the accepted quote
         Order order = orderService.createOrderFromQuote(orderCreate.getQuoteId());
@@ -47,6 +49,7 @@ public class OrderController {
      * Get an order by ID
      */
     @GetMapping("/{orderId}")
+    @Timed("http.server.requests")
     public ResponseEntity<OrderResponse> getOrder(@PathVariable String orderId) {
         Order order = orderService.getOrderById(orderId);
         

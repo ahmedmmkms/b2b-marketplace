@@ -12,6 +12,12 @@ import com.p4.backend.quotes.repository.QuoteLineRepository;
 import com.p4.backend.quotes.repository.QuoteRepository;
 import com.p4.backend.rfq.model.RFQ;
 import com.p4.backend.rfq.repository.RFQRepository;
+import io.micrometer.core.instrument.Counter;
+import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.instrument.Timer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.slf4j.MDC;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -23,6 +29,8 @@ import java.util.Optional;
 
 @Service
 public class OrderService {
+    
+    private static final Logger logger = LoggerFactory.getLogger(OrderService.class);
     
     @Autowired
     private OrderRepository orderRepository;
@@ -38,6 +46,44 @@ public class OrderService {
     
     @Autowired
     private RFQRepository rfqRepository;
+    
+    @Autowired
+    private MeterRegistry meterRegistry;
+    
+    private final Counter orderCreateCounter;
+    private final Counter orderConflictCounter;
+    private final Counter orderNotFoundCounter;
+    private final Timer orderServiceTimer;
+    
+    public OrderService(MeterRegistry meterRegistry) {
+        this.meterRegistry = meterRegistry;
+        
+        this.orderCreateCounter = Counter.builder("service_operations_total")
+                .description("Total number of successful order creation operations")
+                .tag("service", "OrderService")
+                .tag("operation", "createOrderFromQuote")
+                .tag("result", "success")
+                .register(meterRegistry);
+                
+        this.orderConflictCounter = Counter.builder("service_operations_total")
+                .description("Total number of failed order creation operations due to conflict")
+                .tag("service", "OrderService")
+                .tag("operation", "createOrderFromQuote")
+                .tag("result", "conflict")
+                .register(meterRegistry);
+                
+        this.orderNotFoundCounter = Counter.builder("service_operations_total")
+                .description("Total number of failed operations due to order not found")
+                .tag("service", "OrderService")
+                .tag("operation", "getOrderById")
+                .tag("result", "not_found")
+                .register(meterRegistry);
+                
+        this.orderServiceTimer = Timer.builder("service_operation_duration_seconds")
+                .description("Service operation duration in seconds")
+                .tag("service", "OrderService")
+                .register(meterRegistry);
+    }
 
     /**
      * Create an order from an accepted quote
@@ -46,8 +92,14 @@ public class OrderService {
      */
     @Transactional
     public Order createOrderFromQuote(String quoteId) {
+        String correlationId = MDC.get("correlationId");
+        Timer.Sample sample = Timer.start(meterRegistry);
+        
+        logger.info("Creating order from accepted quote with id: {}, correlationId: {}", quoteId, correlationId);
+        
         // Validate ULID format before querying database
         if (!ULIDGenerator.isValidULID(quoteId)) {
+            logger.warn("Invalid ULID format for quoteId: {}, correlationId: {}", quoteId, correlationId);
             throw new ProblemDetailException(
                 HttpStatus.BAD_REQUEST,
                 "https://api.example.com/errors/invalid-id",
@@ -59,6 +111,8 @@ public class OrderService {
         // Check if an order already exists for this quote (unique constraint)
         Optional<Order> existingOrderOpt = orderRepository.findByQuoteId(quoteId);
         if (existingOrderOpt.isPresent()) {
+            logger.warn("Order already exists for quoteId: {}, correlationId: {}", quoteId, correlationId);
+            orderConflictCounter.increment();
             throw new ProblemDetailException(
                 HttpStatus.CONFLICT,
                 "https://api.example.com/errors/order-already-exists",
@@ -70,6 +124,7 @@ public class OrderService {
         // Get the quote
         Optional<Quote> quoteOpt = quoteRepository.findById(quoteId);
         if (quoteOpt.isEmpty()) {
+            logger.warn("Quote not found with id: {}, correlationId: {}", quoteId, correlationId);
             throw new ProblemDetailException(
                 HttpStatus.NOT_FOUND,
                 "https://api.example.com/errors/quote-not-found",
@@ -82,6 +137,9 @@ public class OrderService {
         
         // Validate that the quote is in 'accepted' status
         if (quote.getStatus() != Quote.Status.accepted) {
+            logger.warn("Quote with id: {} is not accepted (status: {}), correlationId: {}", 
+                       quoteId, quote.getStatus(), correlationId);
+            orderConflictCounter.increment();
             throw new ProblemDetailException(
                 HttpStatus.CONFLICT,
                 "https://api.example.com/errors/quote-not-accepted",
@@ -93,6 +151,8 @@ public class OrderService {
         // Get the RFQ to get the buyer information
         Optional<RFQ> rfqOpt = rfqRepository.findById(quote.getRfqId());
         if (rfqOpt.isEmpty()) {
+            logger.error("RFQ not found for quote id: {}, rfqId: {}, correlationId: {}", 
+                        quoteId, quote.getRfqId(), correlationId);
             throw new ProblemDetailException(
                 HttpStatus.INTERNAL_SERVER_ERROR,
                 "https://api.example.com/errors/rfq-not-found",
@@ -105,7 +165,8 @@ public class OrderService {
         
         // Create the order
         Order order = new Order();
-        order.setId(ULIDGenerator.generateULID());
+        String orderId = ULIDGenerator.generateULID();
+        order.setId(orderId);
         order.setBuyerId(rfq.getBuyerId()); // Use the buyer from the RFQ
         order.setQuoteId(quoteId);
         order.setCurrency(quote.getCurrency());
@@ -138,6 +199,12 @@ public class OrderService {
         // Save all order lines
         orderLineRepository.saveAll(orderLinesToPersist);
         
+        sample.stop(orderServiceTimer);
+        orderCreateCounter.increment();
+        
+        logger.info("Successfully created order with id: {} from quote: {}, correlationId: {}", 
+                   orderId, quoteId, correlationId);
+        
         return savedOrder;
     }
 
@@ -147,8 +214,14 @@ public class OrderService {
      * @return The order
      */
     public Order getOrderById(String orderId) {
+        String correlationId = MDC.get("correlationId");
+        Timer.Sample sample = Timer.start(meterRegistry);
+        
+        logger.debug("Fetching order with id: {}, correlationId: {}", orderId, correlationId);
+        
         // Validate ULID format before querying database
         if (!ULIDGenerator.isValidULID(orderId)) {
+            logger.warn("Invalid ULID format for orderId: {}, correlationId: {}", orderId, correlationId);
             throw new ProblemDetailException(
                 HttpStatus.BAD_REQUEST,
                 "https://api.example.com/errors/invalid-id",
@@ -159,6 +232,9 @@ public class OrderService {
         
         Optional<Order> orderOpt = orderRepository.findById(orderId);
         if (orderOpt.isEmpty()) {
+            logger.warn("Order not found with id: {}, correlationId: {}", orderId, correlationId);
+            sample.stop(orderServiceTimer);
+            orderNotFoundCounter.increment();
             throw new ProblemDetailException(
                 HttpStatus.NOT_FOUND,
                 "https://api.example.com/errors/order-not-found",
@@ -166,6 +242,9 @@ public class OrderService {
                 "Order with id '" + orderId + "' does not exist"
             );
         }
+        
+        sample.stop(orderServiceTimer);
+        logger.debug("Successfully retrieved order with id: {}, correlationId: {}", orderId, correlationId);
         
         return orderOpt.get();
     }

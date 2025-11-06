@@ -12,6 +12,7 @@ import com.p4.backend.wallet.model.Wallet;
 import com.p4.backend.wallet.model.WalletTransaction;
 import com.p4.backend.wallet.repository.WalletRepository;
 import com.p4.backend.wallet.repository.WalletTransactionRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -43,13 +44,16 @@ class PaymentServiceTest {
 
     @Mock
     private OrganizationRepository organizationRepository;
+    
+    @Mock
+    private MeterRegistry meterRegistry;
 
     private PaymentService paymentService;
 
     @BeforeEach
     void setUp() {
         paymentService = new PaymentService(paymentRepository, orderRepository, walletRepository, 
-                                           walletTransactionRepository, organizationRepository);
+                                           walletTransactionRepository, organizationRepository, meterRegistry);
     }
 
     @Test

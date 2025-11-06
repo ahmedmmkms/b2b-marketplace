@@ -5,6 +5,7 @@ import com.p4.backend.catalog.model.ProductCreate;
 import com.p4.backend.catalog.service.ProductService;
 import com.p4.backend.common.ProblemDetailException;
 import com.p4.backend.common.ULIDGenerator;
+import io.micrometer.core.annotation.Timed;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -26,6 +27,7 @@ public class ProductController {
      * Browse products with optional search, category filter, and pagination
      */
     @GetMapping
+    @Timed("http.server.requests")
     public ResponseEntity<Map<String, Object>> browseProducts(
             @RequestParam(required = false) String q,
             @RequestParam(required = false) String category,
@@ -48,6 +50,7 @@ public class ProductController {
      * Get a single product by ID
      */
     @GetMapping("/{id}")
+    @Timed("http.server.requests")
     public ResponseEntity<Product> getProduct(@PathVariable String id) {
         // Validate ULID format before proceeding
         if (!ULIDGenerator.isValidULID(id)) {
@@ -67,6 +70,7 @@ public class ProductController {
      * Create a new product
      */
     @PostMapping
+    @Timed("http.server.requests")
     public ResponseEntity<Product> createProduct(@Valid @RequestBody ProductCreate productCreate) {
         Product product = productService.createProduct(productCreate);
         return ResponseEntity.status(HttpStatus.CREATED).body(product);

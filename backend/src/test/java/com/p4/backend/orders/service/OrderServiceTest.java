@@ -12,6 +12,7 @@ import com.p4.backend.quotes.repository.QuoteLineRepository;
 import com.p4.backend.quotes.repository.QuoteRepository;
 import com.p4.backend.rfq.model.RFQ;
 import com.p4.backend.rfq.repository.RFQRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -22,7 +23,6 @@ import org.springframework.test.util.ReflectionTestUtils;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -47,12 +47,15 @@ class OrderServiceTest {
 
     @Mock
     private RFQRepository rfqRepository;
+    
+    @Mock
+    private MeterRegistry meterRegistry;
 
     private OrderService orderService;
 
     @BeforeEach
     void setUp() {
-        orderService = new OrderService();
+        orderService = new OrderService(meterRegistry);
         ReflectionTestUtils.setField(orderService, "orderRepository", orderRepository);
         ReflectionTestUtils.setField(orderService, "orderLineRepository", orderLineRepository);
         ReflectionTestUtils.setField(orderService, "quoteRepository", quoteRepository);
