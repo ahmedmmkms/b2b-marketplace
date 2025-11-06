@@ -83,33 +83,57 @@ goto findBaseDir
 
 :baseDirFound
 set MAVEN_PROJECTBASEDIR=%WDIR%
-cd "%EXEC_DIR%"
 goto endDetectBaseDir
 
 :baseDirNotFound
 set MAVEN_PROJECTBASEDIR=%EXEC_DIR%
-cd "%EXEC_DIR%"
-
 :endDetectBaseDir
 
 IF NOT EXIST "%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config" goto endReadAdditionalConfig
 
 @setlocal EnableExtensions EnableDelayedExpansion
-for /f "usebackq delims=" %%a in ("%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config") do set JVM_CONFIG_MAVEN_PROPS=!JVM_CONFIG_MAVEN_PROPS! %%a
+for /F "usebackq delims=" %%a in ("%MAVEN_PROJECTBASEDIR%\.mvn\jvm.config") do set JVM_CONFIG_MAVEN_PROPS=!JVM_CONFIG_MAVEN_PROPS! %%a
 @endlocal & set JVM_CONFIG_MAVEN_PROPS=%JVM_CONFIG_MAVEN_PROPS%
 
 :endReadAdditionalConfig
 
-SET MAVEN_JAVA_EXTRAS=%JVM_CONFIG_MAVEN_PROPS%
-
+SET MAVEN_JAVA_EXE="%JAVA_HOME%\bin\java.exe"
 set WRAPPER_JAR="%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.jar"
 set WRAPPER_LAUNCHER=org.apache.maven.wrapper.MavenWrapperMain
 
-"%JAVA_HOME%\bin\java" %JVM_CONFIG_MAVEN_PROPS% ^
-  -classpath "%WRAPPER_JAR%" ^
-  "-Dmaven.home=%M2_HOME%" ^
+set DOWNLOAD_URL="https://repo.maven.apache.org/maven2/org/apache/maven/wrapper/maven-wrapper/3.1.0/maven-wrapper-3.1.0.jar"
+
+FOR /F "usebackq tokens=1,2 delims==" %%A IN ("%MAVEN_PROJECTBASEDIR%\.mvn\wrapper\maven-wrapper.properties") DO (
+    IF "%%A"=="wrapperUrl" SET DOWNLOAD_URL=%%B
+)
+
+@REM Extension to allow automatically downloading the maven-wrapper.jar from Maven-central
+@REM This allows using the maven wrapper in projects that prohibit checking in binary data.
+if exist %WRAPPER_JAR% (
+    if "%MVNW_VERBOSE%" == "true" (
+        echo Found %WRAPPER_JAR%
+    )
+) else (
+    if not "%MVNW_REPOURL%" == "" (
+        SET DOWNLOAD_URL="%MVNW_REPOURL%/org/apache/maven/wrapper/maven-wrapper/3.2.0/maven-wrapper-3.2.0.jar"
+    )
+    if "%MVNW_VERBOSE%" == "true" (
+        echo Couldn't find %WRAPPER_JAR%, please download it from %DOWNLOAD_URL%
+    )
+    exit /B 1
+)
+@REM End of extension
+
+@REM Provide a "standardized" way to retrieve the CLI args that will
+@REM work with both Windows and non-Windows executions.
+set MAVEN_CMD_LINE_ARGS=%*
+
+%MAVEN_JAVA_EXE% ^
+  %JVM_CONFIG_MAVEN_PROPS% ^
+  %MAVEN_OPTS% ^
+  %MAVEN_DEBUG_OPTS% ^
+  -classpath %WRAPPER_JAR% ^
   "-Dmaven.multiModuleProjectDirectory=%MAVEN_PROJECTBASEDIR%" ^
-  "-Dmaven.env=wrapper" ^
   %WRAPPER_LAUNCHER% %MAVEN_CONFIG% %*
 if ERRORLEVEL 1 goto error
 goto end

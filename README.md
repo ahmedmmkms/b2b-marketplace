@@ -19,10 +19,13 @@ This is a comprehensive B2B marketplace project targeting the GCC/MENA region, d
 
 ## Architecture Overview
 
-This repository contains a modular monolith application with the following structure:
+This repository contains a well-organized modular monolith application with the following structure:
 
 ```
 b2b-marketplace/
+├── .github/                 # GitHub workflows and configuration
+│   ├── workflows/           # CI/CD workflows
+│   └── ISSUE_TEMPLATE/      # Issue templates
 ├── backend/                 # Java 21/Spring Boot 3 application
 │   ├── src/main/java/com/p4/backend/
 │   │   ├── catalog/         # Product catalog management
@@ -37,21 +40,49 @@ b2b-marketplace/
 │   │   ├── wallet/          # Corporate wallet
 │   │   ├── common/          # Common utilities
 │   │   └── config/          # Configuration classes
+│   ├── src/test/            # Backend tests
+│   ├── src/main/resources/  # Backend resources
+│   ├── pom.xml              # Maven build configuration
 │   └── README.md            # Backend-specific documentation
 ├── frontend/                # Angular 18/Nx application
 │   ├── app/                 # Application components
 │   ├── features/            # Feature modules
 │   ├── components/          # Shared components
 │   ├── i18n/                # Internationalization files
+│   ├── e2e/                 # End-to-end tests
+│   ├── public/              # Public assets
+│   ├── styles/              # Styles and themes
+│   ├── package.json         # Frontend dependencies
 │   └── README.md            # Frontend-specific documentation
 ├── docs/                    # Documentation
 │   ├── architecture/        # Architecture documentation
 │   ├── runbooks/            # Deployment and operations runbooks
-│   └── guides/              # Development guides
+│   ├── guides/              # Development guides
+│   └── api/                 # API documentation
 ├── scripts/                 # Utility scripts
+│   ├── build/               # Build scripts
+│   ├── deploy/              # Deployment scripts
+│   ├── config/              # Configuration scripts
+│   ├── db/                  # Database scripts
+│   └── utils/               # Utility scripts
 ├── tests/                   # Test files directory
-├── .github/                 # GitHub configuration
-└── README.md                # This file
+│   ├── e2e/                 # End-to-end tests
+│   └── integration/         # Integration tests
+├── seed/                    # Data seeding scripts and files
+│   ├── data/                # Seed data files
+│   └── scripts/             # Seed scripts
+├── tools/                   # Development tools
+├── config/                  # Configuration files
+│   ├── dev/                 # Development config
+│   ├── staging/             # Staging config
+│   └── prod/                # Production config
+├── docker/                  # Docker-related files
+│   ├── backend/             # Backend Dockerfile
+│   └── frontend/            # Frontend Dockerfile
+├── .gitignore               # Git ignore patterns
+├── .gitattributes           # Git attributes
+├── README.md                # Main project documentation
+└── LICENSE                  # License information
 ```
 
 ## Technology Stack
@@ -74,12 +105,16 @@ b2b-marketplace/
 
 The repository is organized as follows:
 
+- `.github/`: GitHub workflows and configuration
 - `backend/`: Contains the Spring Boot 3 application with domain modules
 - `frontend/`: Contains the Angular 18 application built with Nx
 - `docs/`: Contains architecture, guides, and operational runbooks
-- `scripts/`: Utility scripts for various operations
+- `scripts/`: Utility scripts for various operations (build, deploy, config, db, utils)
 - `tests/`: Acceptance and integration tests
-- `.github/`: GitHub workflows and configuration
+- `seed/`: Data seeding scripts and files
+- `tools/`: Development tools
+- `config/`: Configuration files for different environments
+- `docker/`: Docker configuration files
 - Root directory: Core configuration files and primary documentation
 
 ## Getting Started
