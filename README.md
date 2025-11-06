@@ -159,16 +159,16 @@ The application is configured with the following environment variables:
 
 ```
 SPRING_PROFILES_ACTIVE=prod
-DB_URL=jdbc:postgresql://ep-damp-feather-adc322wz-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require
-DB_USERNAME=neondb_owner
-DB_PASSWORD=npg_QTE70VJgbcdp
-REDIS_URL=redis://default:AUUnAAIncDI1ZWRkMmFkMDE2ZjA0MmYxYmEyNWVlYzM1Y2ExODMxNHAyMTc3MDM@adjusted-sunbird-17703.upstash.io:6379
-B2_ACCOUNT_ID=43f8cd5d949d
-B2_APPLICATION_KEY_ID=00543f8cd5d949d0000000001
-B2_APPLICATION_KEY=K005iS73v7srQkqax39ZRy3ZJ/Yth+w
-B2_BUCKET=64735f483c0da5ed9994091d
-B2_ENDPOINT_URL=https://s3.us-east-005.backblazeb2.com
-API_URL_BASE=https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net
+DB_URL=jdbc:postgresql://<your-postgres-url>
+DB_USERNAME=<your-db-username>
+DB_PASSWORD=<your-db-password>
+REDIS_URL=redis://<your-redis-url>
+B2_ACCOUNT_ID=<your-b2-account-id>
+B2_APPLICATION_KEY_ID=<your-b2-application-key-id>
+B2_APPLICATION_KEY=<your-b2-application-key>
+B2_BUCKET=<your-b2-bucket>
+B2_ENDPOINT_URL=https://s3.<your-region>.backblazeb2.com
+API_URL_BASE=<your-api-url-base>
 ```
 
 ## Development Notes
