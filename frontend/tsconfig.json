@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "jsx": "preserve",
     "incremental": true,
-    "types": ["vitest/globals", "vitest/importMeta", "next", "next/types/global"],
+    "types": ["next", "next/types/global"],
     "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
