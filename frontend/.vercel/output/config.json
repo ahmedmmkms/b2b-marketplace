@@ -16,6 +16,26 @@
       "continue": true
     },
     {
+      "src": "/_next/data/(.*)",
+      "missing": [
+        {
+          "type": "header",
+          "key": "x-nextjs-data"
+        }
+      ],
+      "transforms": [
+        {
+          "type": "request.headers",
+          "op": "append",
+          "target": {
+            "key": "x-nextjs-data"
+          },
+          "args": "1"
+        }
+      ],
+      "continue": true
+    },
+    {
       "src": "/404/?",
       "status": 404,
       "continue": true,
@@ -32,7 +52,7 @@
       "continue": true
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(.*).json",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(.*).json",
       "dest": "/$1",
       "override": true,
       "continue": true,
@@ -62,11 +82,13 @@
         {
           "type": "header",
           "key": "x-prerender-revalidate",
-          "value": "b3c2fb2d2aa6d85d012aa17da920e24e"
+          "value": "77bf99f80af639c7b7d8bcf6af528bd4"
         }
       ],
       "middlewarePath": "middleware",
-      "middlewareRawSrc": ["/"],
+      "middlewareRawSrc": [
+        "/"
+      ],
       "override": true
     },
     {
@@ -76,11 +98,13 @@
         {
           "type": "header",
           "key": "x-prerender-revalidate",
-          "value": "b3c2fb2d2aa6d85d012aa17da920e24e"
+          "value": "77bf99f80af639c7b7d8bcf6af528bd4"
         }
       ],
       "middlewarePath": "middleware",
-      "middlewareRawSrc": ["/(en|ar)/:path*"],
+      "middlewareRawSrc": [
+        "/(en|ar)/:path*"
+      ],
       "override": true
     },
     {
@@ -91,7 +115,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/K55Yx2JiiJu9pJx_lf4NK/index.json",
+      "dest": "/_next/data/Tc2DjSIFckD1rQec6Daoq/index.json",
       "continue": true,
       "override": true
     },
@@ -103,7 +127,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/K55Yx2JiiJu9pJx_lf4NK/$1.json",
+      "dest": "/_next/data/Tc2DjSIFckD1rQec6Daoq/$1.json",
       "continue": true,
       "override": true
     },
@@ -143,7 +167,7 @@
       "handle": "filesystem"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(.*).json",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(.*).json",
       "dest": "/$1",
       "continue": true,
       "has": [
@@ -219,7 +243,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/K55Yx2JiiJu9pJx_lf4NK/index.json",
+      "dest": "/_next/data/Tc2DjSIFckD1rQec6Daoq/index.json",
       "continue": true
     },
     {
@@ -230,67 +254,67 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/K55Yx2JiiJu9pJx_lf4NK/$1.json",
+      "dest": "/_next/data/Tc2DjSIFckD1rQec6Daoq/$1.json",
       "continue": true
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)(?:/)?.json$",
       "dest": "/[lng]?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/admin/dashboard(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/admin/dashboard(?:/)?.json$",
       "dest": "/[lng]/admin/dashboard?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
       "dest": "/[lng]/admin/feature-flags?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/admin/users(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/admin/users(?:/)?.json$",
       "dest": "/[lng]/admin/users?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/auth/register(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/auth/register(?:/)?.json$",
       "dest": "/[lng]/auth/register?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/auth/signin(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/auth/signin(?:/)?.json$",
       "dest": "/[lng]/auth/signin?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/catalog(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/catalog(?:/)?.json$",
       "dest": "/[lng]/catalog?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/orders(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/orders(?:/)?.json$",
       "dest": "/[lng]/orders?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
       "dest": "/[lng]/orders/[orderId]?nxtPlng=$nxtPlng&nxtPorderId=$nxtPorderId"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
       "dest": "/[lng]/product/[id]?nxtPlng=$nxtPlng&nxtPid=$nxtPid"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/quotes(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/quotes(?:/)?.json$",
       "dest": "/[lng]/quotes?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/rfq(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/rfq(?:/)?.json$",
       "dest": "/[lng]/rfq?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/rfq/new(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/rfq/new(?:/)?.json$",
       "dest": "/[lng]/rfq/new?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
       "dest": "/[lng]/supplier/quotes/inbox?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(?<nxtPlng>[^/]+?)/wallet(?:/)?.json$",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(?<nxtPlng>[^/]+?)/wallet(?:/)?.json$",
       "dest": "/[lng]/wallet?nxtPlng=$nxtPlng"
     },
     {
@@ -414,7 +438,7 @@
       "dest": "/[lng]/wallet?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(.*).json",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(.*).json",
       "headers": {
         "x-nextjs-matched-path": "/$1"
       },
@@ -422,14 +446,14 @@
       "override": true
     },
     {
-      "src": "^/_next/data/K55Yx2JiiJu9pJx_lf4NK/(.*).json",
+      "src": "^/_next/data/Tc2DjSIFckD1rQec6Daoq/(.*).json",
       "dest": "__next_data_catchall"
     },
     {
       "handle": "hit"
     },
     {
-      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|K55Yx2JiiJu9pJx_lf4NK)/.+",
+      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|Tc2DjSIFckD1rQec6Daoq)/.+",
       "headers": {
         "cache-control": "public,max-age=31536000,immutable"
       },
@@ -468,7 +492,24 @@
   ],
   "images": {
     "domains": [],
-    "sizes": [640, 750, 828, 1080, 1200, 1920, 2048, 3840, 16, 32, 48, 64, 96, 128, 256, 384],
+    "sizes": [
+      640,
+      750,
+      828,
+      1080,
+      1200,
+      1920,
+      2048,
+      3840,
+      16,
+      32,
+      48,
+      64,
+      96,
+      128,
+      256,
+      384
+    ],
     "remotePatterns": [
       {
         "protocol": "https",
@@ -477,7 +518,9 @@
       }
     ],
     "minimumCacheTTL": 60,
-    "formats": ["image/webp"],
+    "formats": [
+      "image/webp"
+    ],
     "dangerouslyAllowSVG": false,
     "contentSecurityPolicy": "script-src 'none'; frame-src 'none'; sandbox;",
     "contentDispositionType": "inline"
