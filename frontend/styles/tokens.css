@@ -3,38 +3,38 @@
   --font-heading: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   --font-rtl: 'Cairo', 'Inter', system-ui, sans-serif;
 
-  --color-primary-50: #eef3ff;
-  --color-primary-100: #d7e2fd;
-  --color-primary-200: #b0c8fa;
-  --color-primary-300: #7da4f5;
-  --color-primary-400: #4d7bf1;
-  --color-primary-500: #2363eb;
-  --color-primary-600: #1d53c3;
-  --color-primary-700: #19419a;
-  --color-primary-800: #123175;
-  --color-primary-900: #0b204d;
+  --color-primary-50: #f2f6ff;
+  --color-primary-100: #dbe9ff;
+  --color-primary-200: #bcd6ff;
+  --color-primary-300: #8dbbfb;
+  --color-primary-400: #5e9dec;
+  --color-primary-500: #2a7be4;
+  --color-primary-600: #1f5fba;
+  --color-primary-700: #17468f;
+  --color-primary-800: #10316a;
+  --color-primary-900: #0a2147;
   --color-primary-foreground: #ffffff;
 
-  --color-accent-100: #c8f7ea;
-  --color-accent-200: #99f0d9;
-  --color-accent-300: #66e3c5;
-  --color-accent-400: #33d4ad;
-  --color-accent-500: #00b894;
-  --color-accent-foreground: #05211b;
+  --color-accent-100: #d5f7e6;
+  --color-accent-200: #aef4cd;
+  --color-accent-300: #7aeba9;
+  --color-accent-400: #44da82;
+  --color-accent-500: #22c55e;
+  --color-accent-foreground: #052c16;
 
   --color-success: #0f9d58;
   --color-warning: #f4b400;
   --color-danger: #d93025;
-  --color-muted: #d0d7e8;
-  --color-ring: rgba(35, 99, 235, 0.25);
+  --color-muted: #e2e8f0;
+  --color-ring: rgba(42, 123, 228, 0.25);
 
-  --color-background: #f8fafc;
-  --color-foreground: #0f172a;
+  --color-background: #fdfdfc;
+  --color-foreground: #0b1528;
   --color-card: #ffffff;
-  --color-card-foreground: #1f2937;
-  --color-border: #dbe2ef;
-  --color-input: #e1e8f5;
-  --color-overlay: rgba(15, 23, 42, 0.6);
+  --color-card-foreground: #1c2434;
+  --color-border: #e4e7ee;
+  --color-input: #e9edf5;
+  --color-overlay: rgba(9, 15, 31, 0.55);
 
   --radius-lg: 1rem;
   --radius-md: 0.75rem;
@@ -50,7 +50,7 @@
     --color-border: #1f273a;
     --color-input: #162238;
     --color-muted: #334155;
-    --color-ring: rgba(0, 184, 148, 0.28);
+    --color-ring: rgba(34, 197, 94, 0.35);
     --color-overlay: rgba(0, 0, 0, 0.7);
   }
 }
@@ -63,6 +63,6 @@
   --color-border: #1f273a;
   --color-input: #162238;
   --color-muted: #334155;
-  --color-ring: rgba(0, 184, 148, 0.28);
+  --color-ring: rgba(34, 197, 94, 0.35);
   --color-overlay: rgba(0, 0, 0, 0.7);
 }

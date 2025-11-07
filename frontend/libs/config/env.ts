@@ -1,6 +1,6 @@
-export const APP_NAME = 'B2B Marketplace';
+export const APP_NAME = 'Central Procurement Platform';
 
-export const DEFAULT_LOCALE = 'en';
+export const DEFAULT_LOCALE = 'ar';
 
 export const SUPPORTED_LOCALES = ['en', 'ar'] as const;
 

@@ -24,6 +24,7 @@
       "@/libs/*": ["./libs/*"],
       "@/messages/*": ["./messages/*"],
       "@/styles/*": ["./styles/*"],
+      "@/stores/*": ["./stores/*"],
       "@/store/*": ["./libs/store/*"],
       "@/utils/*": ["./libs/utils/*"]
     },

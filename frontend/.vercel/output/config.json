@@ -32,7 +32,7 @@
       "continue": true
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
       "dest": "/$1",
       "override": true,
       "continue": true,
@@ -62,7 +62,7 @@
         {
           "type": "header",
           "key": "x-prerender-revalidate",
-          "value": "36e80b6b1bd4f00b9ba28b39e03efd1a"
+          "value": "8780905570bd0e75c1e99e8345208b6f"
         }
       ],
       "middlewarePath": "middleware",
@@ -79,7 +79,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/index.json",
+      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/index.json",
       "continue": true,
       "override": true
     },
@@ -91,7 +91,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/$1.json",
+      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/$1.json",
       "continue": true,
       "override": true
     },
@@ -131,7 +131,7 @@
       "handle": "filesystem"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
       "dest": "/$1",
       "continue": true,
       "has": [
@@ -207,7 +207,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/index.json",
+      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/index.json",
       "continue": true
     },
     {
@@ -218,191 +218,191 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/$1.json",
+      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/$1.json",
       "continue": true
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)(?:/)?.json$",
-      "dest": "/[lng]?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)(?:/)?.json$",
+      "dest": "/[locale]?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/admin/dashboard(?:/)?.json$",
-      "dest": "/[lng]/admin/dashboard?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/admin/dashboard(?:/)?.json$",
+      "dest": "/[locale]/admin/dashboard?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
-      "dest": "/[lng]/admin/feature-flags?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
+      "dest": "/[locale]/admin/feature-flags?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/admin/users(?:/)?.json$",
-      "dest": "/[lng]/admin/users?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/admin/users(?:/)?.json$",
+      "dest": "/[locale]/admin/users?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/auth/register(?:/)?.json$",
-      "dest": "/[lng]/auth/register?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/auth/register(?:/)?.json$",
+      "dest": "/[locale]/auth/register?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/auth/signin(?:/)?.json$",
-      "dest": "/[lng]/auth/signin?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/auth/signin(?:/)?.json$",
+      "dest": "/[locale]/auth/signin?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/catalog(?:/)?.json$",
-      "dest": "/[lng]/catalog?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/catalog(?:/)?.json$",
+      "dest": "/[locale]/catalog?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/orders(?:/)?.json$",
-      "dest": "/[lng]/orders?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/orders(?:/)?.json$",
+      "dest": "/[locale]/orders?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
-      "dest": "/[lng]/orders/[orderId]?nxtPlng=$nxtPlng&nxtPorderId=$nxtPorderId"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
+      "dest": "/[locale]/orders/[orderId]?nxtPlocale=$nxtPlocale&nxtPorderId=$nxtPorderId"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
-      "dest": "/[lng]/product/[id]?nxtPlng=$nxtPlng&nxtPid=$nxtPid"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "dest": "/[locale]/product/[id]?nxtPlocale=$nxtPlocale&nxtPid=$nxtPid"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/quotes(?:/)?.json$",
-      "dest": "/[lng]/quotes?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/quotes(?:/)?.json$",
+      "dest": "/[locale]/quotes?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/rfq(?:/)?.json$",
-      "dest": "/[lng]/rfq?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/rfq(?:/)?.json$",
+      "dest": "/[locale]/rfq?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/rfq/new(?:/)?.json$",
-      "dest": "/[lng]/rfq/new?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/rfq/new(?:/)?.json$",
+      "dest": "/[locale]/rfq/new?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
-      "dest": "/[lng]/supplier/quotes/inbox?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
+      "dest": "/[locale]/supplier/quotes/inbox?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/wallet(?:/)?.json$",
-      "dest": "/[lng]/wallet?nxtPlng=$nxtPlng"
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/wallet(?:/)?.json$",
+      "dest": "/[locale]/wallet?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng].rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale].rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)(?:/)?$",
-      "dest": "/[lng]?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)(?:/)?$",
+      "dest": "/[locale]?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/admin/dashboard(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/admin/dashboard.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/admin/dashboard(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/admin/dashboard.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/admin/dashboard(?:/)?$",
-      "dest": "/[lng]/admin/dashboard?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/admin/dashboard(?:/)?$",
+      "dest": "/[locale]/admin/dashboard?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/admin/feature\\-flags(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/admin/feature-flags.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/admin/feature\\-flags(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/admin/feature-flags.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/admin/feature\\-flags(?:/)?$",
-      "dest": "/[lng]/admin/feature-flags?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/admin/feature\\-flags(?:/)?$",
+      "dest": "/[locale]/admin/feature-flags?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/admin/users(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/admin/users.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/admin/users(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/admin/users.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/admin/users(?:/)?$",
-      "dest": "/[lng]/admin/users?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/admin/users(?:/)?$",
+      "dest": "/[locale]/admin/users?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/auth/register(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/auth/register.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/auth/register(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/auth/register.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/auth/register(?:/)?$",
-      "dest": "/[lng]/auth/register?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/auth/register(?:/)?$",
+      "dest": "/[locale]/auth/register?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/auth/signin(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/auth/signin.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/auth/signin(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/auth/signin.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/auth/signin(?:/)?$",
-      "dest": "/[lng]/auth/signin?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/auth/signin(?:/)?$",
+      "dest": "/[locale]/auth/signin?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/catalog(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/catalog.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/catalog(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/catalog.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/catalog(?:/)?$",
-      "dest": "/[lng]/catalog?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/catalog(?:/)?$",
+      "dest": "/[locale]/catalog?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/orders(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/orders.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/orders(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/orders.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/orders(?:/)?$",
-      "dest": "/[lng]/orders?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/orders(?:/)?$",
+      "dest": "/[locale]/orders?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/orders/[orderId].rsc?nxtPlng=$nxtPlng&nxtPorderId=$nxtPorderId"
+      "src": "^/(?<nxtPlocale>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/orders/[orderId].rsc?nxtPlocale=$nxtPlocale&nxtPorderId=$nxtPorderId"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?$",
-      "dest": "/[lng]/orders/[orderId]?nxtPlng=$nxtPlng&nxtPorderId=$nxtPorderId"
+      "src": "^/(?<nxtPlocale>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?$",
+      "dest": "/[locale]/orders/[orderId]?nxtPlocale=$nxtPlocale&nxtPorderId=$nxtPorderId"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/product/[id].rsc?nxtPlng=$nxtPlng&nxtPid=$nxtPid"
+      "src": "^/(?<nxtPlocale>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/product/[id].rsc?nxtPlocale=$nxtPlocale&nxtPid=$nxtPid"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?$",
-      "dest": "/[lng]/product/[id]?nxtPlng=$nxtPlng&nxtPid=$nxtPid"
+      "src": "^/(?<nxtPlocale>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?$",
+      "dest": "/[locale]/product/[id]?nxtPlocale=$nxtPlocale&nxtPid=$nxtPid"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/quotes(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/quotes.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/quotes(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/quotes.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/quotes(?:/)?$",
-      "dest": "/[lng]/quotes?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/quotes(?:/)?$",
+      "dest": "/[locale]/quotes?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/rfq(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/rfq.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/rfq(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/rfq.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/rfq(?:/)?$",
-      "dest": "/[lng]/rfq?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/rfq(?:/)?$",
+      "dest": "/[locale]/rfq?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/rfq/new(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/rfq/new.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/rfq/new(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/rfq/new.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/rfq/new(?:/)?$",
-      "dest": "/[lng]/rfq/new?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/rfq/new(?:/)?$",
+      "dest": "/[locale]/rfq/new?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/supplier/quotes/inbox(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/supplier/quotes/inbox.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/supplier/quotes/inbox(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/supplier/quotes/inbox.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/supplier/quotes/inbox(?:/)?$",
-      "dest": "/[lng]/supplier/quotes/inbox?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/supplier/quotes/inbox(?:/)?$",
+      "dest": "/[locale]/supplier/quotes/inbox?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/wallet(?:\\.rsc)(?:/)?$",
-      "dest": "/[lng]/wallet.rsc?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/wallet(?:\\.rsc)(?:/)?$",
+      "dest": "/[locale]/wallet.rsc?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/(?<nxtPlng>[^/]+?)/wallet(?:/)?$",
-      "dest": "/[lng]/wallet?nxtPlng=$nxtPlng"
+      "src": "^/(?<nxtPlocale>[^/]+?)/wallet(?:/)?$",
+      "dest": "/[locale]/wallet?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
       "headers": {
         "x-nextjs-matched-path": "/$1"
       },
@@ -410,14 +410,14 @@
       "override": true
     },
     {
-      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
+      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
       "dest": "__next_data_catchall"
     },
     {
       "handle": "hit"
     },
     {
-      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|Wkz1s3t15QmixzB3Bu0rN)/.+",
+      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|\\-o81QC770dSHWSJi0VbjL)/.+",
       "headers": {
         "cache-control": "public,max-age=31536000,immutable"
       },

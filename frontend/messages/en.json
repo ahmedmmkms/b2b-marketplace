@@ -41,15 +41,43 @@
     }
   },
   "hero": {
-    "heading": "Scale your sourcing with trusted suppliers",
-    "subheading": "Discover vetted vendors, issue RFQs in minutes, and turn quotes into orders with seamless wallet payments.",
-    "primaryCta": "Browse catalog",
-    "secondaryCta": "Request a demo",
-    "valueProps": [
-      "Localized experiences for Arabic and English teams",
-      "Real-time quote comparison and supplier scoring",
-      "Wallet-based payments with instant reconciliation"
-    ]
+    "title": "Procurement intelligence for GCC enterprises",
+    "subtitle": "Launch bilingual buyer and supplier journeys with automated RFQs, catalog intelligence, and compliance-ready audit trails.",
+    "primary": "Launch workspace",
+    "secondary": "See buyer journeys",
+    "search": "Search medical disposables, fleet, logistics...",
+    "searchLabel": "Search approved categories",
+    "searchButton": "Search suppliers",
+    "badge": "Bilingual control tower",
+    "highlights": [
+      "RFQ automation with audit trails",
+      "Wallet, credit, and VAT-ready invoices",
+      "Arabic and English supplier onboarding"
+    ],
+    "stats": [
+      {
+        "label": "Average savings",
+        "value": "14%"
+      },
+      {
+        "label": "Lead time improvement",
+        "value": "5d"
+      },
+      {
+        "label": "Active suppliers",
+        "value": "326"
+      }
+    ],
+    "mockup": {
+      "latestLabel": "Latest RFQ",
+      "latestValue": "Critical valves - Q1",
+      "statusLabel": "Status",
+      "statusValue": "Open",
+      "activationTitle": "Supplier activation rate",
+      "activationSubtitle": "Last 30 days",
+      "activationMetric": "92%",
+      "compliance": "Certified compliance"
+    }
   },
   "nav": {
     "catalog": "Catalog",
@@ -63,7 +91,17 @@
     "users": "Users",
     "featureFlags": "Feature Flags",
     "signin": "Sign In",
-    "register": "Register"
+    "register": "Register",
+    "buyers": "Buyers",
+    "suppliers": "Suppliers",
+    "categories": "Categories",
+    "pricing": "Pricing",
+    "contact": "Contact",
+    "cta": "Request access",
+    "switchToAr": "العربية",
+    "switchToArAria": "Switch to Arabic experience",
+    "switchToEn": "English",
+    "switchToEnAria": "Switch to English experience"
   },
   "catalog": {
     "title": "Catalog",
@@ -151,6 +189,189 @@
     "flags": {
       "title": "Feature flags",
       "description": "Manage rollout of capabilities across buyer and supplier experiences."
+    }
+  },
+  "brand": {
+    "name": "Central Procurement Platform",
+    "alt": "منصة الشراء المركزي",
+    "tagline": "Strategic sourcing and supplier orchestration for GCC enterprises."
+  },
+  "sections": {
+    "features": {
+      "title": "Built for buyers and suppliers",
+      "subtitle": "Dual-sided workflows",
+      "items": [
+        {
+          "id": "buyers",
+          "badge": "Enterprise buyers",
+          "title": "Orchestrate sourcing programs across entities",
+          "description": "Consolidate spend, govern approval paths, and collaborate with finance across every RFQ.",
+          "bullets": [
+            "Dynamic catalogs and controlled spot buying",
+            "Policy-driven workflows mapped to your ERP",
+            "Wallet, credit, and settlement tracking"
+          ]
+        },
+        {
+          "id": "suppliers",
+          "badge": "Supplier teams",
+          "title": "Respond faster with guided quotes",
+          "description": "Give vendors a branded space to receive RFQs, compare demand, and negotiate securely.",
+          "bullets": [
+            "Instant translation between Arabic and English",
+            "Mobile-ready submissions with attachment proof",
+            "Performance insights and SLA reminders"
+          ]
+        }
+      ]
+    },
+    "steps": {
+      "title": "How rollout works",
+      "subtitle": "Three-step activation",
+      "items": [
+        {
+          "title": "Calibrate governance",
+          "description": "Import policies, map approval chains, and align payment controls.",
+          "badge": "Governance"
+        },
+        {
+          "title": "Activate suppliers",
+          "description": "Invite preferred partners, publish onboarding kits, and enforce KYC.",
+          "badge": "Suppliers"
+        },
+        {
+          "title": "Measure outcomes",
+          "description": "Monitor savings, cycle times, and compliance dashboards in real time.",
+          "badge": "Insights"
+        }
+      ]
+    },
+    "categories": {
+      "title": "Trusted categories",
+      "subtitle": "Category coverage",
+      "description": "Pre-qualified partners across industrial, healthcare, energy, and public sector supply chains.",
+      "items": [
+        {
+          "name": "Infrastructure & MRO",
+          "description": "Facilities, critical spares, and technical services.",
+          "stat": "87 vetted suppliers"
+        },
+        {
+          "name": "Risk & Compliance",
+          "description": "Background checks, ESG, and assurance partners.",
+          "stat": "45 audit firms"
+        },
+        {
+          "name": "Logistics & Fleet",
+          "description": "Regional freight, fleet leasing, and last-mile.",
+          "stat": "62 carriers"
+        },
+        {
+          "name": "Healthcare & Pharma",
+          "description": "Disposables, devices, and cold chain providers.",
+          "stat": "54 GMP suppliers"
+        },
+        {
+          "name": "Technology",
+          "description": "Cloud, cybersecurity, and smart devices.",
+          "stat": "78 digital partners"
+        },
+        {
+          "name": "Energy & Utilities",
+          "description": "Pipes, valves, and field services.",
+          "stat": "49 EPC specialists"
+        }
+      ]
+    },
+    "testimonials": {
+      "title": "Proof from the region",
+      "subtitle": "What leaders say",
+      "items": [
+        {
+          "quote": "We consolidated six business units into one bilingual procurement cockpit and cut cycle times by 38%.",
+          "author": "Khalid Al Qasimi",
+          "role": "Chief Procurement Officer",
+          "company": "Madar Holdings"
+        },
+        {
+          "quote": "Suppliers now reply within hours thanks to guided RFQs and instant translation between Arabic and English.",
+          "author": "Sara Al Dossary",
+          "role": "VP Supply Chain",
+          "company": "Najm Energy"
+        }
+      ]
+    }
+  },
+  "cta": {
+    "title": "Launch your central procurement workspace today",
+    "button": "Schedule a live preview"
+  },
+  "footer": {
+    "tagline": "Regional procurement cloud built for bilingual teams.",
+    "columns": [
+      {
+        "title": "Platform",
+        "links": [
+          {
+            "label": "Buyer workspace",
+            "href": "#buyers",
+            "description": "RFQs, catalogs, and approvals"
+          },
+          {
+            "label": "Supplier portal",
+            "href": "#suppliers",
+            "description": "Quotes, onboarding, SLAs"
+          },
+          {
+            "label": "Category library",
+            "href": "#categories",
+            "description": "Coverage and sourcing data"
+          }
+        ]
+      },
+      {
+        "title": "Resources",
+        "links": [
+          {
+            "label": "Rollout steps",
+            "href": "#steps",
+            "description": "See the 3-step blueprint"
+          },
+          {
+            "label": "Customer stories",
+            "href": "#testimonials",
+            "description": "Impact across MENA"
+          },
+          {
+            "label": "Pricing",
+            "href": "#pricing",
+            "description": "Flexible tiers for government and enterprise"
+          }
+        ]
+      },
+      {
+        "title": "Company",
+        "links": [
+          {
+            "label": "Contact",
+            "href": "#contact"
+          },
+          {
+            "label": "Security brief",
+            "href": "/docs/security"
+          },
+          {
+            "label": "Runbooks",
+            "href": "/docs/runbooks"
+          }
+        ]
+      }
+    ],
+    "contact": {
+      "title": "Talk with an advisor",
+      "description": "We will tailor a bilingual onboarding plan for your procurement office.",
+      "email": "hello@centralprocurement.app",
+      "phone": "+971 4 555 1212"
     }
   }
 }

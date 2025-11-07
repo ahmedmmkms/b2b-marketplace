@@ -1,5 +1,4 @@
-import localFont from 'next/font/local';
-import { Inter } from 'next/font/google';
+import { Cairo, Inter } from 'next/font/google';
 
 export const inter = Inter({
   subsets: ['latin'],
@@ -7,16 +6,11 @@ export const inter = Inter({
   display: 'swap',
 });
 
-export const cairo = localFont({
+export const cairo = Cairo({
+  subsets: ['arabic'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-rtl',
   display: 'swap',
-  src: [
-    {
-      path: '../../public/fonts/cairo/cairo-arabic.woff2',
-      weight: '400 700',
-      style: 'normal',
-    },
-  ],
 });
 
 export const heading = Inter({
