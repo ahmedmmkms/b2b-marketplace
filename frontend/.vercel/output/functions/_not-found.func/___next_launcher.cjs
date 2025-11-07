@@ -53,11 +53,19 @@ var nextServer = new NextServer({
   customServer: false
 });
 var serve = (handler) => async (req, res) => {
-  const vercelContext = getContext();
-  await withNextRequestContext({ waitUntil: vercelContext.waitUntil }, () => {
-    // @preserve entryDirectory handler
-    return handler(req, res);
-  });
+  try {
+    const vercelContext = getContext();
+    await withNextRequestContext(
+      { waitUntil: vercelContext.waitUntil },
+      () => {
+        // @preserve entryDirectory handler
+        return handler(req, res);
+      }
+    );
+  } catch (err) {
+    console.error(err);
+    process.exit(1);
+  }
 };
 module.exports = serve(nextServer.getRequestHandler());
 if ((conf.experimental?.ppr || conf.experimental?.cacheComponents) && "getRequestHandlerWithMetadata" in nextServer && typeof nextServer.getRequestHandlerWithMetadata === "function") {
