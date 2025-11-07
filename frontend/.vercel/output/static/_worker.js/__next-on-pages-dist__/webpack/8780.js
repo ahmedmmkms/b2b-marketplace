@@ -1,0 +1,23 @@
+var r = {},
+  g = (c, u, b) => (
+    (r.__chunk_8780 = (f, o, e) => {
+      'use strict';
+      e.d(o, { g: () => s });
+      var a = e(3408),
+        i = e(9563),
+        l = e(164);
+      let s = i.forwardRef(({ className: t, ...n }, d) =>
+        (0, a.jsx)('textarea', {
+          className: (0, l.cn)(
+            'flex min-h-[120px] w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50',
+            t,
+          ),
+          ref: d,
+          ...n,
+        }),
+      );
+      s.displayName = 'Textarea';
+    }),
+    r
+  );
+export { g as __getNamedExports };

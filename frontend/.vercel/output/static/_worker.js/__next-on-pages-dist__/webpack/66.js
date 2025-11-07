@@ -1,0 +1,34 @@
+var s = {},
+  p = (m, b, h) => (
+    (s.__chunk_66 = (g, n, t) => {
+      'use strict';
+      t.d(n, { u: () => d });
+      var e = t(3408),
+        c = t(9805),
+        o = t(164);
+      let d = ({ title: i, description: l, actionLabel: r, onAction: a, icon: x, className: u }) =>
+        (0, e.jsxs)('div', {
+          className: (0, o.cn)(
+            'flex flex-col items-center justify-center gap-3 rounded-lg border border-dashed border-border bg-card px-6 py-12 text-center',
+            u,
+          ),
+          children: [
+            x,
+            (0, e.jsxs)('div', {
+              children: [
+                (0, e.jsx)('h3', { className: 'text-lg font-semibold', children: i }),
+                l
+                  ? (0, e.jsx)('p', {
+                      className: 'text-muted-foreground mt-2 text-sm',
+                      children: l,
+                    })
+                  : null,
+              ],
+            }),
+            r ? (0, e.jsx)(c.Button, { onClick: a, variant: 'outline', children: r }) : null,
+          ],
+        });
+    }),
+    s
+  );
+export { p as __getNamedExports };

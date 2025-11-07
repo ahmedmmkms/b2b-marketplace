@@ -11,6 +11,8 @@ import { Toaster } from '@/components/common/toast';
 import { inter, cairo, heading } from '@/libs/config/fonts';
 import { AppBootstrap } from '@/app/providers';
 
+export const runtime = 'edge';
+
 export const metadata: Metadata = {
   title: APP_NAME,
   description: 'Digital B2B Marketplace for the MENA region connecting buyers and suppliers.',
