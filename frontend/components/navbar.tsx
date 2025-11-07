@@ -22,6 +22,9 @@ type NavbarProps = {
   switchLabel: string;
   switchAriaLabel: string;
   ctaLabel: string;
+  ctaHref: string;
+  authLabel: string;
+  authHref: string;
 };
 
 export const Navbar = ({
@@ -32,6 +35,9 @@ export const Navbar = ({
   switchLabel,
   switchAriaLabel,
   ctaLabel,
+  ctaHref,
+  authLabel,
+  authHref,
 }: NavbarProps) => {
   const pathname = usePathname();
   const { isMobileMenuOpen, toggleMobileMenu, closeMobileMenu } = useUiStore();
@@ -63,8 +69,11 @@ export const Navbar = ({
               {switchLabel}
             </Link>
           </Button>
+          <Button asChild variant="outline" size="sm" className="hidden lg:inline-flex">
+            <Link href={authHref}>{authLabel}</Link>
+          </Button>
           <Button asChild className="hidden lg:inline-flex" size="sm">
-            <Link href={`/${currentLocale}#pricing`}>{ctaLabel}</Link>
+            <Link href={ctaHref}>{ctaLabel}</Link>
           </Button>
           <button
             type="button"
@@ -99,8 +108,11 @@ export const Navbar = ({
               {switchLabel}
             </Link>
           </Button>
+          <Button asChild variant="outline" className="w-full">
+            <Link href={authHref}>{authLabel}</Link>
+          </Button>
           <Button asChild className="w-full">
-            <Link href={`/${currentLocale}#pricing`}>{ctaLabel}</Link>
+            <Link href={ctaHref}>{ctaLabel}</Link>
           </Button>
         </div>
       </div>

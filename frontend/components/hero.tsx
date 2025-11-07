@@ -36,9 +36,15 @@ export type HeroContent = {
 
 type HeroProps = {
   content: HeroContent;
+  primaryHref?: string;
+  secondaryHref?: string;
 };
 
-export const Hero = ({ content }: HeroProps) => {
+export const Hero = ({
+  content,
+  primaryHref = '#pricing',
+  secondaryHref = '#buyers',
+}: HeroProps) => {
   return (
     <section
       id="hero"
@@ -58,13 +64,13 @@ export const Hero = ({ content }: HeroProps) => {
 
           <div className="flex flex-wrap gap-4">
             <Button asChild size="lg">
-              <Link href="#pricing">
+              <Link href={primaryHref}>
                 {content.primaryCta}
                 <ArrowUpRight className="ms-2 h-4 w-4" />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline">
-              <Link href="#buyers">{content.secondaryCta}</Link>
+              <Link href={secondaryHref}>{content.secondaryCta}</Link>
             </Button>
           </div>
 

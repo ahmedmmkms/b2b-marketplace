@@ -44,6 +44,10 @@ export default async function LandingPage({ params: { locale } }: LandingPagePro
   const footerContact = (await footerT.raw('contact')) as FooterContact;
 
   const anchor = (hash: string) => `/${locale}${hash}`;
+  const catalogPath = `/${locale}/catalog`;
+  const signinHref = `/${locale}/auth/signin?next=${encodeURIComponent(catalogPath)}`;
+  const ctaHref = anchor('#pricing');
+  const buyersHref = anchor('#buyers');
 
   const navItems: NavItem[] = [
     { id: 'buyers', label: navT('buyers'), href: anchor('#buyers') },
@@ -71,9 +75,12 @@ export default async function LandingPage({ params: { locale } }: LandingPagePro
         switchLabel={switchLabel}
         switchAriaLabel={switchAriaLabel}
         ctaLabel={navT('cta')}
+        ctaHref={ctaHref}
+        authLabel={navT('signin')}
+        authHref={signinHref}
       />
       <main className="container space-y-24 py-16">
-        <Hero content={heroContent} />
+        <Hero content={heroContent} primaryHref={signinHref} secondaryHref={buyersHref} />
         <Features
           title={sectionsT('features.title')}
           subtitle={sectionsT('features.subtitle')}
