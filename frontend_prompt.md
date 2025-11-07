@@ -1,9 +1,9 @@
-You are a senior Frontend Architect. Generate a complete, production-ready Next.js 14 + TypeScript app from scratch that consumes the attached OpenAPI spec at ./doc/openapi.yaml.
+You are a senior Frontend Architect. Generate a complete, production-ready Next.js 14 + TypeScript app from scratch that consumes the attached OpenAPI spec at ./docs/openapi.yaml.
 
 ## ROLE
-Act as a meticulous implementer. Output only files (paths + full contents). No explanations.
+Act as a meticulous implementer.
 
-## CONTRACT (from ./doc/openapi.yaml)
+## CONTRACT (from ./docs/openapi.yaml)
 - Base server: https://b2b-marketplace-dcd9azhpefdkdve4.canadacentral-01.azurewebsites.net with JWT bearer security. Public health route is open. (See servers/security & /actuator/health). 
 - Identity: POST /auth/login, POST /auth/register, GET /users/me. 
 - Ops/Flags: GET /flags for feature flags. 
@@ -19,7 +19,7 @@ Act as a meticulous implementer. Output only files (paths + full contents). No e
 - TanStack Query for server state; Zustand for light client state
 - React Hook Form + Zod
 - Axios with interceptors
-- openapi-typescript + orval to generate typed clients & React Query hooks from ./doc/openapi.yaml
+- openapi-typescript + orval to generate typed clients & React Query hooks from ./docs/openapi.yaml
 
 ## BRAND
 - B2B provider marketplace (MENA). Tokens: primary #2363EB, accent #00B894, semantic (success/warn/danger), gray scale.
@@ -42,7 +42,7 @@ Admin:
 
 ## CODEGEN
 - Add script `pnpm gen:api`:
-  1) `openapi-typescript ./doc/openapi.yaml -o libs/api/types.ts`
+  1) `openapi-typescript ./docs/openapi.yaml -o libs/api/types.ts`
   2) `orval --config libs/api/orval.config.ts` to emit React Query hooks:
      useLogin, useRegister, useMe, useFeatureFlags,
      useProducts, useProduct,
@@ -124,4 +124,5 @@ frontend/
 - Catalog list/detail, RFQ→Quote→Accept→Order→WalletPay all work against generated hooks.
 
 ## OUTPUT FORMAT
-Return files (paths + full contents) in ./frontend folder. Include libs/api/orval.config.ts and realistic example pages wired to the hooks. If any endpoint is not yet present, scaffold UI behind a feature flag with mocked data and clear TODOs.
+files in ./frontend folder. Include libs/api/orval.config.ts and realistic example pages wired to the hooks. If any endpoint is not yet present, scaffold UI behind a feature flag with mocked data and clear TODOs.
+Create these files with production-ready contents (do not print them)

@@ -1,0 +1,62 @@
+@import './tokens.css';
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  *,
+  *::before,
+  *::after {
+    @apply border-border;
+  }
+
+  html {
+    font-family: var(--font-sans);
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    scroll-behavior: smooth;
+  }
+
+  body {
+    min-height: 100vh;
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+  }
+
+  a {
+    @apply text-primary transition-colors duration-150;
+  }
+
+  a:hover {
+    color: var(--color-primary-600);
+  }
+
+  [dir='rtl'] {
+    font-family: var(--font-rtl, var(--font-sans));
+  }
+
+  [data-theme='dark'] {
+    color-scheme: dark;
+  }
+}
+
+@layer utilities {
+  .scrollbar-thin {
+    scrollbar-width: thin;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-track {
+    background-color: transparent;
+  }
+
+  .scrollbar-thin::-webkit-scrollbar-thumb {
+    background-color: var(--color-muted);
+    border-radius: 9999px;
+  }
+}
