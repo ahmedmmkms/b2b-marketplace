@@ -43,5 +43,11 @@
     "**/*.mjs",
     ".next/types/**/*.ts"
   ],
-  "exclude": ["node_modules", ".next", "dist", "libs/api/orval.config.ts"]
+  "exclude": [
+    "node_modules",
+    ".next",
+    "dist",
+    "libs/api/orval.config.ts",
+    "playwright.config.ts"
+  ]
 }
