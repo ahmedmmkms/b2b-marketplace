@@ -32,7 +32,7 @@
       "continue": true
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(.*).json",
       "dest": "/$1",
       "override": true,
       "continue": true,
@@ -62,7 +62,7 @@
         {
           "type": "header",
           "key": "x-prerender-revalidate",
-          "value": "8780905570bd0e75c1e99e8345208b6f"
+          "value": "d7fee16807ca52fb126eec5711b8a9d7"
         }
       ],
       "middlewarePath": "middleware",
@@ -79,7 +79,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/index.json",
+      "dest": "/_next/data/YUeCvy6VDj6bFpLdjJKTa/index.json",
       "continue": true,
       "override": true
     },
@@ -91,7 +91,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/$1.json",
+      "dest": "/_next/data/YUeCvy6VDj6bFpLdjJKTa/$1.json",
       "continue": true,
       "override": true
     },
@@ -131,7 +131,7 @@
       "handle": "filesystem"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(.*).json",
       "dest": "/$1",
       "continue": true,
       "has": [
@@ -207,7 +207,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/index.json",
+      "dest": "/_next/data/YUeCvy6VDj6bFpLdjJKTa/index.json",
       "continue": true
     },
     {
@@ -218,67 +218,67 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/-o81QC770dSHWSJi0VbjL/$1.json",
+      "dest": "/_next/data/YUeCvy6VDj6bFpLdjJKTa/$1.json",
       "continue": true
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)(?:/)?.json$",
       "dest": "/[locale]?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/admin/dashboard(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/admin/dashboard(?:/)?.json$",
       "dest": "/[locale]/admin/dashboard?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
       "dest": "/[locale]/admin/feature-flags?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/admin/users(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/admin/users(?:/)?.json$",
       "dest": "/[locale]/admin/users?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/auth/register(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/auth/register(?:/)?.json$",
       "dest": "/[locale]/auth/register?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/auth/signin(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/auth/signin(?:/)?.json$",
       "dest": "/[locale]/auth/signin?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/catalog(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/catalog(?:/)?.json$",
       "dest": "/[locale]/catalog?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/orders(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/orders(?:/)?.json$",
       "dest": "/[locale]/orders?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
       "dest": "/[locale]/orders/[orderId]?nxtPlocale=$nxtPlocale&nxtPorderId=$nxtPorderId"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
       "dest": "/[locale]/product/[id]?nxtPlocale=$nxtPlocale&nxtPid=$nxtPid"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/quotes(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/quotes(?:/)?.json$",
       "dest": "/[locale]/quotes?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/rfq(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/rfq(?:/)?.json$",
       "dest": "/[locale]/rfq?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/rfq/new(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/rfq/new(?:/)?.json$",
       "dest": "/[locale]/rfq/new?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
       "dest": "/[locale]/supplier/quotes/inbox?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(?<nxtPlocale>[^/]+?)/wallet(?:/)?.json$",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(?<nxtPlocale>[^/]+?)/wallet(?:/)?.json$",
       "dest": "/[locale]/wallet?nxtPlocale=$nxtPlocale"
     },
     {
@@ -402,7 +402,7 @@
       "dest": "/[locale]/wallet?nxtPlocale=$nxtPlocale"
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(.*).json",
       "headers": {
         "x-nextjs-matched-path": "/$1"
       },
@@ -410,14 +410,14 @@
       "override": true
     },
     {
-      "src": "^/_next/data/\\-o81QC770dSHWSJi0VbjL/(.*).json",
+      "src": "^/_next/data/YUeCvy6VDj6bFpLdjJKTa/(.*).json",
       "dest": "__next_data_catchall"
     },
     {
       "handle": "hit"
     },
     {
-      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|\\-o81QC770dSHWSJi0VbjL)/.+",
+      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|YUeCvy6VDj6bFpLdjJKTa)/.+",
       "headers": {
         "cache-control": "public,max-age=31536000,immutable"
       },
@@ -498,12 +498,12 @@
       "path": "500",
       "contentType": "text/html; charset=utf-8"
     },
-    "_app.rsc.json": {
-      "path": "_app.rsc",
-      "contentType": "application/json"
-    },
     "_error.rsc.json": {
       "path": "_error.rsc",
+      "contentType": "application/json"
+    },
+    "_app.rsc.json": {
+      "path": "_app.rsc",
       "contentType": "application/json"
     },
     "_document.rsc.json": {
