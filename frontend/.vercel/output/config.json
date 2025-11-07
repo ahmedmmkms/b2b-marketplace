@@ -32,7 +32,7 @@
       "continue": true
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(.*).json",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
       "dest": "/$1",
       "override": true,
       "continue": true,
@@ -62,7 +62,7 @@
         {
           "type": "header",
           "key": "x-prerender-revalidate",
-          "value": "9f49395c0380f240e81aaa754f700758"
+          "value": "36e80b6b1bd4f00b9ba28b39e03efd1a"
         }
       ],
       "middlewarePath": "middleware",
@@ -79,7 +79,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/pQgsXOSuZNk369IB52Lz2/index.json",
+      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/index.json",
       "continue": true,
       "override": true
     },
@@ -91,7 +91,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/pQgsXOSuZNk369IB52Lz2/$1.json",
+      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/$1.json",
       "continue": true,
       "override": true
     },
@@ -131,7 +131,7 @@
       "handle": "filesystem"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(.*).json",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
       "dest": "/$1",
       "continue": true,
       "has": [
@@ -207,7 +207,7 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/pQgsXOSuZNk369IB52Lz2/index.json",
+      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/index.json",
       "continue": true
     },
     {
@@ -218,67 +218,67 @@
           "key": "x-nextjs-data"
         }
       ],
-      "dest": "/_next/data/pQgsXOSuZNk369IB52Lz2/$1.json",
+      "dest": "/_next/data/Wkz1s3t15QmixzB3Bu0rN/$1.json",
       "continue": true
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)(?:/)?.json$",
       "dest": "/[lng]?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/admin/dashboard(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/admin/dashboard(?:/)?.json$",
       "dest": "/[lng]/admin/dashboard?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/admin/feature\\-flags(?:/)?.json$",
       "dest": "/[lng]/admin/feature-flags?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/admin/users(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/admin/users(?:/)?.json$",
       "dest": "/[lng]/admin/users?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/auth/register(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/auth/register(?:/)?.json$",
       "dest": "/[lng]/auth/register?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/auth/signin(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/auth/signin(?:/)?.json$",
       "dest": "/[lng]/auth/signin?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/catalog(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/catalog(?:/)?.json$",
       "dest": "/[lng]/catalog?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/orders(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/orders(?:/)?.json$",
       "dest": "/[lng]/orders?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/orders/(?<nxtPorderId>[^/]+?)(?:/)?.json$",
       "dest": "/[lng]/orders/[orderId]?nxtPlng=$nxtPlng&nxtPorderId=$nxtPorderId"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/product/(?<nxtPid>[^/]+?)(?:/)?.json$",
       "dest": "/[lng]/product/[id]?nxtPlng=$nxtPlng&nxtPid=$nxtPid"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/quotes(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/quotes(?:/)?.json$",
       "dest": "/[lng]/quotes?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/rfq(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/rfq(?:/)?.json$",
       "dest": "/[lng]/rfq?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/rfq/new(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/rfq/new(?:/)?.json$",
       "dest": "/[lng]/rfq/new?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/supplier/quotes/inbox(?:/)?.json$",
       "dest": "/[lng]/supplier/quotes/inbox?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(?<nxtPlng>[^/]+?)/wallet(?:/)?.json$",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(?<nxtPlng>[^/]+?)/wallet(?:/)?.json$",
       "dest": "/[lng]/wallet?nxtPlng=$nxtPlng"
     },
     {
@@ -402,7 +402,7 @@
       "dest": "/[lng]/wallet?nxtPlng=$nxtPlng"
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(.*).json",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
       "headers": {
         "x-nextjs-matched-path": "/$1"
       },
@@ -410,14 +410,14 @@
       "override": true
     },
     {
-      "src": "^/_next/data/pQgsXOSuZNk369IB52Lz2/(.*).json",
+      "src": "^/_next/data/Wkz1s3t15QmixzB3Bu0rN/(.*).json",
       "dest": "__next_data_catchall"
     },
     {
       "handle": "hit"
     },
     {
-      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|pQgsXOSuZNk369IB52Lz2)/.+",
+      "src": "/_next/static/(?:[^/]+/pages|pages|chunks|runtime|css|image|media|Wkz1s3t15QmixzB3Bu0rN)/.+",
       "headers": {
         "cache-control": "public,max-age=31536000,immutable"
       },

@@ -169,6 +169,7 @@ B2_APPLICATION_KEY=<your-b2-application-key>
 B2_BUCKET=<your-b2-bucket>
 B2_ENDPOINT_URL=https://s3.<your-region>.backblazeb2.com
 API_URL_BASE=<your-api-url-base>
+APP_CORS_ALLOWED_ORIGINS=https://b2b-marketplace.pages.dev,http://localhost:3000
 ```
 
 ## Development Notes
