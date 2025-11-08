@@ -1,6 +1,6 @@
 # منصة الشراء المركزي — Centralized Procurement Platform
 
-![License](https://img.shields.io/github/license/ahmedmmkms/b2b-marketplace?style=for-the-badge) ![CI/CD](https://img.shields.io/github/actions/workflow/status/ahmedmmkms/b2b-marketplace/ci-cd.yml?label=CI%2FCD&style=for-the-badge) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=for-the-badge) ![Java](https://img.shields.io/badge/Java-ED8B00?logo=openjdk&logoColor=fff&style=for-the-badge) ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff&style=for-the-badge) ![Next.js](https://img.shields.io/badge/Next.js-000?logo=nextdotjs&style=for-the-badge) ![React](https://img.shields.io/badge/React-149ECA?logo=react&style=for-the-badge) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-38BDF8?logo=tailwindcss&logoColor=fff&style=for-the-badge) ![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000?style=for-the-badge) ![React Query](https://img.shields.io/badge/React%20Query-FF4154?logo=reactquery&logoColor=fff&style=for-the-badge) ![Zustand](https://img.shields.io/badge/Zustand-443E3C?style=for-the-badge) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=fff&style=for-the-badge) ![OpenAPI](https://img.shields.io/badge/OpenAPI-6BA539?logo=openapiinitiative&logoColor=fff&style=for-the-badge) ![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-F38020?logo=cloudflare&logoColor=fff&style=for-the-badge) ![Azure](https://img.shields.io/badge/Azure_App_Service-0078D4?logo=microsoftazure&logoColor=fff&style=for-the-badge) ![Docker](https://img.shields.io/badge/Docker-2496ED?logo=docker&logoColor=fff&style=for-the-badge) [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin&style=for-the-badge)](https://www.linkedin.com/in/<YOUR-USERNAME>/)
+![License](https://img.shields.io/github/license/ahmedmmkms/b2b-marketplace?style=for-the-badge) ![CI/CD](https://img.shields.io/github/actions/workflow/status/ahmedmmkms/b2b-marketplace/master_b2b-marketplace.yml?label=CI%2FCD&style=for-the-badge) ![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=fff&style=for-the-badge) ![Java](https://img.shields.io/badge/Java-ED8B00?logo=openjdk&logoColor=fff&style=for-the-badge) ![Python](https://img.shields.io/badge/Python-3776AB?logo=python&logoColor=fff&style=for-the-badge) ![Next.js](https://img.shields.io/badge/Next.js-000?logo=nextdotjs&style=for-the-badge) ![React](https://img.shields.io/badge/React-149ECA?logo=react&style=for-the-badge) ![Tailwind CSS](https://img.shields.io/badge/Tailwind-38BDF8?logo=tailwindcss&logoColor=fff&style=for-the-badge) ![shadcn/ui](https://img.shields.io/badge/shadcn%2Fui-000?style=for-the-badge) ![React Query](https://img.shields.io/badge/React%20Query-FF4154?logo=reactquery&logoColor=fff&style=for-the-badge) ![Spring Boot](https://img.shields.io/badge/Spring%20Boot-6DB33F?logo=springboot&logoColor=fff&style=for-the-badge) ![OpenAPI](https://img.shields.io/badge/OpenAPI-6BA539?logo=openapiinitiative&logoColor=fff&style=for-the-badge) ![Cloudflare Pages](https://img.shields.io/badge/Cloudflare_Pages-F38020?logo=cloudflare&logoColor=fff&style=for-the-badge) ![Azure](https://img.shields.io/badge/Azure_App_Service-0078D4?logo=microsoftazure&logoColor=fff&style=for-the-badge) ![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin&style=for-the-badge)](https://www.linkedin.com/in/ahmedmmkms/)
 
 ## Table of Contents
 - [Overview](#overview)
@@ -18,8 +18,10 @@
 - [License](#license)
 
 ## Overview
-منصة الشراء المركزي | Centralized Procurement Platform is a bilingual (English + العربية) B2B marketplace that lets enterprise buyers browse catalog data, issue RFQs, compare supplier quotes, convert to orders, and settle wallets/payments through one cohesive workflow. The Next.js 14 frontend ships on Cloudflare Pages for edge-localized RTL/LTR rendering, while a Spring Boot 3 API on Azure App Service orchestrates catalog, RFQ, wallet, and admin capabilities exposed via OpenAPI. Feature flags, JWT auth, and modular services make the solution production-ready while still in pilot/alpha rollout.  
-**Live Demo:** <DEPLOY_URL>
+Centralized Procurement Platform is a bilingual B2B marketplace that lets enterprise buyers browse catalog data, issue RFQs, compare supplier quotes, convert to orders, and settle wallets/payments through one cohesive workflow. The Next.js 14 frontend ships on Cloudflare Pages for edge-localized RTL/LTR rendering, while a Spring Boot 3 API on Azure App Service orchestrates catalog, RFQ, wallet, and admin capabilities exposed via OpenAPI. Feature flags, JWT auth, and modular services make the solution production-ready while still in pilot/alpha rollout.  
+
+م  
+**Live Demo:** [<DEPLOY_URL>](https://b2b-marketplace.pages.dev/en)
 
 ## Screenshots
 <p align="center">
@@ -109,35 +111,6 @@ cd backend
 ./mvnw spring-boot:run  # API at http://localhost:8080
 ```
 
-### Seed & Feature Flags
-```bash
-python3 seed/scripts/seed_data.py
-# Flags such as catalog.publicBrowse/search.enabled are also configurable via POST /ops/feature-flags
-```
-
-### Environment Variables
-| Variable | Context | Description | Example |
-| --- | --- | --- | --- |
-| `NEXT_PUBLIC_API_BASE_URL` | Frontend | Base URL for the Spring Boot API | `http://localhost:8080` |
-| `NEXT_PUBLIC_APP_BASE_URL` | Frontend | Public origin used for redirects | `http://localhost:3000` |
-| `SPRING_PROFILES_ACTIVE` | Backend | Spring profile | `dev` / `prod` |
-| `DB_URL` / `DB_USERNAME` / `DB_PASSWORD` | Backend | PostgreSQL connection | `jdbc:postgresql://localhost:5432/b2b` |
-| `REDIS_URL` | Backend | Cache / messaging | `redis://localhost:6379` |
-| `B2_*` | Backend | Backblaze B2 object storage credentials | `B2_ACCOUNT_ID=...` |
-| `API_URL_BASE` | Shared | Public API base (used by scripts/tests) | `https://api.example.com` |
-| `APP_CORS_ALLOWED_ORIGINS` | Backend | Comma-separated allowed origins | `https://b2b-marketplace.pages.dev,http://localhost:3000` |
-
-`.env` snippet (do not commit secrets):
-```dotenv
-NEXT_PUBLIC_API_BASE_URL=http://localhost:8080
-NEXT_PUBLIC_APP_BASE_URL=http://localhost:3000
-SPRING_PROFILES_ACTIVE=dev
-DB_URL=jdbc:postgresql://localhost:5432/b2b
-DB_USERNAME=b2b
-DB_PASSWORD=localdev
-APP_CORS_ALLOWED_ORIGINS=http://localhost:3000
-```
-
 ## Scripts
 | Target | Command | Purpose |
 | --- | --- | --- |
@@ -154,16 +127,6 @@ APP_CORS_ALLOWED_ORIGINS=http://localhost:3000
 - **monorepo.yml** — Full-stack pipeline with Postgres service, Maven verify, frontend lint/tests, and Azure-ready deploy artifact.
 - **flyway-repair.yml** — Manual Neon DB repair guardrail.
 - **master_b2b-marketplace.yml** — Build + deploy the Spring Boot JAR to Azure App Service.
-
-```mermaid
-flowchart LR
-  Commit --> FeCI[Frontend Lint/Test]
-  Commit --> BeCI[Backend Verify + Flyway]
-  FeCI --> PagesDeploy[Cloudflare Pages Deploy]
-  BeCI --> Artifact[JAR Artifact]
-  Artifact --> AzureDeploy[Azure App Service]
-  BeCI --> FlywayRepair{{Flyway Repair (manual)}}
-```
 
 ## Security & Quality
 - Spring Security + JWT, request filtering by feature flag (catalog/search/RFQ) and strict CORS.
@@ -182,16 +145,8 @@ flowchart LR
 - Payment gateway expansion (Stripe, HyperPay) and multi-currency wallets.
 - Compliance automation: e-invoicing, tax codes, and retention policies.
 
-## Contributing
-1. Create a feature branch off `main`.
-2. Run `pnpm lint && pnpm typecheck && pnpm test:unit && pnpm e2e` plus `./mvnw verify`.
-3. Update docs/screenshots when UI or API contracts change.
-4. Open a PR detailing feature flags touched, screenshots, and commands executed.
-
-Checklist: ✅ tests pass · ✅ lint/typecheck clean · ✅ docs updated · ✅ screenshots (for UI changes) · ✅ feature flags documented.
-
 ## License
 Released under the [MIT License](LICENSE).
 
 ---
-Crafted by Ahmed Mahmoud — [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin&style=for-the-badge)](https://www.linkedin.com/in/<YOUR-USERNAME>/) · Contact: <EMAIL>
+By Ahmed Mahmoud — [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin&style=for-the-badge)](https://www.linkedin.com/in/ahmedmmkms/) · 
