@@ -1,2 +1,4 @@
 /mvnw text eol=lf
 *.cmd text eol=crlf
+# Keep helper scripts out of the language bar
+*.py linguist-detectable=false

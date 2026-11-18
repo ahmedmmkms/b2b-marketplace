@@ -18,10 +18,27 @@
 - [License](#license)
 
 ## Overview
-Centralized Procurement Platform is a bilingual B2B marketplace that lets enterprise buyers browse catalog data, issue RFQs, compare supplier quotes, convert to orders, and settle wallets/payments through one cohesive workflow. The Next.js 14 frontend ships on Cloudflare Pages for edge-localized RTL/LTR rendering, while a Spring Boot 3 API on Azure App Service orchestrates catalog, RFQ, wallet, and admin capabilities exposed via OpenAPI. Feature flags, JWT auth, and modular services make the solution production-ready while still in pilot/alpha rollout.  
+Centralized Procurement Platform is a bilingual B2B marketplace that lets enterprise buyers browse catalog data, issue RFQs, compare supplier quotes, convert to orders, and settle wallets/payments through one cohesive workflow. The Next.js 14 frontend ships on Cloudflare Pages for edge-localized RTL/LTR rendering, while a Spring Boot 3 API on Azure App Service orchestrates catalog, RFQ, wallet, and admin capabilities exposed via OpenAPI. Feature flags, JWT auth, and modular services keep each capability independently releasable.
 
-م  
-**Live Demo:** [<DEPLOY_URL>](https://b2b-marketplace.pages.dev/en)
+**Live Demo:** [b2b-marketplace.pages.dev](https://b2b-marketplace.pages.dev/en)
+
+## Product Brief
+
+_Status: independent MVP with a live demo. Not yet used by real customers; the problem and metrics below are assumptions a pilot would test._
+
+**Problem.** Enterprise buyers often run sourcing across email, spreadsheets and phone calls. Catalog lookup, requests for quotes, quote comparison and approvals sit in different places, which makes cycle time and spend hard to track.
+
+**Who it's for.** Procurement buyers, suppliers responding to RFQs, and platform admins, in Arabic or English.
+
+**Key decisions and trade-offs**
+- **RFQ-to-order as the core flow,** not a catalog-only store, because negotiated purchases are where buyers spend the most effort.
+- **Feature flags per capability** (catalog, search, RFQ), so a pilot can switch capabilities on one at a time. Trade-off: more configuration to manage.
+- **Contract-first API.** The OpenAPI spec generates typed frontend clients, so frontend and backend can move independently.
+- **Wallet payments in the MVP;** payment gateways (Stripe, HyperPay) wait for the roadmap.
+
+**Deliberately out of scope:** supplier onboarding and verification, quote negotiation threads, split shipments and invoices, and spend analytics (see Roadmap).
+
+**What a pilot would measure:** RFQ cycle time from request to accepted quote, quotes received per RFQ, approval turnaround, and share of spend running through the platform.
 
 ## Screenshots
 <p align="center">
@@ -149,4 +166,4 @@ cd backend
 Released under the [MIT License](LICENSE).
 
 ---
-By Ahmed Mahmoud — [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin&style=for-the-badge)](https://www.linkedin.com/in/ahmedmmkms/) · 
+Built by **Ahmed Mahmoud Moustafa** as part of an independent product portfolio — [github.com/ahmedmmkms](https://github.com/ahmedmmkms) · [![LinkedIn](https://img.shields.io/badge/LinkedIn-Profile-blue?logo=linkedin&style=for-the-badge)](https://www.linkedin.com/in/ahmedmmkms/) · 
