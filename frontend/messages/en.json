@@ -56,15 +56,15 @@
     ],
     "stats": [
       {
-        "label": "Average savings",
+        "label": "Average savings (sample data)",
         "value": "14%"
       },
       {
-        "label": "Lead time improvement",
+        "label": "Lead time improvement (sample data)",
         "value": "5d"
       },
       {
-        "label": "Active suppliers",
+        "label": "Active suppliers (sample data)",
         "value": "326"
       }
     ],
@@ -74,9 +74,9 @@
       "statusLabel": "Status",
       "statusValue": "Open",
       "activationTitle": "Supplier activation rate",
-      "activationSubtitle": "Last 30 days",
+      "activationSubtitle": "Last 30 days (sample data)",
       "activationMetric": "92%",
-      "compliance": "Certified compliance"
+      "compliance": "Compliance-ready audit trail"
     }
   },
   "nav": {
